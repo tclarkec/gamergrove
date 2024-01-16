@@ -1,14 +1,26 @@
-# volumes:
+volumes:
+    postgres-data:
+        external: true
 services:
+    postgres:
+        image: postgres:14.5-bullseye
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: gamergrove
+            POSTGRES_DB: gamergrove_db
+        ports:
+            - 15432:5432
     fastapi:
         environment:
+            DATABASE_URL: postgresql://gamergrove:password@postgres/gamergrove_db
             CORS_HOST: http://localhost:5173
         build:
             context: api
             dockerfile: Dockerfile.dev
         ports:
             - 8000:8000
-        user: "1000:1000" # on macOS and Linux, replace this with your real user id and group id
         volumes:
             - ./api:/app
 
@@ -16,7 +28,6 @@ services:
         image: node:lts-bullseye
         command: /bin/bash run.sh
         working_dir: /app
-        user: "1000:1000" # on macOS and Linux, replace this with your real user id and group id
         volumes:
             - ./ghi:/app
         ports:
