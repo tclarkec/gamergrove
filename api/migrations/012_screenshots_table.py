@@ -3,9 +3,10 @@ steps = [
 
         """
         CREATE TABLE screenshots (
-        image_id SERIAL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         image_url VARCHAR(255),
-        game_id INT REFERENCES gamesdb(game_id)
+        game_id INT NOT NULL,
+        FOREIGN KEY (game_id) REFERENCES gamesdb(id),
         );
 
 

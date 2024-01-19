@@ -3,7 +3,7 @@ steps = [
 
         """
         CREATE TABLE gamesdb(
-        game_id SERIAL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         name VARCHAR(50),
         description VARCHAR(2500),
         ratings INTEGER,

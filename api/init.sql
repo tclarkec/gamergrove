@@ -1,11 +1,11 @@
 CREATE TABLE accounts (
   account_id SERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE,
-  password VARCHAR(50)
+  hashed_password VARCHAR(500)
 );
 
 CREATE TABLE gamesdb (
-    game_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(50),
     description VARCHAR(2500),
     ratings INTEGER,
@@ -25,92 +25,93 @@ CREATE TABLE gamesdb (
 );
 
 CREATE TABLE icons (
-    icon_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     icon_url TEXT
 );
 
 CREATE TABLE users(
-    user_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
-    username VARCHAR(255) UNIQUE,
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
     icon_id INT NOT NULL,
-    FOREIGN KEY (icon_id) REFERENCES icons(icon_id)
+    FOREIGN KEY (icon_id) REFERENCES icons(id),
+    account_id INT NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id)
 );
 
 CREATE TABLE boards(
-    board_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     board_name VARCHAR(255),
     description TEXT,
     private BOOLEAN,
     cover_photo VARCHAR(255),
     game_count INT,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE libraries(
-    library_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     wishlist BOOLEAN DEFAULT false,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
     game_id INT NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES gamesdb(game_id),
+    FOREIGN KEY (game_id) REFERENCES gamesdb(id),
     board_id INT NOT NULL,
-    FOREIGN KEY (board_id) REFERENCES boards(board_id)
+    FOREIGN KEY (board_id) REFERENCES boards(id)
 );
 
 CREATE TABLE reviews (
-    review_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     body TEXT,
     title VARCHAR(255),
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
     game_id INT NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES gamesdb(game_id),
+    FOREIGN KEY (game_id) REFERENCES gamesdb(id),
     replies_count INT DEFAULT NULL,
     vote_count INT DEFAULT NULL,
     ratings INT
 );
 
 CREATE TABLE replies (
-    reply_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     body TEXT,
     title VARCHAR(255),
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
     review_id INT NOT NULL,
-    FOREIGN KEY (review_id) REFERENCES reviews(review_id),
+    FOREIGN KEY (review_id) REFERENCES reviews(id),
 );
 
 CREATE TABLE votes (
-    vote_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
     review_id INT NOT NULL,
-    FOREIGN KEY (review_id) REFERENCES reviews(review_id),
+    FOREIGN KEY (review_id) REFERENCES reviews(id),
     upvote BOOLEAN,
     downvote BOOLEAN
 );
 CREATE TABLE storesdb (
-    storesdb_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     game_id INT,
     store_id INT,
     store_url VARCHAR(255)
 );
-CREATE TABLE screenshots (
-    image_id SERIAL PRIMARY KEY,
+ CREATE TABLE screenshots (
+    id SERIAL PRIMARY KEY,
     image_url VARCHAR(255),
-    game_id INT REFERENCES gamesdb(game_id)
-);
+    game_id INT NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES gamesdb(id),
+    );
 CREATE TABLE uploads (
-    upload_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
     board_id INT NOT NULL,
-    FOREIGN KEY (board_id) REFERENCES boards(board_id),
+    FOREIGN KEY (board_id) REFERENCES boards(id),
     image_uri VARCHAR(255)
 );

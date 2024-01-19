@@ -3,9 +3,9 @@ steps = [
 
         """
         CREATE TABLE accounts(
-        account_id SERIAL PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         username VARCHAR(50) UNIQUE,
-        password VARCHAR(50)
+        hashed_password VARCHAR(500)
 
         );
         """,
