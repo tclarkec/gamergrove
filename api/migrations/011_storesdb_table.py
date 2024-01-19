@@ -7,7 +7,7 @@ steps = [
         game_id INT,
         store_id INT,
         store_url VARCHAR(255)
-);
+        );
 
 
         """,

@@ -105,8 +105,9 @@ CREATE TABLE storesdb (
     id SERIAL PRIMARY KEY,
     image_url VARCHAR(255),
     game_id INT NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES gamesdb(id),
+    FOREIGN KEY (game_id) REFERENCES gamesdb(id)
     );
+
 CREATE TABLE uploads (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,

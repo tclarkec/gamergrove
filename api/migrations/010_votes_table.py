@@ -10,7 +10,7 @@ steps = [
         FOREIGN KEY (review_id) REFERENCES reviews(id),
         upvote BOOLEAN,
         downvote BOOLEAN
-    );
+        );
 
         """,
         """

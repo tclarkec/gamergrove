@@ -11,7 +11,7 @@ steps = [
         FOREIGN KEY (game_id) REFERENCES gamesdb(id),
         board_id INT NOT NULL,
         FOREIGN KEY (board_id) REFERENCES boards(id)
-);
+        );
 
         """,
         """

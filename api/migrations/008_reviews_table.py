@@ -13,7 +13,7 @@ steps = [
         replies_count INT DEFAULT 0,
         vote_count INT DEFAULT 0,
         ratings INT
-    );
+        );
 
 
         """,
