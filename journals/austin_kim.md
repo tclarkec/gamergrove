@@ -33,3 +33,41 @@ Today I learned that:
 1. If you create a table that contains a foreign key field which references another table, that latter table must have been created in a prior migration file (makes sense since for a table to reference an id property in another table, that other table must have already been created in the database).
 
 2. If you make a migration but then make subsequent changes to prior migration files (to update a column in a table) this will cause a "Incompatible migration history at XXX_example_migration_file_name" error, which will require clearing the database. Adding migration files should be fine as long as the new file doesn't contain any errors.
+
+# January 19, 2024
+
+Today I worked on:
+
+* Fixing some of our table migrations and finishing the part of authentication that allows people to sign up for new accounts
+
+In the morning I was the driver and fixed some issues in our tables:
+- Icon Table
+    - Added an icon table (acts as a value object) that will allow the user
+    choose from a number of pre-inserted profile avator/icons
+- User Table
+    - Added an icon_id foreign key integer field
+- Votes Table
+    - review_id is simply listed as an integer field when it should be a
+    foreign key integer field
+    - we are missing a user_id foreign key integer field to associate each
+     upvote or downvote with the logged in user
+- Reviews Table
+    - replies_count should be default 0 since when a review is first created
+     it won’t have any replies
+    - vote is listed as a foreign key when it should actually be
+     votes_count, an integer field with a default of 0 since when a review
+      is first created it won’t have any upvotes or downvotes
+    - wouldn’t make sense for vote to be a foreign key since the review
+     table has to be created before the vote table (will cause a reference
+      error when starting the containers and running migration files)
+    - votes_count will be incremented by 1 or decremented by 1 every time a
+     user clicks upvote or downvote on the review (either upvote or downvote
+      boolean for a vote row will be set to true through the frontend)
+
+Later on Clark was the driver and thanks to Riley's help we redid the convention of ids in our table. We also flushed out more of the authentication and eventually got to a point where we could not create an account in our database because of a Pydantic validation error involving an id.
+
+After Clark left, with the help of Thomas and Stesha we figured out that this error was being caused by not including id as a field in the RETURNING clause of the INSERT query we use to add an account to the accounts table in our database.
+
+Today I learned that:
+
+Watching Dalante's lecture on PostGres auth would have been very helpful from the beginning. Going to watch it and read the JWTdown documentation very closely to finish out the rest of authentication.

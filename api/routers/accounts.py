@@ -24,7 +24,7 @@ router = APIRouter()
 # @router.post("/api/accounts/", response_model=AccountOut)
 #Check for token in CREATE ACCOUNT
 @router.post("/api/accounts/", response_model = Union[AccountToken, HttpError])
-async def create_accounts(
+async def create_account(
     data: AccountIn,
     request: Request,
     response: Response,
@@ -54,4 +54,16 @@ async def get_account(
     username: str,
     repo: AccountsQueries = Depends(),
 ):
-    return repo.get_account(username)
+    return repo.get(username)
+
+@router.get("/token", response_model=AccountToken | None)
+async def get_token(
+    request: Request,
+    account: dict = Depends(authenticator.try_get_current_account_data),
+) -> AccountToken | None:
+    if account and authenticator.cookie_name in request.cookies:
+        return {
+            "access_token": request.cookies[authenticator.cookie_name],
+            "type": "Bearer",
+            "account": account
+        }
