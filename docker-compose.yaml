@@ -36,6 +36,9 @@ services:
             - 8000:8000
         volumes:
             - ./api:/app
+        depends_on:
+            - pg-admin
+            - postgres
 
     ghi:
         # image: node:lts-bullseye
