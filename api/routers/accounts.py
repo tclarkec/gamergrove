@@ -21,8 +21,6 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
-# @router.post("/api/accounts/", response_model=AccountOut)
-#Check for token in CREATE ACCOUNT
 @router.post("/api/accounts/", response_model = Union[AccountToken, HttpError])
 async def create_account(
     data: AccountIn,
@@ -45,9 +43,6 @@ async def create_account(
     form = AccountForm(username=data.username, password=data.password)
     token = await authenticator.login(response, request, form, queries)
     return AccountToken(account=account, **token.dict())
-
-
-
 
 @router.get("/user/{username}/", response_model=AccountOut)
 async def get_account(
