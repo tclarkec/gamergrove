@@ -1,27 +1,30 @@
 from fastapi import (
     APIRouter, Depends, HTTPException, Request,
-    Response, status
+    Response, status,
 )
 from typing import Optional, Union
 from queries.accounts import (
     AccountIn,
     AccountOut,
     AccountsQueries,
-    AccountOutWithPassword,
     DuplicateAccountError,
     AccountToken,
     AccountForm
 )
 from authenticator import authenticator
 
+from pydantic import BaseModel
+
+class HttpError(BaseModel):
+    detail: str
+
 router = APIRouter()
 
 
 # @router.post("/api/accounts/", response_model=AccountOut)
 #Check for token in CREATE ACCOUNT
-@router.post("/api/accounts/")
+@router.post("/api/accounts/", response_model = Union[AccountToken, HttpError])
 async def create_accounts(
-    # info: AccountOutWithPassword,
     data: AccountIn,
     request: Request,
     response: Response,

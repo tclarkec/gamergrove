@@ -23,7 +23,6 @@ class AccountOut(BaseModel):
     username: str
 
 class AccountToken(Token):
-    # id: Optional[str]
     account: AccountOut
 
 
@@ -69,9 +68,9 @@ class AccountsQueries:
                     """
                     INSERT INTO accounts (username, hashed_password)
                     VALUES (%s, %s)
-                    RETURNING username, hashed_password;
+                    RETURNING id, username, hashed_password;
                     """,
-                    (data.username, hashed_password),
+                    [data.username, hashed_password],
                 )
 
                 row = result.fetchone()
