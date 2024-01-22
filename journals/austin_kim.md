@@ -66,8 +66,10 @@ In the morning I was the driver and fixed some issues in our tables:
 
 Later on Clark was the driver and thanks to Riley's help we redid the convention of ids in our table. We also flushed out more of the authentication and eventually got to a point where we could not create an account in our database because of a Pydantic validation error involving an id.
 
-After Clark left, with the help of Thomas and Stesha we figured out that this error was being caused by not including id as a field in the RETURNING clause of the INSERT query we use to add an account to the accounts table in our database.
+After Clark left, with the help of Thomas and Stesha we figured out that this error was being caused by not including id as a field in the RETURNING clause of the INSERT query we use to add an account to the accounts table in our database. Some other things we missed included not defining a response model for the create account router and mistakenly defining AccountsQueries as inheriting from Queries.
+
+I also was able to finish out authentication fully, adding the get token and get account end points. In main.py, I also grouped all authentication-related routes using tags = ["AUTH"].
 
 Today I learned that:
 
-Watching Dalante's lecture on PostGres auth would have been very helpful from the beginning. Going to watch it and read the JWTdown documentation very closely to finish out the rest of authentication.
+Watching Dalante's lecture on PostGres auth would have been very helpful from the beginning. Skipping through this lecture, reading the JWTdown documentation very closely, and rewatching the exploration (Curtis' lecture) on FastAPI was very helpful in understanding what is going on.
