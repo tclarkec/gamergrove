@@ -2,6 +2,7 @@ from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
                      status)
 from typing import Union
 from queries.users import (
+    UserInBase,
     UserIn,
     UserOut,
     UserQueries,
@@ -20,7 +21,7 @@ router = APIRouter()
 
 @router.post("/api/users/", response_model=Union[UserOut, HttpError])
 async def create_user(
-    user: UserIn,
+    user: UserInBase,
     request: Request,
     response: Response,
     queries: UserQueries = Depends(),
@@ -28,9 +29,10 @@ async def create_user(
 ):
     response.status_code = 200
     account_id = account_data["id"]
-    user.account_id = account_id
+    user_dict = user.dict()
+    user_dict["account_id"] = account_id
     try:
-        created_user = queries.create_user(user)
+        created_user = queries.create_user(user_dict)
 
         if isinstance(created_user, HttpError):
             return created_user
