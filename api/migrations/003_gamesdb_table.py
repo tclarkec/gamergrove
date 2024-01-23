@@ -16,10 +16,9 @@ steps = [
         rating_count FLOAT,
         rating_total FLOAT,
         genre VARCHAR(50),
-        tags VARCHAR(50),
         developers VARCHAR(50),
         rawg_pk INTEGER,
-        replies_count INTEGER
+        reviews_count INTEGER
 
         );
         """,
