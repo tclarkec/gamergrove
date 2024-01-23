@@ -16,13 +16,14 @@ class HttpError(BaseModel):
     detail: str
 
 
-class UserIn(BaseModel):
+class UserInBase(BaseModel):
     first_name: str
     last_name: str
     email: str
     icon_id: str
-    account_id: str
 
+class UserIn(UserInBase):
+    account_id: str
 
 class UserOut(BaseModel):
     id: str
@@ -53,7 +54,7 @@ class UserQueries:
                     return UserOut(**record)
                 raise ValueError("Could not get user")
 
-    def create_user(self, user: UserIn) -> UserOut:
+    def create_user(self, user_dict: UserIn) -> UserOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -72,11 +73,11 @@ class UserQueries:
                     account_id;
                     """,
                     [
-                        user.first_name,
-                        user.last_name,
-                        user.email,
-                        user.icon_id,
-                        user.account_id
+                        user_dict["first_name"],
+                        user_dict["last_name"],
+                        user_dict["email"],
+                        user_dict["icon_id"],
+                        user_dict["account_id"]
                     ],
                 )
 

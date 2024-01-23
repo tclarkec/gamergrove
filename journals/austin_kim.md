@@ -73,3 +73,19 @@ I also was able to finish out authentication fully, adding the get token and get
 Today I learned that:
 
 Watching Dalante's lecture on PostGres auth would have been very helpful from the beginning. Skipping through this lecture, reading the JWTdown documentation very closely, and rewatching the exploration (Curtis' lecture) on FastAPI was very helpful in understanding what is going on.
+
+### January 22, 2024
+
+Today I worked on:
+
+* Creating the API endpoints for our User table, which involved first creating our Icons table (list of pre-selected icons/avatars a user chooses from when creating their profile) and pre-loading it into the database using a seeder file, and learning how to pass and access foreign keys in FastAPI.
+
+In the morning I gave a little stand-up explaining what bugs I fixed to make authentication on the back-end work and then did a demo testing each endpoint. Then Cameron was the driver with myself, Kyle, and Clarke guiding him through the code.
+
+We kept running into issues with inserting our four pre-selected icon records into the Icon table, first with syntax errors and then eventually realizing including the INSERT commands into our migrations were not getting the job done. Eli then helped us architect a seeder file. We then realized that the way we were calling the function that inserts our icons records into the table every time our container starts up which would cause duplication errors. We thus added logic so that this function would only run if the data had not been inserted yet.
+
+We then went through and finished the CRUD for our User table, allowing us to create a user, get an individual user, update a user, and delete a user.
+
+Today I learned that:
+
+It is common industry practice to store all the functions/logic used to preload data of interest when an application is first run in a seeder file and that in addition to defining one-to-many relationships in the tables we create in our migration files, the passing of the necessary foreign key ids are handled in routers. I also learned how to hide unnecessary/unused JSON request body hints in FastAPI (since the account_id is accessed using the authenticator.get_current_account_data method). This involved removing account_id from my UserinBase model, turning my user Pydantic model object into a dictionary using the .dict() method, manually creating an account_id key-value pair, and then accessing the necessary values (using dictionary syntax) I want to insert into each column of the record I want to add to the users table.
