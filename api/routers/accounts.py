@@ -44,7 +44,7 @@ async def create_account(
     token = await authenticator.login(response, request, form, queries)
     return AccountToken(account=account, **token.dict())
 
-@router.get("/user/{username}/", response_model=AccountOut)
+@router.get("/accounts/{username}/", response_model=AccountOut)
 async def get_account(
     username: str,
     repo: AccountsQueries = Depends(),
@@ -54,7 +54,7 @@ async def get_account(
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: dict = Depends(authenticator.try_get_current_account_data),
+    account: dict = Depends(authenticator.get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
         return {

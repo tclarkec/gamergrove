@@ -1,0 +1,132 @@
+import os
+from psycopg_pool import ConnectionPool
+from psycopg import connect, sql
+from typing import Optional
+from pydantic import BaseModel, ValidationError
+from typing import Union
+
+pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
+
+
+class InvalidUserError(ValueError):
+    pass
+
+
+class HttpError(BaseModel):
+    detail: str
+
+
+class UserIn(BaseModel):
+    first_name: str
+    last_name: str
+    email: str
+    icon_id: str
+    account_id: str
+
+
+class UserOut(BaseModel):
+    id: str
+    first_name: str
+    last_name: str
+    email: str
+    icon_id: str
+    account_id: str
+
+
+class UserQueries:
+    def get_user(self, id: str) -> UserOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                    SELECT *
+                    FROM users
+                    WHERE id = %s;
+                    """,
+                    [id],
+                )
+                row = result.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    return UserOut(**record)
+                raise ValueError("Could not get user")
+
+    def create_user(self, user: UserIn) -> UserOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                    INSERT INTO users (first_name,
+                    last_name,
+                    email,
+                    icon_id,
+                    account_id)
+                    VALUES (%s, %s, %s, %s, %s)
+                    RETURNING id,
+                    first_name,
+                    last_name,
+                    email,
+                    icon_id,
+                    account_id;
+                    """,
+                    [
+                        user.first_name,
+                        user.last_name,
+                        user.email,
+                        user.icon_id,
+                        user.account_id
+                    ],
+                )
+
+                row = result.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    return UserOut(**record)
+                raise ValueError("Could not create user")
+
+    def delete_user(self, id: str) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM users
+                        WHERE id = %s
+                        """,
+                        [id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def update_user(self, id: str, user: UserIn) -> Union[UserOut, HttpError]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE users
+                        SET first_name = %s,
+                            last_name = %s,
+                            email = %s,
+                            icon_id = %s
+                        WHERE id = %s
+                        """,
+                        [
+                            user.first_name,
+                            user.last_name,
+                            user.email,
+                            user.icon_id,
+                            id
+                        ]
+                    )
+                old_data = user.dict()
+                return UserOut(id=id, **old_data)
+        except ValidationError as e:
+            print(e.errors())
+            return False
