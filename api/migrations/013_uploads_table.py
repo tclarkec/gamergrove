@@ -4,8 +4,8 @@ steps = [
         """
         CREATE TABLE uploads (
         id SERIAL PRIMARY KEY,
-        user_id INT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id),
+        account_id INT NOT NULL,
+        FOREIGN KEY (account_id) REFERENCES accounts(id),
         board_id INT NOT NULL,
         FOREIGN KEY (board_id) REFERENCES boards(id),
         image_uri VARCHAR(255)

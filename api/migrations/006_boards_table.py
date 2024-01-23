@@ -9,8 +9,8 @@ steps = [
         private BOOLEAN,
         cover_photo VARCHAR(255),
         game_count INT,
-        user_id INT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        account_id INT NOT NULL,
+        FOREIGN KEY (account_id) REFERENCES accounts(id)
 
         );
         """,
