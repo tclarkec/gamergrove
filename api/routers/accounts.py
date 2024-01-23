@@ -29,8 +29,6 @@ async def create_account(
     queries: AccountsQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(data.password)
-    print(f"data: {data}")
-    print(f"hashed_password: {hashed_password}")
 
     try:
         account = queries.create(data, hashed_password)
