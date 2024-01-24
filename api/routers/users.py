@@ -62,7 +62,7 @@ async def delete_user(
 @router.put("/api/users/{id}", response_model=Union[UserOut, HttpError])
 async def update_user(
     id: str,
-    user: UserInBase,
+    user: UserIn,
     queries: UserQueries = Depends(),
 ) -> Union[HttpError, UserOut]:
     return queries.update_user(id, user)

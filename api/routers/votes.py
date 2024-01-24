@@ -44,6 +44,7 @@ async def create_vote(
 async def get_user_votes(
     account_id: str,
     queries: VoteQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     return queries.get_user_votes(account_id)
 
@@ -54,11 +55,19 @@ async def get_review_votes(
 ):
     return queries.get_review_votes(review_id)
 
+@router.get("/api/votes/{id}/", response_model=Union[VoteOut, HttpError])
+async def get_vote(
+    id: str,
+    queries: VoteQueries = Depends(),
+):
+    return queries.get_vote(id)
+
 
 @router.delete("/api/votes/{id}", response_model=bool)
 async def delete_vote(
     id: str,
     queries: VoteQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ) -> bool:
     return queries.delete_vote(id)
 
@@ -68,5 +77,6 @@ async def update_vote(
     id: str,
     vote: VoteIn,
     queries: VoteQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ) -> Union[HttpError, VoteOut]:
     return queries.update_vote(id, vote)

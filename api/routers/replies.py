@@ -44,6 +44,7 @@ async def create_reply(
 async def get_user_replies(
     account_id: str,
     queries: ReplyQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     return queries.get_user_replies(account_id)
 
@@ -54,11 +55,18 @@ async def get_review_replies(
 ):
     return queries.get_review_replies(review_id)
 
+@router.get("/api/replies/{id}/", response_model=ReplyOut)
+async def get_reply(
+    id: str,
+    queries: ReplyQueries = Depends(),
+):
+    return queries.get_reply(id)
 
 @router.delete("/api/replies/{id}", response_model=bool)
 async def delete_reply(
     id: str,
     queries: ReplyQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ) -> bool:
     return queries.delete_reply(id)
 
@@ -68,5 +76,6 @@ async def update_reply(
     id: str,
     reply: ReplyIn,
     queries: ReplyQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ) -> Union[HttpError, ReplyOut]:
     return queries.update_reply(id, reply)

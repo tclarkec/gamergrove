@@ -28,9 +28,8 @@ class VoteOut(BaseModel):
     upvote: bool
     downvote: bool
 
-
 class VoteQueries:
-    def get_user_votes(self, account_id: str) -> Union[VoteOut, HttpError]:
+    def get_user_votes(self, account_id: str) -> VoteOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -41,7 +40,6 @@ class VoteQueries:
                     """,
                     [account_id]
                 )
-
                 rows = result.fetchall()
                 if rows is not None:
                     records = {}
@@ -51,7 +49,7 @@ class VoteQueries:
                     return VoteOut(**records)
                 raise ValueError("Could not get all votes associated with that user")
 
-    def get_review_votes(self, review_id: str) -> Union[VoteOut, HttpError]:
+    def get_review_votes(self, review_id: str) -> VoteOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -62,7 +60,6 @@ class VoteQueries:
                     """,
                     [review_id]
                 )
-
                 rows = result.fetchall()
                 if rows is not None:
                     records = {}
@@ -71,6 +68,25 @@ class VoteQueries:
                             records[column.name] = row[i]
                     return VoteOut(**records)
                 raise ValueError("Could not get all votes associated with that review")
+
+    def get_vote(self, id: str) -> VoteOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                    SELECT *
+                    FROM votes
+                    WHERE id = %s;
+                    """,
+                    [id]
+                )
+                row = result.fetchone()
+                if row is not None:
+                    records = {}
+                    for i, column in enumerate(cur.description):
+                        records[column.name] = row[i]
+                    return VoteOut(**records)
+                raise ValueError("Could not get vote")
 
     def create_vote(self, vote_dict: VoteIn) -> VoteOut:
         with pool.connection() as conn:
@@ -95,7 +111,6 @@ class VoteQueries:
                         vote_dict["downvote"]
                     ]
                 )
-
                 row = result.fetchone()
                 if row is not None:
                     record = {}
@@ -120,7 +135,7 @@ class VoteQueries:
                 print(e)
                 return False
 
-    def update_vote(self, id: str, vote: VoteIn) -> Union[VoteOut, HttpError]:
+    def update_vote(self, id: str, vote: VoteIn) -> VoteOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

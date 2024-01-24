@@ -40,7 +40,6 @@ class ReplyQueries:
                     """,
                     [account_id]
                 )
-
                 rows = result.fetchall()
                 if rows is not None:
                     records = {}
@@ -61,7 +60,6 @@ class ReplyQueries:
                     """,
                     [review_id]
                 )
-
                 rows = result.fetchall()
                 if rows is not None:
                     records = {}
@@ -70,6 +68,25 @@ class ReplyQueries:
                             records[column.name] = row[i]
                     return ReplyOut(**records)
                 raise ValueError("Could not get all replies associated with that review")
+
+    def get_reply(self, id: str) -> ReplyOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                    SELECT *
+                    FROM replies
+                    WHERE id = %s;
+                    """,
+                    [id]
+                )
+                row = result.fetchone()
+                if row is not None:
+                    records = {}
+                    for i, column in enumerate(cur.description):
+                        records[column.name] = row[i]
+                    return ReplyOut(**records)
+                raise ValueError("Could not get reply")
 
     def create_reply(self, reply_dict: ReplyIn) -> ReplyOut:
         with pool.connection() as conn:
@@ -94,7 +111,6 @@ class ReplyQueries:
                         reply_dict["review_id"]
                     ]
                 )
-
                 row = result.fetchone()
                 if row is not None:
                     record = {}
