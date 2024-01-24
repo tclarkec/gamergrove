@@ -29,6 +29,7 @@ services:
             DATABASE_URL: ${DATABASE_URL_FROM_ENV_FILE}
             CORS_HOST: http://localhost:5173
             SIGNING_KEY: ${SIGNING_KEY_FROM_ENV_FILE}
+            API_KEY: ${RAWG_API_KEY}
         build:
             context: api
             dockerfile: Dockerfile.dev
@@ -39,7 +40,6 @@ services:
         depends_on:
             - pg-admin
             - postgres
-
     ghi:
         # image: node:lts-bullseye
         # command: /bin/bash run.sh

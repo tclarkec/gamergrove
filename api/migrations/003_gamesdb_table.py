@@ -1,6 +1,5 @@
 steps = [
     [
-
         """
         CREATE TABLE gamesdb(
         id SERIAL PRIMARY KEY,
@@ -17,14 +16,12 @@ steps = [
         rating_total FLOAT,
         genre VARCHAR(50),
         developers VARCHAR(50),
-        rawg_pk INTEGER,
+        rawg_pk VARCHAR(20) UNIQUE,
         reviews_count INTEGER
-
         );
         """,
         """
         DROP TABLE gamesdb;
         """
     ],
-
 ]

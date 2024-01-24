@@ -2,13 +2,15 @@ from fastapi import FastAPI
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import accounts, users
+from routers import accounts, users, replies, votes
 from seederfile import seed_data
 
 app = FastAPI()
 app.include_router(authenticator.router, tags = ["AUTH"])
 app.include_router(accounts.router, tags=["AUTH"])
 app.include_router(users.router, tags=["User"])
+app.include_router(replies.router, tags=["Replies"])
+app.include_router(votes.router, tags=["Votes"])
 
 
 @app.on_event("startup")
