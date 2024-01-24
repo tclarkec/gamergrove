@@ -40,7 +40,6 @@ services:
         depends_on:
             - pg-admin
             - postgres
-
     ghi:
         # image: node:lts-bullseye
         # command: /bin/bash run.sh
