@@ -14,7 +14,7 @@ from authenticator import authenticator
 
 router = APIRouter()
 
-@router.post("/api/replies/", response_model=Union[ReplyOut, HttpError])
+@router.post("/api/replies", response_model=Union[ReplyOut, HttpError])
 async def create_reply(
     reply: ReplyInBase,
     request: Request,
@@ -40,7 +40,7 @@ async def create_reply(
             detail="Cannot create reply"
         )
 
-@router.get("/api/replies/{account_id}/", response_model=Union[ReplyOut, HttpError])
+@router.get("/api/replies/{account_id}", response_model=Union[ReplyOut, HttpError])
 async def get_user_replies(
     account_id: str,
     queries: ReplyQueries = Depends(),
@@ -48,14 +48,14 @@ async def get_user_replies(
 ):
     return queries.get_user_replies(account_id)
 
-@router.get("/api/replies/{review_id}/", response_model=Union[ReplyOut, HttpError])
+@router.get("/api/replies/{review_id}", response_model=Union[ReplyOut, HttpError])
 async def get_review_replies(
     review_id: str,
     queries: ReplyQueries = Depends(),
 ):
     return queries.get_review_replies(review_id)
 
-@router.get("/api/replies/{id}/", response_model=ReplyOut)
+@router.get("/api/replies/{id}", response_model=ReplyOut)
 async def get_reply(
     id: str,
     queries: ReplyQueries = Depends(),

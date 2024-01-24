@@ -14,7 +14,7 @@ from authenticator import authenticator
 
 router = APIRouter()
 
-@router.post("/api/votes/", response_model=Union[VoteOut, HttpError])
+@router.post("/api/votes", response_model=Union[VoteOut, HttpError])
 async def create_vote(
     vote: VoteInBase,
     request: Request,
@@ -40,7 +40,7 @@ async def create_vote(
             detail="Cannot create Vote"
         )
 
-@router.get("/api/votes/{account_id}/", response_model=Union[VoteOut, HttpError])
+@router.get("/api/votes/{account_id}", response_model=Union[VoteOut, HttpError])
 async def get_user_votes(
     account_id: str,
     queries: VoteQueries = Depends(),
@@ -48,14 +48,14 @@ async def get_user_votes(
 ):
     return queries.get_user_votes(account_id)
 
-@router.get("/api/votes/{review_id}/", response_model=Union[VoteOut, HttpError])
+@router.get("/api/votes/{review_id}", response_model=Union[VoteOut, HttpError])
 async def get_review_votes(
     review_id: str,
     queries: VoteQueries = Depends(),
 ):
     return queries.get_review_votes(review_id)
 
-@router.get("/api/votes/{id}/", response_model=Union[VoteOut, HttpError])
+@router.get("/api/votes/{id}", response_model=Union[VoteOut, HttpError])
 async def get_vote(
     id: str,
     queries: VoteQueries = Depends(),
