@@ -22,8 +22,10 @@ class UserInBase(BaseModel):
     email: str
     icon_id: str
 
+
 class UserIn(UserInBase):
     account_id: str
+
 
 class UserOut(BaseModel):
     id: str
