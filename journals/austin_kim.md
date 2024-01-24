@@ -89,3 +89,17 @@ We then went through and finished the CRUD for our User table, allowing us to cr
 Today I learned that:
 
 It is common industry practice to store all the functions/logic used to preload data of interest when an application is first run in a seeder file and that in addition to defining one-to-many relationships in the tables we create in our migration files, the passing of the necessary foreign key ids are handled in routers. I also learned how to hide unnecessary/unused JSON request body hints in FastAPI (since the account_id is accessed using the authenticator.get_current_account_data method). This involved removing account_id from my UserinBase model, turning my user Pydantic model object into a dictionary using the .dict() method, manually creating an account_id key-value pair, and then accessing the necessary values (using dictionary syntax) I want to insert into each column of the record I want to add to the users table.
+
+### January 23, 2024
+
+Today I worked on:
+
+* Fixing the seeder file that it would load in the pre-selected icons that a user can choose when creating their profile and adding functionality that would allow certain games to be loaded into our database from Rawgs (third-party API). We also split up the rest of the API endpoints for each table.
+
+In the morning we had our standup and went through various items with Kyle as the driver: fixing some of our tables in the migration files, correcting the logic in our seeder file so that data would be properly loaded in, and eventually split up the remaining API endpoints for each table amongst the four of us.
+
+Today I learned that:
+
+cur.execute allows you to execute whatever SQL operation you want to perform on the database and in most cases returns the number of rows affected by those operations you executed. This is why the original logic for our seed_data function in our seeder file was incorrect: we set it up so that if the application was being booted up for the first time, our function would check to see if the icons had already been inserted into the table so that we wouldn't be trying to insert into the table every time we restart our containers. However, because cur.execute simply returns the number of rows that are affected by whatever SQL operations we executed, our icons would never be inserted since our if condition just checked to see if icons = cur.execute("SELECT * FROM icons") was returning a truthy value - which would happen every time even if 0 operations were affected.
+
+We thus changed the logic so that our if condition would use a variable icons = cur.fetchall() since this method actually returns the rows themselves, not just how many were affected by the pre-defined SQL operations.
