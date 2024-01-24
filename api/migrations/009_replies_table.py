@@ -1,11 +1,10 @@
 steps = [
     [
-
         """
         CREATE TABLE replies (
         id SERIAL PRIMARY KEY,
-        body TEXT,
         title VARCHAR(255),
+        body TEXT,
         account_id INT NOT NULL,
         FOREIGN KEY (account_id) REFERENCES accounts(id),
         review_id INT NOT NULL,
@@ -15,6 +14,6 @@ steps = [
         """
         DROP TABLE replies;
         """
-    ],
 
+    ],
 ]

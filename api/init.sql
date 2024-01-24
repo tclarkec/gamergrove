@@ -71,6 +71,8 @@ CREATE TABLE reviews (
     FOREIGN KEY (user_id) REFERENCES users(id),
     game_id INT NOT NULL,
     FOREIGN KEY (game_id) REFERENCES gamesdb(id),
+    account_id INT NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id),
     replies_count INT DEFAULT NULL,
     vote_count INT DEFAULT NULL,
     ratings INT
