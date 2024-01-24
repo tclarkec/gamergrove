@@ -29,7 +29,7 @@ class ReplyOut(BaseModel):
     account_id: str
 
 class ReplyQueries:
-    def get_user_replies(self, account_id: str) -> Union[ReplyOut, HttpError]:
+    def get_user_replies(self, account_id: str) -> ReplyOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -49,7 +49,7 @@ class ReplyQueries:
                     return ReplyOut(**records)
                 raise ValueError("Could not get all replies associated with that user")
 
-    def get_review_replies(self, review_id: str) -> Union[ReplyOut, HttpError]:
+    def get_review_replies(self, review_id: str) -> ReplyOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -97,7 +97,7 @@ class ReplyQueries:
                     body,
                     account_id,
                     review_id)
-                    VALUES (%s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s)
                     RETURNING id,
                     title,
                     body,
@@ -135,7 +135,7 @@ class ReplyQueries:
                 print(e)
                 return False
 
-    def update_reply(self, id: str, reply: ReplyIn) -> Union[ReplyOut, HttpError]:
+    def update_reply(self, id: str, reply: ReplyIn) -> ReplyOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

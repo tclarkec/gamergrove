@@ -97,7 +97,7 @@ class VoteQueries:
                     review_id,
                     upvote,
                     downvote)
-                    VALUES (%s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s)
                     RETURNING id,
                     account_id,
                     review_id,

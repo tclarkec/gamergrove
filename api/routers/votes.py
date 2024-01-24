@@ -68,7 +68,7 @@ async def delete_vote(
     id: str,
     queries: VoteQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
-) -> bool:
+):
     return queries.delete_vote(id)
 
 
@@ -78,5 +78,5 @@ async def update_vote(
     vote: VoteIn,
     queries: VoteQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
-) -> Union[HttpError, VoteOut]:
+):
     return queries.update_vote(id, vote)

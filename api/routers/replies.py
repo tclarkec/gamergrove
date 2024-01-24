@@ -67,7 +67,7 @@ async def delete_reply(
     id: str,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
-) -> bool:
+):
     return queries.delete_reply(id)
 
 
@@ -77,5 +77,5 @@ async def update_reply(
     reply: ReplyIn,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
-) -> Union[HttpError, ReplyOut]:
+):
     return queries.update_reply(id, reply)
