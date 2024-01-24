@@ -15,13 +15,15 @@ from authenticator import authenticator
 
 from pydantic import BaseModel
 
+
 class HttpError(BaseModel):
     detail: str
+
 
 router = APIRouter()
 
 
-@router.post("/api/accounts/", response_model = Union[AccountToken, HttpError])
+@router.post("/api/accounts", response_model=Union[AccountToken, HttpError])
 async def create_account(
     data: AccountIn,
     request: Request,
@@ -42,7 +44,7 @@ async def create_account(
     token = await authenticator.login(response, request, form, queries)
     return AccountToken(account=account, **token.dict())
 
-@router.get("/accounts/{username}/", response_model=AccountOut)
+@router.get("/accounts/{username}", response_model=AccountOut)
 async def get_account(
     username: str,
     repo: AccountsQueries = Depends(),

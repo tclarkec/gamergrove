@@ -6,18 +6,17 @@ from queries.users import (
     UserIn,
     UserOut,
     UserQueries,
-    InvalidUserError, HttpError
+    HttpError,
+    InvalidUserError
 )
 from pydantic import BaseModel
 from authenticator import authenticator
 
 
-
-
 router = APIRouter()
 
 
-@router.post("/api/users/", response_model=Union[UserOut, HttpError])
+@router.post("/api/users", response_model=Union[UserOut, HttpError])
 async def create_user(
     user: UserInBase,
     request: Request,
@@ -44,7 +43,7 @@ async def create_user(
         )
 
 
-@router.get("/api/users/{id}/", response_model=UserOut)
+@router.get("/api/users/{id}", response_model=UserOut)
 async def get_user(
     id: str,
     queries: UserQueries = Depends(),

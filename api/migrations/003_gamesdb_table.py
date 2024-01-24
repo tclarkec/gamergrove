@@ -1,5 +1,6 @@
 steps = [
     [
+
         """
         CREATE TABLE gamesdb(
         id SERIAL PRIMARY KEY,
@@ -18,6 +19,8 @@ steps = [
         developers VARCHAR(50),
         rawg_pk VARCHAR(20) UNIQUE,
         reviews_count INTEGER
+        );
+
         );
         """,
         """
