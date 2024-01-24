@@ -20,8 +20,6 @@ steps = [
         rawg_pk VARCHAR(20) UNIQUE,
         reviews_count INTEGER
         );
-
-        );
         """,
         """
         DROP TABLE gamesdb;

@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import accounts, users, boards, screenshots, games, replies, votes
+from routers import (accounts, users, boards, screenshots, games, replies,
+                     votes, libraries, stores, reviews)
 from seederfile import seed_data
 
 app = FastAPI()
@@ -14,6 +15,9 @@ app.include_router(screenshots.router, tags=["Screenshots"])
 app.include_router(games.router, tags=["Games"])
 app.include_router(replies.router, tags=["Replies"])
 app.include_router(votes.router, tags=["Votes"])
+app.include_router(libraries.router, tags=["Libraries"])
+app.include_router(stores.router, tags=["StoresDB"])
+app.include_router(reviews.router, tags=["Reviews"])
 
 
 @app.on_event("startup")
