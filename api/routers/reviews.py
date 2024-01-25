@@ -72,29 +72,31 @@ async def create_review(
         )
 
 
-@router.put("/api/reviews/users/{id}/{account_id}", response_model=Union[ReviewOut,
-                                                              HttpError])
+@router.put("/api/reviews/users/{id}/{account_id}", response_model=Union[ReviewOut, HttpError])
 async def update_review(
     id: str,
     review: ReviewInBase,
     queries: ReviewQueries = Depends(),
     review_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[ReviewOut, HttpError]:
-    account_id = authenticate_user(review_data)
-    review_dict = review.dict()
-    review_dict["account_id"] = account_id
-
     try:
+        account_id = authenticate_user(review_data)
+        review_dict = review.dict()
+        review_dict["account_id"] = account_id
         updated_review = queries.update_review(id, review_dict)
+
         if isinstance(updated_review, HttpError):
             return updated_review
-    except HttpError:
+
+        return updated_review
+    except Exception as e:
+        print(e)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Review cannot be updated"
+            detail="Review cannot be created"
         )
 
-    return updated_review
+
 
 
 @router.delete("/api/reviews/users/{id}/{account_id}", response_model=bool)

@@ -2,7 +2,7 @@ import os
 from psycopg_pool import ConnectionPool
 from psycopg import connect, sql
 from typing import List
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from typing import Union
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
@@ -133,39 +133,35 @@ class ReviewQueries:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
-                    cur.execute(
+                    result = cur.execute(
                         """
                         UPDATE reviews
                         SET body = %s,
                             title = %s,
                             ratings = %s,
+                            replies_count = %s,
                             vote_count = %s
-                        WHERE id = %s
-                        RETURNING id,
-                            account_id,
-                            body,
-                            title,
-                            ratings,
-                            replies_count
-                            game_id,
-                            vote_count
+                        WHERE id = %s and account_id = %s
                         """,
                         [
                             review['body'],
                             review['title'],
                             review['ratings'],
+                            review['replies_count'],
                             review['vote_count'],
-                            id
+                            id,
+                            review["account_id"]
                         ]
                     )
-                    row = cur.fetchone()
+                    row = result.fetchone()
+                    print(row)
                     if row is not None:
                         record = {}
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
                         return ReviewOut(**record)
                     raise ValueError("Review not found")
-        except HttpError as e:
+        except ValidationError as e:
             print(e.errors())
             return False
 

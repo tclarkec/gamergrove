@@ -3,7 +3,7 @@ from psycopg_pool import ConnectionPool
 from psycopg import connect, sql
 from typing import Optional
 from pydantic import BaseModel, ValidationError
-from typing import Union
+from typing import Union, List
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
@@ -30,7 +30,7 @@ class LibraryOut(BaseModel):
     account_id: str
 
 class LibraryQueries:
-    def get_library(self, id: str) -> LibraryOut:
+    def get_library(self, id: str) -> List[LibraryOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -102,22 +102,22 @@ class LibraryQueries:
             print(e)
             return False
 
-    def update_library_entry(self, id: str, library: LibraryIn) -> Union[LibraryOut, HttpError]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        UPDATE libraries
-                        SET
-                        wishlist = %s
-                        WHERE id = %s
-                        """,
-                        [library.wishlist,
-                         id]
-                    )
-                old_data = library.dict()
-                return LibraryOut(id=id, **old_data)
-        except ValidationError as e:
-            print(e.errors())
-            return False
+    # def update_library_entry(self, id: str, library: LibraryIn) -> Union[LibraryOut, HttpError]:
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 db.execute(
+    #                     """
+    #                     UPDATE libraries
+    #                     SET
+    #                     wishlist = %s
+    #                     WHERE id = %s
+    #                     """,
+    #                     [library.wishlist,
+    #                      id]
+    #                 )
+    #             old_data = library.dict()
+    #             return LibraryOut(id=id, **old_data)
+    #     except ValidationError as e:
+    #         print(e.errors())
+    #         return False
