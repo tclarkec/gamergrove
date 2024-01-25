@@ -72,7 +72,7 @@ class BoardQueries:
                         [account_id],
                     )
                     rows = cur.fetchall()
-                    logging.debug(f"Rows: {rows}")
+                    # logging.debug(f"Rows: {rows}")
 
                     if rows:
                         for row in rows:
