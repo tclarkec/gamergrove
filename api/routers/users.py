@@ -58,15 +58,6 @@ async def delete_user(
 ) -> bool:
     return queries.delete_user(id)
 
-
-# @router.put("/api/users/{id}", response_model=Union[UserOut, HttpError])
-# async def update_user(
-#     id: str,
-#     user: UserInBase,
-#     queries: UserQueries = Depends(),
-# ) -> Union[HttpError, UserOut]:
-#     return queries.update_user(id, user)
-
 @router.put("/api/users/{id}", response_model=Union[UserOut, HttpError])
 async def update_user(
     id: str,
@@ -80,8 +71,7 @@ async def update_user(
     user_dict = user.dict()
     user_dict["account_id"] = account_id
     try:
-        user_in_instance = UserIn(**user_dict)
-        updated_user = queries.update_user(id, user_in_instance)
+        updated_user = queries.update_user(id, user_dict)
         if isinstance(updated_user, HttpError):
             return updated_user
         return updated_user

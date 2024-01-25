@@ -107,7 +107,7 @@ class UserQueries:
             print(e)
             return False
 
-    def update_user(self, id: str, user: UserInBase) -> Union[UserOut, HttpError]:
+    def update_user(self, id: str, user_dict: UserInBase) -> UserOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -121,15 +121,14 @@ class UserQueries:
                         WHERE id = %s
                         """,
                         [
-                            user.first_name,
-                            user.last_name,
-                            user.email,
-                            user.icon_id,
+                            user_dict["first_name"],
+                            user_dict["last_name"],
+                            user_dict["email"],
+                            user_dict["icon_id"],
                             id
                         ]
                     )
-                old_data = user.dict()
-                return UserOut(id=id, **old_data)
+                return UserOut(id=id, **user_dict)
         except ValidationError as e:
             print(e.errors())
             return False

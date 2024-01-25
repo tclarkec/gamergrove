@@ -103,3 +103,17 @@ Today I learned that:
 cur.execute allows you to execute whatever SQL operation you want to perform on the database and in most cases returns the number of rows affected by those operations you executed. This is why the original logic for our seed_data function in our seeder file was incorrect: we set it up so that if the application was being booted up for the first time, our function would check to see if the icons had already been inserted into the table so that we wouldn't be trying to insert into the table every time we restart our containers. However, because cur.execute simply returns the number of rows that are affected by whatever SQL operations we executed, our icons would never be inserted since our if condition just checked to see if icons = cur.execute("SELECT * FROM icons") was returning a truthy value - which would happen every time even if 0 operations were affected.
 
 We thus changed the logic so that our if condition would use a variable icons = cur.fetchall() since this method actually returns the rows themselves, not just how many were affected by the pre-defined SQL operations.
+
+### January 24, 2024
+
+Today I worked on:
+
+* Finishing my assigned API endpoints (replies, votes) although I couldn't test them without having access to reviews data, working with my group to merge feature branches into test (a main proxy branch), and fixing the update user endpoint.
+
+In the morning we discussed locking down more CRUD backend routes for each table, cleaning up error handling once all of our endpoints were compiled and tested, and changes we needed to make to common files to avoid merge conflicts.
+
+We each spent time working on our respective endpoints and then screenshared one at a time as we merged our respective feature branch with our test branch and then pulled accordingly. We then began testing our endpoints only to find our user endpoint was bugged out. Clarke and I spent some time after hours debugging this.
+
+Today I learned that:
+
+If you mistakenly run .dict() on an object that is already a Python dictionary, this will cause an AttributeError: 'dict' object has no attribute 'dict'. I also learned more about making merging requests and systematically dealing with merge conflicts.
