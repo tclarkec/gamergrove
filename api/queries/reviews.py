@@ -76,14 +76,17 @@ class ReviewQueries:
                 )
                 rows = cur.fetchall()
                 reviews = []
-                for row in rows:
-                    record = {}
-                    for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    reviews.append(ReviewOut(**record))
-                return reviews
+                if rows is not None:
+                    for row in rows:
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        reviews.append(ReviewOut(**record))
+                    return reviews
+                return None
 
-    def create_review(self, review_dict: Snails) -> ReviewOut:
+
+    def create_review(self, review_dict: ReviewIn) -> ReviewOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -126,7 +129,7 @@ class ReviewQueries:
                     return ReviewOut(**record)
                 raise ValueError("Could not create review")
 
-    def update_review(self, game_id: str, review: ReviewIn) -> Union[ReviewOut, HttpError]:
+    def update_review(self, id: str, review: ReviewIn) -> Union[ReviewOut, HttpError]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -137,8 +140,8 @@ class ReviewQueries:
                             title = %s,
                             ratings = %s,
                             vote_count = %s
-                        WHERE game_id = %s
-                        RETURNING game_id,
+                        WHERE id = %s
+                        RETURNING id,
                             account_id,
                             body,
                             title,
@@ -148,12 +151,11 @@ class ReviewQueries:
                             vote_count
                         """,
                         [
-                            review.body,
-                            review.title,
-                            review.ratings,
-                            review.vote_count,
-                            review.game_id,
-                            review.replies_count
+                            review['body'],
+                            review['title'],
+                            review['ratings'],
+                            review['vote_count'],
+                            id
                         ]
                     )
                     row = cur.fetchone()
@@ -167,16 +169,16 @@ class ReviewQueries:
             print(e.errors())
             return False
 
-    def delete_review(self, game_id: str) -> bool:
+    def delete_review(self, id: str, account_id: str) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
                         DELETE FROM reviews
-                        WHERE game_id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
-                        [game_id]
+                        [id, account_id]
                     )
                     return True
         except Exception as e:
