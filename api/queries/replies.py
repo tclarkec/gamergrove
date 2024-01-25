@@ -3,7 +3,7 @@ from psycopg_pool import ConnectionPool
 from psycopg import connect, sql
 from typing import Optional
 from pydantic import BaseModel, ValidationError
-from typing import Union
+from typing import Union, List
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
@@ -18,6 +18,10 @@ class ReplyInBase(BaseModel):
     body: str
     review_id: str
 
+class ReplyInUpdate(BaseModel):
+    title: str
+    body: str
+
 class ReplyIn(ReplyInBase):
     account_id: str
 
@@ -29,7 +33,7 @@ class ReplyOut(BaseModel):
     account_id: str
 
 class ReplyQueries:
-    def get_user_replies(self, account_id: str) -> ReplyOut:
+    def get_user_replies(self, account_id: str) -> List[ReplyOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -41,15 +45,17 @@ class ReplyQueries:
                     [account_id]
                 )
                 rows = result.fetchall()
+                replies = []
                 if rows is not None:
                     records = {}
                     for row in rows:
                         for i, column in enumerate(cur.description):
                             records[column.name] = row[i]
-                    return ReplyOut(**records)
+                        replies.append(ReplyOut(**records))
+                    return replies
                 raise ValueError("Could not get all replies associated with that user")
 
-    def get_review_replies(self, review_id: str) -> ReplyOut:
+    def get_review_replies(self, review_id: str) -> List[ReplyOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -61,12 +67,14 @@ class ReplyQueries:
                     [review_id]
                 )
                 rows = result.fetchall()
+                replies = []
                 if rows is not None:
                     records = {}
                     for row in rows:
                         for i, column in enumerate(cur.description):
                             records[column.name] = row[i]
-                    return ReplyOut(**records)
+                        replies.append(ReplyOut(**records))
+                    return replies
                 raise ValueError("Could not get all replies associated with that review")
 
     def get_reply(self, id: str) -> ReplyOut:
@@ -135,7 +143,7 @@ class ReplyQueries:
                 print(e)
                 return False
 
-    def update_reply(self, id: str, reply: ReplyIn) -> ReplyOut:
+    def update_reply(self, id: str, review_id: str, reply_dict: ReplyIn) -> ReplyOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -144,20 +152,20 @@ class ReplyQueries:
                         UPDATE replies
                         SET title = %s,
                             body = %s,
-                            account_id = %s,
-                            review_id = %s
-                        WHERE id = %s
+                            review_id = %s,
+                            account_id = %s
+                        WHERE id = %s AND review_id = %s
                         """,
                         [
-                            reply.title,
-                            reply.body,
-                            reply.account_id,
-                            reply.review_id,
-                            id
+                            reply_dict["title"],
+                            reply_dict["body"],
+                            reply_dict["review_id"],
+                            reply_dict["account_id"],
+                            id,
+                            review_id
                         ]
                     )
-                old_data = reply.dict()
-                return ReplyOut(id=id, **old_data)
+                return ReplyOut(id=id, **reply_dict)
         except ValidationError as e:
             print(e.errors())
             return False

@@ -1,9 +1,10 @@
 from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
                      status)
-from typing import Union
+from typing import Union, List
 from queries.replies import (
     ReplyInBase,
     ReplyIn,
+    ReplyInUpdate,
     ReplyOut,
     ReplyQueries,
     InvalidReplyError,
@@ -40,15 +41,15 @@ async def create_reply(
             detail="Cannot create reply"
         )
 
-@router.get("/api/replies/{account_id}", response_model=Union[ReplyOut, HttpError])
+@router.get("/api/replies/users/{account_id}", response_model=Union[List[ReplyOut], HttpError])
 async def get_user_replies(
-    account_id: str,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
+    account_id = account_data["id"]
     return queries.get_user_replies(account_id)
 
-@router.get("/api/replies/{review_id}", response_model=Union[ReplyOut, HttpError])
+@router.get("/api/replies/reviews/{review_id}", response_model=Union[List[ReplyOut], HttpError])
 async def get_review_replies(
     review_id: str,
     queries: ReplyQueries = Depends(),
@@ -71,11 +72,27 @@ async def delete_reply(
     return queries.delete_reply(id)
 
 
-@router.put("/api/replies/{id}", response_model=Union[ReplyOut, HttpError])
+@router.put("/api/replies/{id}/{review_id}", response_model=Union[ReplyOut, HttpError])
 async def update_reply(
     id: str,
-    reply: ReplyIn,
+    review_id: str,
+    reply: ReplyInUpdate,
+    response: Response,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    return queries.update_reply(id, reply)
+    response.status_code = 200
+    account_id = account_data["id"]
+    reply_dict = reply.dict()
+    reply_dict["account_id"] = account_id
+    reply_dict["review_id"] = review_id
+    try:
+        updated_reply = queries.update_reply(id, review_id, reply_dict)
+        if isinstance(updated_reply, HttpError):
+            return updated_reply
+        return updated_reply
+    except InvalidReplyError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot update reply"
+        )
