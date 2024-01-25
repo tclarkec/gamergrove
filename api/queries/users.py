@@ -107,7 +107,7 @@ class UserQueries:
             print(e)
             return False
 
-    def update_user(self, id: str, user_dict: UserInBase) -> UserOut:
+    def update_user(self, id: str, user_dict: UserIn) -> UserOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
