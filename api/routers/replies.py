@@ -63,16 +63,17 @@ async def get_reply(
 ):
     return queries.get_reply(id)
 
-@router.delete("/api/replies/{id}", response_model=bool)
+@router.delete("/api/replies/{id}/{account_id}", response_model=bool)
 async def delete_reply(
     id: str,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    return queries.delete_reply(id)
+    account_id = account_data["id"]
+    return queries.delete_reply(id, account_id)
 
 
-@router.put("/api/replies/{id}/{review_id}", response_model=Union[ReplyOut, HttpError])
+@router.put("/api/replies/{id}/{review_id}/{account_id}", response_model=Union[ReplyOut, HttpError])
 async def update_reply(
     id: str,
     review_id: str,
@@ -87,7 +88,7 @@ async def update_reply(
     reply_dict["account_id"] = account_id
     reply_dict["review_id"] = review_id
     try:
-        updated_reply = queries.update_reply(id, review_id, reply_dict)
+        updated_reply = queries.update_reply(id, review_id, account_id, reply_dict)
         if isinstance(updated_reply, HttpError):
             return updated_reply
         return updated_reply

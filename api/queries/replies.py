@@ -127,23 +127,27 @@ class ReplyQueries:
                     return ReplyOut(**record)
                 raise ValueError("Could not create reply")
 
-    def delete_reply(self, id: str) -> bool:
+    def delete_reply(self, id: str, account_id: str) -> bool:
             try:
                 with pool.connection() as conn:
                     with conn.cursor() as db:
                         db.execute(
                             """
                             DELETE FROM replies
-                            WHERE id = %s
+                            WHERE id = %s AND account_id = %s
                             """,
-                            [id]
+                            [
+                                id,
+                                account_id
+
+                             ]
                         )
                         return True
             except Exception as e:
                 print(e)
                 return False
 
-    def update_reply(self, id: str, review_id: str, reply_dict: ReplyIn) -> ReplyOut:
+    def update_reply(self, id: str, review_id: str, account_id: str, reply_dict: ReplyIn) -> ReplyOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -154,7 +158,7 @@ class ReplyQueries:
                             body = %s,
                             review_id = %s,
                             account_id = %s
-                        WHERE id = %s AND review_id = %s
+                        WHERE id = %s AND review_id = %s AND account_id = %s
                         """,
                         [
                             reply_dict["title"],
@@ -162,7 +166,8 @@ class ReplyQueries:
                             reply_dict["review_id"],
                             reply_dict["account_id"],
                             id,
-                            review_id
+                            review_id,
+                            account_id
                         ]
                     )
                 return ReplyOut(id=id, **reply_dict)

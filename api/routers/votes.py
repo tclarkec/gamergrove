@@ -56,7 +56,7 @@ async def get_review_votes(
 ):
     return queries.get_review_votes(review_id)
 
-@router.put("/api/votes/{id}/{review_id}", response_model=Union[VoteOut, HttpError])
+@router.put("/api/votes/{id}/{review_id}/{account_id}", response_model=Union[VoteOut, HttpError])
 async def update_vote(
     id: str,
     review_id: str,
@@ -71,7 +71,7 @@ async def update_vote(
     vote_dict["account_id"] = account_id
     vote_dict["review_id"] = review_id
     try:
-        updated_vote = queries.update_vote(id, review_id, vote_dict)
+        updated_vote = queries.update_vote(id, review_id, account_id, vote_dict)
         if isinstance(updated_vote, HttpError):
             return updated_vote
         return updated_vote
