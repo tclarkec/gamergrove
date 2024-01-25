@@ -73,7 +73,7 @@ async def delete_reply(
     return queries.delete_reply(id, account_id)
 
 
-@router.put("/api/replies/{id}/{review_id}/{account_id}", response_model=Union[ReplyOut, HttpError])
+@router.put("/api/replies/{id}/{account_id}", response_model=Union[ReplyOut, HttpError])
 async def update_reply(
     id: str,
     review_id: str,

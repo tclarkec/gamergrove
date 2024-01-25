@@ -56,7 +56,7 @@ async def get_review_votes(
 ):
     return queries.get_review_votes(review_id)
 
-@router.put("/api/votes/{id}/{review_id}/{account_id}", response_model=Union[VoteOut, HttpError])
+@router.put("/api/votes/{id}/{account_id}", response_model=Union[VoteOut, HttpError])
 async def update_vote(
     id: str,
     review_id: str,
