@@ -3,4 +3,4 @@ jwtdown-fastapi==0.5.0
 uvicorn[standard]==0.17.6
 psycopg[binary,pool]==3.1.2
 pytest
-requests
+requests==2.31.0

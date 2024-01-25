@@ -11,8 +11,6 @@ def seed_data():
         with conn.cursor() as cur:
             cur.execute("SELECT * FROM icons")
             icons = cur.fetchall()
-
-            print(icons)
             if icons:
                 pass
             else:

@@ -107,7 +107,7 @@ class UserQueries:
             print(e)
             return False
 
-    def update_user(self, id: str, user: UserIn) -> Union[UserOut, HttpError]:
+    def update_user(self, id: str, user: UserInBase) -> Union[UserOut, HttpError]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
