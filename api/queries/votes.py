@@ -77,6 +77,26 @@ class VoteQueries:
                     return votes
                 raise ValueError("Could not get all votes associated with that review")
 
+    def get_vote(self, id: str) -> VoteOut:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                    SELECT *
+                    FROM votes
+                    WHERE id = %s;
+                    """,
+                    [id]
+                )
+                row = result.fetchone()
+                if row is not None:
+                    records = {}
+                    for i, column in enumerate(cur.description):
+                        records[column.name] = row[i]
+                    return VoteOut(**records)
+                raise ValueError("Could not get reply")
+
+
     def create_vote(self, vote_dict: VoteIn) -> VoteOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:

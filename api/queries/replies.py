@@ -155,16 +155,12 @@ class ReplyQueries:
                         """
                         UPDATE replies
                         SET title = %s,
-                            body = %s,
-                            review_id = %s,
-                            account_id = %s
+                            body = %s
                         WHERE id = %s AND review_id = %s AND account_id = %s
                         """,
                         [
                             reply_dict["title"],
                             reply_dict["body"],
-                            reply_dict["review_id"],
-                            reply_dict["account_id"],
                             id,
                             review_id,
                             account_id

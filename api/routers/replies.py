@@ -76,14 +76,17 @@ async def delete_reply(
 @router.put("/api/replies/{id}/{account_id}", response_model=Union[ReplyOut, HttpError])
 async def update_reply(
     id: str,
-    review_id: str,
     reply: ReplyInUpdate,
     response: Response,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
+    reply_details = queries.get_reply(id).dict()
+
     response.status_code = 200
     account_id = account_data["id"]
+    review_id = reply_details["review_id"]
+    
     reply_dict = reply.dict()
     reply_dict["account_id"] = account_id
     reply_dict["review_id"] = review_id
