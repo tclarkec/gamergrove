@@ -1,15 +1,16 @@
 from fastapi import (APIRouter, Depends)
 from queries.stores import (
-    StoreOut,
-    StoreQueries
+    StoresOut,
+    StoresQueries
 )
+from typing import List
 
 router = APIRouter()
 
 
-@router.get("/api/stores/{store_id}/", response_model=StoreOut)
+@router.get("/api/stores/{rawg_pk}/", response_model=List[StoresOut])
 async def get_store(
-    store_id: str,
-    queries: StoreQueries = Depends(),
+    rawg_pk: str,
+    queries: StoresQueries = Depends(),
 ):
-    return queries.get_store(store_id)
+    return queries.get_stores(rawg_pk)

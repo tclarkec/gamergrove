@@ -1,5 +1,5 @@
 from fastapi import (APIRouter, Depends, HTTPException, Request, Response, status)
-from typing import Union
+from typing import Union, List
 from pydantic import BaseModel
 from authenticator import authenticator
 from queries.libraries import (
@@ -38,12 +38,13 @@ async def create_library_entry(
             detail="Cannot create library entry"
         )
 
-@router.get("/api/libraries/{account_id}/", response_model=LibraryOut)
+@router.get("/api/libraries/{account_id}/", response_model=List[LibraryOut])
 async def get_library(
-    id: str,
-    queries: LibraryQueries = Depends()
+    queries: LibraryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    return queries.get_library(id)
+    account_id = account_data['id']
+    return queries.get_library(account_id)
 
 @router.delete("/api/libraries/{id}", response_model=bool)
 async def delete_library_entry(
@@ -52,10 +53,10 @@ async def delete_library_entry(
 ) -> bool:
     return queries.delete_library_entry(id)
 
-@router.put("/api/libraries/{id}", response_model=Union[LibraryOut, HttpError])
-async def update_library_entry(
-    id: str,
-    library: LibraryIn,
-    queries: LibraryQueries = Depends()
-) -> Union[HttpError, LibraryOut]:
-    return queries.update_library_entry(id, library)
+# @router.put("/api/libraries/{id}", response_model=Union[LibraryOut, HttpError])
+# async def update_library_entry(
+#     id: str,
+#     library: LibraryIn,
+#     queries: LibraryQueries = Depends()
+# ) -> Union[HttpError, LibraryOut]:
+#     return queries.update_library_entry(id, library)
