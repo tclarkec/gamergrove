@@ -10,7 +10,7 @@ steps = [
         icon_id INT NOT NULL,
         FOREIGN KEY (icon_id) REFERENCES icons(id),
         account_id INT NOT NULL,
-        FOREIGN KEY (account_id) REFERENCES accounts(id)
+        FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 
         );
         """,

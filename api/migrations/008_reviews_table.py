@@ -7,7 +7,7 @@ steps = [
         body TEXT,
         title VARCHAR(255),
         account_id INT NOT NULL,
-        FOREIGN KEY (account_id) REFERENCES accounts(id),
+        FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE,
         game_id INT NOT NULL,
         FOREIGN KEY (game_id) REFERENCES gamesdb(id),
         replies_count INT DEFAULT 0,
