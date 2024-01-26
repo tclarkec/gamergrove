@@ -60,7 +60,6 @@ class AccountsQueries:
 
                 raise ValueError("Could not get user record for this username")
 
-# DATA CREATED BEING PUT IN DATABASE
     def create(self, data: AccountIn, hashed_password: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -82,8 +81,21 @@ class AccountsQueries:
 
                 raise ValueError("Failed to create the account")
 
-
-
-
-
-# -------------------------------- FastAPI Models
+    def delete(self, id: str, account_id: str) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM accounts
+                        WHERE id = %s AND account_id = %s
+                        """,
+                        [
+                            id,
+                            account_id
+                        ]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False

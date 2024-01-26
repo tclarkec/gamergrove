@@ -51,6 +51,15 @@ async def get_account(
 ):
     return repo.get(username)
 
+@router.delete("/accounts/{id}/{account_id}", response_model = bool)
+async def delete_account(
+    id: str,
+    queries: AccountsQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    account_id = account_data["id"]
+    return queries.delete(id, account_id)
+
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
