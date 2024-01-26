@@ -117,3 +117,15 @@ We each spent time working on our respective endpoints and then screenshared one
 Today I learned that:
 
 If you mistakenly run .dict() on an object that is already a Python dictionary, this will cause an AttributeError: 'dict' object has no attribute 'dict'. I also learned more about making merging requests and systematically dealing with merge conflicts.
+
+### January 25, 2024
+
+Today I worked on:
+
+* Finishing and testing my assigned API endpoints (replies, votes) even though reviews was not finished (did this by manually inserting reviews data into the database using SQL queries in pg-admin). I also refactored our user, reviews, and board delete/update endpoints so that a person can only delete or update objects they have created themselves and so that they cannot change the associated account_id, review_id or game_id.
+
+In the morning we had our standup and began testing different endpoints with Clarke driving before I split off to finish off my portion of the endpoints (replies and votes) to save us some time.
+
+Today I learned that:
+
+We are really going to have invest time into standardizing how we implement error handling and write our endpoints code since some of us used Dalonte's videos as a scaffold while others used a combination of Riley and Curtis'.

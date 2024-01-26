@@ -72,7 +72,6 @@ class BoardQueries:
                         [account_id],
                     )
                     rows = cur.fetchall()
-                    # logging.debug(f"Rows: {rows}")
 
                     if rows:
                         for row in rows:
@@ -120,23 +119,26 @@ class BoardQueries:
                     return BoardOut(**record)
                 raise ValueError("Could not create board")
 
-    def delete_board(self, id: str) -> bool:
+    def delete_board(self, id: str, account_id: str) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
                         DELETE FROM boards
-                        WHERE id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
-                        [id]
+                        [
+                            id,
+                            account_id
+                        ]
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-    def update_board(self, id: str, board: BoardIn) -> Union[BoardOut, HttpError]:
+    def update_board(self, id: str, board_dict: BoardIn) -> BoardOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -147,18 +149,18 @@ class BoardQueries:
                             description = %s,
                             private = %s,
                             cover_photo = %s
-                        WHERE id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
                         [
-                            board.board_name,
-                            board.description,
-                            board.private,
-                            board.cover_photo,
-                            id
+                            board_dict["board_name"],
+                            board_dict["description"],
+                            board_dict["private"],
+                            board_dict["cover_photo"],
+                            id,
+                            board_dict["account_id"]
                         ]
                     )
-                old_data = board.dict()
-                return BoardOut(id=id, **old_data)
+                return BoardOut(id=id, **board_dict)
         except ValidationError as e:
             print(e.errors())
             return False

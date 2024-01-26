@@ -65,20 +65,36 @@ async def get_all_boards(
     print(f"Endpoint - Account ID: {account_id}")
     return queries.get_all_boards(account_id)
 
-@router.delete("/api/boards/{id}", response_model=bool)
+@router.delete("/api/boards/{id}/{account_id}", response_model=bool)
 async def delete_board(
     id: str,
     queries: BoardQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-) -> bool:
+):
+    account_id = account_data["id"]
     return queries.delete_board(id)
 
 
-@router.put("/api/boards/{id}", response_model=Union[BoardOut, HttpError])
+@router.put("/api/boards/{id}/{account_id}", response_model=Union[BoardOut, HttpError])
 async def update_board(
     id: str,
-    board: BoardIn,
+    board: BoardInBase,
+    response: Response,
     queries: BoardQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-) -> Union[HttpError, BoardOut]:
-    return queries.update_board(id, board)
+):
+    response.status_code = 200
+    account_id = account_data["id"]
+
+    board_dict = board.dict()
+    board_dict["account_id"] = account_id
+    try:
+        updated_board = queries.update_board(id, board_dict)
+        if isinstance(updated_board, HttpError):
+            return updated_board
+        return updated_board
+    except InvalidBoardError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot update board"
+        )
