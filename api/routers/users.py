@@ -51,14 +51,16 @@ async def get_user(
     return queries.get_user(id)
 
 
-@router.delete("/api/users/{id}", response_model=bool)
+@router.delete("/api/users/{id}/{account_id}", response_model=bool)
 async def delete_user(
     id: str,
     queries: UserQueries = Depends(),
-) -> bool:
-    return queries.delete_user(id)
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    account_id = account_data["id"]
+    return queries.delete_user(id, account_id)
 
-@router.put("/api/users/{id}", response_model=Union[UserOut, HttpError])
+@router.put("/api/users/{id}/{account_id}", response_model=Union[UserOut, HttpError])
 async def update_user(
     id: str,
     user: UserInBase,

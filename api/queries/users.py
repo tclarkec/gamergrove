@@ -91,16 +91,19 @@ class UserQueries:
                     return UserOut(**record)
                 raise ValueError("Could not create user")
 
-    def delete_user(self, id: str) -> bool:
+    def delete_user(self, id: str, account_id: str) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
                         DELETE FROM users
-                        WHERE id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
-                        [id]
+                        [
+                            id,
+                            account_id
+                        ]
                     )
                     return True
         except Exception as e:
@@ -118,14 +121,15 @@ class UserQueries:
                             last_name = %s,
                             email = %s,
                             icon_id = %s
-                        WHERE id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
                         [
                             user_dict["first_name"],
                             user_dict["last_name"],
                             user_dict["email"],
                             user_dict["icon_id"],
-                            id
+                            id,
+                            user_dict["account_id"]
                         ]
                     )
                 return UserOut(id=id, **user_dict)

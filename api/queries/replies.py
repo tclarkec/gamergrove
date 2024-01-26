@@ -139,7 +139,6 @@ class ReplyQueries:
                             [
                                 id,
                                 account_id
-
                              ]
                         )
                         return True
