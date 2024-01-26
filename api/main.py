@@ -5,6 +5,7 @@ import os
 from routers import (accounts, users, boards, screenshots, games, replies,
                      votes, libraries, stores, reviews)
 from seederfile import seed_data
+from queries.screenshots import ScreenshotsQueries
 
 app = FastAPI()
 app.include_router(authenticator.router, tags=["AUTH"])
