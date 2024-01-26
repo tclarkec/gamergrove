@@ -5,7 +5,7 @@ steps = [
         CREATE TABLE storesdb(
         id SERIAL PRIMARY KEY,
         game_id INT,
-        FOREIGN KEY (game_id) REFERENCES gamesdb(rawg_pk),
+        FOREIGN KEY (game_id) REFERENCES gamesdb(id),
         store_id INT,
         url VARCHAR(255),
         rawg_pk VARCHAR(20),

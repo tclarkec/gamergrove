@@ -86,12 +86,12 @@ async def update_reply(
     response.status_code = 200
     account_id = account_data["id"]
     review_id = reply_details["review_id"]
-    
+
     reply_dict = reply.dict()
     reply_dict["account_id"] = account_id
     reply_dict["review_id"] = review_id
     try:
-        updated_reply = queries.update_reply(id, review_id, account_id, reply_dict)
+        updated_reply = queries.update_reply(id,reply_dict)
         if isinstance(updated_reply, HttpError):
             return updated_reply
         return updated_reply

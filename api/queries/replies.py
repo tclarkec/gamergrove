@@ -147,7 +147,7 @@ class ReplyQueries:
                 print(e)
                 return False
 
-    def update_reply(self, id: str, review_id: str, account_id: str, reply_dict: ReplyIn) -> ReplyOut:
+    def update_reply(self, id: str, reply_dict: ReplyIn) -> ReplyOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -162,8 +162,8 @@ class ReplyQueries:
                             reply_dict["title"],
                             reply_dict["body"],
                             id,
-                            review_id,
-                            account_id
+                            reply_dict["review_id"],
+                            reply_dict["account_id"]
                         ]
                     )
                 return ReplyOut(id=id, **reply_dict)

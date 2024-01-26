@@ -128,7 +128,7 @@ class VoteQueries:
                     return VoteOut(**record)
                 raise ValueError("Could not create Vote")
 
-    def update_vote(self, id: str, review_id: str, account_id: str, vote_dict: VoteIn) -> VoteOut:
+    def update_vote(self, id: str, vote_dict: VoteIn) -> VoteOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -147,8 +147,8 @@ class VoteQueries:
                             vote_dict["upvote"],
                             vote_dict["downvote"],
                             id,
-                            review_id,
-                            account_id
+                            vote_dict["review_id"],
+                            vote_dict["account_id"]
                         ]
                     )
                 return VoteOut(id=id, **vote_dict)

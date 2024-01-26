@@ -74,7 +74,7 @@ async def update_vote(
     vote_dict["account_id"] = account_id
     vote_dict["review_id"] = review_id
     try:
-        updated_vote = queries.update_vote(id, review_id, account_id, vote_dict)
+        updated_vote = queries.update_vote(id,vote_dict)
         if isinstance(updated_vote, HttpError):
             return updated_vote
         return updated_vote

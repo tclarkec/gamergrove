@@ -3,6 +3,7 @@ from fastapi import (APIRouter, Depends, HTTPException, Response,
 from typing import Union
 from queries.reviews import (
     ReviewInBase,
+    ReviewInUpdate,
     ReviewOut,
     ReviewQueries,
     HttpError
@@ -75,14 +76,22 @@ async def create_review(
 @router.put("/api/reviews/users/{id}/{account_id}", response_model=Union[ReviewOut, HttpError])
 async def update_review(
     id: str,
-    review: ReviewInBase,
+    review: ReviewInUpdate,
+    response: Response,
     queries: ReviewQueries = Depends(),
     review_data: dict = Depends(authenticator.get_current_account_data),
-) -> Union[ReviewOut, HttpError]:
+):
+    review_details = queries.get_review(id).dict()
+
+    response.status_code=200
+    account_id = authenticate_user(review_data)
+    game_id = review_details["game_id"]
+
+    review_dict = review.dict()
+    review_dict["account_id"] = account_id
+    review_dict["game_id"] = game_id
+    
     try:
-        account_id = authenticate_user(review_data)
-        review_dict = review.dict()
-        review_dict["account_id"] = account_id
         updated_review = queries.update_review(id, review_dict)
 
         if isinstance(updated_review, HttpError):
