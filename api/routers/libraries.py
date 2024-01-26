@@ -46,12 +46,14 @@ async def get_library(
     account_id = account_data['id']
     return queries.get_library(account_id)
 
-@router.delete("/api/libraries/{id}", response_model=bool)
+@router.delete("/api/libraries/{id}/{account_id}", response_model=bool)
 async def delete_library_entry(
     id: str,
-    queries: LibraryQueries = Depends()
-) -> bool:
-    return queries.delete_library_entry(id)
+    queries: LibraryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    account_id = account_data["id"]
+    return queries.delete_library_entry(id, account_id)
 
 # @router.put("/api/libraries/{id}", response_model=Union[LibraryOut, HttpError])
 # async def update_library_entry(

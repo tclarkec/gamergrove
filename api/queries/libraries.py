@@ -86,16 +86,19 @@ class LibraryQueries:
                     return LibraryOut(**record)
                 raise ValueError("Could not create entry")
 
-    def delete_library_entry(self, id: str) -> bool:
+    def delete_library_entry(self, id: str, account_id: str) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
                         DELETE FROM libraries
-                        WHERE id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
-                        [id]
+                        [
+                            id,
+                            account_id
+                        ]
                     )
                     return True
         except Exception as e:
