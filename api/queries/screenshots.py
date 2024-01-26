@@ -84,9 +84,9 @@ class ScreenshotsQueries:
                                     """
                                     SELECT id
                                     FROM screenshots
-                                    WHERE image_url = %s AND rawg_pk = %s;
+                                    WHERE image_url = %s;
                                     """,
-                                    [image_url, rawg_pk],
+                                    [image_url]
                                 )
                                 existing_image = cur.fetchone()
 

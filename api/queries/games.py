@@ -5,6 +5,8 @@ from typing import Optional
 from pydantic import BaseModel, ValidationError
 from typing import Union
 from datetime import date
+from queries.screenshots import ScreenshotsQueries
+from queries.stores import StoresQueries
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
@@ -119,6 +121,10 @@ class GamesQueries:
                         games_dict.reviews_count
                     ],
                 )
+                shot = ScreenshotsQueries()
+                shot.get_screenshots(games_dict.rawg_pk)
+                store = StoresQueries()
+                store.get_stores(games_dict.rawg_pk)
 
                 row = result.fetchone()
                 if row is not None:

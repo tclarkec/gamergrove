@@ -6,6 +6,9 @@ from fastapi import Request, Response, HTTPException
 import requests
 import logging
 
+# store id of 1 = PC,2 = XBOX,3 = PlayStation,6 = Nintendo
+
+
 logging.basicConfig(level=logging.DEBUG)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
@@ -20,17 +23,17 @@ class HttpError(BaseModel):
     detail: str
 
 
-class StoresInBase(BaseModel):
-    store_url: str
-
-
-class StoresIn(StoresInBase):
+class StoresIn(BaseModel):
+    url: str
+    platform: str
     rawg_pk: str
+
 
 
 class StoresOut(BaseModel):
     id: str
-    store_url: str
+    url: str
+    platform: str
     rawg_pk: str
 
 
@@ -76,34 +79,54 @@ class StoresQueries:
                 try:
                     with pool.connection() as conn:
                         with conn.cursor() as cur:
+                            good_stores = []
                             for store in stores:
+                                if store.get("store_id") in [1,2,3,6]:
+                                    good_stores.append(store)
+                            for store in good_stores:
+                                print("these are good stores:", store)
                                 store_url = store.get("url")
                                 store_id = store.get("store_id")
+                                platform = ''
+                                if store_id == 1:
+                                    platform = "PC"
+                                elif store_id == 2:
+                                    platform = "Xbox"
+                                elif store_id == 3:
+                                    platform = "PlayStation"
+                                elif store_id == 6:
+                                    platform = "Nintendo"
+
+
+                                print("store_url:", store_url)
+                                print("platform", platform)
+                                print("rawg_pk", rawg_pk)
 
                                 # Check if the entry already exists in the database
+                                # cur.execute(
+                                #     """
+                                #     SELECT id
+                                #     FROM storesdb
+                                #     WHERE platform = %s;
+                                #     """,
+                                #     [platform],
+                                # )
+                                # existing_store = cur.fetchone()
+
+                                # if existing_store:
+                                #     continue
+
                                 cur.execute(
                                     """
-                                    SELECT id
-                                    FROM storesdb
-                                    WHERE store_id = %s AND rawg_pk = %s;
-                                    """,
-                                    [store_url, store_id, rawg_pk],
-                                )
-                                existing_store = cur.fetchone()
-
-                                if existing_store:
-                                    continue
-
-                                cur.execute(
-                                    """
-                                    INSERT INTO storesdb (store_id, store_url, rawg_pk)
+                                    INSERT INTO storesdb (platform, url, rawg_pk)
                                     VALUES (%s, %s, %s)
-                                    RETURNING id, store_id, store_url, rawg_pk;
+                                    RETURNING id, platform, url, rawg_pk;
                                     """,
-                                    [store_id, store_url, rawg_pk],
+                                    [platform, store_url, rawg_pk]
                                 )
-
+                                conn.commit()
                                 row = cur.fetchone()
+                                print("THIS IS THE ROW", row)
                                 if row is not None:
                                     record = dict(zip([column.name for column in cur.description], row))
                                     stores_list.append(StoresOut(**record))
