@@ -47,6 +47,12 @@ async def get_user_reviews(
     account_id = authenticate_user(review_data)
     return queries.get_user_reviews(account_id)
 
+@router.get("/api/reviews/{id}", response_model=ReviewOut)
+async def get_review(
+    id: str,
+    queries: ReviewQueries = Depends(),
+):
+    return queries.get_review(id)
 
 @router.post("/api/reviews", response_model=Union[ReviewOut, ErrorResponse])
 async def create_review(
@@ -59,6 +65,8 @@ async def create_review(
 
     review_dict = review.dict()
     review_dict["account_id"] = account_id
+    review_dict["replies_count"] = 0
+    review_dict["vote_count"] = 0
 
     try:
         created_review = queries.create_review(review_dict)
@@ -86,11 +94,17 @@ async def update_review(
     response.status_code=200
     account_id = authenticate_user(review_data)
     game_id = review_details["game_id"]
+    ratings = review_details["ratings"]
+    replies_count = review_details["replies_count"]
+    vote_count = review_details["vote_count"]
 
     review_dict = review.dict()
     review_dict["account_id"] = account_id
     review_dict["game_id"] = game_id
-    
+    review_dict["ratings"] = ratings
+    review_dict["replies_count"] = replies_count
+    review_dict["vote_count"] = vote_count
+
     try:
         updated_review = queries.update_review(id, review_dict)
 
@@ -104,9 +118,6 @@ async def update_review(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Review cannot be created"
         )
-
-
-
 
 @router.delete("/api/reviews/users/{id}/{account_id}", response_model=bool)
 async def delete_review(

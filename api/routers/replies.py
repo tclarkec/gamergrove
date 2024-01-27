@@ -9,6 +9,9 @@ from queries.replies import (
     ReplyQueries,
     InvalidReplyError,
     HttpError
+    )
+from queries.reviews import(
+    ReviewQueries
 )
 from pydantic import BaseModel
 from authenticator import authenticator
@@ -21,12 +24,21 @@ async def create_reply(
     request: Request,
     response: Response,
     queries: ReplyQueries = Depends(),
+    review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     response.status_code = 200
     account_id = account_data["id"]
     reply_dict = reply.dict()
     reply_dict["account_id"] = account_id
+
+    review_id = reply_dict["review_id"]
+    review_dict = review_queries.get_review(review_id).dict()
+    del review_dict["id"]
+    review_dict["replies_count"] += 1
+
+    review_queries.update_review(review_id, review_dict)
+
     try:
         created_reply = queries.create_reply(reply_dict)
 
@@ -67,8 +79,17 @@ async def get_reply(
 async def delete_reply(
     id: str,
     queries: ReplyQueries = Depends(),
+    review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
+    reply_details = queries.get_reply(id).dict()
+    review_id = reply_details["review_id"]
+    review_dict = review_queries.get_review(review_id).dict()
+    del review_dict["id"]
+    review_dict["replies_count"] -= 1
+
+    review_queries.update_review(review_id, review_dict)
+
     account_id = account_data["id"]
     return queries.delete_reply(id, account_id)
 

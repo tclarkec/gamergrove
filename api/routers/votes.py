@@ -10,6 +10,9 @@ from queries.votes import (
     InvalidVoteError,
     HttpError
 )
+from queries.reviews import(
+    ReviewQueries
+)
 from pydantic import BaseModel
 from authenticator import authenticator
 
@@ -21,12 +24,25 @@ async def create_vote(
     request: Request,
     response: Response,
     queries: VoteQueries = Depends(),
+    review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     response.status_code = 200
     account_id = account_data["id"]
     vote_dict = vote.dict()
     vote_dict["account_id"] = account_id
+
+    review_id = vote_dict["review_id"]
+    review_dict = review_queries.get_review(review_id).dict()
+    del review_dict["id"]
+
+    if vote_dict["upvote"] == True:
+        review_dict["vote_count"] += 1
+    elif vote_dict["downvote"] == True:
+        review_dict["vote_count"] -= 1
+
+    review_queries.update_review(review_id, review_dict)
+
     try:
         created_vote = queries.create_vote(vote_dict)
 
@@ -62,6 +78,7 @@ async def update_vote(
     vote: VoteInUpdate,
     response: Response,
     queries: VoteQueries = Depends(),
+    review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     vote_details = queries.get_vote(id).dict()
@@ -73,6 +90,18 @@ async def update_vote(
     vote_dict = vote.dict()
     vote_dict["account_id"] = account_id
     vote_dict["review_id"] = review_id
+
+    review_dict = review_queries.get_review(review_id).dict()
+    del review_dict["id"]
+
+    if vote_dict["upvote"] == True:
+        review_dict["vote_count"] += 1
+    elif vote_dict["downvote"] == True:
+        review_dict["vote_count"] -= 1
+
+    review_queries.update_review(review_id, review_dict)
+
+
     try:
         updated_vote = queries.update_vote(id,vote_dict)
         if isinstance(updated_vote, HttpError):

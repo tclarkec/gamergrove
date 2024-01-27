@@ -16,19 +16,17 @@ class ReviewInBase(BaseModel):
     body: str
     title: str
     game_id: str
-    replies_count: int
-    vote_count: int
     ratings: int
+
 
 class ReviewInUpdate(BaseModel):
     body: str
     title: str
-    replies_count: int
-    vote_count: int
-    ratings: int
 
 
 class ReviewIn(ReviewInBase):
+    replies_count: int
+    vote_count: int
     account_id: str
 
 
