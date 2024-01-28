@@ -29,8 +29,8 @@ class AccountOutWithPassword(AccountOut):
 class AccountsQueries:
     def get(self, username: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
+            with conn.cursor() as db:
+                result = db.execute(
                     """
                     SELECT *
                     FROM accounts
@@ -43,7 +43,7 @@ class AccountsQueries:
 
                 if row is not None:
                     record = {}
-                    for i, column in enumerate(cur.description):
+                    for i, column in enumerate(db.description):
                         record[column.name] = row[i]
                     return AccountOutWithPassword(**record)
 
@@ -54,9 +54,9 @@ class AccountsQueries:
 
     def create(self, data: AccountIn, hashed_password: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
-            with conn.cursor() as cur:
+            with conn.cursor() as db:
                 try:
-                    result = cur.execute(
+                    result = db.execute(
                         """
                         INSERT INTO accounts (username, hashed_password)
                         VALUES (%s, %s)
@@ -68,7 +68,7 @@ class AccountsQueries:
                     row = result.fetchone()
                     if row is not None:
                         record = {}
-                        for i, column in enumerate(cur.description):
+                        for i, column in enumerate(db.description):
                             record[column.name] = row[i]
                         return AccountOutWithPassword(**record)
                 except errors.UniqueViolation:
