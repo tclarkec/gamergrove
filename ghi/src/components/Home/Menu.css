@@ -1,0 +1,27 @@
+.side-menu {
+
+  height: 100%;
+  position: fixed;
+  top: 40px;
+  left: 0;
+  background-color: #111; /* Adjust the background color as needed */
+  color: white;
+  padding-top: 0px; /* Adjust the top padding as needed */
+  width: 20%;
+  /* Z-index means to allow layer to stack ontop */
+  z-index: 1;
+}
+
+.side-menu  ul{
+  padding-top: 20px;
+  padding-left: 10px;
+  margin-bottom: 0.4px;
+;
+
+}
+.side-menu  li{
+  margin-top: 0%;
+  margin-left: 3px;
+  padding-left: px;
+  cursor: pointer;
+}
