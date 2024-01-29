@@ -7,18 +7,18 @@ from pydantic import BaseModel
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
 class IconIn(BaseModel):
-    name: str
+    name: int
     icon_url: str
 
 
 class IconOut(BaseModel):
-    id: str
+    id: int
     name: str
     icon_url: str
 
 
 class IconQueries:
-    def get_icon(self, id: str) -> IconOut:
+    def get_icon(self, id: int) -> IconOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -35,4 +35,4 @@ class IconQueries:
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
                     return IconOut(**record)
-                raise ValueError("Could not get user")
+                raise ValueError("Could not get icon")

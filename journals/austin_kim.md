@@ -129,3 +129,15 @@ In the morning we had our standup and began testing different endpoints with Cla
 Today I learned that:
 
 We are really going to have invest time into standardizing how we implement error handling and write our endpoints code since some of us used Dalonte's videos as a scaffold while others used a combination of Riley and Curtis'.
+
+### January 26, 2024
+
+Today I worked on:
+
+* Updating seederfile to also pull in screenshot data for the database, allowing for cascade delete, streamlining backend datadump for a new game, making the backend dynamic.
+
+For the majority of the day Kyle drove while Cameron and I helped debug and offer ideas whenever we ran into issues. We spent a great amount of time on streamlining the process of getting a game and all the relevant information (screenshots, links to buy the game on different platforms) that is not preloaded into our database via the seederfile in the backend, since this will make the frontend not as difficult. This involved pulling in screenshots for the games preloaded into our database and having our create_game function also call on the get_screenshots and get_stores functions so that we can streamline getting whatever information we need for a game that is not already in our database through the backend. We also worked on implementing cascade delete into our tables so that in any one-to-many relationships for our application, if the one was deleted (i.e. reviews) so would the many (i.e. replies, votes). I also worked after-hours on making the backend actually dynamic (i.e. if a reply to a review is created, the reply_count for that review is automatically increased by 1.)
+
+Today I learned that:
+
+When inserting a record into a table in the database, it seems running the return command is also necessary. Excluding this from our get_stores function was a major blocker for a while. I also relearned the importance of rebuilding volumes and containers after pulling down recent migration/table related changes pushed up by my team members. I also learned that to pull from a particular table's queries class in the router file, you need to inject dependency. For example, when modifying my create_reply function in the routers -> replies.py so that whenever a reply was created the replies_count value for the associated review would be increased by 1, in order to interact with any of the ReviewQueries I had to do a dependency injection just like I did for ReplyQueries.

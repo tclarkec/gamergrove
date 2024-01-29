@@ -1,13 +1,12 @@
 from fastapi import (
-    APIRouter, Depends, HTTPException, Request,
-    Response, status,
+    APIRouter, Depends, Request,
+    Response
 )
-from typing import Optional, Union
+from typing import Union
 from queries.accounts import (
     AccountIn,
     AccountOut,
-    AccountsQueries,
-    DuplicateAccountError,
+    AccountQueries,
     AccountToken,
     AccountForm
 )
@@ -28,17 +27,11 @@ async def create_account(
     data: AccountIn,
     request: Request,
     response: Response,
-    queries: AccountsQueries = Depends(),
+    queries: AccountQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(data.password)
 
-    try:
-        account = queries.create(data, hashed_password)
-    except DuplicateAccountError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create an account with those credentials",
-        )
+    account = queries.create(data, hashed_password)
 
     form = AccountForm(username=data.username, password=data.password)
     token = await authenticator.login(response, request, form, queries)
@@ -47,18 +40,18 @@ async def create_account(
 @router.get("/accounts/{username}", response_model=AccountOut)
 async def get_account(
     username: str,
-    repo: AccountsQueries = Depends(),
+    queries: AccountQueries = Depends()
 ):
-    return repo.get(username)
+    return queries.get(username)
 
-@router.delete("/accounts/{id}/{account_id}", response_model = bool)
+@router.delete("/accounts/{id}/{username}", response_model = Union[bool, HttpError])
 async def delete_account(
-    id: str,
-    queries: AccountsQueries = Depends(),
+    id: int,
+    queries: AccountQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    account_id = account_data["id"]
-    return queries.delete(id, account_id)
+    username = account_data["username"]
+    return queries.delete(id, username)
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(

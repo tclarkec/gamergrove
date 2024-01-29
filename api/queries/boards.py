@@ -1,16 +1,11 @@
 import os
 from psycopg_pool import ConnectionPool
-# from psycopg import connect, sql
-# from typing import Optional
-from pydantic import BaseModel, ValidationError
-from typing import Union, List
-import logging
+from psycopg import connect, sql, errors
+from pydantic import BaseModel
+from typing import List
+from fastapi import(HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
-
-class InvalidBoardError(ValueError):
-    pass
-
 
 class HttpError(BaseModel):
     detail: str
@@ -28,7 +23,7 @@ class BoardIn(BoardInBase):
 
 
 class BoardOut(BaseModel):
-    id: str
+    id: int
     board_name: str
     description: str
     cover_photo: str
@@ -37,10 +32,10 @@ class BoardOut(BaseModel):
 
 
 class BoardQueries:
-    def get_board(self, id: str) -> BoardOut:
+    def get_board(self, id: int) -> BoardOut:
         with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
+            with conn.cursor() as db:
+                result = db.execute(
                     """
                     SELECT *
                     FROM boards
@@ -51,116 +46,154 @@ class BoardQueries:
                 row = result.fetchone()
                 if row is not None:
                     record = {}
-                    for i, column in enumerate(cur.description):
+                    for i, column in enumerate(db.description):
                         record[column.name] = row[i]
                     return BoardOut(**record)
-                raise ValueError("Could not get board")
+
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could not find a board with that id"
+                )
 
     def get_all_boards(self, account_id: int) -> List[BoardOut]:
-        print(account_id)
-        boards = []
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT *
+                    FROM boards
+                    WHERE account_id = %s;
+                    """,
+                    [account_id],
+                )
+                rows = result.fetchall()
+                boards = []
+                if rows:
+                    for row in rows:
+                        record = dict(zip([column.name for column in db.description], row))
+                        boards.append(BoardOut(**record))
+                    return boards
 
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """
-                        SELECT id, board_name, description, cover_photo, private, account_id
-                        FROM boards
-                        WHERE account_id = %s;
-                        """,
-                        [account_id],
-                    )
-                    rows = cur.fetchall()
-
-                    if rows:
-                        for row in rows:
-                            record = dict(zip([column.name for column in cur.description], row))
-                            boards.append(BoardOut(**record))
-                        return boards
-
-        except Exception as db_error:
-            print(db_error)
-
-        return boards
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="No boards associated with this user"
+                )
 
     def create_board(self, board_dict: BoardIn) -> BoardOut:
         with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
-                    """
-                    INSERT INTO boards (board_name,
-                    description,
-                    private,
-                    cover_photo,
-                    account_id)
-                    VALUES (%s, %s, %s, %s, %s)
-                    RETURNING id,
-                    board_name,
-                    description,
-                    private,
-                    cover_photo,
-                    account_id;
-                    """,
-                    [
-                        board_dict["board_name"],
-                        board_dict["description"],
-                        board_dict["private"],
-                        board_dict["cover_photo"],
-                        board_dict["account_id"]
-                    ],
-                )
-
-                row = result.fetchone()
-                if row is not None:
-                    record = {}
-                    for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    return BoardOut(**record)
-                raise ValueError("Could not create board")
-
-    def delete_board(self, id: str, account_id: str) -> bool:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
+            with conn.cursor() as db:
+                try:
+                    result = db.execute(
                         """
-                        DELETE FROM boards
-                        WHERE id = %s AND account_id = %s
-                        """,
-                        [
-                            id,
-                            account_id
-                        ]
-                    )
-                    return True
-        except Exception as e:
-            print(e)
-            return False
-
-    def update_board(self, id: str, board_dict: BoardIn) -> BoardOut:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        UPDATE boards
-                        SET board_name = %s,
-                            description = %s,
-                            private = %s,
-                            cover_photo = %s
-                        WHERE id = %s AND account_id = %s
+                        INSERT INTO boards (board_name,
+                        description,
+                        private,
+                        cover_photo,
+                        account_id)
+                        VALUES (%s, %s, %s, %s, %s)
+                        RETURNING id,
+                        board_name,
+                        description,
+                        private,
+                        cover_photo,
+                        account_id;
                         """,
                         [
                             board_dict["board_name"],
                             board_dict["description"],
                             board_dict["private"],
                             board_dict["cover_photo"],
-                            id,
                             board_dict["account_id"]
-                        ]
+                        ],
+                    )
+
+                    row = result.fetchone()
+                    if row is not None:
+                        record = {}
+                        for i, column in enumerate(db.description):
+                            record[column.name] = row[i]
+                        return BoardOut(**record)
+                except ValueError:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Error creating board"
+                    )
+
+    def delete_board(self, id: int, account_id: int) -> bool:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                id_check = db.execute(
+                    """
+                    SELECT * FROM boards
+                    WHERE id = %s
+                    """,
+                    [id]
+                )
+
+                id_row = id_check.fetchone()
+                if id_row is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="A board with that id does not exist in the database"
+                    )
+
+                account_id_check = db.execute(
+                    """
+                    DELETE FROM boards
+                    WHERE id = %s AND account_id = %s
+                    """,
+                    [
+                        id,
+                        account_id
+                    ]
+                )
+                if account_id_check.rowcount == 0:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="You are attempting to delete a board that you did not create"
+                    )
+                return True
+
+
+    def update_board(self, id: int, board_dict: BoardIn) -> BoardOut:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                id_check = db.execute(
+                    """
+                    SELECT * FROM boards
+                    WHERE id = %s
+                    """,
+                    [id]
+                )
+
+                id_row = id_check.fetchone()
+                if id_row is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="A board with that id does not exist in the database"
+                    )
+
+                account_id_check = db.execute(
+                    """
+                    UPDATE boards
+                    SET board_name = %s,
+                        description = %s,
+                        private = %s,
+                        cover_photo = %s
+                    WHERE id = %s AND account_id = %s
+                    """,
+                    [
+                        board_dict["board_name"],
+                        board_dict["description"],
+                        board_dict["private"],
+                        board_dict["cover_photo"],
+                        id,
+                        board_dict["account_id"]
+                    ]
+                )
+                if account_id_check.rowcount == 0:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="You are attempting to update a board that you did not create"
                     )
                 return BoardOut(id=id, **board_dict)
-        except ValidationError as e:
-            print(e.errors())
-            return False
