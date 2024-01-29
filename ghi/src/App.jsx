@@ -8,6 +8,7 @@ import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
+import Login from './Login';
 import BoardForm from './BoardForm';
 
 // All your environment variables in vite are in this object
@@ -59,10 +60,11 @@ function App() {
     // }, [])
 
     return (
-        <AuthProvider>
+        <AuthProvider baseUrl = 'http://localhost:8000'>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/boards" element={<BoardForm />} />
                 </Routes>
             </BrowserRouter>
