@@ -9,6 +9,8 @@ const SideMenu = () => {
             <div className="side-menu">
                 {/* Add your menu items and content here */}
                 <ul>
+                    <br />
+                   
                     <p> New Releases</p>
                     <ul>
                         <li>Last 30 Days</li>

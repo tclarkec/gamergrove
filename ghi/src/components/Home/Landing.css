@@ -1,34 +1,50 @@
 @import "../../root.css";
 @import '../../Nav.css';
 
-.hero-carosuel {
-    margin-top: 25px;
-    height: px;
-    transition: transform 450ms;
-    position: relative;
-    object-fit: contain;
+
+/* .root */
+
+.hero-carousel-container {
+    /* background-color: #0d0225; */
+  overflow: hidden;
+  position: relative;
+  margin: 0px auto; /* Center the carousel horizontally */
+  width: 50%; /* Adjust the width as needed */
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 450ms ease-in-out;
+
+}
+
+.carousel-item {
+  min-width: 100%; /* Ensure each item takes the full width */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  padding-top: 19.8px;
+  margin-left: 30px;
+
+
+
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%; /* Adjust the width of the controls as needed */
 }
 
 
-
-
-.carousel-image {
-    display: flex;
-    position: fixed;
-    max-height: 450px;
-    margin-left: 55px;
-    /* margin-right: 55px; */
-    padding-left: 40px;
-    width: 100%;
+header {
     background-color: #0d0225;
-    object-fit: contain;
-    padding: 20px;
-
-
 
 }
 
-/*
+
+
 .search-bar {
     border-radius: 25%;
     width: 400px;
@@ -38,17 +54,4 @@
     margin-top: 10px;
 
 
-} */
-.carousel-item-bottomfade  {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 7.4rem;
-    background-image: linear-gradient(
-        180deg,
-        transparent,
-        rgba(37, 37, 37, 0.61),
-        #111
-    );
 }
