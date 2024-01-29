@@ -28,7 +28,6 @@ async def create_user(
     user_dict["account_id"] = account_id
 
     created_user = queries.create_user(user_dict)
-
     return created_user
 
 @router.get("/api/users/{id}", response_model=UserOut)

@@ -1,12 +1,10 @@
 import os
 from psycopg_pool import ConnectionPool
 from psycopg import connect, sql, errors
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 from fastapi import(HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
-
-
 
 class HttpError(BaseModel):
     detail: str
