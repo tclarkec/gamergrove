@@ -1,46 +1,36 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql
-from typing import Optional
+from psycopg import connect, sql, errors
 from jwtdown_fastapi.authentication import Token
-# from authenticator import authenticator
 from pydantic import BaseModel
+from fastapi import(HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
-
-
-class DuplicateAccountError(ValueError):
-    pass
 
 
 class AccountIn(BaseModel):
     username: str
     password: str
 
-
 class AccountOut(BaseModel):
-    id: str
+    id: int
     username: str
 
 class AccountToken(Token):
     account: AccountOut
 
-
 class AccountForm(BaseModel):
     username: str
     password: str
 
-
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
-
-class AccountsQueries:
+class AccountQueries:
     def get(self, username: str) -> AccountOutWithPassword:
-        print("here in get): " + username)
         with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
+            with conn.cursor() as db:
+                result = db.execute(
                     """
                     SELECT *
                     FROM accounts
@@ -53,49 +43,56 @@ class AccountsQueries:
 
                 if row is not None:
                     record = {}
-                    for i, column in enumerate(cur.description):
+                    for i, column in enumerate(db.description):
                         record[column.name] = row[i]
-                    print(record)
                     return AccountOutWithPassword(**record)
 
-                raise ValueError("Could not get user record for this username")
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could not find an account with that username"
+                )
 
     def create(self, data: AccountIn, hashed_password: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
-                    """
-                    INSERT INTO accounts (username, hashed_password)
-                    VALUES (%s, %s)
-                    RETURNING id, username, hashed_password;
-                    """,
-                    [data.username, hashed_password],
-                )
-
-                row = result.fetchone()
-                if row is not None:
-                    record = {}
-                    for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    return AccountOutWithPassword(**record)
-
-                raise ValueError("Failed to create the account")
-
-    def delete(self, id: str, account_id: str) -> bool:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
+            with conn.cursor() as db:
+                try:
+                    result = db.execute(
                         """
-                        DELETE FROM accounts
-                        WHERE id = %s AND account_id = %s
+                        INSERT INTO accounts (username, hashed_password)
+                        VALUES (%s, %s)
+                        RETURNING id, username, hashed_password;
                         """,
-                        [
-                            id,
-                            account_id
-                        ]
+                        [data.username, hashed_password],
                     )
-                    return True
-        except Exception as e:
-            print(e)
-            return False
+
+                    row = result.fetchone()
+                    if row is not None:
+                        record = {}
+                        for i, column in enumerate(db.description):
+                            record[column.name] = row[i]
+                        return AccountOutWithPassword(**record)
+                except errors.UniqueViolation:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="That username is already taken"
+                    )
+
+    def delete(self, id: int, username: str) -> bool:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    DELETE FROM accounts
+                    WHERE id = %s AND username = %s
+                    """,
+                    [
+                        id,
+                        username
+                    ]
+                )
+                if errors.ProgrammingError:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="An account with that id does not exist in the database"
+                    )
+                return True

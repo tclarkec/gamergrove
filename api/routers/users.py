@@ -1,16 +1,12 @@
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
-                     status)
+from fastapi import (APIRouter, Depends, Request, Response)
 from typing import Union
+from authenticator import authenticator
 from queries.users import (
     UserInBase,
-    UserIn,
     UserOut,
     UserQueries,
-    HttpError,
-    InvalidUserError
+    HttpError
 )
-from pydantic import BaseModel
-from authenticator import authenticator
 
 
 router = APIRouter()
@@ -24,36 +20,24 @@ async def create_user(
     queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    response.status_code = 200
     account_id = account_data["id"]
     user_dict = user.dict()
     user_dict["account_id"] = account_id
-    try:
-        created_user = queries.create_user(user_dict)
 
-        if isinstance(created_user, HttpError):
-            return created_user
-
-        return created_user
-
-    except InvalidUserError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create user"
-        )
-
+    created_user = queries.create_user(user_dict)
+    return created_user
 
 @router.get("/api/users/{id}", response_model=UserOut)
 async def get_user(
-    id: str,
+    id: int,
     queries: UserQueries = Depends(),
 ):
     return queries.get_user(id)
 
 
-@router.delete("/api/users/{id}/{account_id}", response_model=bool)
+@router.delete("/api/users/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_user(
-    id: str,
+    id: int,
     queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
@@ -62,23 +46,15 @@ async def delete_user(
 
 @router.put("/api/users/{id}/{account_id}", response_model=Union[UserOut, HttpError])
 async def update_user(
-    id: str,
+    id: int,
     user: UserInBase,
     response: Response,
     queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    response.status_code = 200
     account_id = account_data["id"]
     user_dict = user.dict()
     user_dict["account_id"] = account_id
-    try:
-        updated_user = queries.update_user(id, user_dict)
-        if isinstance(updated_user, HttpError):
-            return updated_user
-        return updated_user
-    except InvalidUserError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot update user"
-        )
+
+    updated_user = queries.update_user(id, user_dict)
+    return updated_user

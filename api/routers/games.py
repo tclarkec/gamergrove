@@ -1,64 +1,50 @@
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
-                     status)
+from fastapi import (APIRouter, Depends, Request, Response)
 from typing import Union
 from queries.games import (
-    GamesIn,
-    GamesOut,
-    GamesQueries,
-    InvalidGamesError,
+    GameIn,
+    GameOut,
+    GameQueries,
     HttpError
 )
-# from pydantic import BaseModel
-# from authenticator import authenticator
 
 
 router = APIRouter()
 
 
-@router.post("/api/games", response_model=Union[GamesOut, HttpError])
-async def create_games(
-    games: GamesIn,
+@router.post("/api/games", response_model=Union[GameOut, HttpError])
+async def create_game(
+    game: GameIn,
     request: Request,
     response: Response,
-    queries: GamesQueries = Depends(),
+    queries: GameQueries = Depends(),
 
 ):
-    response.status_code = 200
-    try:
-        created_games = queries.create_games(games)
+    game_dict = game.dict()
+    created_game = queries.create_game(game_dict)
+    return created_game
 
-        if isinstance(created_games, HttpError):
-            return created_games
-
-        return created_games
-
-    except InvalidGamesError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create games"
-        )
-
-
-@router.get("/api/games/{id}", response_model=GamesOut)
-async def get_games(
-    id: str,
-    queries: GamesQueries = Depends(),
+@router.get("/api/games/{id}", response_model=GameOut)
+async def get_game(
+    id: int,
+    queries: GameQueries = Depends(),
 ):
-    return queries.get_games(id)
+    return queries.get_game(id)
 
 
-@router.delete("/api/games/{id}", response_model=bool)
-async def delete_games(
-    id: str,
-    queries: GamesQueries = Depends(),
-) -> bool:
-    return queries.delete_games(id)
+# @router.delete("/api/games/{id}", response_model=bool)
+# async def delete_games(
+#     id: int,
+#     queries: GamesQueries = Depends(),
+# ) -> bool:
+#     return queries.delete_games(id)
 
 
-@router.put("/api/games/{id}", response_model=Union[GamesOut, HttpError])
-async def update_games(
-    id: str,
-    games: GamesIn,
-    queries: GamesQueries = Depends(),
-) -> Union[HttpError, GamesOut]:
-    return queries.update_games(id, games)
+@router.put("/api/games/{id}", response_model=Union[GameOut, HttpError])
+async def update_game(
+    id: int,
+    game: GameIn,
+    queries: GameQueries = Depends(),
+):
+    game_dict = game.dict()
+    updated_game = queries.update_game(id, game_dict)
+    return updated_game

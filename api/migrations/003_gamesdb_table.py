@@ -6,7 +6,7 @@ steps = [
         id SERIAL PRIMARY KEY,
         name VARCHAR(50),
         description VARCHAR(2500),
-        ratings FLOAT,
+        rating FLOAT,
         dates DATE,
         background_img VARCHAR(2500),
         Xbox BOOLEAN DEFAULT false,
