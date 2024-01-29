@@ -76,7 +76,7 @@ class BoardQueries:
 
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
-                    detail="Could not find all boards associated with this user"
+                    detail="No boards associated with this user"
                 )
 
     def create_board(self, board_dict: BoardIn) -> BoardOut:
@@ -116,7 +116,7 @@ class BoardQueries:
                 except ValueError:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="Sorry, we could not create that board"
+                        detail="Error creating board"
                     )
 
     def delete_board(self, id: int, account_id: int) -> bool:

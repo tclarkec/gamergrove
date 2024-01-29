@@ -104,23 +104,24 @@ class GamesQueries:
                         RETURNING *;
                         """,
                         [
-                            games_dict.name,
-                            games_dict.description,
-                            games_dict.ratings,
-                            games_dict.dates,
-                            games_dict.background_img,
-                            games_dict.Xbox,
-                            games_dict.PlayStation,
-                            games_dict.Nintendo,
-                            games_dict.PC,
-                            games_dict.rating_count,
-                            games_dict.rating_total,
-                            games_dict.genre,
-                            games_dict.developers,
-                            games_dict.rawg_pk,
-                            games_dict.reviews_count
+                            games_dict["name"],
+                            games_dict["description"],
+                            games_dict["ratings"],
+                            games_dict["dates"],
+                            games_dict["background_img"],
+                            games_dict["Xbox"],
+                            games_dict["PlayStation"],
+                            games_dict["Nintendo"],
+                            games_dict["PC"],
+                            games_dict["rating_count"],
+                            games_dict["rating_total"],
+                            games_dict["genre"],
+                            games_dict["developers"],
+                            games_dict["rawg_pk"],
+                            games_dict["reviews_count"]
                         ],
                     )
+
                     shot = ScreenshotsQueries()
                     shot.get_screenshots(games_dict.rawg_pk)
                     store = StoresQueries()
@@ -142,7 +143,7 @@ class GamesQueries:
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="Sorry, that game already exists in the database"
                     )
-    def update_game(self, id: int, games: GamesIn) -> GamesOut:
+    def update_game(self, id: int, games_dict: GamesIn) -> GamesOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 try:
@@ -167,29 +168,30 @@ class GamesQueries:
                         WHERE id = %s
                         """,
                         [
-                            games.name,
-                            games.description,
-                            games.ratings,
-                            games.dates,
-                            games.background_img,
-                            games.Xbox,
-                            games.PlayStation,
-                            games.Nintendo,
-                            games.PC,
-                            games.rating_count,
-                            games.rating_total,
-                            games.genre,
-                            games.developers,
-                            games.rawg_pk,
-                            games.reviews_count,
+                            games_dict["name"],
+                            games_dict["description"],
+                            games_dict["ratings"],
+                            games_dict["dates"],
+                            games_dict["background_img"],
+                            games_dict["Xbox"],
+                            games_dict["PlayStation"],
+                            games_dict["Nintendo"],
+                            games_dict["PC"],
+                            games_dict["rating_count"],
+                            games_dict["rating_total"],
+                            games_dict["genre"],
+                            games_dict["developers"],
+                            games_dict["rawg_pk"],
+                            games_dict["reviews_count"],
                             id
-                        ]
+                        ],
                     )
-                    old_data = games.dict()
-                    return GamesOut(id=id, **old_data)
-                except ValidationError as e:
-                    print(e.errors())
-                    return False
+                    return GamesOut(id=id, **games_dict)
+                except ValueError:
+                    raise HTTPException(
+                        status_code = status.HTTP_400_BAD_REQUEST,
+                        detail="Error updating game"
+                    )
 
     # def delete_games(self, id: str) -> bool:
     #     try:
