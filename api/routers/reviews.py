@@ -9,7 +9,7 @@ from queries.reviews import (
     HttpError
 )
 from queries.games import (
-    GamesQueries
+    GameQueries
 )
 from authenticator import authenticator
 from typing import List, Union
@@ -57,7 +57,7 @@ async def create_review(
     review: ReviewInBase,
     response: Response,
     queries: ReviewQueries = Depends(),
-    games_queries: GamesQueries = Depends(),
+    games_queries: GameQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     account_id = authenticate_user(account_data)
@@ -79,7 +79,23 @@ async def create_review(
     created_review = queries.create_review(review_dict)
     return created_review
 
+@router.delete("/api/reviews/users/{id}/{account_id}", response_model=Union[bool, HttpError])
+async def delete_review(
+    id: int,
+    queries: ReviewQueries = Depends(),
+    games_queries: GameQueries = Depends(),
+    review_data: dict = Depends(authenticator.get_current_account_data)
+):
+    review_details = queries.get_review(id).dict()
+    game_id = review_details["game_id"]
+    game_dict = games_queries.get_game(game_id).dict()
+    del game_dict["id"]
+    game_dict["reviews_count"] -=1
 
+    games_queries.update_game(game_id, game_dict)
+
+    account_id = authenticate_user(review_data)
+    return queries.delete_review(id, account_id)
 
 @router.put("/api/reviews/users/{id}/{account_id}", response_model=Union[ReviewOut, HttpError])
 async def update_review(
@@ -107,22 +123,3 @@ async def update_review(
 
     updated_review = queries.update_review(id, review_dict)
     return updated_review
-
-
-@router.delete("/api/reviews/users/{id}/{account_id}", response_model=bool)
-async def delete_review(
-    id: int,
-    queries: ReviewQueries = Depends(),
-    games_queries: GamesQueries = Depends(),
-    review_data: dict = Depends(authenticator.get_current_account_data)
-):
-    review_details = queries.get_review(id).dict()
-    game_id = review_details["game_id"]
-    game_dict = games_queries.get_game(game_id).dict()
-    del game_dict["id"]
-    game_dict["reviews_count"] -=1
-
-    games_queries.update_game(game_id, game_dict)
-
-    account_id = authenticate_user(review_data)
-    return queries.delete_review(id, account_id)

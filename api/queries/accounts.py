@@ -26,7 +26,7 @@ class AccountForm(BaseModel):
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
-class AccountsQueries:
+class AccountQueries:
     def get(self, username: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -74,7 +74,7 @@ class AccountsQueries:
                 except errors.UniqueViolation:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="Sorry, that username is already taken"
+                        detail="That username is already taken"
                     )
 
     def delete(self, id: int, username: str) -> bool:

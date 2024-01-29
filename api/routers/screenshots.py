@@ -19,7 +19,7 @@ async def get_screenshots(
 
 # @router.delete("/api/screenshots/{id}", response_model=bool)
 # async def delete_screenshots(
-#     id: str,
+#     id: int,
 #     queries: ScreenshotsQueries = Depends(),
 # ) -> bool:
 #     return queries.delete_screenshots(id)

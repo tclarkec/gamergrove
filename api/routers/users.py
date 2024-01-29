@@ -35,7 +35,7 @@ async def get_user(
     return queries.get_user(id)
 
 
-@router.delete("/api/users/{id}/{account_id}", response_model=bool)
+@router.delete("/api/users/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_user(
     id: int,
     queries: UserQueries = Depends(),

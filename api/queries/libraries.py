@@ -22,9 +22,9 @@ class LibraryIn(LibraryInBase):
 class LibraryOut(BaseModel):
     id: int
     wishlist: bool
-    game_id: str
-    board_id: str
-    account_id: str
+    game_id: int
+    board_id: int
+    account_id: int
 
 class LibraryQueries:
     def get_library(self, account_id: int) -> List[LibraryOut]:
@@ -152,7 +152,7 @@ class LibraryQueries:
                     )
                 return True
 
-    # def update_library_entry(self, id: str, library: LibraryIn) -> Union[LibraryOut, HttpError]:
+    # def update_library_entry(self, id: int, library: LibraryIn) -> Union[LibraryOut, HttpError]:
     #     try:
     #         with pool.connection() as conn:
     #             with conn.cursor() as db:

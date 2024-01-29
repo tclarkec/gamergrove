@@ -14,7 +14,7 @@ class HttpError(BaseModel):
     detail: str
 
 
-class GamesIn(BaseModel):
+class GameIn(BaseModel):
     name: str
     description: str
     ratings: float
@@ -31,11 +31,7 @@ class GamesIn(BaseModel):
     rawg_pk: int
     reviews_count: int
 
-# class GamesIn(GamesInBase):
-#     account_id: str
-
-
-class GamesOut(BaseModel):
+class GameOut(BaseModel):
     id: int
     name: str
     description: str
@@ -54,8 +50,8 @@ class GamesOut(BaseModel):
     reviews_count: int
 
 
-class GamesQueries:
-    def get_game(self, id: int) -> GamesOut:
+class GameQueries:
+    def get_game(self, id: int) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -71,14 +67,14 @@ class GamesQueries:
                     record = {}
                     for i, column in enumerate(db.description):
                         record[column.name] = row[i]
-                    return GamesOut(**record)
+                    return GameOut(**record)
 
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="Could find a game with that id"
                 )
 
-    def create_game(self, games_dict: GamesIn) -> GamesOut:
+    def create_game(self, games_dict: GameIn) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -132,18 +128,18 @@ class GamesQueries:
                         record = {}
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
-                        return GamesOut(**record)
+                        return GameOut(**record)
                     if ValueError:
                         raise HTTPException(
                             status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Sorry, we couldn't create that game"
+                            detail="Error creating game"
                         )
                 except errors.UniqueViolation:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="Sorry, that game already exists in the database"
+                        detail="That game already exists in the database"
                     )
-    def update_game(self, id: int, games_dict: GamesIn) -> GamesOut:
+    def update_game(self, id: int, games_dict: GameIn) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 try:
@@ -186,14 +182,14 @@ class GamesQueries:
                             id
                         ],
                     )
-                    return GamesOut(id=id, **games_dict)
+                    return GameOut(id=id, **games_dict)
                 except ValueError:
                     raise HTTPException(
                         status_code = status.HTTP_400_BAD_REQUEST,
                         detail="Error updating game"
                     )
 
-    # def delete_games(self, id: str) -> bool:
+    # def delete_games(self, id: int) -> bool:
     #     try:
     #         with pool.connection() as conn:
     #             with conn.cursor() as db:

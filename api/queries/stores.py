@@ -148,7 +148,7 @@ class StoresQueries:
         logging.debug("Returning stores: %s", stores_list)
         return stores_list
 
-    # def delete_stores(self, id: str) -> bool:
+    # def delete_stores(self, id: int) -> bool:
     #     try:
     #         with pool.connection() as conn:
     #             with conn.cursor() as db:

@@ -117,7 +117,6 @@ class ReviewQueries:
                     detail="No reviews written by this user"
                 )
 
-
     def create_review(self, review_dict: ReviewIn) -> ReviewOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -165,7 +164,7 @@ class ReviewQueries:
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="Error creating review"
                     )
-                
+
     def delete_review(self, id: int, account_id: int) -> bool:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -189,7 +188,10 @@ class ReviewQueries:
                     DELETE FROM reviews
                     WHERE id = %s AND account_id = %s
                     """,
-                    [id, account_id]
+                    [
+                        id,
+                        account_id
+                    ]
                 )
                 if account_id_check.rowcount == 0:
                     raise HTTPException(

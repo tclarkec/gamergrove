@@ -43,7 +43,7 @@ async def get_all_boards(
     account_id = account_data["id"]
     return queries.get_all_boards(account_id)
 
-@router.delete("/api/boards/{id}/{account_id}", response_model=bool)
+@router.delete("/api/boards/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_board(
     id: int,
     queries: BoardQueries = Depends(),
@@ -51,7 +51,6 @@ async def delete_board(
 ):
     account_id = account_data["id"]
     return queries.delete_board(id, account_id)
-
 
 @router.put("/api/boards/{id}/{account_id}", response_model=Union[BoardOut, HttpError])
 async def update_board(

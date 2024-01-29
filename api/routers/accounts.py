@@ -6,7 +6,7 @@ from typing import Union
 from queries.accounts import (
     AccountIn,
     AccountOut,
-    AccountsQueries,
+    AccountQueries,
     AccountToken,
     AccountForm
 )
@@ -27,7 +27,7 @@ async def create_account(
     data: AccountIn,
     request: Request,
     response: Response,
-    queries: AccountsQueries = Depends(),
+    queries: AccountQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(data.password)
 
@@ -40,14 +40,14 @@ async def create_account(
 @router.get("/accounts/{username}", response_model=AccountOut)
 async def get_account(
     username: str,
-    queries: AccountsQueries = Depends(),
+    queries: AccountQueries = Depends()
 ):
     return queries.get(username)
 
-@router.delete("/accounts/{id}/{username}", response_model = bool)
+@router.delete("/accounts/{id}/{username}", response_model = Union[bool, HttpError])
 async def delete_account(
     id: int,
-    queries: AccountsQueries = Depends(),
+    queries: AccountQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
     username = account_data["username"]

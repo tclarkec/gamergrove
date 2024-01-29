@@ -125,7 +125,7 @@ class ScreenshotsQueries:
         logging.debug("Returning Screenshots: %s", screenshots_list)
         return screenshots_list
 
-    # def delete_screenshots(self, id: str) -> bool:
+    # def delete_screenshots(self, id: int) -> bool:
     #     try:
     #         with pool.connection() as conn:
     #             with conn.cursor() as db:

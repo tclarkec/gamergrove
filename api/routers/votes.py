@@ -1,19 +1,15 @@
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
-                     status)
+from fastapi import (APIRouter, Depends, Request, Response)
 from typing import Union, List
 from queries.votes import (
     VoteInBase,
-    VoteIn,
     VoteInUpdate,
     VoteOut,
     VoteQueries,
-    InvalidVoteError,
     HttpError
 )
 from queries.reviews import(
     ReviewQueries
 )
-from pydantic import BaseModel
 from authenticator import authenticator
 
 router = APIRouter()
@@ -27,7 +23,6 @@ async def create_vote(
     review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
-    response.status_code = 200
     account_id = account_data["id"]
     vote_dict = vote.dict()
     vote_dict["account_id"] = account_id
@@ -43,19 +38,9 @@ async def create_vote(
 
     review_queries.update_review(review_id, review_dict)
 
-    try:
-        created_vote = queries.create_vote(vote_dict)
 
-        if isinstance(created_vote, HttpError):
-            return created_vote
-
-        return created_vote
-
-    except InvalidVoteError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create Vote"
-        )
+    created_vote = queries.create_vote(vote_dict)
+    return created_vote
 
 @router.get("/api/votes/{account_id}", response_model=Union[List[VoteOut], HttpError])
 async def get_user_votes(
@@ -67,14 +52,14 @@ async def get_user_votes(
 
 @router.get("/api/votes/{review_id}", response_model=Union[List[VoteOut], HttpError])
 async def get_review_votes(
-    review_id: str,
+    review_id: int,
     queries: VoteQueries = Depends(),
 ):
     return queries.get_review_votes(review_id)
 
 @router.put("/api/votes/{id}/{account_id}", response_model=Union[VoteOut, HttpError])
 async def update_vote(
-    id: str,
+    id: int,
     vote: VoteInUpdate,
     response: Response,
     queries: VoteQueries = Depends(),
@@ -83,7 +68,6 @@ async def update_vote(
 ):
     vote_details = queries.get_vote(id).dict()
 
-    response.status_code = 200
     account_id = account_data["id"]
     review_id = vote_details["review_id"]
 
@@ -101,14 +85,5 @@ async def update_vote(
 
     review_queries.update_review(review_id, review_dict)
 
-
-    try:
-        updated_vote = queries.update_vote(id,vote_dict)
-        if isinstance(updated_vote, HttpError):
-            return updated_vote
-        return updated_vote
-    except InvalidVoteError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot update vote"
-        )
+    updated_vote = queries.update_vote(id,vote_dict)
+    return updated_vote

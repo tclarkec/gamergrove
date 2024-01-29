@@ -91,12 +91,12 @@ class UserQueries:
                     if ValueError:
                         raise HTTPException(
                             status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Sorry, we couldn't create that user"
+                            detail="Error creating user"
                         )
                 except errors.UniqueViolation:
                     raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="Sorry, that email is already taken"
+                        detail="That email is already taken"
                     )
 
     def delete_user(self, id: int, account_id: int) -> bool:
@@ -181,5 +181,5 @@ class UserQueries:
                     except errors.UniqueViolation:
                         raise HTTPException(
                             status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Sorry, that email is already taken"
+                            detail="That email is already taken"
                         )
