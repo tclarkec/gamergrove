@@ -2,6 +2,7 @@
   background-color: #0d0225;
   padding-left: 11%; /* Adjust the padding as needed */
   margin-left: 11%; /* Added margin to create space for the menu */
+
 }
 
 .row__posters {
@@ -18,7 +19,6 @@
 
 .row__poster {
   max-height: 325px;
-  margin-top: 0px;
   margin-top: 0px;
   padding-left: 10px;
   width: 23%;
