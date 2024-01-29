@@ -1,19 +1,14 @@
 
 
 .nav {
-    position: fixed;
-    top: 0;
-    padding: 20px;
-    width: 100%;
-    height: 30px;
-    z-index: 1;
-
-    /* Annimations */
-    transition-timing-function: ease-in;
-    transition: all 0.5s;
-
-    flex-direction: row;
-    background-color: #0d0225;
+  position: fixed;
+  top: 0;
+  padding: 20px;
+  width: 100%;
+  height: 70px; /* Adjust the height as needed */
+  z-index: 1;
+  background-color: #d6d1e2;
+  transition: background-color 0.5s ease-in-out; /* Added transition for background color change */
 }
 
 .nav__contents {
