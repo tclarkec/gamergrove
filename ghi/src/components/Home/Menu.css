@@ -5,20 +5,37 @@
   left: 0;
   background-color: #111;
   color: white;
-  padding: 0px;
-  width: 20%;
+  padding: 20px;
+  width: 190px;
   z-index: 1;
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
+  transition: width 0.5s ease-in-out;
+
+  @media (max-width: 68px) {
+    width: 100%; /* Adjust width for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
 }
 
 .side-menu ul {
-  padding-top: 20px;
-  padding-left: 10px;
-  margin-bottom: 0.4px;
+  list-style: none;
+  padding: 0;
+}
+
+.side-menu p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .side-menu li {
-  margin-top: 0%;
-  margin-left: 3px;
-  padding-left: px; /* This line seems to have a typo, consider fixing it */
+  margin: 5px 0;
+  padding: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.side-menu li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
