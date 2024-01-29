@@ -17,7 +17,7 @@ class HttpError(BaseModel):
 class GameIn(BaseModel):
     name: str
     description: str
-    ratings: float
+    rating: float
     dates: date
     background_img: str
     Xbox: bool = False
@@ -35,7 +35,7 @@ class GameOut(BaseModel):
     id: int
     name: str
     description: str
-    ratings: float
+    rating: float
     dates: date
     background_img: str
     Xbox: bool = False
@@ -83,7 +83,7 @@ class GameQueries:
                         INSERT INTO gamesdb (
                         name,
                         description,
-                        ratings,
+                        rating,
                         dates,
                         background_img,
                         Xbox,
@@ -102,7 +102,7 @@ class GameQueries:
                         [
                             game_dict["name"],
                             game_dict["description"],
-                            game_dict["ratings"],
+                            game_dict["rating"],
                             game_dict["dates"],
                             game_dict["background_img"],
                             game_dict["Xbox"],
@@ -148,7 +148,7 @@ class GameQueries:
                         UPDATE gamesdb
                         SET name = %s,
                             description = %s,
-                            ratings = %s,
+                            rating = %s,
                             dates = %s,
                             background_img = %s,
                             Xbox = %s,
@@ -166,7 +166,7 @@ class GameQueries:
                         [
                             games_dict["name"],
                             games_dict["description"],
-                            games_dict["ratings"],
+                            games_dict["rating"],
                             games_dict["dates"],
                             games_dict["background_img"],
                             games_dict["Xbox"],

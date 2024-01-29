@@ -16,18 +16,18 @@ class ReviewInBase(BaseModel):
     body: str
     title: str
     game_id: int
-    ratings: int
+    rating: int
 
 
 class ReviewInUpdate(BaseModel):
     body: str
     title: str
-    ratings: int
+    rating: int
 
 
 class ReviewIn(ReviewInBase):
     replies_count: int
-    vote_count: int
+    upvote_count: int
     account_id: int
 
 
@@ -38,8 +38,8 @@ class ReviewOut(BaseModel):
     body: str
     title: str
     replies_count: int
-    vote_count: int
-    ratings: int
+    upvote_count: int
+    rating: int
 
 
 class ReviewQueries:
@@ -129,9 +129,9 @@ class ReviewQueries:
                             account_id,
                             body,
                             title,
-                            ratings,
+                            rating,
                             replies_count,
-                            vote_count
+                            upvote_count
                             )
                         VALUES (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING
@@ -140,18 +140,18 @@ class ReviewQueries:
                             account_id,
                             body,
                             title,
-                            ratings,
+                            rating,
                             replies_count,
-                            vote_count
+                            upvote_count
                         """,
                         [
                             review_dict["game_id"],
                             review_dict["account_id"],
                             review_dict["body"],
                             review_dict["title"],
-                            review_dict["ratings"],
+                            review_dict["rating"],
                             review_dict["replies_count"],
-                            review_dict["vote_count"]
+                            review_dict["upvote_count"]
                         ],
                     )
                     row = result.fetchone()
@@ -224,17 +224,17 @@ class ReviewQueries:
                     UPDATE reviews
                     SET body = %s,
                         title = %s,
-                        ratings = %s,
+                        rating = %s,
                         replies_count = %s,
-                        vote_count = %s
+                        upvote_count = %s
                     WHERE id = %s AND game_id = %s AND account_id = %s
                     """,
                     [
                         review_dict["body"],
                         review_dict["title"],
-                        review_dict["ratings"],
+                        review_dict["rating"],
                         review_dict["replies_count"],
-                        review_dict["vote_count"],
+                        review_dict["upvote_count"],
                         id,
                         review_dict["game_id"],
                         review_dict["account_id"]

@@ -11,8 +11,8 @@ steps = [
         game_id INT NOT NULL,
         FOREIGN KEY (game_id) REFERENCES gamesdb(id),
         replies_count INT DEFAULT 0,
-        vote_count INT DEFAULT 0,
-        ratings INT
+        upvote_count INT DEFAULT 0,
+        rating INT
         );
 
 

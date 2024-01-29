@@ -8,7 +8,7 @@ CREATE TABLE gamesdb (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50),
     description VARCHAR(2500),
-    ratings INTEGER,
+    rating INTEGER,
     dates DATE,
     background_img VARCHAR(2500),
     Xbox BOOLEAN DEFAULT false,
@@ -75,7 +75,7 @@ CREATE TABLE reviews (
     FOREIGN KEY (account_id) REFERENCES accounts(id),
     replies_count INT DEFAULT NULL,
     vote_count INT DEFAULT NULL,
-    ratings INT
+    rating INT
 );
 
 CREATE TABLE replies (
