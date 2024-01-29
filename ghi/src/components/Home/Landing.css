@@ -1,25 +1,72 @@
-html {
-    background-color: black;
+@import "../../root.css";
+@import '../../Nav.css';
+
+
+/* .root */
+
+.hero-carousel-container {
+    /* background-color: #0d0225; */
+  overflow: hidden;
+  position: relative;
+  margin: 0px auto; /* Center the carousel horizontally */
+  width: 50%; /* Adjust the width as needed */
 }
 
-.hero-carosuel {
-    margin-top: 25px;
-    height: 250px;
+.carousel-inner {
+  display: flex;
+  transition: transform 450ms ease-in-out;
+
 }
 
 .carousel-item {
-    height: 250px;
-    position: relative;
-    object-fit: contain;
+  min-width: 100%; /* Ensure each item takes the full width */
 }
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  padding-top: 19.8px;
+  margin-left: 30px;
+
+
+
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%; /* Adjust the width of the controls as needed */
+}
+
+
+header {
+    background-color: #0d0225;
+
+}
+
+
 
 .search-bar {
-    border-radius: 25%;
-    width: 400px;
-    background-color: rgb(55, 49, 49);
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 10px;
-    
-
+  width: 26.4%;
+  background-color: rgb(55, 49, 49);
+  padding: 8px;
+  /* position: relative; */
+  margin-left: 71.8%;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 16px;
 }
+
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-bar:focus {
+  transition: box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+

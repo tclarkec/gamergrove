@@ -14,11 +14,12 @@ class HttpError(BaseModel):
 class BoardInBase(BaseModel):
     board_name: str
     description: str
-    cover_photo: str
     private: bool = False
+    cover_photo: str
 
 
 class BoardIn(BoardInBase):
+    game_count: int
     account_id: int
 
 
@@ -26,8 +27,9 @@ class BoardOut(BaseModel):
     id: int
     board_name: str
     description: str
-    cover_photo: str
     private: bool = False
+    game_count: int
+    cover_photo: str
     account_id: int
 
 
@@ -85,28 +87,32 @@ class BoardQueries:
                 try:
                     result = db.execute(
                         """
-                        INSERT INTO boards (board_name,
-                        description,
-                        private,
-                        cover_photo,
-                        account_id)
-                        VALUES (%s, %s, %s, %s, %s)
-                        RETURNING id,
-                        board_name,
-                        description,
-                        private,
-                        cover_photo,
-                        account_id;
+                        INSERT INTO boards (
+                            board_name,
+                            description,
+                            private,
+                            cover_photo,
+                            game_count,
+                            account_id)
+                        VALUES (%s, %s, %s, %s, %s, %s)
+                        RETURNING
+                            id,
+                            board_name,
+                            description,
+                            private,
+                            cover_photo,
+                            game_count,
+                            account_id
                         """,
                         [
                             board_dict["board_name"],
                             board_dict["description"],
                             board_dict["private"],
                             board_dict["cover_photo"],
+                            board_dict["game_count"],
                             board_dict["account_id"]
                         ],
                     )
-
                     row = result.fetchone()
                     if row is not None:
                         record = {}
@@ -179,7 +185,8 @@ class BoardQueries:
                     SET board_name = %s,
                         description = %s,
                         private = %s,
-                        cover_photo = %s
+                        cover_photo = %s,
+                        game_count = %s
                     WHERE id = %s AND account_id = %s
                     """,
                     [
@@ -187,6 +194,7 @@ class BoardQueries:
                         board_dict["description"],
                         board_dict["private"],
                         board_dict["cover_photo"],
+                        board_dict["game_count"],
                         id,
                         board_dict["account_id"]
                     ]

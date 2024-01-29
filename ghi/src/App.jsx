@@ -7,8 +7,6 @@ import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
-import Dashboard from './components/Dashboard/dashboard';
-
 
 // All your environment variables in vite are in this object
 console.table(import.meta.env)
@@ -61,7 +59,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/boards" element={<BoardForm />} />
                 <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
         </BrowserRouter>
