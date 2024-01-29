@@ -35,9 +35,7 @@ async def create_vote(
         review_dict["vote_count"] += 1
     elif vote_dict["downvote"] == True:
         review_dict["vote_count"] -= 1
-
     review_queries.update_review(review_id, review_dict)
-
 
     created_vote = queries.create_vote(vote_dict)
     return created_vote
@@ -82,7 +80,6 @@ async def update_vote(
         review_dict["vote_count"] += 1
     elif vote_dict["downvote"] == True:
         review_dict["vote_count"] -= 1
-
     review_queries.update_review(review_id, review_dict)
 
     updated_vote = queries.update_vote(id,vote_dict)

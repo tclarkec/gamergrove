@@ -69,13 +69,16 @@ async def create_review(
     del game_dict["id"]
     game_dict["reviews_count"] += 1
 
+    ratings = review_dict["ratings"]
+    game_dict["rating_count"] += 1
+    game_dict["rating_total"] += ratings
+    game_dict["ratings"] = game_dict["rating_total"]/game_dict["rating_count"]
+
     games_queries.update_game(game_id, game_dict)
 
     review_dict["account_id"] = account_id
     review_dict["replies_count"] = 0
     review_dict["vote_count"] = 0
-
-
     created_review = queries.create_review(review_dict)
     return created_review
 
@@ -90,7 +93,12 @@ async def delete_review(
     game_id = review_details["game_id"]
     game_dict = games_queries.get_game(game_id).dict()
     del game_dict["id"]
-    game_dict["reviews_count"] -=1
+    game_dict["reviews_count"] -= 1
+
+    ratings = review_details["ratings"]
+    game_dict["rating_count"] -= 1
+    game_dict["rating_total"] -= ratings
+    game_dict["ratings"] = game_dict["rating_total"]/game_dict["rating_count"]
 
     games_queries.update_game(game_id, game_dict)
 
@@ -103,22 +111,35 @@ async def update_review(
     review: ReviewInUpdate,
     response: Response,
     queries: ReviewQueries = Depends(),
+    games_queries: GameQueries= Depends(),
     review_data: dict = Depends(authenticator.get_current_account_data),
 ):
+    review_dict = review.dict()
+
     review_details = queries.get_review(id).dict()
 
     account_id = authenticate_user(review_data)
+
     game_id = review_details["game_id"]
-    ratings = review_details["ratings"]
+    previous_rating = review_details["ratings"]
+    ratings = review_dict["ratings"]
+
+    game_dict = games_queries.get_game(game_id).dict()
+    del game_dict["id"]
+    game_dict["rating_total"] -= previous_rating
+    game_dict["rating_total"] += ratings
+    game_dict["ratings"] = game_dict["rating_total"]/game_dict["rating_count"]
+    games_queries.update_game(game_id, game_dict)
+
     replies_count = review_details["replies_count"]
     vote_count = review_details["vote_count"]
 
-    review_dict = review.dict()
     review_dict["account_id"] = account_id
     review_dict["game_id"] = game_id
-    review_dict["ratings"] = ratings
     review_dict["replies_count"] = replies_count
     review_dict["vote_count"] = vote_count
+
+
 
 
     updated_review = queries.update_review(id, review_dict)

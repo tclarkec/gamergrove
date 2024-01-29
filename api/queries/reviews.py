@@ -22,6 +22,7 @@ class ReviewInBase(BaseModel):
 class ReviewInUpdate(BaseModel):
     body: str
     title: str
+    ratings: int
 
 
 class ReviewIn(ReviewInBase):

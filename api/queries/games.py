@@ -74,7 +74,7 @@ class GameQueries:
                     detail="Could find a game with that id"
                 )
 
-    def create_game(self, games_dict: GameIn) -> GameOut:
+    def create_game(self, game_dict: GameIn) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -100,28 +100,28 @@ class GameQueries:
                         RETURNING *;
                         """,
                         [
-                            games_dict["name"],
-                            games_dict["description"],
-                            games_dict["ratings"],
-                            games_dict["dates"],
-                            games_dict["background_img"],
-                            games_dict["Xbox"],
-                            games_dict["PlayStation"],
-                            games_dict["Nintendo"],
-                            games_dict["PC"],
-                            games_dict["rating_count"],
-                            games_dict["rating_total"],
-                            games_dict["genre"],
-                            games_dict["developers"],
-                            games_dict["rawg_pk"],
-                            games_dict["reviews_count"]
+                            game_dict["name"],
+                            game_dict["description"],
+                            game_dict["ratings"],
+                            game_dict["dates"],
+                            game_dict["background_img"],
+                            game_dict["Xbox"],
+                            game_dict["PlayStation"],
+                            game_dict["Nintendo"],
+                            game_dict["PC"],
+                            game_dict["rating_count"],
+                            game_dict["rating_total"],
+                            game_dict["genre"],
+                            game_dict["developers"],
+                            game_dict["rawg_pk"],
+                            game_dict["reviews_count"]
                         ],
                     )
 
                     shot = ScreenshotsQueries()
-                    shot.get_screenshots(games_dict.rawg_pk)
+                    shot.get_screenshots(game_dict.rawg_pk)
                     store = StoresQueries()
-                    store.get_stores(games_dict.rawg_pk)
+                    store.get_stores(game_dict.rawg_pk)
 
                     row = result.fetchone()
                     if row is not None:

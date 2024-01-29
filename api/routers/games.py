@@ -19,9 +19,9 @@ async def create_game(
     queries: GameQueries = Depends(),
 
 ):
-    games_dict = game.dict()
-    created_games = queries.create_game(games_dict)
-    return created_games
+    game_dict = game.dict()
+    created_game = queries.create_game(game_dict)
+    return created_game
 
 @router.get("/api/games/{id}", response_model=GameOut)
 async def get_game(
@@ -45,4 +45,6 @@ async def update_game(
     game: GameIn,
     queries: GameQueries = Depends(),
 ):
-    return queries.update_game(id, game)
+    game_dict = game.dict()
+    updated_game = queries.update_game(id, game_dict)
+    return updated_game

@@ -31,7 +31,6 @@ async def create_reply(
     review_dict = review_queries.get_review(review_id).dict()
     del review_dict["id"]
     review_dict["replies_count"] += 1
-
     review_queries.update_review(review_id, review_dict)
 
     created_reply = queries.create_reply(reply_dict)
@@ -71,7 +70,6 @@ async def delete_reply(
     review_dict = review_queries.get_review(review_id).dict()
     del review_dict["id"]
     review_dict["replies_count"] -= 1
-
     review_queries.update_review(review_id, review_dict)
 
     account_id = account_data["id"]
