@@ -76,7 +76,7 @@ class BoardQueries:
 
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
-                    detail="Could not find all boards associated with this account"
+                    detail="Could not find all boards associated with this user"
                 )
 
     def create_board(self, board_dict: BoardIn) -> BoardOut:

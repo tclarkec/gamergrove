@@ -1,15 +1,12 @@
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
-                     status)
+from fastapi import (APIRouter, Depends, Request, Response)
 from typing import Union
+from authenticator import authenticator
 from queries.users import (
     UserInBase,
-    UserIn,
     UserOut,
     UserQueries,
     HttpError
 )
-from pydantic import BaseModel
-from authenticator import authenticator
 
 
 router = APIRouter()

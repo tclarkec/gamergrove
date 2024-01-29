@@ -1,16 +1,12 @@
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response, status)
+from fastapi import (APIRouter, Depends, Request, Response)
 from typing import Union, List
-from pydantic import BaseModel
 from authenticator import authenticator
 from queries.libraries import (
-    LibraryIn,
     LibraryInBase,
     LibraryOut,
     LibraryQueries,
-    InvalidLibraryError,
     HttpError
 )
-
 
 router = APIRouter()
 
@@ -23,20 +19,12 @@ async def create_library_entry(
     queries: LibraryQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    response.status_code = 200
     account_id = account_data["id"]
     library_dict = entry.dict()
     library_dict["account_id"] = account_id
-    try:
-        created_entry = queries.create_library_entry(library_dict)
-        if isinstance(created_entry, HttpError):
-            return created_entry
-        return created_entry
-    except InvalidLibraryError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create library entry"
-        )
+
+    created_entry = queries.create_library_entry(library_dict)
+    return created_entry
 
 @router.get("/api/libraries/{account_id}/", response_model=List[LibraryOut])
 async def get_library(

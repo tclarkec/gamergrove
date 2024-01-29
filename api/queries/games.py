@@ -1,10 +1,10 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql
-from typing import Optional
+from psycopg import connect, sql, errors
 from pydantic import BaseModel, ValidationError
 from typing import Union
 from datetime import date
+from fastapi import(HTTPException, status)
 from queries.screenshots import ScreenshotsQueries
 from queries.stores import StoresQueries
 
@@ -60,10 +60,10 @@ class GamesOut(BaseModel):
 
 
 class GamesQueries:
-    def get_games(self, id: str) -> GamesOut:
+    def get_game(self, id: str) -> GamesOut:
         with pool.connection() as conn:
-            with conn.cursor() as cur:
-                result = cur.execute(
+            with conn.cursor() as db:
+                result = db.execute(
                     """
                     SELECT *
                     FROM gamesdb
@@ -74,70 +74,83 @@ class GamesQueries:
                 row = result.fetchone()
                 if row is not None:
                     record = {}
-                    for i, column in enumerate(cur.description):
+                    for i, column in enumerate(db.description):
                         record[column.name] = row[i]
                     return GamesOut(**record)
-                raise ValueError("Could not get games")
 
-    def create_games(self, games_dict: GamesIn) -> GamesOut:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could find a game with that id"
+                )
+
+    def create_game(self, games_dict: GamesIn) -> GamesOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
-                result = cur.execute(
-                    """
-                    INSERT INTO gamesdb (
-                    name,
-                    description,
-                    ratings,
-                    dates,
-                    background_img,
-                    Xbox,
-                    PlayStation,
-                    Nintendo,
-                    PC,
-                    rating_count,
-                    rating_total,
-                    genre,
-                    developers,
-                    rawg_pk,
-                    reviews_count)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    RETURNING *;
-                    """,
-                    [
-                        games_dict.name,
-                        games_dict.description,
-                        games_dict.ratings,
-                        games_dict.dates,
-                        games_dict.background_img,
-                        games_dict.Xbox,
-                        games_dict.PlayStation,
-                        games_dict.Nintendo,
-                        games_dict.PC,
-                        games_dict.rating_count,
-                        games_dict.rating_total,
-                        games_dict.genre,
-                        games_dict.developers,
-                        games_dict.rawg_pk,
-                        games_dict.reviews_count
-                    ],
-                )
-                shot = ScreenshotsQueries()
-                shot.get_screenshots(games_dict.rawg_pk)
-                store = StoresQueries()
-                store.get_stores(games_dict.rawg_pk)
+                try:
+                    result = cur.execute(
+                        """
+                        INSERT INTO gamesdb (
+                        name,
+                        description,
+                        ratings,
+                        dates,
+                        background_img,
+                        Xbox,
+                        PlayStation,
+                        Nintendo,
+                        PC,
+                        rating_count,
+                        rating_total,
+                        genre,
+                        developers,
+                        rawg_pk,
+                        reviews_count)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        RETURNING *;
+                        """,
+                        [
+                            games_dict.name,
+                            games_dict.description,
+                            games_dict.ratings,
+                            games_dict.dates,
+                            games_dict.background_img,
+                            games_dict.Xbox,
+                            games_dict.PlayStation,
+                            games_dict.Nintendo,
+                            games_dict.PC,
+                            games_dict.rating_count,
+                            games_dict.rating_total,
+                            games_dict.genre,
+                            games_dict.developers,
+                            games_dict.rawg_pk,
+                            games_dict.reviews_count
+                        ],
+                    )
+                    shot = ScreenshotsQueries()
+                    shot.get_screenshots(games_dict.rawg_pk)
+                    store = StoresQueries()
+                    store.get_stores(games_dict.rawg_pk)
 
-                row = result.fetchone()
-                if row is not None:
-                    record = {}
-                    for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    return GamesOut(**record)
-                raise ValueError("Could not create games")
-
-    def update_games(self, id: str, games: GamesIn) -> Union[GamesOut, HttpError]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
+                    row = result.fetchone()
+                    if row is not None:
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                        return GamesOut(**record)
+                    if ValueError:
+                        raise HTTPException(
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Sorry, we couldn't create that game"
+                        )
+                except errors.UniqueViolation:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Sorry, that game already exists in the database"
+                    )
+    def update_game(self, id: str, games: GamesIn) -> GamesOut:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                try:
                     db.execute(
                         """
                         UPDATE gamesdb
@@ -177,24 +190,24 @@ class GamesQueries:
                             id
                         ]
                     )
-                old_data = games.dict()
-                return GamesOut(id=id, **old_data)
-        except ValidationError as e:
-            print(e.errors())
-            return False
+                    old_data = games.dict()
+                    return GamesOut(id=id, **old_data)
+                except ValidationError as e:
+                    print(e.errors())
+                    return False
 
-    def delete_games(self, id: str) -> bool:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        DELETE FROM gamesdb
-                        WHERE id = %s
-                        """,
-                        [id]
-                    )
-                    return True
-        except Exception as e:
-            print(e)
-            return False
+    # def delete_games(self, id: str) -> bool:
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 db.execute(
+    #                     """
+    #                     DELETE FROM gamesdb
+    #                     WHERE id = %s
+    #                     """,
+    #                     [id]
+    #                 )
+    #                 return True
+    #     except Exception as e:
+    #         print(e)
+    #         return False

@@ -1,19 +1,12 @@
-from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
-                     status)
-from typing import Union
+from fastapi import (APIRouter, Depends, Request, Response)
+from typing import Union, List
+from authenticator import authenticator
 from queries.boards import (
     BoardInBase,
     BoardOut,
     BoardQueries,
+    HttpError
 )
-from pydantic import BaseModel
-from authenticator import authenticator
-from typing import List
-
-
-class HttpError(BaseModel):
-    detail: str
-
 
 router = APIRouter()
 
