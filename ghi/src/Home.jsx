@@ -8,8 +8,8 @@ function Home () {
     return(
         <div>
             <Nav />
-            <Landing />
             <Menu />
+            <Landing />
             <Row title="Games" />
 
 
