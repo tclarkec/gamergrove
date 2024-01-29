@@ -1,0 +1,38 @@
+/* Add this to your CSS file or style section */
+
+/* Center the card on the page */
+.center-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+   /* Adjust the height as needed */
+}
+
+/* Style for the card */
+.card-style {
+  width: 800px; /* Adjust the width as needed */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: grey;
+}
+
+/* Center the card on the page */
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+/* Style for the card */
+.dashboard-card {
+  width: 800px; /* Adjust the width as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Style for the Tabs component */
+.dashboard-tabs {
+  /* Add any specific styling for Tabs if needed */
+}
