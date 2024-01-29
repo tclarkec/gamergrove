@@ -1,0 +1,25 @@
+html {
+    background-color: black;
+}
+
+.hero-carosuel {
+    margin-top: 25px;
+    height: 250px;
+}
+
+.carousel-item {
+    height: 250px;
+    position: relative;
+    object-fit: contain;
+}
+
+.search-bar {
+    border-radius: 25%;
+    width: 400px;
+    background-color: rgb(55, 49, 49);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    
+
+}

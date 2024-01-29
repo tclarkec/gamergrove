@@ -1,7 +1,19 @@
 volumes:
     postgres-data:
         external: true
+    pg-admin:
+        external: true
 services:
+    pg-admin:
+        image: dpage/pgadmin4
+        volumes:
+            - pg-admin:/var/lib/pgadmin
+        ports:
+            - 8082:80
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@email.com
+            PGADMIN_DEFAULT_PASSWORD: password
+            PGADMIN_DISABLE_POSTFIX: 1
     postgres:
         image: postgres:14.5-bullseye
         volumes:
@@ -14,8 +26,10 @@ services:
             - 15432:5432
     fastapi:
         environment:
-            DATABASE_URL: postgresql://gamergrove:password@postgres/gamergrove_db
+            DATABASE_URL: ${DATABASE_URL_FROM_ENV_FILE}
             CORS_HOST: http://localhost:5173
+            SIGNING_KEY: ${SIGNING_KEY_FROM_ENV_FILE}
+            API_KEY: ${RAWG_API_KEY}
         build:
             context: api
             dockerfile: Dockerfile.dev
@@ -23,8 +37,23 @@ services:
             - 8000:8000
         volumes:
             - ./api:/app
-
+        depends_on:
+            - pg-admin
+            - postgres
     ghi:
+        # image: node:lts-bullseye
+        # command: /bin/bash run.sh
+        # working_dir: /app
+        # volumes:
+        #     - ./ghi:/app
+        # ports:
+        #     - "3000:3000"
+        # environment:
+        #     HOST_OS: ${OS}
+        #     NODE_ENV: development
+        #     HOST: "0.0.0.0"
+        #     PUBLIC_URL: http://localhost:3000
+        #     REACT_APP_API_HOST: ${REACT_APP_API_HOST}
         image: node:lts-bullseye
         command: /bin/bash run.sh
         working_dir: /app
