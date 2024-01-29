@@ -15,7 +15,6 @@ class BoardInBase(BaseModel):
     board_name: str
     description: str
     cover_photo: str
-    private: bool = False
 
 
 class BoardIn(BoardInBase):
@@ -27,7 +26,6 @@ class BoardOut(BaseModel):
     board_name: str
     description: str
     cover_photo: str
-    private: bool = False
     account_id: int
 
 
@@ -87,21 +85,18 @@ class BoardQueries:
                         """
                         INSERT INTO boards (board_name,
                         description,
-                        private,
                         cover_photo,
                         account_id)
-                        VALUES (%s, %s, %s, %s, %s)
+                        VALUES (%s, %s, %s, %s)
                         RETURNING id,
                         board_name,
                         description,
-                        private,
                         cover_photo,
                         account_id;
                         """,
                         [
                             board_dict["board_name"],
                             board_dict["description"],
-                            board_dict["private"],
                             board_dict["cover_photo"],
                             board_dict["account_id"]
                         ],
@@ -178,14 +173,12 @@ class BoardQueries:
                     UPDATE boards
                     SET board_name = %s,
                         description = %s,
-                        private = %s,
                         cover_photo = %s
                     WHERE id = %s AND account_id = %s
                     """,
                     [
                         board_dict["board_name"],
                         board_dict["description"],
-                        board_dict["private"],
                         board_dict["cover_photo"],
                         id,
                         board_dict["account_id"]
