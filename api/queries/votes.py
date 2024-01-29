@@ -43,7 +43,7 @@ class VoteQueries:
                 )
                 rows = result.fetchall()
                 votes = []
-                if rows is not None:
+                if rows:
                     records = {}
                     for row in rows:
                         for i, column in enumerate(db.description):
@@ -69,7 +69,7 @@ class VoteQueries:
                 )
                 rows = result.fetchall()
                 votes = []
-                if rows is not None:
+                if rows:
                     records = {}
                     for row in rows:
                         for i, column in enumerate(db.description):

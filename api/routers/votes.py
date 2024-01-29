@@ -40,7 +40,7 @@ async def create_vote(
     created_vote = queries.create_vote(vote_dict)
     return created_vote
 
-@router.get("/api/votes/{account_id}", response_model=Union[List[VoteOut], HttpError])
+@router.get("/api/votes/users/{account_id}", response_model=Union[List[VoteOut], HttpError])
 async def get_user_votes(
     queries: VoteQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
@@ -48,7 +48,7 @@ async def get_user_votes(
     account_id = account_data["id"]
     return queries.get_user_votes(account_id)
 
-@router.get("/api/votes/{review_id}", response_model=Union[List[VoteOut], HttpError])
+@router.get("/api/votes/reviews/{review_id}", response_model=Union[List[VoteOut], HttpError])
 async def get_review_votes(
     review_id: int,
     queries: VoteQueries = Depends(),
