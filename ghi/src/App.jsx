@@ -3,6 +3,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
 import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
@@ -58,12 +59,14 @@ function App() {
     // }, [])
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/boards" element={<BoardForm />} />
-            </Routes>
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/boards" element={<BoardForm />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
 
