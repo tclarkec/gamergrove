@@ -21,6 +21,7 @@ async def create_board(
 ):
     account_id = account_data["id"]
     board_dict = board.dict()
+    board_dict["game_count"] = 0
     board_dict["account_id"] = account_id
 
     created_board = queries.create_board(board_dict)

@@ -53,6 +53,29 @@ class LibraryQueries:
                     detail="Could not find the library associated with this account"
                 )
 
+    def get_library_entry(self, id:int) -> LibraryOut:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT *
+                    FROM libraries
+                    WHERE id = %s;
+                    """,
+                    [id]
+                )
+                row = result.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(db.description):
+                        record[column.name] = row[i]
+                    return LibraryOut(**record)
+
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could not find a library entry with that id"
+                )
+
     def create_library_entry(self, library_dict: LibraryIn) -> LibraryOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
