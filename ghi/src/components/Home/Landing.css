@@ -1,18 +1,34 @@
-html {
-    background-color: black;
-}
+@import "../../root.css";
+@import '../../Nav.css';
 
 .hero-carosuel {
     margin-top: 25px;
-    height: 250px;
-}
-
-.carousel-item {
-    height: 250px;
+    height: px;
+    transition: transform 450ms;
     position: relative;
     object-fit: contain;
 }
 
+
+
+
+.carousel-image {
+    display: flex;
+    position: fixed;
+    max-height: 450px;
+    margin-left: 55px;
+    /* margin-right: 55px; */
+    padding-left: 40px;
+    width: 100%;
+    background-color: #0d0225;
+    object-fit: contain;
+    padding: 20px;
+
+
+
+}
+
+/*
 .search-bar {
     border-radius: 25%;
     width: 400px;
@@ -20,6 +36,19 @@ html {
     padding-top: 5px;
     padding-bottom: 5px;
     margin-top: 10px;
-    
 
+
+} */
+.carousel-item-bottomfade  {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 7.4rem;
+    background-image: linear-gradient(
+        180deg,
+        transparent,
+        rgba(37, 37, 37, 0.61),
+        #111
+    );
 }
