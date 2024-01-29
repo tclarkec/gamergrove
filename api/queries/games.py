@@ -2,17 +2,12 @@ import os
 from psycopg_pool import ConnectionPool
 from psycopg import connect, sql, errors
 from pydantic import BaseModel, ValidationError
-from typing import Union
 from datetime import date
 from fastapi import(HTTPException, status)
 from queries.screenshots import ScreenshotsQueries
 from queries.stores import StoresQueries
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
-
-
-class InvalidGamesError(ValueError):
-    pass
 
 
 class HttpError(BaseModel):
@@ -41,7 +36,7 @@ class GamesIn(BaseModel):
 
 
 class GamesOut(BaseModel):
-    id: str
+    id: int
     name: str
     description: str
     ratings: float
@@ -60,7 +55,7 @@ class GamesOut(BaseModel):
 
 
 class GamesQueries:
-    def get_game(self, id: str) -> GamesOut:
+    def get_game(self, id: int) -> GamesOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -147,7 +142,7 @@ class GamesQueries:
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="Sorry, that game already exists in the database"
                     )
-    def update_game(self, id: str, games: GamesIn) -> GamesOut:
+    def update_game(self, id: int, games: GamesIn) -> GamesOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 try:

@@ -1,5 +1,4 @@
-from fastapi import (APIRouter, Depends, Request, Response,
-                     status)
+from fastapi import (APIRouter, Depends, Request, Response)
 from typing import Union
 from queries.games import (
     GamesIn,

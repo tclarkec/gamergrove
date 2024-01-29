@@ -1,8 +1,8 @@
 import os
 from psycopg_pool import ConnectionPool
 from pydantic import BaseModel
-from typing import Union, List
-from fastapi import Request, Response, HTTPException
+from typing import List
+from fastapi import (HTTPException, status)
 import requests
 import logging
 
@@ -15,10 +15,6 @@ pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 api_key = os.environ.get("API_KEY")
 
 
-class InvalidStoresError(ValueError):
-    pass
-
-
 class HttpError(BaseModel):
     detail: str
 
@@ -26,15 +22,15 @@ class HttpError(BaseModel):
 class StoresIn(BaseModel):
     url: str
     platform: str
-    rawg_pk: str
+    rawg_pk: int
 
 
 
 class StoresOut(BaseModel):
-    id: str
+    id: int
     url: str
     platform: str
-    rawg_pk: str
+    rawg_pk: int
 
 
 class StoresNotFoundError(Exception):
@@ -42,7 +38,7 @@ class StoresNotFoundError(Exception):
 
 
 class StoresQueries:
-    def get_stores(self, rawg_pk: str) -> List[StoresOut]:
+    def get_stores(self, rawg_pk: int) -> List[StoresOut]:
         stores_list = []
 
         try:
@@ -66,6 +62,10 @@ class StoresQueries:
 
         except Exception as db_error:
             logging.error("Error fetching stores from the database: %s", db_error)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Error fetching stores from the database"
+            )
 
         # If not found in the database or not enough in the database, make an API call to Rawg
         api_url = f"https://api.rawg.io/api/games/{rawg_pk}/stores?key={api_key}"
@@ -98,9 +98,9 @@ class StoresQueries:
                                     platform = "Nintendo"
 
 
-                                print("store_url:", store_url)
-                                print("platform", platform)
-                                print("rawg_pk", rawg_pk)
+                                # print("store_url:", store_url)
+                                # print("platform", platform)
+                                # print("rawg_pk", rawg_pk)
 
                                 # Check if the entry already exists in the database
                                 # cur.execute(
@@ -133,26 +133,33 @@ class StoresQueries:
 
                 except Exception as db_error:
                     logging.error("Error inserting stores into the database: %s", db_error)
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Error adding stores into the database"
+                    )
 
         if not stores_list:
             logging.debug("No stores found in both database and API.")
-            return []
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No screenshots found in both database and API"
+            )
 
         logging.debug("Returning stores: %s", stores_list)
         return stores_list
 
-    def delete_stores(self, id: str) -> bool:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        DELETE FROM stores
-                        WHERE id = %s
-                        """,
-                        [id]
-                    )
-                    return True
-        except Exception as e:
-            print(e)
-            return False
+    # def delete_stores(self, id: str) -> bool:
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 db.execute(
+    #                     """
+    #                     DELETE FROM stores
+    #                     WHERE id = %s
+    #                     """,
+    #                     [id]
+    #                 )
+    #                 return True
+    #     except Exception as e:
+    #         print(e)
+    #         return False
