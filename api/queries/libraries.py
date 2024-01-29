@@ -79,66 +79,56 @@ class LibraryQueries:
     def create_library_entry(self, library_dict: LibraryIn) -> LibraryOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
-                game_id_check = db.execute(
-                    """
-                    SELECT * FROM gamesdb
-                    WHERE id = %s
-                    """,
-                    [library_dict["game_id"]]
-                )
-
-                game_id_row = game_id_check.fetchone()
-                if game_id_row is None:
-                    raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail="A game with the id you inputted does not exist in the database"
+                try:
+                    game_id_check = db.execute(
+                        """
+                        SELECT * FROM gamesdb
+                        WHERE id = %s
+                        """,
+                        [library_dict["game_id"]]
                     )
 
-                board_id_check = db.execute(
-                    """
-                    SELECT * FROM boards
-                    WHERE id = %s
-                    """,
-                    [library_dict["board_id"]]
-                )
+                    game_id_row = game_id_check.fetchone()
+                    if game_id_row is None:
+                        raise HTTPException(
+                            status_code=status.HTTP_404_NOT_FOUND,
+                            detail="A game with the id you inputted does not exist in the database"
+                        )
 
-                board_id_row=board_id_check.fetchone()
-                if board_id_row is None:
-                    raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail="A board with the id you inputted does not exist in the database"
+                    result = db.execute(
+                        """
+                        INSERT INTO libraries (
+                        wishlist,
+                        game_id,
+                        board_id,
+                        account_id)
+                        VALUES (%s, %s, %s, %s)
+                        RETURNING
+                        id,
+                        wishlist,
+                        game_id,
+                        board_id,
+                        account_id;
+                        """,
+                        [
+                            library_dict["wishlist"],
+                            library_dict["game_id"],
+                            library_dict["board_id"],
+                            library_dict["account_id"]
+                        ],
                     )
 
-                result = db.execute(
-                    """
-                    INSERT INTO libraries (
-                    wishlist,
-                    game_id,
-                    board_id,
-                    account_id)
-                    VALUES (%s, %s, %s, %s)
-                    RETURNING
-                    id,
-                    wishlist,
-                    game_id,
-                    board_id,
-                    account_id;
-                    """,
-                    [
-                        library_dict["wishlist"],
-                        library_dict["game_id"],
-                        library_dict["board_id"],
-                        library_dict["account_id"]
-                    ],
-                )
-
-                row = result.fetchone()
-                if row is not None:
-                    record = {}
-                    for i, column in enumerate(db.description):
-                        record[column.name] = row[i]
-                    return LibraryOut(**record)
-
+                    row = result.fetchone()
+                    if row is not None:
+                        record = {}
+                        for i, column in enumerate(db.description):
+                            record[column.name] = row[i]
+                        return LibraryOut(**record)
+                except ValueError:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Error creating library entry"
+                    )
 
     def delete_library_entry(self, id: int, account_id: int) -> bool:
         with pool.connection() as conn:
