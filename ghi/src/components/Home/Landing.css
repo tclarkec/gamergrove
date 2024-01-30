@@ -25,6 +25,7 @@
 .carousel-item img {
   width: 100%;
   height: auto;
+
   padding-top: 19.8px;
   margin-left: 30px;
 
@@ -40,6 +41,7 @@
 
 header {
     background-color: #0d0225;
+    margin-top: 50.5px;
 
 }
 
@@ -69,4 +71,3 @@ header {
   transition: box-shadow 0.3s ease-in-out;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-

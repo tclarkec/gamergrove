@@ -7,6 +7,7 @@ const SideMenu = () => {
                 <ul>
                     <br />
                     <p>New Releases</p>
+                    <hr class='solid' />
                     <ul>
                         <li>Last 30 Days</li>
                         <li>This Week</li>
@@ -14,6 +15,7 @@ const SideMenu = () => {
                     </ul>
                     <br />
                     <p>Consoles</p>
+                    <hr class='solid' />
                     <ul>
                         <li>Xbox</li>
                         <li>Playstation</li>
@@ -22,6 +24,7 @@ const SideMenu = () => {
                     </ul>
                     <br />
                     <p>Genres</p>
+                    <hr class='solid'/>
                     <ul>
                         <li>Action</li>
                         <li>Strategy</li>
