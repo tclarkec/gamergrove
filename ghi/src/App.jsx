@@ -10,6 +10,8 @@ import './App.css'
 import Home from './Home';
 import Login from './Login';
 import BoardForm from './BoardForm';
+import SignUp from './SignUp';
+
 
 // All your environment variables in vite are in this object
 console.table(import.meta.env)
@@ -65,6 +67,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
                     <Route path="/boards" element={<BoardForm />} />
                 </Routes>
             </BrowserRouter>

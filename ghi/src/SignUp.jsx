@@ -1,6 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useState } from "react";
-import React, { useEffect, useState } from 'react';
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import React, { useState, useEffect } from 'react';
 // import {useNavigate} from 'react-router-dom';
 
 const initialAccountData = {
@@ -15,15 +15,30 @@ const initialUserData = {
     icon_id:""
 }
 
-function SignUpForm(){
-    const navigate = useNavigate();
+function SignUp(){
+    // const navigate = useNavigate();
 
+    const [icons, setIcons] = useState([]);
     const [accountFormData, setAccountFormData] = useState(initialAccountData);
     const [userFormData, setUserFormData] = useState(initialUserData);
+    const { login } = useToken();
+    const { token } = useAuthContext();
 
     const fetchData = async () => {
-        const url = 'http://localhost:8000/api/icons/';
+        const url = 'http://localhost:8000/api/icons';
+        const response = await fetch(url);
+
+        if (response.ok) {
+        const data = await response.json();
+        setIcons(data);
+    } else {
+        throw new Error('Failed to retrieve icons data')
     }
+  }
+
+    useEffect(() => {
+      fetchData();
+    }, []);
 
     const handleFormChange = (e) => {
         setAccountFormData({
@@ -52,6 +67,7 @@ function SignUpForm(){
         const account_response = await fetch(accountUrl, accountFetchConfig);
         if (account_response.ok) {
             // navigate("/accounts");
+            login(accountFormData.username, accountFormData.password)
             setAccountFormData(initialAccountData);
         } else {
             throw new Error('Failed to create account')
@@ -62,7 +78,8 @@ function SignUpForm(){
             method: "post",
             body: JSON.stringify(userFormData),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         };
 
@@ -103,11 +120,11 @@ function SignUpForm(){
               </div>
               <div className="mb-3">
                 <select onChange={handleFormChange}required name = "icon_id" id="icon_id" className="form-select" value={userFormData.icon_id}>
-                  <option value="">Choose a technician</option>
-                  {technicians.map(technician => {
+                  <option value="">Choose an icon</option>
+                  {icons.map(icon => {
                       return (
-                          <option key={technician.id} value={technician.id}>
-                              {`${technician.first_name} ${technician.last_name}`}
+                          <option key={icon.id} value={icon.id}>
+                              {icon.name}
                           </option>
                       )
                   })}
@@ -123,4 +140,4 @@ function SignUpForm(){
     );
 }
 
-export default SignUpForm;
+export default SignUp;

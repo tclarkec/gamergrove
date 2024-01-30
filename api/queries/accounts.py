@@ -80,7 +80,22 @@ class AccountQueries:
     def delete(self, id: int, username: str) -> bool:
         with pool.connection() as conn:
             with conn.cursor() as db:
-                db.execute(
+                id_check = db.execute(
+                    """
+                    SELECT * FROM accounts
+                    WHERE id = %s
+                    """,
+                    [id]
+                )
+
+                id_row = id_check.fetchone()
+                if id_row is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="An account with that id does not exist in the database"
+                    )
+
+                username_check = db.execute(
                     """
                     DELETE FROM accounts
                     WHERE id = %s AND username = %s
@@ -90,9 +105,9 @@ class AccountQueries:
                         username
                     ]
                 )
-                if errors.ProgrammingError:
+                if username_check.rowcount == 0:
                     raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail="An account with that id does not exist in the database"
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="You are attempting to delete an account that you did not create"
                     )
                 return True
