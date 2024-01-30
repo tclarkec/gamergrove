@@ -1,12 +1,7 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect } from 'react';
-// import {useNavigate} from 'react-router-dom';
-
-const initialAccountData = {
-    username:"",
-    password:"",
-}
+import {useNavigate} from 'react-router-dom';
 
 const initialUserData = {
     first_name: "",
@@ -15,12 +10,12 @@ const initialUserData = {
     icon_id:""
 }
 
-function SignUp(){
-    // const navigate = useNavigate();
+function SignUpAccount(){
+    const navigate = useNavigate();
 
     const [icons, setIcons] = useState([]);
-    const [accountFormData, setAccountFormData] = useState(initialAccountData);
     const [userFormData, setUserFormData] = useState(initialUserData);
+
     const { login } = useToken();
     const { token } = useAuthContext();
 
@@ -41,10 +36,6 @@ function SignUp(){
     }, []);
 
     const handleFormChange = (e) => {
-        setAccountFormData({
-            ...accountFormData,
-            [e.target.name]:e.target.value
-        })
         setUserFormData({
             ...userFormData,
             [e.target.name]:e.target.value
@@ -54,58 +45,34 @@ function SignUp(){
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const accountUrl = 'http://localhost:8000/api/accounts'
-
-        const accountFetchConfig = {
-            method: "post",
-            body: JSON.stringify(accountFormData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-
-        const account_response = await fetch(accountUrl, accountFetchConfig);
-        if (account_response.ok) {
-            // navigate("/accounts");
-            login(accountFormData.username, accountFormData.password)
-            setAccountFormData(initialAccountData);
-        } else {
-            throw new Error('Failed to create account')
-        }
         const userUrl = 'http://localhost:8000/api/users'
 
         const userFetchConfig = {
             method: "post",
             body: JSON.stringify(userFormData),
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
+            },
         };
 
         const user_response = await fetch(userUrl, userFetchConfig);
         if (user_response.ok) {
-            // navigate("/accounts");
             setUserFormData(initialUserData);
+            navigate("/");
         } else {
             throw new Error('Failed to create user')
         }
+
     }
+
     return (
     <div className="container">
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create a profile</h1>
+            <h1>Create a user profile</h1>
             <form onSubmit={handleSubmit} id="create-profile">
-              <div className="form-floating mb-3">
-                <label htmlFor="username">Username</label>
-                <input onChange={handleFormChange} placeholder="i.e. jdoe24" required type="text" name = "username" id="username" className="form-control" value={accountFormData.username}/>
-              </div>
-              <div className="form-floating mb-3">
-                <label htmlFor="password">Password</label>
-                <input onChange={handleFormChange} placeholder="i.e. Password24#" name = "password" id="password" className="form-control" value={accountFormData.password}/>
-              </div>
               <div className="form-floating mb-3">
                 <label htmlFor="first_name">First name</label>
                 <input onChange={handleFormChange} placeholder="i.e. John" required type="text" name = "first_name" id="first_name" className="form-control" value={userFormData.first_name}/>
@@ -140,4 +107,4 @@ function SignUp(){
     );
 }
 
-export default SignUp;
+export default SignUpAccount;

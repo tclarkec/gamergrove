@@ -5,7 +5,7 @@ import './Landing.css'
 const Landing = () => {
   return (
     <div>
-        <div className='hero-carosuel' id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div className='hero-carousel' id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                 <img src="https://media.rawg.io/media/screenshots/8b8/8b81f703d92ce0bc95525bbfee2c1d06.jpg" class="d-block w-100" alt="..." />
