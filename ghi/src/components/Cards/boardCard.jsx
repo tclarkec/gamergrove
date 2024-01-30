@@ -3,9 +3,7 @@ import './boardCard.css';
 
 function BoardCard() {
   return (
-    // <div className="container mx-auto mt-4">
-    //   <div className="row">
-    //     <div className="col-md-4">
+
           <div className="card" style={{ width: '20rem' }}>
 
             <img src="https://image.api.playstation.com/vulcan/ap/rnd/202306/2400/ac505d57a46e24dd96712263d89a150cb443af288c025ff2.jpg" className="card-img-top" alt="..." style={{ borderRadius: '20px' }} />
@@ -13,7 +11,7 @@ function BoardCard() {
             <div className="card-body">
               <h5 className="card-title1">Call of Duty Games</h5>
 
-              <hr className="solid" />
+              <hr className="bsolid" />
               <p className="card-text1">10 Games</p>
 
               <div className="flex-container left" style={{ width: '8rem' }}>
@@ -29,9 +27,7 @@ function BoardCard() {
               </div>
             </div>
           </div>
-    //     </div>
-    //   </div>
-    // </div>
+
   );
 }
 
