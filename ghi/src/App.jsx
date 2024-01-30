@@ -10,6 +10,7 @@ import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
 
 
+
 // All your environment variables in vite are in this object
 console.table(import.meta.env)
 // When using environment variables, you should do a check to see if

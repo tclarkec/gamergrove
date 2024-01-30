@@ -1,7 +1,7 @@
 .row {
-  background-color: #121212;
-  padding-left: 11%; /* Adjust the padding as needed  #0d0225*/
-  margin-left: 11%; /* Added margin to create space for the menu */
+  background-color: #0d0225;
+  padding-left: 11%; /* Adjust the padding as needed */
+  margin-left: 7%; /* Added margin to create space for the menu */
 
 }
 
@@ -23,7 +23,7 @@
   padding-left: 10px;
   width: 23%;
   transition: transform 450ms;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .row__poster:hover {

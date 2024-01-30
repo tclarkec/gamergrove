@@ -4,17 +4,15 @@ import Nav from './Nav';
 import Row from './components/Home/Rows'
 import Menu from './components/Home/Menu';
 
-
-
 function Home () {
     return(
         <div>
-
             <Nav />
             <Menu />
             <Landing />
-
             <Row title="Games" />
+
+
         </div>
     )
 }

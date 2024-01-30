@@ -40,6 +40,7 @@
 
 header {
     background-color: #0d0225;
+    margin-top: 50.5px;
 
 }
 
@@ -70,3 +71,11 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-bar:focus {
+  transition: box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
