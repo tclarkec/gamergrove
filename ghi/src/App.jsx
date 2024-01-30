@@ -8,6 +8,8 @@ import Construct from './Construct'
 import './App.css'
 import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
+import UserHomePage from "./components/UserHome/UserHomePage";
+import Listgames from './components/Games/Listgames';
 
 
 
@@ -58,6 +60,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/home" element={<UserHomePage />} />
+                <Route path="/games" element={<Listgames />} />
             </Routes>
         </BrowserRouter>
     )

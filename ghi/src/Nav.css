@@ -28,6 +28,7 @@
     object-fit: contain;
     margin-left: -59px; /* Originally set at 20 its working the left side of the image*/
     cursor: pointer;
+    /* z-index: 1; */
 }
 
 
@@ -40,5 +41,6 @@
     top: 10px;
     padding-bottom: 5px;
     object-fit: contain;
+     /* z-index: 1; */
 
 }

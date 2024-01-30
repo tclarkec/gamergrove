@@ -1,0 +1,32 @@
+.row {
+  background-color: #0d0225;
+  padding-left: 11%; /* Adjust the padding as needed */
+  margin-left: 7%; /* Added margin to create space for the menu */
+
+}
+
+.row__posters {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+}
+
+/* Below is what hides the scrollbar */
+.row__posters::-webkit-scrollbar {
+  display: none;
+}
+
+.row__poster {
+  max-height: 325px;
+  margin-top: 0px;
+  padding-left: 10px;
+  width: 23%;
+  transition: transform 450ms;
+  /* z-index: 1; */
+}
+
+.row__poster:hover {
+  transform: scale(1.08);
+  opacity: 1;
+}

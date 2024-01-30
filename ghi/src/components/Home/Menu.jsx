@@ -22,7 +22,7 @@ const SideMenu = () => {
         };
     }, []);
 
-
+// Maybe do like a recently purchased Games or Save or some sort that redirects yout to a particular page
 
     return (
             <div className="side-menu">
@@ -53,6 +53,13 @@ const SideMenu = () => {
                         <li>RPG</li>
                         <li>Shooter</li>
                         <li>Adventure</li>
+                    </ul>
+                    <br />
+                    <hr class='solid' />
+                    <p className='all-games' >All Games</p>
+                    <hr class='solid'/>
+                    <ul>
+
                     </ul>
                 </ul>
             </div>

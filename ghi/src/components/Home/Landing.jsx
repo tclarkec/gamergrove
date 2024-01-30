@@ -17,6 +17,7 @@ const Landing = () => {
             <div className="carousel-item">
               <img src="https://cdn.vox-cdn.com/thumbor/WepWpOm_mb9zhjHplHwFcDwLFuw=/0x0:3840x2160/1920x0/filters:focal(0x0:3840x2160):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/25143312/DD2_Glyndwr_png_jpgcopy.jpg" className="d-block w-100" alt="..." />
             </div>
+
             <div className="carousel-item">
               <img src="https://cdn.vox-cdn.com/thumbor/Ca6QN7HIPyTmdtAuKrvWAnIv8WQ=/0x0:1500x844/1920x0/filters:focal(0x0:1500x844):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/24963291/qhybg2ye.png" className="d-block w-100" alt="..." />
             </div>
