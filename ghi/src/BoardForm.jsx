@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+// import React, { useEffect, useState } from 'react';
+// import {useNavigate} from 'react-router-dom';
 
-const initialData = {
-    title:"",
-    cover_photo:"",
-    description:""
-}
+// const initialData = {
+//     title:"",
+//     cover_photo:"",
+//     description:""
+// }
 
 
-function BoardForm(){
+// function BoardForm(){
 
-}
+// }
 
-export default BoardForm;
+// export default BoardForm;
