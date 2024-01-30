@@ -3,10 +3,17 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
 import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
+import Login from './Login';
+import BoardForm from './BoardForm';
+import SignUpAccount from './SignUpAccount';
+import SignUpUser from './SignUpUser';
+import LogOutTest from './components/Home/LogOutTest';
+
 
 // All your environment variables in vite are in this object
 console.table(import.meta.env)
@@ -27,42 +34,49 @@ if (!API_HOST) {
  * @returns {React.ReactNode}
  */
 function App() {
-    // Replace this App component with your own.
-    /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
-    const [launchInfo, setLaunchInfo] = useState()
-    const [error, setError] = useState(null)
+    // // Replace this App component with your own.
+    // /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
+    // const [launchInfo, setLaunchInfo] = useState()
+    // const [error, setError] = useState(null)
 
-    useEffect(() => {
-        async function getData() {
-            let url = `${API_HOST}/api/launch-details`
-            console.log('fastapi url: ', url)
-            let response = await fetch(url)
-            /** @type {LaunchData} */
-            let data = await response.json()
+    // useEffect(() => {
+    //     async function getData() {
+    //         let url = `${API_HOST}/api/launch-details`
+    //         console.log('fastapi url: ', url)
+    //         let response = await fetch(url)
+    //         /** @type {LaunchData} */
+    //         let data = await response.json()
 
-            if (response.ok) {
-                if (!data.launch_details) {
-                    console.log('drat! no launch data')
-                    setError('No launch data')
-                    return
-                }
-                console.log('got launch data!')
-                setLaunchInfo(data.launch_details)
-            } else {
-                console.log('drat! something happened')
-                setError(data.message)
-            }
-        }
-        getData()
-    }, [])
+    //         if (response.ok) {
+    //             if (!data.launch_details) {
+    //                 console.log('drat! no launch data')
+    //                 setError('No launch data')
+    //                 return
+    //             }
+    //             console.log('got launch data!')
+    //             setLaunchInfo(data.launch_details)
+    //         } else {
+    //             console.log('drat! something happened')
+    //             setError(data.message)
+    //         }
+    //     }
+    //     getData()
+    // }, [])
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/boards" element={<BoardForm />} />
-            </Routes>
-        </BrowserRouter>
+        <AuthProvider baseUrl = 'http://localhost:8000'>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<LogOutTest />} />
+                    <Route path="/signup/account" element={<SignUpAccount />} />
+                    <Route path="/signup/user" element={<SignUpUser />} />
+                    <Route path="/boards" element={<BoardForm />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
 
-export default App
+export default App;

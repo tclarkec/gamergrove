@@ -141,3 +141,15 @@ For the majority of the day Kyle drove while Cameron and I helped debug and offe
 Today I learned that:
 
 When inserting a record into a table in the database, it seems running the return command is also necessary. Excluding this from our get_stores function was a major blocker for a while. I also relearned the importance of rebuilding volumes and containers after pulling down recent migration/table related changes pushed up by my team members. I also learned that to pull from a particular table's queries class in the router file, you need to inject dependency. For example, when modifying my create_reply function in the routers -> replies.py so that whenever a reply was created the replies_count value for the associated review would be increased by 1, in order to interact with any of the ReviewQueries I had to do a dependency injection just like I did for ReplyQueries.
+
+### January 29, 2024
+
+Today I worked on:
+
+* Continuing to make the backend dynamically linked and finishing out error handling. I also made some changes to our tables, began front-end authentication, and writing out the form component for creating a board through our website.
+
+In the morning before breakout rooms were opened, I worked on dynamically linking reviews and games in the backend so that if a review was created/deleted for a game, the game's review count would go up or down. Also, the overall ratings for that game would be affected by whatever rating was submitted for the game in the review. I then changed vote_count to upvote_count and ratings to rating in the reviews and gamesdb tables for clarity. Once the breakout rooms opened, Cameron, Clarke, and I worked on dividing up front-end tasks and answering each other's questions whenever we could. As I started writing the BoardForm component, I realized that libraries and boards needed to be dynamically linked in the background so that if a game is saved to a user's library, the game count for that board is accordingly updated. I then also updated some of the error handling. Next was front-end authentication, in which I created a login component. I am now stuck on the signup component - since we have a separate account and user table I have to set up the form so that the sensitive info (i.e. username, password in accounts table) and nonsensitive info (i.e. first_name, last_name, email, icon_id in users table) are in two separate states and sent to two different endpoints (create accounts, create users). The issue is that in order for a user to be created, it requires an existing account. When my form is submitted, the account is created but the user is not - I am getting a CORS error in the front-end and foreign key violation in the backend (for some reason the account id that is passed into the user creation endpoint is one behind).
+
+Today I learned that:
+
+Error validation can require a fair amount of time and effort depending on how many potential errors you can anticipate for a particular endpoint. Also, working on the frontend is a great way to discover issues in your backend endpoints which previously slipped through the cracks.
