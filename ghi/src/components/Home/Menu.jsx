@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Menu.css';
 
 const SideMenu = () => {
+
+    const [menuWidth, setMenuWidth] = useState(250);
+
+    const updateMenuWidth = () => {
+        if (window.innerWidth <= 768) {
+            setMenuWidth(window.innerWidth);
+        } else {
+            setMenuWidth(250); // Set your default width
+        }
+    };
+
+    useEffect(() => {
+        updateMenuWidth();
+        window.addEventListener('resize', updateMenuWidth);
+
+        return () => {
+            window.removeEventListener('resize', updateMenuWidth);
+        };
+    }, []);
+
+
+
     return (
             <div className="side-menu">
                 <ul>
