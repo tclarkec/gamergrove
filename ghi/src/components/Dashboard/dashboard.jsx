@@ -6,12 +6,14 @@ import ReviewCard from '../Cards/reviewCard.jsx';
 import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
 import SideMenu from '../Home/Menu';
+import Nav from '../../Nav';
 
 
 function Dashboard() {
   return (
     <div>
       <SideMenu />
+      <Nav />
       <main>
         <h1>User Dashboard!</h1>
 
