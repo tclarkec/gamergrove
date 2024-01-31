@@ -3,10 +3,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
 import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
+import Login from './Login';
+import BoardForm from './BoardForm';
+import SignUpAccount from './SignUpAccount';
+import SignUpUser from './SignUpUser';
+import LogOutTest from './components/Home/LogOutTest';
+import Settings from './Settings';
+
 import Dashboard from "./components/Dashboard/dashboard";
 import UserHomePage from "./components/UserHome/UserHomePage";
 import Listgames from './components/Games/Listgames';
@@ -34,6 +42,7 @@ function App() {
     /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
     const [launchInfo, setLaunchInfo] = useState()
     const [error, setError] = useState(null)
+
     useEffect(() => {
         async function getData() {
             let url = `${API_HOST}/api/launch-details`
@@ -41,6 +50,7 @@ function App() {
             let response = await fetch(url)
             /** @type {LaunchData} */
             let data = await response.json()
+
             if (response.ok) {
                 if (!data.launch_details) {
                     console.log('drat! no launch data')
@@ -56,16 +66,14 @@ function App() {
         }
         getData()
     }, [])
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/home" element={<UserHomePage />} />
-                <Route path="/games" element={<Listgames />} />
-                <Route path="/gamedetails" element={<GameDetails />} />
+                <Route path="/boards" element={<BoardForm />} />
             </Routes>
         </BrowserRouter>
     )
 }
+
 export default App

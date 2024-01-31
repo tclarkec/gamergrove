@@ -1,5 +1,5 @@
 from fastapi import (APIRouter, Depends, Request, Response)
-from typing import Union
+from typing import Union, List
 from queries.games import (
     GameIn,
     GameOut,
@@ -22,6 +22,12 @@ async def create_game(
     game_dict = game.dict()
     created_game = queries.create_game(game_dict)
     return created_game
+
+@router.get("/api/games", response_model=Union[List[GameOut], HttpError])
+async def get_all_games(
+    queries: GameQueries = Depends()
+):
+    return queries.get_all_games()
 
 @router.get("/api/games/{id}", response_model=GameOut)
 async def get_game(
