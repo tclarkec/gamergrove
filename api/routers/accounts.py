@@ -42,7 +42,7 @@ async def get_account(
     username: str,
     queries: AccountQueries = Depends()
 ):
-    return queries.get(username)
+    return queries.get(id)
 
 @router.delete("/api/accounts/{id}/{username}", response_model = Union[bool, HttpError])
 async def delete_account(

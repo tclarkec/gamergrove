@@ -11,10 +11,18 @@ pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 class AccountIn(BaseModel):
     username: str
     password: str
+    first_name: str
+    last_name: str
+    email: str
+    icon_id: int
 
 class AccountOut(BaseModel):
     id: int
     username: str
+    first_name: str
+    last_name: str
+    email: str
+    icon_id: int
 
 
 class AccountToken(Token):
@@ -60,24 +68,38 @@ class AccountQueries:
                 try:
                     result = db.execute(
                         """
-                        INSERT INTO accounts (username, hashed_password)
-                        VALUES (%s, %s)
-                        RETURNING id, username, hashed_password;
+                        INSERT INTO accounts (username, hashed_password,
+                        first_name, last_name, email, icon_id)
+                        VALUES (%s, %s, %s, %s, %s, %s)
+                        RETURNING id, username, hashed_password, first_name,
+                        last_name, email, icon_id;
                         """,
-                        [data.username, hashed_password],
+                        [
+                            data.username,
+                            hashed_password,
+                            data.first_name,
+                            data.last_name,
+                            data.email,
+                            data.icon_id
+                        ]
                     )
-
                     row = result.fetchone()
                     if row is not None:
                         record = {}
                         for i, column in enumerate(db.description):
                             record[column.name] = row[i]
                         return AccountOutWithPassword(**record)
-                except errors.UniqueViolation:
-                    raise HTTPException(
+                except errors.UniqueViolation as e:
+                    if "email" in str(e):
+                        raise HTTPException(
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="That email is already taken"
+                        )
+                    elif "username" in str(e):
+                        raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="That username is already taken"
-                    )
+                        )
 
     def delete(self, id: int, username: str) -> bool:
         with pool.connection() as conn:
@@ -136,12 +158,20 @@ class AccountQueries:
                         """
                         UPDATE accounts
                         SET username = %s,
-                            hashed_password = %s
+                            hashed_password = %s,
+                            first_name = %s,
+                            last_name = %s,
+                            email = %s,
+                            icon_id = %s
                         WHERE id = %s AND username = %s
                         """,
                         [
                          data.username,
                          hashed_password,
+                         data.first_name,
+                         data.last_name,
+                         data.email,
+                         data.icon_id,
                          id,
                          username
                         ]
@@ -173,8 +203,14 @@ class AccountQueries:
                             record[column.name] = row[i]
                         return AccountOutWithPassword(**record)
 
-                except errors.UniqueViolation:
-                    raise HTTPException(
+                except errors.UniqueViolation as e:
+                    if "email" in str(e):
+                        raise HTTPException(
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="That email is already taken"
+                        )
+                    elif "username" in str(e):
+                        raise HTTPException(
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="That username is already taken"
-                    )
+                        )
