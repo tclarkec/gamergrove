@@ -11,13 +11,13 @@ function ReviewCard() {
         <div className="card-details">
           <div className="card-title">Game Title</div>
           <hr className="rsolid" />
-          <div className="card-description">
+          {/* <div className="card-description"> */}
             <div className="side-by-side">
               <div className="link-container">
                 <a href="https://www.example.com/link1" target="_blank" rel="noopener noreferrer">
                   Details
                 </a>
-              </div>
+              {/* </div> */}
             </div>
           </div>
         </div>

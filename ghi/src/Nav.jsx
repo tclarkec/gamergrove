@@ -21,22 +21,25 @@ const Nav = () => {
     }, [])
 
   return (
-    <div className='nav'>
+  <div className={`nav ${display && 'nav__black'}`}>
+    <nav>
+      <div className='nav__contents'>
+        <div className="ncontainer expanded">
+          <input placeholder='Search...' className='js-search' type="text" />
+          <i className="fa fa-search"></i>
+        </div>
 
-      <nav>
-          <div className='nav__contents'>
+        <img className='nav__logo' src={logo} alt='' />
+        <img
+          className="nav__avatar"
+          src="https://i.postimg.cc/SQCfRFsN/image-9.png"
+          alt=""
+        />
+      </div>
+    </nav>
+  </div>
+);
 
-              <img
-                className='nav__logo'
-                src={logo} alt='' />
-              <img
-                  className="nav__avatar"
-                  src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LTNkc29saWQtcG8tMDI5LnBuZw.png" alt="" />
-          </div>
-
-      </nav>
-    </div>
-  )
 }
 
 export default Nav;

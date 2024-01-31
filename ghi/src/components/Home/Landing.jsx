@@ -67,9 +67,9 @@ const Landing = () => {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <input className='search-bar' type="text" placeholder='Search' />
-      </div>
+      </div> */}
 
     </header>
   );

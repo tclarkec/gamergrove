@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
 
 .nav {
@@ -14,20 +15,23 @@
 .nav__contents {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .nav__black {
     flex-direction: row;
-    background-color: #0d0225;
+    background-color: #000000;
 }
 
 .nav__logo {
     position: fixed;
     top: -15px;
-    width: 269px; /* Drags the bottom right of the image */
+    width: 250px;
+
     object-fit: contain;
-    margin-left: -59px; /* Originally set at 20 its working the left side of the image*/
+    margin-left: -40px;
     cursor: pointer;
+    padding: 16px;
     /* z-index: 1; */
 }
 
@@ -36,11 +40,40 @@
     cursor: pointer;
     position: fixed;
     right: 20px;
-    width: 30px;
-    height: 30px;
-    top: 10px;
+    width: 50px;
+    height: 50px;
+    top: 20px;
     padding-bottom: 5px;
     object-fit: contain;
      /* z-index: 1; */
 
+}
+
+/* Search bar */
+
+.ncontainer {
+  cursor: pointer;
+  position: fixed;
+  right: 100px;
+  width: 500px; /* Set the desired expanded width */
+  height: 40px;
+  top: 23px;
+  padding-bottom: 5px;
+  object-fit: contain;
+}
+
+input[type=text] {
+  position: relative;
+  padding: 15px 20px; /* Adjust padding as needed */
+  width: 100%; /* Set to 100% to fill the container */
+  height: 40px;
+  color: #525252;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(to right, #FFFFFF 0%, #464747 #F9F9F9 100%);
+  outline: none;
 }
