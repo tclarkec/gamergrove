@@ -9,7 +9,7 @@ import './App.css'
 import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
 import UserHomePage from "./components/UserHome/UserHomePage";
-import Allgames from './components/Games/Allgames';
+
 import GameDetails from './components/GameDetails/gameDetails';
 
 
@@ -62,7 +62,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/home" element={<UserHomePage />} />
-                <Route path="/games" element={<Listgames />} />
+                <Route path="/gamesdetails" element={<GameDetails />} />
+
             </Routes>
         </BrowserRouter>
     )

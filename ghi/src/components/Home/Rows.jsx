@@ -6,57 +6,44 @@ import BoardCard from '../Cards/boardCard.jsx';
 
 const Rows = () => {
     const [games, setGames] = useState([]);
+    const getData = async () => {
+        // Want to ping our DB so 15432 or 5432
+        const response = await fetch("http://localhost:8000/api/games/{id}");
+
+        if (response.ok) {
+            const data =await response.json();
+            setGames(data.games)
+        }
+    }
 
     useEffect(() => {
-        const fetchGames = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/api/games', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        // Replace this with the actual game data you want to send to the backend
-                        name: '',
-                        description: '',
-                        rating: 5,
-                        background_img: ''
-                        // Add other fields as needed
-                    }),
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setGames(data);
-                } else {
-                    console.error('Could not fetch those games for you');
-                }
-            } catch (error) {
-                console.error('Error fetching games:', error);
-            }
-        };
-
-        fetchGames();
-    }, []);
-
-
-
+        getData()
+    }, [])
+    console.log(games)
     return (
 
         <div className='row'>
             <h1>Action Games</h1>
             <div className='row__posters'>
-                {/* Provide the correct image source */}
+                {games.map(
+                    (game) =>{
+                        <tr key={game.id}>
+                            <td>
+                                {game.name}
+                            </td>
 
+                        </tr>
+                    }
+                )}
+                <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
+                {/* <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
                 <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
                 <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
                 <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
                 <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
                 <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
                 <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
-                <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
-                <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
-                <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" />
+                <img className='row__poster' src="https://variety.com/wp-content/uploads/2023/06/MCDSPMA_SP062.jpg?w=1024" alt="Poster" /> */}
             </div>
             <h1>Strategy Games</h1>
             <div className='row__posters'>
