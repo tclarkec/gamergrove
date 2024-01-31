@@ -153,3 +153,17 @@ In the morning before breakout rooms were opened, I worked on dynamically linkin
 Today I learned that:
 
 Error validation can require a fair amount of time and effort depending on how many potential errors you can anticipate for a particular endpoint. Also, working on the frontend is a great way to discover issues in your backend endpoints which previously slipped through the cracks.
+
+### January 30, 2024
+
+Today I worked on:
+
+* Finishing out front end authentication, testing creating a board through our front-end, and starting an account/user settings component.
+
+I spent pretty much the entire morning until lunch trying to figure out how to create one form so that a person trying to sign up on our website could upon submission, create a record of themselves both in the accounts and user table. The logic I wrote in this component script was solid and basically set up so that all of the form fields relevant to the account profile (username, password) and to the user profile (first name, last name, email, icon) were stored in two different states and then sent as a JSON body request to each respective endpoint (create account) and (create user). The issue is that our backend is set up so that a user can only be created if 1. an account has been created and the corresponding id can be input into the json request body for creating the user 2. there is a valid token so that the create endpoint can be accessed. For some reason, even though I set up the logic so that the create endpoint will only be called once an account is successfully created and a token is retrieved, due to the asynchronous nature of the script my code attempts to call the user endpoint before the token is retrieved. A couple of instructors and SEIRs also took a look at this, only for them to say my logic looked fine and that this was a difficult race condition to deal with. Thus, I ended up just separating the form into two, where the user is first asked to input credentials which are submitted and create an account and then they are asked to create a user profile, which is submitted to create a user.
+
+I then finished testing the form to create a board through our front-end and began the account/user settings component. I soon realized that we hadn't written an update_account endpoint which I set out to do. When passing in the current username of the logged in user that is trying to create the account (to ensure that a person can only update an account they created) I was mistakenly using get_account_data as opposed to current_account_data which was causing a response model error that crashed my FastAPI swagger UI, even before getting to test the endpoint. I also then realized that upon updating a username for example, the currently logged in account wouldn't be able to update their account anymore since their current username wouldn't match the updated username in the database. To work around this I made it to where if a user updates their account details (username or password) a new token is created which reflects the updated credentials.
+
+Today I learned:
+
+When trying to send two different states to different endpoints in a certain order, due to the asynchronous nature of fetch requests it is easy to create a race condition and for code to not work out the way you want it to. I also learned more about FastAPI and how validation errors can be created during auto-docs generation.
