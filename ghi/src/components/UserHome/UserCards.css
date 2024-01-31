@@ -1,7 +1,7 @@
-.row {
-  background-color: #0d0225;
-  padding-left: 11%; /* Adjust the padding as needed */
-  margin-left: 7%; /* Added margin to create space for the menu */
+/* .row {
+  background-color: hsl(0, 0%, 0%);
+  padding-left: 11%;
+  margin-left: 7%;
 
 }
 
@@ -12,7 +12,7 @@
   padding: 20px;
 }
 
-/* Below is what hides the scrollbar */
+
 .row__posters::-webkit-scrollbar {
   display: none;
 }
@@ -23,10 +23,10 @@
   padding-left: 10px;
   width: 23%;
   transition: transform 450ms;
-  /* z-index: 1; */
+
 }
 
 .row__poster:hover {
   transform: scale(1.08);
   opacity: 1;
-}
+} */
