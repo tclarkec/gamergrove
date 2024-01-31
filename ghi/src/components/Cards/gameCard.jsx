@@ -1,6 +1,9 @@
 import React from 'react';
 import './gameCard.css';
 
+
+
+
 function GameCard() {
   return (
     <div className='gcard-container'>

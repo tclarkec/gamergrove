@@ -28,31 +28,34 @@ const SideMenu = () => {
             <div className="side-menu">
                 <ul>
                     <br />
-                    <p>New Releases</p>
+                    <br />
+                    <hr class='solid' />
+
+                    <p class='space'>New Releases</p>
                     <hr class='solid' />
                     <ul>
-                        <li>Last 30 Days</li>
-                        <li>This Week</li>
-                        <li>Coming Soon</li>
+                        <li>- Last 30 Days</li>
+                        <li>- This Week</li>
+                        <li>- Coming Soon</li>
                     </ul>
                     <br />
                     <p>Consoles</p>
                     <hr class='solid' />
                     <ul>
-                        <li>Xbox</li>
-                        <li>Playstation</li>
-                        <li>PC</li>
-                        <li>Nintendo</li>
+                        <li>- Xbox</li>
+                        <li>- Playstation</li>
+                        <li>- PC</li>
+                        <li>- Nintendo</li>
                     </ul>
                     <br />
                     <p>Genres</p>
                     <hr class='solid'/>
                     <ul>
-                        <li>Action</li>
-                        <li>Strategy</li>
-                        <li>RPG</li>
-                        <li>Shooter</li>
-                        <li>Adventure</li>
+                        <li>- Action</li>
+                        <li>- Strategy</li>
+                        <li>- RPG</li>
+                        <li>- Shooter</li>
+                        <li>- Adventure</li>
                     </ul>
                     <br />
                     <hr class='solid' />

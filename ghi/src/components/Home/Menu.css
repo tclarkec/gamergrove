@@ -3,14 +3,15 @@
   position: fixed;
   top: 70px;
   left: 0;
-  background-color: #111;
+  background-color: #000000;
   color: white;
-  padding: 20px;
+  padding: 7px;
   width: 190px;
   z-index: 1;
   overflow-y: auto; /* Enable vertical scrolling if needed */
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); Add a subtle box shadow */
   transition: width 0.5s ease-in-out;
+  border-right: #bbb 2px;
 
   @media (max-width: 68px) {
     width: 100%; /* Adjust width for smaller screens */
@@ -24,16 +25,17 @@
 }
 
 .side-menu p {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
 .side-menu li {
   margin: 5px 0;
-  padding: 8px;
+  padding: 1px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 13px;
 }
 
 .side-menu li:hover {
@@ -55,4 +57,8 @@ hr.solid {
 
 .all-games p:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.space {
+  margin-top: 2px;
 }

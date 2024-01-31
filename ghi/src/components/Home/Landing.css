@@ -5,7 +5,7 @@
 /* .root */
 
 .hero-carousel-container {
-    /* background-color: #0d0225; */
+  background-color: #0d0225;
   overflow: hidden;
   position: relative;
   margin: 0px auto; /* Center the carousel horizontally */
@@ -46,11 +46,11 @@ header {
 
 
 
-.search-bar {
-  width: 26.4%;
+/* .search-bar {
+  width: 100px;
   background-color: rgb(55, 49, 49);
   padding: 8px;
-  /* position: relative; */
+  position: relative;
   margin-left: 71.8%;
   margin-right: 10px;
   margin-top: 10px;
@@ -60,9 +60,9 @@ header {
   border: none;
   outline: none;
   font-size: 16px;
-}
+} */
 
-.search-bar::placeholder {
+/* .search-bar::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -78,4 +78,4 @@ header {
 .search-bar:focus {
   transition: box-shadow 0.3s ease-in-out;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+} */

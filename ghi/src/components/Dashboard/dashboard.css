@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
 body {
-  background: #121212;
+  background: #000000;
   /* color: #121212; */
   font-family: "K2D";
 }
@@ -9,7 +9,7 @@ body {
 main {
   max-width: 1100px;
   margin: 70px; /* fill in for top menu */
-  background: 121212;
+  background: black;
   padding: 30px;
 
   /* position: relative; */
@@ -42,7 +42,7 @@ p {
   padding: 0;
   width: 1100px;
   margin-left: -30px;
-  background: #2B2A28;
+  background: #333333;
   height: 40px;
   border-bottom: 5px solid #ffffff;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
@@ -169,5 +169,3 @@ footer {
   padding: 5px 10px;
   margin: 5px;
 } */
-
-

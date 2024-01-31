@@ -10,6 +10,7 @@ import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
 import UserHomePage from "./components/UserHome/UserHomePage";
 import Listgames from './components/Games/Listgames';
+import GameDetails from './components/GameDetails/gameDetails';
 
 
 
@@ -62,6 +63,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/home" element={<UserHomePage />} />
                 <Route path="/games" element={<Listgames />} />
+                <Route path="/gamedetails" element={<GameDetails />} />
             </Routes>
         </BrowserRouter>
     )
