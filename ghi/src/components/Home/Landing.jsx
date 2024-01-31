@@ -4,10 +4,15 @@ import './Landing.css';
 import Nav from '../../Nav.css';
 import './Menu';
 import './Rows';
+import HomeGameCard from '../Cards/homeGameCard.jsx';
 
 const Landing = () => {
   return (
     <header>
+      <br />
+      <br />
+      <h3 className='homeH3'>New Releases →</h3>
+      <div class="homeline"></div>
       <div className="hero-carousel-container">
         <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
           <div className="carousel-inner">

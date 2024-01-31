@@ -1,0 +1,73 @@
+
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
+
+
+.lgamesbody {
+    background-color: rgb(255, 255, 255);
+    font-family: "K2D";
+    margin-top: 0;
+}
+
+
+/* .top {
+    margin-top: 20px;
+    height: 50px;
+    width: 1530px;
+    background-color: rgb(83, 83, 83);
+} */
+
+.banana {
+    color: rgb(0, 255, 0);
+    margin-left: 200px;
+    margin-top: 100px;
+    z-index: 1;
+    /* margin-bottom: 30px; */
+
+}
+
+.lgamesh2 {
+    color: rgb(251, 255, 251);
+    margin-top: -30px;
+    text-align: right;
+    z-index: 1;
+
+
+}
+
+.lgamessolid {
+    border-top: 2px solid #bbb;
+    width: 230px;
+    position: relative;
+    margin-top: -10px;
+    top: 0;
+    z-index: 0;
+}
+
+.lgamescard-img {
+    background-color: rgb(255, 252, 252);
+    width: 300px;
+    height: 170px;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0px 25px 35px black;
+    margin-left: 1200px;
+    margin-top: 50px;
+}
+
+.grow {
+  background-color: #000000;
+  padding-left: 11%;
+  margin-left: 7%;
+
+}
+
+.grow__posters {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 0px;
+  margin-left: 50px;
+  margin-right: 10px;
+  gap: 50px;
+  margin-top: -40px;
+  margin-bottom: 20px;
+}
