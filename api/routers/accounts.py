@@ -53,6 +53,24 @@ async def delete_account(
     username = account_data["username"]
     return queries.delete(id, username)
 
+@router.put("/api/accounts/{id}/{username}", response_model = Union[AccountToken, HttpError])
+async def update_account(
+    id: int,
+    data: AccountIn,
+    request: Request,
+    response: Response,
+    queries: AccountQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    hashed_password = authenticator.hash_password(data.password)
+    username = account_data["username"]
+    updated_account = queries.update(id, username, data, hashed_password)
+
+    form = AccountForm(username=data.username, password=data.password)
+    token = await authenticator.login(response, request, form, queries)
+    return AccountToken(account=updated_account, **token.dict())
+
+
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
