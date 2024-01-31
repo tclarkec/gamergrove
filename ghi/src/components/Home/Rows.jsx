@@ -53,12 +53,6 @@ const Rows = () => {
             <div className='row__posters'>
 
                 <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-
-
-
 
                 </div>
             </div>
@@ -68,13 +62,6 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-
-
-
 
                 </div>
             </div>
@@ -83,12 +70,6 @@ const Rows = () => {
             <h3>RPG Games →</h3>
             <div class="line"></div>
             <div className='row__posters'>
-
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-
 
 
 
@@ -100,14 +81,6 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-
-
-
-
                 </div>
             </div>
             <div className='row'>
@@ -115,12 +88,6 @@ const Rows = () => {
             <h3>Adventure Games →</h3>
             <div class="line"></div>
             <div className='row__posters'>
-
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-
 
 
 

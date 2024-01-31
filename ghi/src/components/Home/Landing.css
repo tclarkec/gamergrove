@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
-
 .homeH3 {
   font-family: K2D;
   color: white;
   text-align: left;
   margin-left: 300px;
 }
-
 .hero-carousel-container {
   background-color: #000000;
   overflow: hidden;
@@ -22,27 +20,37 @@
     0px 30px 150px 30px rgb(255, 255, 255),
     /* 0px 30px 50px 30px rgba(147, 2, 184, 0.371); */
 }
-
 .carousel-inner {
   display: flex;
   transition: transform 450ms ease-in-out;
   /* border-radius: 20px; */
   overflow: hidden;
 }
-
 .carousel-item {
-    height: 250px;
-    position: relative;
-    object-fit: contain;
+  min-width: 100%; /* Ensure each item takes the full width */
+  border-radius: 20px;
 }
-
-.search-bar {
-    border-radius: 25%;
-    width: 400px;
-    background-color: rgb(55, 49, 49);
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 10px;
-
-
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  /* padding-top: 19.8px; */
+  margin-left: auto;
+  margin-right: auto; /* Center the image horizontally */
+  border-radius: 20px;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%; /* Adjust the width of the controls as needed */
+  border-radius: 20px;
+}
+header {
+  background-color: #000000;
+  margin-top: 50.5px;
+}
+.homeline {
+    width: 77%;
+    margin-left: 275px;
+    height: 3px;
+    background: linear-gradient(to right, #ff10bf, #009dff);
+    box-shadow: 0px 2px 40px rgba(119, 0, 255, 0.1);
 }

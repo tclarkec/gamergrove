@@ -9,7 +9,7 @@ import Construct from './Construct'
 import './App.css'
 import Home from './Home';
 import Login from './Login';
-import BoardForm from './BoardForm';
+// import BoardForm from './BoardForm';
 import SignUpAccount from './SignUpAccount';
 import SignUpUser from './SignUpUser';
 import LogOutTest from './components/Home/LogOutTest';
