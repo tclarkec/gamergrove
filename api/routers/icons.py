@@ -1,10 +1,8 @@
 from fastapi import (
-    APIRouter, Depends, Request,
-    Response
+    APIRouter, Depends
 )
-from typing import Union
+from typing import Union, List
 from queries.icons import (
-    IconIn,
     IconOut,
     IconQueries
 )
@@ -16,7 +14,13 @@ class HttpError(BaseModel):
 
 router = APIRouter()
 
-@router.get("/icons/{id}", response_model=Union[IconOut, HttpError])
+@router.get("/api/icons", response_model=Union[List[IconOut], HttpError])
+async def get_all_icons(
+    queries: IconQueries = Depends()
+):
+    return queries.get_all_icons()
+
+@router.get("/api/icons/{id}", response_model=Union[IconOut, HttpError])
 async def get_icon(
     id: int,
     queries: IconQueries = Depends()

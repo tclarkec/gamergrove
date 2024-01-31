@@ -3,6 +3,7 @@ from psycopg_pool import ConnectionPool
 from psycopg import connect, sql, errors
 from pydantic import BaseModel, ValidationError
 from datetime import date
+from typing import List
 from fastapi import(HTTPException, status)
 from queries.screenshots import ScreenshotsQueries
 from queries.stores import StoresQueries
@@ -51,6 +52,29 @@ class GameOut(BaseModel):
 
 
 class GameQueries:
+    def get_all_games(self) -> List[GameOut]:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT *
+                        FROM gamesdb
+                        """
+                    )
+                    rows = db.fetchall()
+                    games = []
+                    if rows:
+                        record = {}
+                        for row in rows:
+                            for i, column in enumerate(db.description):
+                                record[column.name] = row[i]
+                            games.append(GameOut(**record))
+                        return games
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="Could not find the games in the database"
+                    )
+                
     def get_game(self, id: int) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
