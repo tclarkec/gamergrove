@@ -70,8 +70,16 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<LogOutTest />} />
+                <Route path="/signup/account" element={<SignUpAccount />} />
+                <Route path="/signup/user" element={<SignUpUser />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/boards" element={<BoardForm />} />
-            </Routes>
+        </Routes>
         </BrowserRouter>
     )
 }

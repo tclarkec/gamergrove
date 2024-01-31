@@ -1,27 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './homeGameCard.css';
 
-
-
-
 function HomeGameCard() {
+  const [gameDataList, setGameDataList] = useState([]);
+
+
+
+const fetchData = async () => {
+    try {
+    const response = await fetch('http://localhost:8000/api/games');
+    const data = await response.json();
+    setGameDataList(data);
+    } catch (error) {
+    console.error('Error fetching data:', error);
+    }
+};
+
+
+useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className='hgcard-container'>
-    <div className='hgcard'>
-
-
-        <img
-          src="https://store-images.s-microsoft.com/image/apps.14679.13754210357812593.c3c8aa7a-e063-438f-8dc1-02c5d4abfd95.b555e954-35b4-47f6-87fb-405136d7273e?q=90&w=480&h=270"
-          className="hgcard-img"
-          alt="Card"
-        />
-        <div className="hgcontent-head">
-          <h2>Card Heading</h2>
-
-      </div>
-
-        <div className="hgcontent-capsules">
-          <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="15px" height="15px" alt="Icon 1" />
+      {gameDataList.map((gameData) => (
+        <div key={gameData.id} className='hgcard'>
+          <img
+            src={gameData.background_img}
+            className="hgcard-img"
+            alt={`Card for ${gameData.name}`}
+          />
+          <div className="hgcontent-head">
+            <h2>{gameData.name.slice(0, 20)}</h2>
+          </div>
+          <div className="hgcontent-capsules">
+            <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="15px" height="15px" alt="Icon 1" />
           <img
             src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
             width="15px"
@@ -35,23 +48,18 @@ function HomeGameCard() {
             height="15px"
             alt="Icon 4"
           />
+          </div>
+          <div className="hgcontent-body">
+            <p>{gameData.description.slice(0, 200)}</p>
+          </div>
+          <div className="hgbutton">
+            <button>
+              <b>Options</b>
+            </button>
+          </div>
         </div>
-
-        <div className="hgcontent-body">
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum debitis aut sequi quaerat. Nobis deleniti
-            quibusdam perspiciatis perferendis dicta. Dicta, quia voluptas. Quos amet cupiditate pariatur perspiciatis
-            ipsa optio accusamus.
-        </p>
-        </div>
-        <div className="hgbutton">
-          <button>
-            <b>Options</b>
-          </button>
-        </div>
-      </div>
-      </div>
-
+      ))}
+    </div>
   );
 }
 

@@ -53,9 +53,6 @@ const Rows = () => {
             <div className='row__posters'>
 
                 <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
 
 
 
@@ -68,10 +65,8 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
+                
+
 
 
 
@@ -84,10 +79,6 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
 
 
 
@@ -100,10 +91,7 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
+
 
 
 
@@ -116,10 +104,7 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
+
 
 
 

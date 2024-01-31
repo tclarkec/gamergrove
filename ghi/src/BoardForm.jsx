@@ -1,5 +1,5 @@
-// import React, { useEffect, useState } from 'react';
-// import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const initialData = {
     board_name:"",
@@ -28,6 +28,7 @@ function BoardForm(){
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(formData),
+            credentials: 'include', 
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -71,4 +72,4 @@ function BoardForm(){
     );
 }
 
-// export default BoardForm;
+export default BoardForm;

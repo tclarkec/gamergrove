@@ -29,7 +29,9 @@ const SideMenu = () => {
                 <ul>
                     <br />
                     <br />
+                    <a href="http://localhost:5173/">
                     <h5 class='home'>Hompage</h5>
+                    </a>
                     <div class="small-space"></div>
 
                     <hr class='solid' />

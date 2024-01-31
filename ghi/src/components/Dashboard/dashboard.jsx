@@ -5,6 +5,7 @@ import BoardCard from '../Cards/boardCard.jsx';
 import ReviewCard from '../Cards/reviewCard.jsx';
 import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
+import HomeGameCard from '../Cards/homeGameCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
 
@@ -34,16 +35,8 @@ function Dashboard() {
         <div id="content">
           <section id="content1">
             <div>
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
+            <HomeGameCard />
+
 
             </div>
           </section>
@@ -56,10 +49,8 @@ function Dashboard() {
           </section>
           <section id="content3">
              <div className='gcard-container'>
-              <GameCard />
-              <GameCard />
-              <GameCard />
-              <GameCard />
+             <GameCard />
+
             </div>
           </section>
           <section id="content4">
