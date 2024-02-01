@@ -167,3 +167,15 @@ I then finished testing the form to create a board through our front-end and beg
 Today I learned:
 
 When trying to send two different states to different endpoints in a certain order, due to the asynchronous nature of fetch requests it is easy to create a race condition and for code to not work out the way you want it to. I also learned more about FastAPI and how validation errors can be created during auto-docs generation.
+
+### January 31, 2024
+
+Today I worked on:
+
+* Finishing out the account/user settings component (although I need to figure out how to account for if a user does not update their password), combining the account and user tables into one, recombining the account and user signup forms into one, added a get_all_games endpoint, getting all of the games in our database to show up on the Landing Page, creating the my saved games tab in the user dashboard, and added an update_library_entry endpoint so that a user can add and remove a game to their wishlist.
+
+In the morning we each worked on our own individual features and I soon realized as I was working on the update account settings page that it would be best to combine our account and user tables into one. This is because in order to access the update user endpoint, we would need to pass in the user id into the fetch request url, which we have no way of accessing. I then recombined the account and user signup forms into a single form. We then came together to create a get_all_games endpoint so that we could fetch all games and load them into our landing page, with me driving. We then coded the filtering logic so that in the my saved games tab in the user dashboard, only the games that have been added to a user's board will populate that tab. I also added an update_library_entry endpoint so that a user can add and remove a game to their wishlist - I had to adjust the error handling so that a user cannot update a library entry they did not create. I am now going to move on to the create a review form - I eventually need to figure out how to get the account settings component (basically an update account form) to not update the current password in the database if nothing is input into the password field. This is uniquely difficult since the actual password is not saved in the database (it is hashed).
+
+Today I learned:
+
+The nature of async in JavaScript is still unpredictable and should not be relied upon when attempting to make fetch requests to endpoints in a particular order - we had trouble setting the state of our loaded-in games after getting a response back from the get_all_games endpoint.

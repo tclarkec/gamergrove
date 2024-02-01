@@ -16,11 +16,11 @@ import GameDetails from './components/GameDetails/gameDetails';
 
 =========
 import Login from './Login';
-// import BoardForm from './BoardForm';
-import SignUpAccount from './SignUpAccount';
-import SignUpUser from './SignUpUser';
+import BoardForm from './BoardForm';
+import SignUpForm from './SignUpForm'
 import LogOutTest from './components/Home/LogOutTest';
 import Settings from './Settings';
+import ReviewForm from './ReviewForm';
 
 import Dashboard from "./components/Dashboard/dashboard";
 // import UserHomePage from "./components/UserHome/UserHomePage";
@@ -80,15 +80,11 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/logout" element={<LogOutTest />} />
-                    <Route path="/signup/account" element={<SignUpAccount />} />
-                    <Route path="/signup/user" element={<SignUpUser />} />
+                    <Route path="/signup" element={<SignUpForm />} />
                     <Route path="/settings" element={<Settings />} />
-                    <Route path="/" element={<Home />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/home" element={<UserHomePage />} />
-                <Route path="/gamesdetails" element={<GameDetails />} />
-
-            </Routes>
+                    <Route path="/boards/create" element={<BoardForm />} />
+                    <Route path="/reviews/create" element={<ReviewForm />} />
+                </Routes>
             </BrowserRouter>
         </AuthProvider>
     )

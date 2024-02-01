@@ -3,6 +3,7 @@ from typing import Union, List
 from authenticator import authenticator
 from queries.libraries import (
     LibraryInBase,
+    LibraryInUpdate,
     LibraryOut,
     LibraryQueries,
     HttpError
@@ -68,10 +69,24 @@ async def delete_library_entry(
     account_id = account_data["id"]
     return queries.delete_library_entry(id, account_id)
 
-# @router.put("/api/libraries/{id}", response_model=Union[LibraryOut, HttpError])
-# async def update_library_entry(
-#     id: int,
-#     library: LibraryIn,
-#     queries: LibraryQueries = Depends()
-# ) -> Union[HttpError, LibraryOut]:
-#     return queries.update_library_entry(id, library)
+@router.put("/api/libraries/{id}/{account_id}", response_model=Union[LibraryOut, HttpError])
+async def update_library_entry(
+    id: int,
+    entry: LibraryInUpdate,
+    queries: LibraryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    library_details = queries.get_library_entry(id).dict()
+
+    account_id = account_data["id"]
+    game_id = library_details["game_id"]
+    board_id = library_details["board_id"]
+
+    library_dict = entry.dict()
+    library_dict["account_id"] = account_id
+    library_dict["game_id"] = game_id
+    library_dict["board_id"] = board_id
+
+
+    updated_entry = queries.update_library_entry(id,library_dict)
+    return updated_entry
