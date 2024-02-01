@@ -9,7 +9,7 @@ function GameCard() {
 
   // const onClickHandler = () => {
   //   setSelected(icon);
-  //   window.open({icon.storesdb})
+  //   window.open({})
   // }
 
 
