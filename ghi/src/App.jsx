@@ -80,6 +80,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/boards" element={<BoardForm />} />
                 <Route path="/games" element={<Listgames />} />
+                <Route path="/gamedetails" element={<GameDetails />} />
         </Routes>
         </BrowserRouter>
     )

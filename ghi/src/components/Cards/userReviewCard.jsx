@@ -4,7 +4,7 @@ import './userReviewCard.css';
 function UserReviewCard() {
   return (
     <div className="urcard">
-      <div className="urcard-title">Game Title</div>
+      <div className="urcard-title">Review Title</div>
       <div className="urcard-date">9/3/2023</div>
       <div className="urcard-edit-delete">edit | delete</div>
       <div className="urline"></div>

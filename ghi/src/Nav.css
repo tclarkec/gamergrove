@@ -9,9 +9,9 @@
   height: 103px; /* Adjust the height as needed */
   z-index: 1;
   background-color: #000000;
-  transition: background-color 0.5s ease-in-out; /* Added transition for background color change */
+  transition: background-color 0.5s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .nav__contents {
     display: flex;
     justify-content: space-between;
@@ -68,7 +68,7 @@ input[type=text] {
   width: 100%; /* Set to 100% to fill the container */
   height: 40px;
   color: #525252;
-  text-transform: uppercase;
+  
   font-size: 16px;
   font-weight: 100;
   letter-spacing: 2px;
