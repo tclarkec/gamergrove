@@ -8,13 +8,13 @@ import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
-<<<<<<<<< Temporary merge branch 1
+// <<<<<<<<< Temporary merge branch 1
 import Dashboard from "./components/Dashboard/dashboard";
 import UserHomePage from "./components/UserHome/UserHomePage";
 import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
 
-=========
+// =========
 import Login from './Login';
 import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
