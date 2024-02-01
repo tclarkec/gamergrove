@@ -5,11 +5,9 @@ import BoardCard from '../Cards/boardCard.jsx';
 import ReviewCard from '../Cards/reviewCard.jsx';
 import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
-import HomeGameCard from '../Cards/homeGameCard';
 import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
-import HomeGameCard from '../Cards/homeGameCard';
 
 function Dashboard() {
   return (
