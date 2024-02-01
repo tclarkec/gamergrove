@@ -28,10 +28,12 @@ async def create_library_entry(
     library_dict = entry.dict()
 
     board_id = library_dict["board_id"]
-    board_dict = board_queries.get_board(board_id).dict()
-    del board_dict["id"]
-    board_dict["game_count"] += 1
-    board_queries.update_board(board_id, board_dict)
+
+    if board_id is not None:
+        board_dict = board_queries.get_board(board_id).dict()
+        del board_dict["id"]
+        board_dict["game_count"] += 1
+        board_queries.update_board(board_id, board_dict)
 
     library_dict["account_id"] = account_id
     created_entry = queries.create_library_entry(library_dict)

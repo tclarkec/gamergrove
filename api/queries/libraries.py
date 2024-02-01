@@ -2,7 +2,7 @@ import os
 from psycopg_pool import ConnectionPool
 from psycopg import connect, sql, errors
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from fastapi import(HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
@@ -14,7 +14,7 @@ class HttpError(BaseModel):
 class LibraryInBase(BaseModel):
     wishlist: bool
     game_id: int
-    board_id: int
+    board_id: Optional[int]
 
 class LibraryIn(LibraryInBase):
     account_id: int
@@ -26,7 +26,7 @@ class LibraryOut(BaseModel):
     id: int
     wishlist: bool
     game_id: int
-    board_id: int
+    board_id: Optional[int]
     account_id: int
 
 class LibraryQueries:
