@@ -74,7 +74,7 @@ class GameQueries:
                         status_code=status.HTTP_404_NOT_FOUND,
                         detail="Could not find the games in the database"
                     )
-                
+
     def get_game(self, id: int) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -99,6 +99,8 @@ class GameQueries:
                 )
 
     def create_game(self, game_dict: GameIn) -> GameOut:
+        print("------------------------------------")
+        print(game_dict)
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 try:
