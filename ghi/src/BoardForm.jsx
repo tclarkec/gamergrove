@@ -28,6 +28,7 @@ function BoardForm(){
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(formData),
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }

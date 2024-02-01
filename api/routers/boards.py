@@ -61,9 +61,14 @@ async def update_board(
     queries: BoardQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
+    board_details = queries.get_board(id).dict()
+
     account_id = account_data["id"]
+    game_count = board_details["game_count"]
+
     board_dict = board.dict()
     board_dict["account_id"] = account_id
+    board_dict["game_count"] = game_count
 
     updated_board = queries.update_board(id, board_dict)
     return updated_board
