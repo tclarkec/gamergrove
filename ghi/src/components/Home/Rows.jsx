@@ -1,119 +1,52 @@
-// Rows.jsx
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './Rows.css';
 import HomeGameCard from '../Cards/homeGameCard.jsx';
 
-
 const Rows = () => {
-    // const [games, setGames] = useState([]);
+    const [gameDataList, setGameDataList] = useState([]);
 
-    // useEffect(() => {
-    //     const fetchGames = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:8000/api/games', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({
-    //                     // Replace this with the actual game data you want to send to the backend
-    //                     name: '',
-    //                     description: '',
-    //                     rating: 5,
-    //                     background_img: ''
-    //                     // Add other fields as needed
-    //                 }),
-    //             });
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/games');
+            const data = await response.json();
+            setGameDataList(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-    //             if (response.ok) {
-    //                 const data = await response.json();
-    //                 setGames(data);
-    //             } else {
-    //                 console.error('Could not fetch those games for you');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching games:', error);
-    //         }
-    //     };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-    //     fetchGames();
-    // }, []);
+    const organizeGamesByGenre = () => {
+        const organizedGames = {};
+        gameDataList.forEach((game) => {
+            if (!organizedGames[game.genre]) {
+                organizedGames[game.genre] = [];
+            }
+            organizedGames[game.genre].push(game);
+        });
+        return organizedGames;
+    };
 
-
+    const organizedGamesByGenre = organizeGamesByGenre();
 
     return (
         <div>
             <br />
             <br />
 
-        <div className='row'>
-
-            <h3>Action Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-                <HomeGameCard />
-
-
-
-
+            {Object.keys(organizedGamesByGenre).map((genre) => (
+                <div key={genre} className='row'>
+                    <h3>{`${genre} Games →`}</h3>
+                    <div className="line"></div>
+                    <div className='row__posters'>
+                        <HomeGameCard games={organizedGamesByGenre[genre]} />
+                    </div>
                 </div>
-            </div>
-            <div className='row'>
-
-            <h3>Strategy Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>RPG Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>Shooter Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>Adventure Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-
-                </div>
-            </div>
-           </div>
-
-
+            ))}
+        </div>
     );
 };
 

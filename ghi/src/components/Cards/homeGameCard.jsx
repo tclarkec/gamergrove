@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './homeGameCard.css';
-
-function HomeGameCard() {
+// Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
+function HomeGameCard( {games}) {
   const [gameDataList, setGameDataList] = useState([]);
 
   const fetchData = async () => {
@@ -36,9 +36,11 @@ function HomeGameCard() {
     }
   };
 
+// Used games as a prop to have as a callBack in Rows, but resulted in blank screen
+// gameDataList in line 43 possibly change to games prop
   return (
     <div className='hgcard-container'>
-      {gameDataList.map((gameData) => (
+      {games.map((gameData) => (
         <div key={gameData.id} className='hgcard'>
           <img
             src={gameData.background_img}
@@ -49,34 +51,46 @@ function HomeGameCard() {
             <h2>{gameData.name}</h2>
           </div>
           <div className="hgcontent-capsules">
-            <img
-              src="https://i.postimg.cc/nrDT7szB/image-5.png"
-              width="15px"
-              height="15px"
-              alt="Icon 1"
-              onClick={() => handleClick('Xbox', gameData.rawg_pk)}
-            />
-            <img
-              src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-              width="15px"
-              height="15px"
-              alt="Icon 2"
-              onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
-            />
-            <img
-              src="https://i.postimg.cc/R0qXLppc/image-3.png"
-              width="15px"
-              height="15px"
-              alt="Icon 3"
-              onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
-            />
-            <img
-              src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-              width="15px"
-              height="15px"
-              alt="Icon 4"
-              onClick={() => handleClick('PC', gameData.rawg_pk)}
-            />
+            {/* {gameData.Xbox && ( */}
+              <img
+                src="https://i.postimg.cc/nrDT7szB/image-5.png"
+                width="15px"
+                height="15px"
+                alt="Icon 1"
+                onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+              />
+            {/* )} */}
+
+            {/* {gameData.PlayStation && ( */}
+              <img
+                src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
+                width="15px"
+                height="15px"
+                alt="Icon 2"
+                onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
+              />
+            {/* )} */}
+
+
+            {/* {gameData.Nintendo && ( */}
+              <img
+                src="https://i.postimg.cc/R0qXLppc/image-3.png"
+                width="15px"
+                height="15px"
+                alt="Icon 3"
+                onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
+              />
+            {/* )} */}
+            {/* {gameData.PC && ( */}
+              <img
+                src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+                width="15px"
+                height="15px"
+                alt="Icon 4"
+                onClick={() => handleClick('PC', gameData.rawg_pk)}
+              />
+            {/* )} */}
+
           </div>
           <div className="hgcontent-body">
             <p>{gameData.description.slice(0, 200)}</p>
