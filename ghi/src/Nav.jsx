@@ -47,7 +47,7 @@ const Nav = () => {
       <nav>
         <div className='nav__contents'>
           <div className='ncontainer expanded'>
-            <input placeholder='Search for games...' className='js-search' type='text' />
+            <input placeholder='Search for game titles...' className='js-search' type='text' />
             <i className='fa fa-search'></i>
           </div>
 

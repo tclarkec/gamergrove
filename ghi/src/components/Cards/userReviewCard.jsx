@@ -12,7 +12,7 @@ function UserReviewCard() {
         <div className="urcard-photo">
           <img src="https://www.shareicon.net/data/512x512/2016/08/18/809170_user_512x512.png" />
         </div>
-        <div className="urcard-details">
+        <div className="urcard-details" style={{ color: 'black !important' }}>
             {/* limit this to 715 characters */}
 
             <p>1up isometric view Shoot 'em up rekt Counter-Strike multiplayer online battle arena The Legend of Zelda: Collector's Edition XP character design WWE 2K open world Third-Person. DPS Madden OHKO MMORPG feeding Assassin's Creed bullshot noob. Mudflation achievements drop-out God of War nerf accelerometer FPS tryhard dual wield cheated death job Red Dead game engine. Crowd control Grand Theft Auto IV single-player Crash Bandicoot action mute JRPG The Elder Scrolls V: Skyrim ambient occlusion.</p>

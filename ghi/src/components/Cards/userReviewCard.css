@@ -2,7 +2,7 @@
 
 
 .urcard {
-    background-color: #545454;
+    background-color: #2e2e2e;
     width: 800px;
     height: 250px;
     border: 1px solid black;
@@ -88,7 +88,7 @@
     height: 3px;
     margin-left: 40px;
 
-    background: black;
+    background: rgb(138, 138, 138);
 
 }
 
