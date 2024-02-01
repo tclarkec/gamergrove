@@ -7,7 +7,7 @@ import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
-
+import HomeGameCard from '../Cards/homeGameCard';
 
 function Dashboard() {
   return (
@@ -17,7 +17,7 @@ function Dashboard() {
       <main>
         <h1>User Dashboard!</h1>
 
-          {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
+        {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
 
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />
@@ -34,16 +34,17 @@ function Dashboard() {
         <div id="content">
           <section id="content1">
             <div>
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
-            <BoardCard />
+              <HomeGameCard />
+              {/* <GameCard /> */}
+
+
+
+
+
+
+
+
+
 
             </div>
           </section>
@@ -55,7 +56,7 @@ function Dashboard() {
 
           </section>
           <section id="content3">
-             <div className='gcard-container'>
+            <div className='gcard-container'>
               <GameCard />
               <GameCard />
               <GameCard />
@@ -64,8 +65,8 @@ function Dashboard() {
           </section>
           <section id="content4">
             <div>
-            <WishlistCard />
-            <WishlistCard />
+              <WishlistCard />
+              <WishlistCard />
             </div>
           </section>
           <section id="content5">

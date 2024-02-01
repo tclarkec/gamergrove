@@ -5,6 +5,19 @@ import './gameCard.css';
 
 
 function GameCard() {
+
+
+  // const onClickHandler = () => {
+  //   setSelected(icon);
+  //   window.open({icon.storesdb})
+  // }
+
+
+
+
+
+
+
   return (
     <div className='gcard-container'>
     <div className='gcard'>
