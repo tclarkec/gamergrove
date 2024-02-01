@@ -15,9 +15,10 @@ import GameDetails from './components/GameDetails/gameDetails';
 import Login from './Login';
 import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
-import LogOutTest from './components/Home/LogOutTest';
+import LogOutTest from './LogOutTest';
 import Settings from './Settings';
 import ReviewForm from './ReviewForm';
+import RepliesTest from './RepliesTest';
 
 
 
@@ -80,6 +81,7 @@ function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/gamedetails" element={<GameDetails />} />
+                    <Route path="/replies/create" element={<RepliesTest />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

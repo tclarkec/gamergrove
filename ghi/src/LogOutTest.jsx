@@ -1,5 +1,5 @@
 import React from 'react'
-import './Landing.css'
+import './components/Home/Landing.css'
 
 const LogOutTest = () => {
     const handleLogOut = async () => {
