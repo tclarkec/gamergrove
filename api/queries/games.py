@@ -144,10 +144,10 @@ class GameQueries:
                         ],
                     )
 
-                    shot = ScreenshotsQueries()
-                    shot.get_screenshots(game_dict.rawg_pk)
-                    store = StoresQueries()
-                    store.get_stores(game_dict.rawg_pk)
+                    # shot = ScreenshotsQueries()
+                    # shot.get_screenshots(game_dict.rawg_pk)
+                    # store = StoresQueries()
+                    # store.get_stores(game_dict.rawg_pk)
 
                     row = result.fetchone()
                     if row is not None:

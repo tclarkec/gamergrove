@@ -58,62 +58,58 @@ class ScreenshotsQueries:
                         logging.debug("Screenshots from Database: %s", screenshots_list)
 
         except Exception as db_error:
-            logging.error("Error fetching screenshots from the database: %s", db_error)
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Error fetching screenshots from the database"
-            )
+
 
         # If not found in the database or not enough in the database, make an API call to Rawg
-        api_url = f"https://api.rawg.io/api/games/{rawg_pk}/screenshots?key={api_key}"
-        response = requests.get(api_url)
+            api_url = f"https://api.rawg.io/api/games/{rawg_pk}/screenshots?key={api_key}"
+            response = requests.get(api_url)
 
-        if response.status_code == 200:
-            external_data = response.json()
-            screenshots = external_data.get("results", [])
+            if response.status_code == 200:
+                external_data = response.json()
+                screenshots = external_data.get("results", [])
 
-            if screenshots:
-                try:
-                    with pool.connection() as conn:
-                        with conn.cursor() as db:
-                            for screenshot in screenshots:
-                                image_url = screenshot.get("image")
+                if screenshots:
+                    try:
+                        with pool.connection() as conn:
+                            with conn.cursor() as db:
+                                for screenshot in screenshots:
+                                    image_url = screenshot.get("image")
 
-                                # Check if the entry already exists in the database
-                                db.execute(
-                                    """
-                                    SELECT id
-                                    FROM screenshots
-                                    WHERE image_url = %s;
-                                    """,
-                                    [image_url]
-                                )
-                                existing_image = db.fetchone()
+                                    # Check if the entry already exists in the database
+                                    db.execute(
+                                        """
+                                        SELECT id
+                                        FROM screenshots
+                                        WHERE image_url = %s;
+                                        """,
+                                        [image_url]
+                                    )
+                                    existing_image = db.fetchone()
 
-                                if existing_image:
+                                    if existing_image:
 
-                                    continue
+                                        continue
 
-                                db.execute(
-                                    """
-                                    INSERT INTO screenshots (image_url, rawg_pk)
-                                    VALUES (%s, %s)
-                                    RETURNING id, image_url, rawg_pk;
-                                    """,
-                                    [image_url, rawg_pk],
-                                )
+                                    db.execute(
+                                        """
+                                        INSERT INTO screenshots (image_url, rawg_pk)
+                                        VALUES (%s, %s)
+                                        RETURNING id, image_url, rawg_pk;
+                                        """,
+                                        [image_url, rawg_pk],
+                                    )
 
-                                row = db.fetchone()
-                                if row is not None:
-                                    record = dict(zip([column.name for column in cur.description], row))
-                                    screenshots_list.append(ScreenshotsOut(**record))
+                                    row = db.fetchone()
+                                    if row is not None:
+                                        record = dict(zip([column.name for column in db.description], row))
+                                        screenshots_list.append(ScreenshotsOut(**record))
 
-                except Exception as db_error:
-                    logging.error("Error inserting screenshots into the database: %s", db_error)
-                    raise HTTPException(
-                        status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="Error adding screenshots to the database"
-                    )
+                    except Exception as db_error:
+                        logging.error("Error inserting screenshots into the database: %s", db_error)
+                        raise HTTPException(
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Error adding screenshots to the database"
+                        )
 
         if not screenshots_list:
             logging.debug("No screenshots found in both database and API.")
