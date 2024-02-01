@@ -16,6 +16,14 @@ class AccountIn(BaseModel):
     email: str
     icon_id: int
 
+# class AccountInUpdate(BaseModel):
+#     username: str | None = None
+#     password: str | None = None
+#     first_name: str | None = None
+#     last_name: str | None = None
+#     email: str | None = None
+#     icon_id: int | None = None
+
 class AccountOut(BaseModel):
     id: int
     username: str
