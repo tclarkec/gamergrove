@@ -16,7 +16,6 @@ const Nav = () => {
 
   const closeDropdown = (e) => {
   const avatarContainer = document.getElementById('avatar-container');
-  // Close dropdown if the click is outside the avatar container
   if (avatarContainer && !avatarContainer.contains(e.target)) {
     setShowDropdown(false);
   }

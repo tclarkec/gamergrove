@@ -84,7 +84,7 @@ input[type=text] {
 .nav__dropdown {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   background-color: rgb(255, 0, 0);
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

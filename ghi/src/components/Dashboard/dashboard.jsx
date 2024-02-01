@@ -35,7 +35,8 @@ function Dashboard() {
         <div id="content">
           <section id="content1">
             <div>
-            <HomeGameCard />
+            <BoardCard />
+
 
 
             </div>
@@ -43,8 +44,7 @@ function Dashboard() {
           <section id="content2">
 
             <ReviewCard />
-            <ReviewCard />
-            <ReviewCard />
+            
 
           </section>
           <section id="content3">
@@ -56,7 +56,7 @@ function Dashboard() {
           <section id="content4">
             <div>
             <WishlistCard />
-            <WishlistCard />
+
             </div>
           </section>
           <section id="content5">

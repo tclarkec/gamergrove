@@ -31,7 +31,6 @@ function GameCard() {
       const libraryData = await response.json();
       setUserSavedGames(libraryData.map((item) => item.game_id));
 
-      // Assuming you have an endpoint to fetch game details by game_id
       const gameDetailsPromises = libraryData.map((item) =>
         fetch(`http://localhost:8000/api/games/${item.game_id}`).then((response) =>
           response.json()

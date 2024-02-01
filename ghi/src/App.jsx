@@ -79,6 +79,7 @@ function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/boards" element={<BoardForm />} />
+                <Route path="/games" element={<Listgames />} />
         </Routes>
         </BrowserRouter>
     )

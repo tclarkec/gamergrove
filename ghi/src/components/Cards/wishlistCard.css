@@ -1,105 +1,95 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
-
 .wcontent-capsules {
-    margin-bottom: 5px;
-    z-index: 1;
-    position: relative;
-    right: 450px;
-    top: 15px;
-    margin-right: 5px;
+  margin-bottom: 5px;
+  z-index: 1;
+  position: relative;
+  right: 450px;
+  top: 15px;
+  margin-right: 5px;
 }
 
-.gcontent-capsules {
-            margin-top: 12px;
-            display: flex;
-            gap: 5px;
-            }
+.wcontent-capsules {
+  margin-top: 12px;
+  display: flex;
+  gap: 5px;
+}
 
-            .gcontent-capsules img {
-            margin-right: 2px;
-            }
+.gcontent-capsules img {
+  margin-right: 2px;
+}
 
 .side-by-side {
-            display: flex;
-            justify-content: flex-end;
-            position: relative;
-            top: 0px;
-        }
-.link-container {
-            margin-right: 10px;
-            margin-left: 10px;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: 0px;
+}
 
-        }
+.link-container {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
 .side-by-side a {
-            color: white !important;
-        }
+  color: white !important;
+}
 
 .wcard {
-    background-color: black;
-    width: 800px;
-    height: 145px;
-    border: 1px solid black;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-    margin-left: 10px;
-/*     display: flex; */
+  background-color: rgba(160, 160, 160, 0);
+  width: 800px;
+  height: 145px;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+  margin-left: 10px;
 }
 
 .wcard-content {
-    display: flex;
+  display: flex;
 }
 
 .wcard-photo {
-    flex: 1;
-    overflow: hidden;
+  flex: 1;
+  overflow: hidden;
 }
 
 .wcard-photo img {
-    background-color: black;
-    width: 200px;
-    height: 125px;
-    border-radius: 25px 25px 25px 25px;
-    position: relative;
-    margin: 10px;
-    margin-bottom: 10px;
-    margin-left: 25px;
-    box-shadow: 0px 0px 10.6px 10px rgba(255, 255, 255, 0.25);
+  width: 200px;
+  height: 125px;
+  border-radius: 25px;
+  margin: 10px;
+  box-shadow: 0px 0px 10.6px 10px rgba(255, 255, 255, 0.25);
 }
 
 .wcard-details {
-    flex: 2;
-    padding: 0px;
-    color: white;
-    font-family: 'K2D';
-    position: relative;
-    text-align: right;
-    width: 50%;
-    height: 50%;
-    align-items: center;
+  flex: 2;
+  padding: 10px;
+  color: rgb(0, 0, 0);
+  font-family: 'K2D';
+  position: relative;
 }
 
 hr.solid {
-    border-top: 2px solid #bbb;
-    border-radius: 7px 7px 7px 7px;
-    width: 500px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-  }
+  border-top: 2px solid #000000;
+  border-radius: 7px 7px 7px 7px;
+  width: 500px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 
 .wcard-title {
-    font-size: 20px;
-
-    padding-right: 70px;
-    color: white;
-    margin-top: 40px;
+  font-size: 20px;
+  padding-right: 70px;
+  color: rgb(75, 43, 43);
+  margin-top: 10px;
 }
 
 .wcard-description {
-    font-size: 14px;
-    margin: 0;
-    padding-right: 10px;
-    color: white;
+  font-size: 14px;
+  margin: 0;
+  padding-right: 10px;
+  color: rgb(0, 0, 0);
 }
