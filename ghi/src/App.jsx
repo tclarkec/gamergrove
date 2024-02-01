@@ -8,13 +8,10 @@ import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
-// <<<<<<<<< Temporary merge branch 1
 import Dashboard from "./components/Dashboard/dashboard";
-import UserHomePage from "./components/UserHome/UserHomePage";
 import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
 
-// =========
 import Login from './Login';
 import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
@@ -22,10 +19,6 @@ import LogOutTest from './components/Home/LogOutTest';
 import Settings from './Settings';
 import ReviewForm from './ReviewForm';
 
-import Dashboard from "./components/Dashboard/dashboard";
-// import UserHomePage from "./components/UserHome/UserHomePage";
-import Listgames from './components/Games/Listgames';
-import GameDetails from './components/GameDetails/gameDetails';
 
 
 
@@ -84,6 +77,9 @@ function App() {
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/boards/create" element={<BoardForm />} />
                     <Route path="/reviews/create" element={<ReviewForm />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/games" element={<Listgames />} />
+                    <Route path="/gamedetails" element={<GameDetails />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
