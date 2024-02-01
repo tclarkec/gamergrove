@@ -44,7 +44,7 @@ function Dashboard() {
           <section id="content2">
 
             <ReviewCard />
-            
+
 
           </section>
           <section id="content3">

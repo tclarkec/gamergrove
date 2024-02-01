@@ -16,7 +16,7 @@ import LogOutTest from './components/Home/LogOutTest';
 import Settings from './Settings';
 
 import Dashboard from "./components/Dashboard/dashboard";
-import UserHomePage from "./components/UserHome/UserHomePage";
+// import UserHomePage from "./components/UserHome/UserHomePage";
 import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
 

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import './boardCard.css';
 
 async function fetchUserName() {
   const tokenUrl = `http://localhost:8000/token`;
-
   const fetchConfig = {
     credentials: 'include',
+    redirect: 'follow',
   };
 
   const response = await fetch(tokenUrl, fetchConfig);
@@ -26,9 +27,7 @@ async function fetchGamesForBoard(boardId) {
     const response = await fetch(gamesUrl, gamesConfig);
     const gamesData = await response.json();
 
-    // Filter games based on the current boardId
     const filteredGames = gamesData.filter(game => game.board_id === boardId);
-
     return filteredGames;
   } catch (error) {
     console.error('Error fetching games data:', error);
@@ -44,10 +43,16 @@ async function fetchGameDetails(gameId) {
 
   try {
     const response = await fetch(gameUrl, gameConfig);
-    const gameData = await response.json();
-    return gameData;
+
+    if (response.ok) {
+      const gameData = await response.json();
+      return gameData;
+    } else {
+      console.error(`Error fetching game details for game ID ${gameId}: ${response.statusText}`);
+      return null;
+    }
   } catch (error) {
-    console.error('Error fetching game details:', error);
+    console.error(`Error fetching game details for game ID ${gameId}:`, error);
     return null;
   }
 }
@@ -66,11 +71,8 @@ function BoardCard() {
       const response = await fetch(boardUrl, boardConfig);
       const boardData = await response.json();
 
-      console.log('boardData:', boardData); // Log for debugging
-
       setUserSavedBoards(boardData.map((item) => item.id));
-      setBoardDataList(boardData); // Just set the board data directly
-
+      setBoardDataList(boardData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -79,7 +81,6 @@ function BoardCard() {
   const fetchAndSetGamesData = async (boardId) => {
     const gamesData = await fetchGamesForBoard(boardId);
 
-    // Update the boardDataList with the games information
     setBoardDataList((prevBoardDataList) =>
       prevBoardDataList.map((boardData) =>
         boardData.id === boardId
@@ -88,11 +89,9 @@ function BoardCard() {
       )
     );
 
-    // Fetch and update the game details for each game in the library sequentially
     for (const game of gamesData) {
       const gameDetails = await fetchGameDetails(game.game_id);
       if (gameDetails) {
-        // Update the boardDataList with the game details
         setBoardDataList((prevBoardDataList) =>
           prevBoardDataList.map((boardData) =>
             boardData.id === boardId
@@ -110,8 +109,17 @@ function BoardCard() {
           )
         );
       }
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   };
+
+  // Memoize the fetchBoardData function
+  const fetchBoardData = useCallback(async () => {
+    for (const boardId of userSavedBoards) {
+      await fetchAndSetGamesData(boardId);
+    }
+  }, [userSavedBoards]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -122,12 +130,11 @@ function BoardCard() {
     fetchUserData();
   }, []);
 
+  // Use the memoized function in the useEffect
   useEffect(() => {
-    // Use fetchAndSetGamesData for each board in userSavedBoards
-    userSavedBoards.forEach((boardId) => {
-      fetchAndSetGamesData(boardId);
-    });
-  }, [userSavedBoards]);
+    console.log("Fetching board data...");
+    fetchBoardData();
+  }, [fetchBoardData]);
 
   const filteredBoardDataList = boardDataList.filter((boardData) =>
     userSavedBoards.includes(boardData.id)
@@ -143,16 +150,22 @@ function BoardCard() {
             <hr className='bsolid' />
             <p className='card-text1'>{`${boardData.game_count} Games`}</p>
             <div className={`flex-container ${boardData.alignment}`}>
-  {boardData.games && boardData.games.slice(0, 3).map((game, index) => (
-    <div key={index} className={`flex-container ${index === 0 ? 'left' : index === 1 ? 'right' : 'center'}`}>
-      <div style={{ borderRadius: '25px', overflow: 'hidden', boxShadow: '0px 10px 10px black', backgroundColor: game.background_img ? 'transparent' : 'black' }}>
-        <img src={game.background_img} className='small-card-img-top' alt={`Game ${index + 2}`} />
-      </div>
-    </div>
-  ))}
-</div>
+              {boardData.games && Array.isArray(boardData.games) ? (
+                boardData.games.slice(0, 3).map((game, index) => {
+                  const key = `${game.game_id}-${boardData.id}-${index}`;
 
-
+                  return (
+                    <div key={key} className={`flex-container ${index === 0 ? 'left' : index === 1 ? 'right' : 'center'}`}>
+                      <div style={{ borderRadius: '25px', overflow: 'hidden', boxShadow: '0px 10px 10px black', backgroundColor: game.background_img ? 'transparent' : 'black' }}>
+                        <img src={game.background_img} className='small-card-img-top' alt={`Game ${index + 2}`} />
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>Loading games...</p>
+              )}
+            </div>
           </div>
         </div>
       ))}
