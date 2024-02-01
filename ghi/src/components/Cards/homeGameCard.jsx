@@ -21,7 +21,6 @@ function HomeGameCard() {
   const openPurchaseLink = (platform) => {
     const platformStore = gameDataList.find((game) => game[platform]);
     if (platformStore) {
-      // Fetch the store URL from the storesdb based on the platform
       const storeUrl = fetchStoreUrl(platform);
       if (storeUrl) {
         window.location.href = storeUrl;
