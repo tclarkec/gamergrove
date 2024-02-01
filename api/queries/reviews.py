@@ -13,16 +13,16 @@ class HttpError(BaseModel):
 
 
 class ReviewInBase(BaseModel):
-    body: str
     title: str
+    body: str
     game_id: int
-    rating: int
+    rating: float
 
 
 class ReviewInUpdate(BaseModel):
-    body: str
     title: str
-    rating: int
+    body: str
+    rating: float
 
 
 class ReviewIn(ReviewInBase):
@@ -35,11 +35,11 @@ class ReviewOut(BaseModel):
     id: int
     game_id: int
     account_id: int
-    body: str
     title: str
+    body: str
     replies_count: int
     upvote_count: int
-    rating: int
+    rating: float
 
 
 class ReviewQueries:

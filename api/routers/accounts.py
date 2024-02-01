@@ -5,6 +5,7 @@ from fastapi import (
 from typing import Union
 from queries.accounts import (
     AccountIn,
+    # AccountInUpdate,
     AccountOut,
     AccountQueries,
     AccountToken,
@@ -42,7 +43,7 @@ async def get_account(
     username: str,
     queries: AccountQueries = Depends()
 ):
-    return queries.get(id)
+    return queries.get(username)
 
 @router.delete("/api/accounts/{id}/{username}", response_model = Union[bool, HttpError])
 async def delete_account(

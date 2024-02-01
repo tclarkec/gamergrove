@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 
 const initialData = {
-    board_name:"",
-    description:"",
-    cover_photo:""
+    body:"",
+    title:"",
+    rating:""
 }
 
 
@@ -28,6 +28,7 @@ function BoardForm(){
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(formData),
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -35,10 +36,10 @@ function BoardForm(){
 
         const response = await fetch(boardUrl, fetchConfig);
         if (response.ok) {
-            navigate("/boards");
+            // navigate("/reviews");
             setFormData(initialData);
         } else {
-            throw new Error('Failed to create board')
+            throw new Error('Failed to create review')
         }
     }
     return (
@@ -46,8 +47,8 @@ function BoardForm(){
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create a board</h1>
-            <form onSubmit={handleSubmit} id="create-board">
+            <h1>Create a review</h1>
+            <form onSubmit={handleSubmit} id="create-review">
               <div className="form-floating mb-3">
                 <label htmlFor="board_name">Title</label>
                 <input onChange={handleFormChange} placeholder="i.e. Collector's Edition" required type="text" name = "board_name" id="board_name" className="form-control" value={formData.board_name}/>

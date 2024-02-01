@@ -79,6 +79,7 @@ async def create_review(
     review_dict["account_id"] = account_id
     review_dict["replies_count"] = 0
     review_dict["upvote_count"] = 0
+
     created_review = queries.create_review(review_dict)
     return created_review
 

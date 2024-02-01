@@ -166,7 +166,7 @@ class VoteQueries:
                             review_id = %s,
                             upvote = %s,
                             downvote = %s
-                        WHERE id = %s AND review_id = %s AND account_id = %s
+                        WHERE id = %s AND account_id = %s
                         """,
                         [
                             vote_dict["account_id"],
@@ -174,11 +174,11 @@ class VoteQueries:
                             vote_dict["upvote"],
                             vote_dict["downvote"],
                             id,
-                            vote_dict["review_id"],
                             vote_dict["account_id"]
                         ]
                     )
-                if account_id_check.rowcount == 0:
+                print(account_id_check.rowcount)
+                if account_id_check.rowcount <= 0:
                     raise HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED,
                         detail="You are attempting to update a vote that you did not create"
