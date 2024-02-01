@@ -9,7 +9,7 @@ import HomeGameCard from '../Cards/homeGameCard';
 import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
-
+import HomeGameCard from '../Cards/homeGameCard';
 
 function Dashboard() {
   return (
@@ -19,7 +19,7 @@ function Dashboard() {
       <main>
         <h1>User Dashboard!</h1>
 
-          {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
+        {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
 
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />

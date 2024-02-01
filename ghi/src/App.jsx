@@ -8,8 +8,15 @@ import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
+<<<<<<<<< Temporary merge branch 1
+import Dashboard from "./components/Dashboard/dashboard";
+import UserHomePage from "./components/UserHome/UserHomePage";
+import Listgames from './components/Games/Listgames';
+import GameDetails from './components/GameDetails/gameDetails';
+
+=========
 import Login from './Login';
-import BoardForm from './BoardForm';
+// import BoardForm from './BoardForm';
 import SignUpAccount from './SignUpAccount';
 import SignUpUser from './SignUpUser';
 import LogOutTest from './components/Home/LogOutTest';
@@ -66,23 +73,24 @@ function App() {
         }
         getData()
     }, [])
-
     return (
-        <BrowserRouter>
-            <Routes>
-
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<LogOutTest />} />
-                <Route path="/signup/account" element={<SignUpAccount />} />
-                <Route path="/signup/user" element={<SignUpUser />} />
-                <Route path="/settings" element={<Settings />} />
+        <AuthProvider baseUrl = 'http://localhost:8000'>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<LogOutTest />} />
+                    <Route path="/signup/account" element={<SignUpAccount />} />
+                    <Route path="/signup/user" element={<SignUpUser />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/boards" element={<BoardForm />} />
-                <Route path="/games" element={<Listgames />} />
-        </Routes>
-        </BrowserRouter>
+                <Route path="/home" element={<UserHomePage />} />
+                <Route path="/gamesdetails" element={<GameDetails />} />
+
+            </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
-
-export default App
+export default App;

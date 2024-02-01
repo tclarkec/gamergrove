@@ -11,7 +11,7 @@ function Home () {
             <Nav />
             <Menu />
             <Landing />
-            <Row title="Games" />
+            <Row path="/" element={<Row />} />
 
 
         </div>

@@ -65,7 +65,7 @@ const Rows = () => {
             <div class="line"></div>
             <div className='row__posters'>
 
-                
+
 
 
 
