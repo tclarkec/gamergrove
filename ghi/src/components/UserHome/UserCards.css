@@ -1,0 +1,32 @@
+/* .row {
+  background-color: hsl(0, 0%, 0%);
+  padding-left: 11%;
+  margin-left: 7%;
+
+}
+
+.row__posters {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+}
+
+
+.row__posters::-webkit-scrollbar {
+  display: none;
+}
+
+.row__poster {
+  max-height: 325px;
+  margin-top: 0px;
+  padding-left: 10px;
+  width: 23%;
+  transition: transform 450ms;
+
+}
+
+.row__poster:hover {
+  transform: scale(1.08);
+  opacity: 1;
+} */

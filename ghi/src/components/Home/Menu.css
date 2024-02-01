@@ -1,0 +1,82 @@
+.side-menu {
+  height: 100%;
+  position: fixed;
+  top: 74px;
+  left: 0;
+  background-color: #000000;
+  color: white;
+  padding: 7px;
+  width: 190px;
+  z-index: 1;
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); Add a subtle box shadow */
+  transition: width 0.5s ease-in-out;
+  border-right: #bbb 2px;
+
+  @media (max-width: 68px) {
+    width: 100%; /* Adjust width for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+}
+
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-menu p {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.side-menu li {
+  margin: 5px 0;
+  padding: 0px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 13px;
+}
+
+.side-menu li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+hr.solid {
+    border-top: 2px solid #bbb;
+    border-radius: 7px 7px 7px 7px;
+    width: 125px;
+  }
+
+hr.dotted {
+    border-top: 2px dotted #bbb;
+    border-radius: 7px 7px 7px 7px;
+    width: 125px;
+  }
+
+
+.all-games {margin: 5px 0;
+  padding: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.all-games p:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.space {
+  margin-top: 2px;
+}
+
+.home {
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, #1084ff, #ff00fb);
+    background-size: 60% 100%;
+    z-index: 1;
+}
+
+.small-space {
+            margin-bottom: 10px;
+        }

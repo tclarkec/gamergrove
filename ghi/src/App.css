@@ -1,11 +1,12 @@
 /* You should probably replace this with your own CSS */
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
 
 .App {
     text-align: center;
 }
 
 .App-header {
-    background-color: #282c34;
+    background-color: #000000;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

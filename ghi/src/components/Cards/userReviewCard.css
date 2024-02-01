@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
+
+
+.urcard {
+    background-color: #2e2e2e;
+    width: 800px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+/*     display: flex; */
+}
+
+.urcard-content {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.urcard-photo img {
+    background-color: transparent;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    position: fixed;
+    margin: 10px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+    flex: 1;
+    overflow: hidden;
+
+
+}
+
+.urcard-details {
+/*     flex: 2;  */
+    padding: 0px;
+    color: black;
+    font-family: 'K2D';
+    font-size: 12px;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 150px;
+    margin-right: 40px;
+    position: relative;
+
+
+}
+
+.urcard-title {
+    font-size: 20px;
+    margin: 0;
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'K2D';
+}
+
+.urcard-date {
+    font-size: 18px;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    text-align: right;
+    margin-top: -25px;
+    margin-right: 40px;
+    font-family: 'K2D';
+    color: black;
+
+}
+.urcard-edit-delete {
+    font-size: 18px;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    text-align: left;
+    margin-top: -25px;
+    margin-left: 40px;
+    font-family: 'K2D';
+    color: black;
+
+
+}
+
+.urline {
+    width: 90%;
+    height: 3px;
+    margin-left: 40px;
+
+    background: rgb(138, 138, 138);
+
+}
+
+.thumbs-up {
+  width: 25px;
+  height: 25px;
+  margin-left: 660px;
+  position: fixed; /* Adjust margin as needed */
+}
+
+.thumbs-down {
+  width: 25px;
+  height: 25px;
+  margin-left: 720px;
+  margin-top: -40px;
+  position: fixed;
+}
+.urp2 {
+    text-align: right;
+    margin-right: 88px;
+    margin-bottom: 20px;
+    margin-top: -90;
+}
+
+.urp {
+    text-align: right;
+    margin-right: 88px;
+    position: relative;
+}
