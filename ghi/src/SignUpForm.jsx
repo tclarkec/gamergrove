@@ -20,16 +20,16 @@ function SignUpForm(){
     const { login } = useToken();
 
     const fetchData = async () => {
-    const url = 'http://localhost:8000/api/icons';
-    const response = await fetch(url);
+        const url = 'http://localhost:8000/api/icons';
+        const response = await fetch(url);
 
-    if (response.ok) {
-        const data = await response.json();
-        setIcons(data);
-    } else {
-        throw new Error('Failed to retrieve icons data')
+        if (response.ok) {
+            const data = await response.json();
+            setIcons(data);
+        } else {
+            throw new Error('Failed to retrieve icons data')
+            }
         }
-    }
 
     useEffect(() => {
       fetchData();
