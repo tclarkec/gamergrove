@@ -93,24 +93,28 @@ return (
               <label htmlFor="email">Email</label>
               <input onChange={handleFormChange} placeholder="i.e. jdoe24@gmail.com" required type="email" name="email" id="email" className="form-control" value={accountFormData.email} />
             </div>
-            <div className="row">
-              <div className="col-12 mb-3">
-                <select onChange={handleFormChange} required name="icon_id" id="icon_id" className="form-select" value={accountFormData.icon_id}>
-                  <option value="">Choose an icon</option>
-                  {icons.map(icon => (
-                    <option key={icon.id} value={icon.id}>
-                      {icon.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {icons.map((icon, index) => (
-                <div key={icon.id} className="col-3 text-center">
-                  <p>{String.fromCharCode(65 + index)}</p>
-                  <img src={icon.icon_url} alt={icon.name} width="50" height="50" />
+              <div className="text-center"> {/* Center "Change your icon" */}
+                <div className="col-12 mb-3">
+                  <select onChange={handleFormChange} required name="icon_id" id="icon_id" className="form-select" value={accountFormData.icon_id}>
+                    <option value="">Choose your icon</option>
+                    {icons.map(icon => (
+                      <option key={icon.id} value={icon.id} style={{ textAlign: 'center' }}>
+                        {icon.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              ))}
-            </div>
+                <div className="row justify-content-center"> {/* Center the icons in a row */}
+                  <div className="col-12 d-flex justify-content-center align-items-center mb-3">
+                    {icons.map((icon, index) => (
+                      <div key={icon.id} className="text-center" style={{ marginRight: '30px' }}>
+                        <p>{String.fromCharCode(65 + index)}</p>
+                        <img src={icon.icon_url} alt={icon.name} width="50" height="50" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             <div className="mb-3"></div>
             <button className="btn btn-primary">Create</button>
           </form>
