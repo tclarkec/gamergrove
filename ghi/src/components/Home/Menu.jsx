@@ -30,33 +30,33 @@ const SideMenu = () => {
                     <br />
                     <br />
                     <a href="http://localhost:5173/">
-                    <h5 class='home'>Hompage</h5>
+                    <h5 className='home'>Hompage</h5>
                     </a>
-                    <div class="small-space"></div>
+                    <div className="small-space"></div>
 
-                    <hr class='solid' />
+                    <hr className='solid' />
 
-                    <div class="small-space"></div>
+                    <div className="small-space"></div>
 
-                    <p class='space'>New Releases</p>
-                    <hr class='solid' />
+                    <p className='space'>New Releases</p>
+                    <hr className='solid' />
                     <ul>
                         <li>- Last 30 Days</li>
                         <li>- This Week</li>
                         <li>- Coming Soon</li>
                     </ul>
-                    <div class="small-space"></div>
+                    <div className="small-space"></div>
                     <p>Consoles</p>
-                    <hr class='solid' />
+                    <hr className='solid' />
                     <ul>
                         <li>- Xbox</li>
                         <li>- Playstation</li>
                         <li>- PC</li>
                         <li>- Nintendo</li>
                     </ul>
-                    <div class="small-space"></div>
+                    <div className="small-space"></div>
                     <p>Genres</p>
-                    <hr class='solid'/>
+                    <hr className='solid'/>
                     <ul>
                         <li>- Action</li>
                         <li>- Strategy</li>
@@ -64,10 +64,10 @@ const SideMenu = () => {
                         <li>- Shooter</li>
                         <li>- Adventure</li>
                     </ul>
-                    <div class="small-space"></div>
-                    <hr class='solid' />
+                    <div className="small-space"></div>
+                    <hr className='solid' />
                     <p className='all-games' >All Games</p>
-                    <hr class='solid'/>
+                    <hr className='solid'/>
                     <ul>
 
                     </ul>

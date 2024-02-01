@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import './boardCard.css';
 
@@ -81,40 +80,28 @@ function BoardCard() {
   const fetchAndSetGamesData = async (boardId) => {
     const gamesData = await fetchGamesForBoard(boardId);
 
+    const updatedBoardDataList = await Promise.all(
+      gamesData.map(async (game) => {
+        const gameDetails = await fetchGameDetails(game.game_id);
+        return gameDetails
+          ? {
+              ...game,
+              background_img: gameDetails.background_img,
+            }
+          : game;
+      })
+    );
+
     setBoardDataList((prevBoardDataList) =>
       prevBoardDataList.map((boardData) =>
         boardData.id === boardId
-          ? { ...boardData, games: gamesData }
+          ? { ...boardData, games: updatedBoardDataList }
           : boardData
       )
     );
-
-    for (const game of gamesData) {
-      const gameDetails = await fetchGameDetails(game.game_id);
-      if (gameDetails) {
-        setBoardDataList((prevBoardDataList) =>
-          prevBoardDataList.map((boardData) =>
-            boardData.id === boardId
-              ? {
-                  ...boardData,
-                  games: prevBoardDataList
-                    .find((bd) => bd.id === boardId)
-                    .games.map((g) =>
-                      g.game_id === game.game_id
-                        ? { ...g, background_img: gameDetails.background_img }
-                        : g
-                    ),
-                }
-              : boardData
-          )
-        );
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
   };
 
-  // Memoize the fetchBoardData function
+
   const fetchBoardData = useCallback(async () => {
     for (const boardId of userSavedBoards) {
       await fetchAndSetGamesData(boardId);
@@ -130,9 +117,9 @@ function BoardCard() {
     fetchUserData();
   }, []);
 
-  // Use the memoized function in the useEffect
+
   useEffect(() => {
-    console.log("Fetching board data...");
+
     fetchBoardData();
   }, [fetchBoardData]);
 
@@ -144,7 +131,7 @@ function BoardCard() {
     <div className='bcard-container'>
       {filteredBoardDataList.map((boardData) => (
         <div key={boardData.id} className='card' style={{ width: '20rem' }}>
-          <img src={boardData.cover_photo} className='card-img-top' alt={`Board Cover for ${boardData.board_name}`} style={{ borderRadius: '20px' }} />
+          <img src={boardData.cover_photo} className='card-img-top' alt={`Board Cover for ${boardData.board_name}`} style={{ borderRadius: '20px 20px 0 0 ' }} />
           <div className='card-body'>
             <h5 className='card-title1'>{boardData.board_name}</h5>
             <hr className='bsolid' />

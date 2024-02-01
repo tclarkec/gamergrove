@@ -57,7 +57,7 @@
   right: 100px;
   width: 500px; /* Set the desired expanded width */
   height: 40px;
-  top: 23px;
+  top: 20px;
   padding-bottom: 5px;
   object-fit: contain;
 }
@@ -83,13 +83,15 @@ input[type=text] {
 
 .nav__dropdown {
   position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: rgb(255, 0, 0);
-  border: 1px solid #ccc;
+  top: calc(100% - 35px);
+  right: 20px;
+  background-color: rgb(0, 0, 0);
+  border: 3px solid #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
   z-index: 2;
   display: none;
+  width: 120px;
 }
 
 .nav__avatar-container:hover .nav__dropdown {
@@ -99,4 +101,13 @@ input[type=text] {
 .nav__dropdown-item {
   padding: 10px;
   cursor: pointer;
+}
+
+.font-drop {
+  font-family: K2D;
+  text-decoration: underline;
+  text-decoration-thickness: .5px;
+  color: white;
+  padding: 7px;
+  margin-left: 10px;
 }

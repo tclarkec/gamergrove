@@ -6,6 +6,7 @@ import ReviewCard from '../Cards/reviewCard.jsx';
 import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
 import HomeGameCard from '../Cards/homeGameCard';
+import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
 
@@ -44,6 +45,7 @@ function Dashboard() {
           <section id="content2">
 
             <ReviewCard />
+            <UserReviewCard />
 
 
           </section>
