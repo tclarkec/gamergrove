@@ -32,13 +32,17 @@ const fetchAccount = async () => {
 
 const account_data = await fetchAccount();
 
-const initialAccountData = {
+let initialAccountData = {};
+
+if (account_data) {
+  initialAccountData = {
     username: saved_username,
     password: "**********",
     first_name: account_data.first_name,
     last_name: account_data.last_name,
     email: account_data.email,
     icon_id: account_data.icon_id
+  }
 }
 
 function Settings(){
@@ -120,15 +124,15 @@ function Settings(){
               </div>
               <div className="form-floating mb-3">
                 <label htmlFor="first_name">First name</label>
-                <input onChange={handleFormChange} placeholder="i.e. John" required type="text" name = "first_name" id="first_name" className="form-control" value={accountFormData.first_name}/>
+                <input onChange={handleFormChange} required type="text" name = "first_name" id="first_name" className="form-control" value={accountFormData.first_name}/>
               </div>
               <div className="form-floating mb-3">
                 <label htmlFor="last_name">Last name</label>
-                <input onChange={handleFormChange} placeholder="i.e. Doe" required type="text" name = "last_name" id="last_name" className="form-control" value={accountFormData.last_name}/>
+                <input onChange={handleFormChange} required type="text" name = "last_name" id="last_name" className="form-control" value={accountFormData.last_name}/>
               </div>
               <div className="form-floating mb-3">
                 <label htmlFor="email">Email</label>
-                <input onChange={handleFormChange} placeholder="i.e. jdoe24@gmail.com" required type="email" name = "email" id="email" className="form-control" value={accountFormData.email}/>
+                <input onChange={handleFormChange} required type="email" name = "email" id="email" className="form-control" value={accountFormData.email}/>
               </div>
               <div className="mb-3">
                 <select onChange={handleFormChange}required name = "icon_id" id="icon_id" className="form-select" value={accountFormData.icon_id}>

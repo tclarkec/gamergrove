@@ -12,7 +12,7 @@ import Login from './Login';
 import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
 import LogOutTest from './components/Home/LogOutTest';
-// import Settings from './Settings';
+import Settings from './Settings';
 
 
 // All your environment variables in vite are in this object
@@ -71,7 +71,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/logout" element={<LogOutTest />} />
                     <Route path="/signup" element={<SignUpForm />} />
-                    {/* <Route path="/settings" element={<Settings />} /> */}
+                    <Route path="/settings" element={<Settings />} />
                     <Route path="/boards" element={<BoardForm />} />
                 </Routes>
             </BrowserRouter>
