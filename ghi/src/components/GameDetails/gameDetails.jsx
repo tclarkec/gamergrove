@@ -114,7 +114,7 @@ function GameDetails() {
                 src="https://i.postimg.cc/6pP3GtxW/image-11.png"
                 alt="Divider"
               />
-              {/* Pass rawgPk to ScreenshotsCard */}
+              
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
