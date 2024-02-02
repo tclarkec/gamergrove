@@ -27,7 +27,7 @@ services:
     fastapi:
         environment:
             DATABASE_URL: ${DATABASE_URL_FROM_ENV_FILE}
-            CORS_HOST: http://localhost:5173
+            CORS_HOST: ${CORS_HOST}
             SIGNING_KEY: ${SIGNING_KEY_FROM_ENV_FILE}
             API_KEY: ${RAWG_API_KEY}
         build:

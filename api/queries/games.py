@@ -99,6 +99,8 @@ class GameQueries:
                 )
 
     def create_game(self, game_dict: GameIn) -> GameOut:
+        print("------------------------------------")
+        print(game_dict)
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 try:

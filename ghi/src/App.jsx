@@ -18,6 +18,7 @@ import SignUpForm from './SignUpForm'
 import LogOutTest from './LogOutTest';
 import Settings from './Settings';
 import ReviewForm from './ReviewForm';
+import SearchResults from './components/SearchResults/SearchResults';
 import RepliesTest from './RepliesTest';
 
 
@@ -82,6 +83,7 @@ function App() {
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
                     <Route path="/games/:id" element={<GameDetails />} />
+                    <Route path="/search" element={<SearchResults />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
