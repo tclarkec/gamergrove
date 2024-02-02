@@ -143,11 +143,13 @@ p {
 	border-bottom: 8px solid transparent;
 }
 #content section {
-	position: absolute;
-	transform: translateY(10px);
-	opacity: 0;
-	transition: transform 500ms, opacity 500ms;
+  position: absolute;
+  transform: translateY(10px);
+  opacity: 0;
+  pointer-events: none; /* Add this line to prevent click events on hidden tabs */
+  transition: transform 500ms, opacity 500ms;
 }
+
 #radio1:checked ~ #content #content1,
 #radio2:checked ~ #content #content2,
 #radio3:checked ~ #content #content3,
@@ -155,6 +157,7 @@ p {
 #radio5:checked ~ #content #content5 {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto; /* Reset pointer-events for visible tabs */
 }
 
 

@@ -19,6 +19,7 @@ import Dashboard from "./components/Dashboard/dashboard";
 // import UserHomePage from "./components/UserHome/UserHomePage";
 import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
+import BoardPage from './components/BoardPage/boardPage';
 
 
 
@@ -82,6 +83,7 @@ function App() {
                 <Route path="/games" element={<Listgames />} />
                 <Route path="/gamedetails" element={<GameDetails />} />
                 <Route path="/games/:id" element={<GameDetails />} />
+                <Route path="/boards/:id" element={<BoardPage />} />
         </Routes>
         </BrowserRouter>
     )
