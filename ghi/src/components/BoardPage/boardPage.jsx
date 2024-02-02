@@ -125,8 +125,9 @@ function BoardPage() {
     </div>
 
     <div className="content-container">
-      <h1 className='BoardPageTitle'>{boardData.board_name}</h1>
-      <p>{boardData.description}</p>
+      <h1 className='BoardPageTitle'><span>{boardData.board_name}</span></h1>
+      <hr className='boardpagehr' />
+      <h1 className='BoardPageDescription'><span>{boardData.description}</span></h1>
 
       <div className='board-game-card-container'>
         {gamesData.map((gameData) => (

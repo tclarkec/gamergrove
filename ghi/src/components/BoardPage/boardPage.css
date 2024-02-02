@@ -8,20 +8,50 @@
 }
 
 .cover-photo {
-  width: 100%; /* Adjust as needed */
-  height: auto; /* Adjust as needed */
+  width: 100%;
+  height: auto;
   position: fixed;
 }
 
 .content-container {
   position: absolute;
-  top: 200px; /* Adjust based on your layout */
-  left: 200px; /* Adjust based on your layout */
+  top: 200px;
+  left: 200px;
   z-index: 1;
 }
 
 .BoardPageTitle {
-  color: white; /* Adjust the text color as needed */
-  font-size: 36px; /* Adjust the font size as needed */
+  color: white;
+  font-size: 36px;
   margin-bottom: 10px;
+
+}
+
+.BoardPageDescription {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 10px;
+
+}
+
+.BoardPageDescription span {
+  background-color: black;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+
+.BoardPageTitle span {
+  background-color: black;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+
+.boardpagehr {
+  height: 3px;
+  background-color: black;
+  border: none;
+  margin: 10px 0;
+  width: 98%;
 }
