@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Nav.css';
 import logo from './assets/logo.gif';
+import { render } from 'react-dom';
+import SearchResults from './components/SearchResults/SearchResults';
 
 
 
@@ -10,6 +13,7 @@ const Nav = () => {
   const [display, handleDisplay] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const avatarContainerRef = useRef(null);
+  const navigate = useNavigate();
 
 
 
@@ -153,6 +157,7 @@ const Nav = () => {
       }
       console.log("Games that resulted in the search")
       console.log(searchResults)
+      navigate("/search", { state: searchResults });
     }
 
 
