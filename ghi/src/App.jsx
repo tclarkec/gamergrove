@@ -19,10 +19,7 @@ import LogOutTest from './components/Home/LogOutTest';
 import Settings from './Settings';
 import ReviewForm from './ReviewForm';
 
-import Dashboard from "./components/Dashboard/dashboard";
-// import UserHomePage from "./components/UserHome/UserHomePage";
-import Listgames from './components/Games/Listgames';
-import GameDetails from './components/GameDetails/gameDetails';
+
 import BoardPage from './components/BoardPage/boardPage';
 
 
@@ -78,8 +75,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<LogOutTest />} />
-                <Route path="/signup/account" element={<SignUpAccount />} />
-                <Route path="/signup/user" element={<SignUpUser />} />
+                {/* <Route path="/signup/account" element={<SignUpAccount />} /> */}
+                {/* <Route path="/signup/user" element={<SignUpUser />} /> */}
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/boards" element={<BoardForm />} />
