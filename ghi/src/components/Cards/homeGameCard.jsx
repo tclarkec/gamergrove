@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './homeGameCard.css';
 
 function HomeGameCard() {
@@ -40,43 +41,31 @@ function HomeGameCard() {
     <div className='hgcard-container'>
       {gameDataList.map((gameData) => (
         <div key={gameData.id} className='hgcard'>
-          <img
-            src={gameData.background_img}
-            className="hgcard-img"
-            alt={`Card for ${gameData.name}`}
-          />
-          <div className="hgcontent-head">
-            <h2>{gameData.name}</h2>
-          </div>
+          <Link to={`/games/${gameData.id}`}>
+            <img
+              src={gameData.background_img}
+              className="hgcard-img"
+              alt={`Card for ${gameData.name}`}
+            />
+            <div className="hgcontent-head">
+              <h2>{gameData.name.slice(0, 20)}</h2>
+            </div>
+          </Link>
           <div className="hgcontent-capsules">
+            <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="15px" height="15px" alt="Icon 1" />
             <img
-              src="https://i.postimg.cc/nrDT7szB/image-5.png"
-              width="15px"
-              height="15px"
-              alt="Icon 1"
-              onClick={() => handleClick('Xbox', gameData.rawg_pk)}
-            />
-            <img
-              src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-              width="15px"
-              height="15px"
-              alt="Icon 2"
-              onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
-            />
-            <img
-              src="https://i.postimg.cc/R0qXLppc/image-3.png"
-              width="15px"
-              height="15px"
-              alt="Icon 3"
-              onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
-            />
-            <img
-              src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-              width="15px"
-              height="15px"
-              alt="Icon 4"
-              onClick={() => handleClick('PC', gameData.rawg_pk)}
-            />
+            src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
+            width="15px"
+            height="15px"
+            alt="Icon 2"
+          />
+          <img src="https://i.postimg.cc/R0qXLppc/image-3.png" width="15px" height="15px" alt="Icon 3" />
+          <img
+            src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+            width="15px"
+            height="15px"
+            alt="Icon 4"
+          />
           </div>
           <div className="hgcontent-body">
             <p>{gameData.description.slice(0, 200)}</p>

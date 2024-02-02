@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
 
-.urcard {
+.largercard {
     background-color: #2e2e2e;
-    width: 600px;
+    width: 800px;
     height: 250px;
     border: 1px solid black;
     border-radius: 10px;
@@ -14,14 +14,14 @@
 /*     display: flex; */
 }
 
-.urcard-content {
+.lurcard-content {
     display: flex;
     justify-content: flex-end;
 }
 
 
 
-.urcard-photo img {
+.lurcard-photo img {
     background-color: transparent;
     width: 125px;
     height: 125px;
@@ -36,7 +36,7 @@
 
 }
 
-.urcard-details {
+.lurcard-details {
     flex: 2;
     padding: 0px;
     color: black;
@@ -51,7 +51,7 @@
 
 }
 
-.urcard-title {
+.lurcard-title {
     font-size: 20px;
     margin: 0;
     color: black;
@@ -60,7 +60,7 @@
     font-family: 'K2D';
 }
 
-.urcard-date {
+.lurcard-date {
     font-size: 18px;
     margin: 0;
     color: rgb(0, 0, 0);
@@ -71,7 +71,7 @@
     color: black;
 
 }
-.urcard-edit-delete {
+.lurcard-edit-delete {
     font-size: 18px;
     margin: 0;
     color: rgb(0, 0, 0);
@@ -84,7 +84,7 @@
 
 }
 
-.urline {
+.lurline {
     width: 90%;
     height: 3px;
     margin-left: 40px;
@@ -107,14 +107,14 @@
   margin-top: -40px;
   position: fixed;
 }
-.urp2 {
+.lurp2 {
     text-align: right;
     margin-right: 88px;
     margin-bottom: 20px;
     margin-top: -90;
 }
 
-.urp {
+.lurp {
     text-align: right;
     margin-right: 88px;
     position: relative;

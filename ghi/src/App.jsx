@@ -82,7 +82,9 @@ function App() {
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/gamedetails" element={<GameDetails />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
-                </Routes>
+                        <Route path="/gamedetails" element={<GameDetails />} />
+                <Route path="/games/:id" element={<GameDetails />} />
+        </Routes>
             </BrowserRouter>
         </AuthProvider>
     )

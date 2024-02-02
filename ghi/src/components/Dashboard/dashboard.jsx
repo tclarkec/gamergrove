@@ -8,6 +8,7 @@ import WishlistCard from '../Cards/wishlistCard.jsx';
 import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
+import CombinedCards from '../Cards/combinedCards';
 
 function Dashboard() {
   return (
@@ -42,8 +43,8 @@ function Dashboard() {
           </section>
           <section id="content2">
 
-            <ReviewCard />
-            <UserReviewCard />
+            <CombinedCards />
+
 
 
           </section>

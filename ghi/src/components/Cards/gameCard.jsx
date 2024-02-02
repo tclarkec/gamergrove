@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './gameCard.css';
 
 async function fetchUserName() {
@@ -61,6 +62,7 @@ function GameCard() {
     <div className='gcard-container'>
       {filteredGameDataList.map((gameData) => (
         <div key={gameData.id} className='gcard'>
+          <Link to={`/games/${gameData.id}`}>
           <img
             src={gameData.background_img}
             className='gcard-img'
@@ -69,6 +71,7 @@ function GameCard() {
           <div className='gcontent-head'>
             <h2>{gameData.name.slice(0, 20)}</h2>
           </div>
+          </Link>
           <div className='gcontent-capsules'>
             <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="25px" height="25px" alt="Icon 1" />
           <img

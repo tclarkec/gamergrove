@@ -43,8 +43,7 @@ const Rows = () => {
 
     return (
         <div>
-            <br />
-            <br />
+            
 
         <div className='row'>
 

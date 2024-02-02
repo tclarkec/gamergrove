@@ -2,20 +2,22 @@ import React from 'react'
 import Menu from '../Home/Menu.jsx';
 import Nav from '../../Nav.jsx';
 import HomeGameCard from '../Cards/homeGameCard.jsx';
+import './Listgames.css';
 
 const Listgames = () => {
   return (
+
     <div>
         <Menu />
         <Nav />
 
-        <main className='lgamesbody'>
 
 
-            <h3 className='banana'>Games/Popular</h3>
 
 
-            <hr class='lgamessolid'/>
+            <h1 className='text-titlegames'>Games/Popular</h1>
+
+
             <div className='grow'>
 
 
@@ -23,9 +25,7 @@ const Listgames = () => {
             <div className='grow__posters'>
 
                 <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
-                <HomeGameCard />
+
 
 
 
@@ -48,7 +48,7 @@ const Listgames = () => {
 
 
 
-        </main>
+
     </div>
 
   )

@@ -2,19 +2,18 @@
 
 body {
   background: #000000;
-  /* color: #121212; */
+  color: #121212;
   font-family: "K2D";
 }
 
 main {
-  max-width: 1100px;
-  margin: 70px; /* fill in for top menu */
+  max-width: 1400px;
+  margin: 70px;
   background: black;
   padding: 30px;
-
-  /* position: relative; */
+  position: relative;
   right: 0;
-  margin-left: 413px;
+  margin-left: 400px;
   margin-right: 0;
 }
 
@@ -40,7 +39,7 @@ p {
 
 #tabs {
   padding: 0;
-  width: 1100px;
+  width: 1120px;
   margin-left: -30px;
   background: #333333;
   height: 40px;
@@ -120,7 +119,8 @@ p {
 }
 #content {
 	position: relative;
-	/* height: 1200px; */
+	height: 1200px;
+  background-color: black;
 }
 #content::before {
 	content: "";
