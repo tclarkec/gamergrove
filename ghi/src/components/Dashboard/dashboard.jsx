@@ -9,6 +9,7 @@ import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
 import CombinedCards from '../Cards/combinedCards';
+import Settings from '../../Settings.jsx';
 
 function Dashboard() {
   return (
@@ -24,13 +25,13 @@ function Dashboard() {
         <input id="radio2" type="radio" name="css-tabs" />
         <input id="radio3" type="radio" name="css-tabs" />
         <input id="radio4" type="radio" name="css-tabs" />
-        <input id="radio5" type="radio" name="css-tabs" />
+        {/* <input id="radio5" type="radio" name="css-tabs" /> */}
         <div id="tabs">
           <label htmlFor="radio1" id="tab1">Boards</label>
           <label htmlFor="radio2" id="tab2">Reviews</label>
           <label htmlFor="radio3" id="tab3">Games</label>
           <label htmlFor="radio4" id="tab4">Wishlist</label>
-          <label htmlFor="radio5" id="tab5">Settings</label>
+          {/* <label htmlFor="radio5" id="tab5">Settings</label> */}
         </div>
         <div id="content">
           <section id="content1">
@@ -60,11 +61,10 @@ function Dashboard() {
 
             </div>
           </section>
-          <section id="content5">
-            <h3>Change User Settings</h3>
-            <p>FORM COMING SOON</p>
-          </section>
-        </div>
+          {/* <section id="content5">
+            <Settings />
+          </section> */}
+          </div>
 
       </main>
     </div>

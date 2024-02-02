@@ -2,6 +2,13 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom';
 
+const containerStyle = {
+  minHeight: '100vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +23,21 @@ const LoginForm = () => {
   };
 
   return (
+    <div style={{ position: 'relative' }}>
+      <button
+        onClick={() => { navigate("/"); }}
+        style={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          margin: '10px',
+        }}
+      >
+        Back to Homepage
+      </button>
+    <div style={containerStyle}>
     <div className="card text-bg-light mb-3">
+      <div className="offset-3 col-6">
       <h5 className="card-header">Login</h5>
       <div className="card-body">
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -39,11 +60,14 @@ const LoginForm = () => {
             />
           </div>
           <div>
-            <input className="btn btn-primary" type="submit" value="Login" />
+            <input type="submit" value="Login" />
           </div>
         </form>
       </div>
     </div>
+  </div>
+  </div>
+  </div>
   );
 };
 

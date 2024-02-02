@@ -30,7 +30,7 @@ const SideMenu = () => {
                     <br />
                     <br />
                     <a href="http://localhost:5173/">
-                    <h5 className='home'>Hompage</h5>
+                    <h5 className='home'>Home Page</h5>
                     </a>
                     <div className="small-space"></div>
 
