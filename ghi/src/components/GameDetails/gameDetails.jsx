@@ -114,7 +114,7 @@ function GameDetails() {
                 src="https://i.postimg.cc/6pP3GtxW/image-11.png"
                 alt="Divider"
               />
-              
+
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
@@ -132,9 +132,9 @@ function GameDetails() {
           <br />
           <br />
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline' }}>Reviews</h1>
-          <div className='moveright'><LargeUserReviewCard /></div>
-          <div className='moveright'><LargeUserReviewCard /></div>
-          <div className='moveright'><LargeUserReviewCard /></div>
+          <div className='moveright'>
+            <LargeUserReviewCard gameId={gameData.id} />
+          </div>
         </div>
         <br />
       </div>
