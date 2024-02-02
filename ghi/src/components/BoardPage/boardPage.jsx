@@ -118,7 +118,7 @@ function BoardPage() {
 
     <div className="cover-photo-container">
       <img
-        src={boardData.cover_photo} 
+        src={boardData.cover_photo}
         alt="Cover Photo"
         className="cover-photo"
       />

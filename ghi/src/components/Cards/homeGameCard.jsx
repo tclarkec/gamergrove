@@ -48,7 +48,12 @@ function HomeGameCard() {
               alt={`Card for ${gameData.name}`}
             />
             <div className="hgcontent-head">
-              <h2>{gameData.name.slice(0, 20)}</h2>
+              <h2>
+                {gameData.name.length > 20
+                  ? `${gameData.name.slice(0, 20)}..`
+                  : gameData.name
+                }
+              </h2>
             </div>
           </Link>
           <div className="hgcontent-capsules">
