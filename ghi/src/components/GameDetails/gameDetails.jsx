@@ -26,7 +26,6 @@ function GameDetails() {
   }, [id]);
 
   if (!gameData) {
-
     return null;
   }
 
@@ -38,10 +37,10 @@ function GameDetails() {
       <div className='gamescard-img2'>
 
         <img
-            src={gameData.background_img}
-            alt="Background"
-            className="background-image"
-          />
+          src={gameData.background_img}
+          alt="Background"
+          className="background-image"
+        />
         <div>
           <br />
           <br />
@@ -94,8 +93,6 @@ function GameDetails() {
           <br />
           <div className="flex-container">
             <div className="flex-item">
-
-
               <br />
               <br />
               <p className='text-title'>About Game:</p>
@@ -117,30 +114,29 @@ function GameDetails() {
                 src="https://i.postimg.cc/6pP3GtxW/image-11.png"
                 alt="Divider"
               />
-              <div className='screenshotsHero'><ScreenshotsCard /></div>
+              {/* Pass rawgPk to ScreenshotsCard */}
+              <div className='screenshotsHero'>
+                <ScreenshotsCard rawgPk={gameData.rawg_pk} />
+              </div>
             </div>
           </div>
           <br/>
           <br/>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline' }}>Write a Review</h1>
-        <div className='rcontainer-title'>
-          <input placeholder='Review Title...' type='text' />
-        </div>
-
-        <div className='rcontainer'>
-          <input placeholder='Write a review...' type='text' />
+          <div className='rcontainer-title'>
+            <input placeholder='Review Title...' type='text' />
+          </div>
+          <div className='rcontainer'>
+            <input placeholder='Write a review...' type='text' />
+          </div>
+          <br />
+          <br />
+          <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline' }}>Reviews</h1>
+          <div className='moveright'><LargeUserReviewCard /></div>
+          <div className='moveright'><LargeUserReviewCard /></div>
+          <div className='moveright'><LargeUserReviewCard /></div>
         </div>
         <br />
-        <br />
-
-        <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline' }}>Reviews</h1>
-        <div className='moveright'><LargeUserReviewCard /></div>
-        <div className='moveright'><LargeUserReviewCard /></div>
-        <div className='moveright'><LargeUserReviewCard /></div>
-        </div>
-
-        <br />
-
       </div>
     </div>
   );

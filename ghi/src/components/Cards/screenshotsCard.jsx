@@ -1,24 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './screenshotsCard.css';
 
-function ScreenshotsCard() {
-  return (
-    <div className="screenshotscard">
-      <div className="scard-content">
-        <div className="scard-Herophoto">
-          <img src="https://www.gematsu.com/wp-content/uploads/2022/12/Hogwarts-Legacy-Play_12-14-22.jpg" alt="Card Photo" />
+function ScreenshotsCard({ rawgPk }) {
+  const [screenshots, setScreenshots] = useState([]);
+
+useEffect(() => {
+  const fetchScreenshots = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/screenshots/${rawgPk}`);
+      const data = await response.json();
+
+      console.log('Fetched screenshots data:', data);
+
+      
+      setScreenshots(Array.isArray(data) ? data.slice(0, 3) : []);
+    } catch (error) {
+      console.error('Error fetching screenshots:', error);
+    }
+  };
+
+  if (rawgPk) {
+
+    fetchScreenshots();
+  }
+}, [rawgPk]);
+
+
+ return (
+  <div className="screenshotscard">
+    <div className="scard-content">
+      {screenshots.map((screenshot, index) => (
+        <div key={index} className={`scard-${index === 0 ? 'Herophoto' : `Smallphoto${index === 1 ? 'Top' : 'Bottom'}`}`}>
+          <img src={screenshot.image_url} alt={`Screenshot ${index + 1}`} />
         </div>
-        <div className="scard-SmallphotoTop">
-          <img src="https://images.thebrag.com/var/uploads/2023/02/Hogwarts-Legacy-1.jpg" alt="Card Photo" />
-        </div>
-        <div className="scard-SmallphotoBottom">
-          <img src="https://imageio.forbes.com/specials-images/imageserve/63d14ab916372f9583d1c38a/duel2/960x0.png?format=png&width=960" alt="Card Photo" />
-        </div>
-      </div>
-      <div className="scard-title">Screenshots</div>
-      <hr className="ssolid" />
+      ))}
     </div>
-  );
+    <div className="scard-title">Screenshots</div>
+    <hr className="ssolid" />
+  </div>
+);
+
 }
 
 export default ScreenshotsCard;

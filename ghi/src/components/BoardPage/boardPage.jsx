@@ -118,7 +118,7 @@ function BoardPage() {
 
     <div className="cover-photo-container">
       <img
-        src={boardData.cover_photo} // Replace with the appropriate prop or state for the cover photo
+        src={boardData.cover_photo} 
         alt="Cover Photo"
         className="cover-photo"
       />
