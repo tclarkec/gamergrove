@@ -42,7 +42,7 @@ const Nav = () => {
   const searchGames = async (event) => {
     event.preventDefault()
     const searchResults = [];
-    const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${searchTerms}&page=1&page_size=1`;
+    const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${searchTerms}&page=1&page_size=10`;
     const gamesUrl = 'http://localhost:8000/api/games';
 
     const answer = await fetch(gamesUrl);
@@ -92,6 +92,13 @@ const Nav = () => {
               gameData.reviews_count = 0
 
               gameData.rating_total = gameData.rating * gameData.rating_count
+              if (gameData.genre === undefined) {
+                gameData.genre = 'standard'
+              }
+              if (gameData.developers === undefined) {
+                gameData.developers = 'code 007'
+              }
+
               for (const pl of platforms) {
                 if (pl === 'Xbox') {
                   gameData.Xbox = 'True'
