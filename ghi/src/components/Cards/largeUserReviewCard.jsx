@@ -16,7 +16,7 @@ async function fetchAccountId() {
   }
 }
 
-function UserReviewCard() {
+function LargeUserReviewCard() {
   const [userReviews, setUserReviews] = useState([]);
 
   const fetchUserReviews = async (accountId) => {
@@ -72,4 +72,4 @@ function UserReviewCard() {
   );
 }
 
-export default UserReviewCard;
+export default LargeUserReviewCard;

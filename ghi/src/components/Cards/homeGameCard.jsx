@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './homeGameCard.css';
 
 function HomeGameCard() {
   const [gameDataList, setGameDataList] = useState([]);
 
-
-
-const fetchData = async () => {
+  const fetchData = async () => {
     try {
-    const response = await fetch('http://localhost:8000/api/games');
-    const data = await response.json();
-    setGameDataList(data);
+      const response = await fetch('http://localhost:8000/api/games');
+      const data = await response.json();
+      setGameDataList(data);
     } catch (error) {
-    console.error('Error fetching data:', error);
+      console.error('Error fetching data:', error);
     }
-};
+  };
 
-
-useEffect(() => {
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -25,17 +23,19 @@ useEffect(() => {
     <div className='hgcard-container'>
       {gameDataList.map((gameData) => (
         <div key={gameData.id} className='hgcard'>
-          <img
-            src={gameData.background_img}
-            className="hgcard-img"
-            alt={`Card for ${gameData.name}`}
-          />
-          <div className="hgcontent-head">
-            <h2>{gameData.name.slice(0, 20)}</h2>
-          </div>
+          <Link to={`/games/${gameData.id}`}>
+            <img
+              src={gameData.background_img}
+              className="hgcard-img"
+              alt={`Card for ${gameData.name}`}
+            />
+            <div className="hgcontent-head">
+              <h2>{gameData.name.slice(0, 20)}</h2>
+            </div>
+          </Link>
           <div className="hgcontent-capsules">
             <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="15px" height="15px" alt="Icon 1" />
-          <img
+            <img
             src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
             width="15px"
             height="15px"

@@ -81,6 +81,7 @@ function App() {
                 <Route path="/boards" element={<BoardForm />} />
                 <Route path="/games" element={<Listgames />} />
                 <Route path="/gamedetails" element={<GameDetails />} />
+                <Route path="/games/:id" element={<GameDetails />} />
         </Routes>
         </BrowserRouter>
     )
