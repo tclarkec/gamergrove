@@ -18,6 +18,7 @@ import SignUpForm from './SignUpForm'
 import LogOutTest from './components/Home/LogOutTest';
 import Settings from './Settings';
 import ReviewForm from './ReviewForm';
+import SearchResults from './components/SearchResults/SearchResults';
 
 
 import BoardPage from './components/BoardPage/boardPage';
@@ -84,6 +85,7 @@ function App() {
                 <Route path="/gamedetails" element={<GameDetails />} />
                 <Route path="/games/:id" element={<GameDetails />} />
                 <Route path="/boards/:id" element={<BoardPage />} />
+                    <Route path="/search" element={<SearchResults />} />
         </Routes>
         </BrowserRouter>
     )

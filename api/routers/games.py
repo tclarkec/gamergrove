@@ -19,6 +19,7 @@ async def create_game(
     queries: GameQueries = Depends(),
 
 ):
+    print(game)
     game_dict = game.dict()
     created_game = queries.create_game(game_dict)
     return created_game
