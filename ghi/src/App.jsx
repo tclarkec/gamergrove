@@ -80,11 +80,9 @@ function App() {
                     <Route path="/reviews/create" element={<ReviewForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/games" element={<Listgames />} />
-                    <Route path="/gamedetails" element={<GameDetails />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
-                        <Route path="/gamedetails" element={<GameDetails />} />
-                <Route path="/games/:id" element={<GameDetails />} />
-        </Routes>
+                    <Route path="/games/:id" element={<GameDetails />} />
+                </Routes>
             </BrowserRouter>
         </AuthProvider>
     )
