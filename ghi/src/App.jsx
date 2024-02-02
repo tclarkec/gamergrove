@@ -8,12 +8,16 @@ import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
 import Home from './Home';
+import Dashboard from "./components/Dashboard/dashboard";
+import Listgames from './components/Games/Listgames';
+import GameDetails from './components/GameDetails/gameDetails';
+
 import Login from './Login';
 import BoardForm from './BoardForm';
-import SignUpAccount from './SignUpAccount';
-import SignUpUser from './SignUpUser';
+import SignUpForm from './SignUpForm'
 import LogOutTest from './components/Home/LogOutTest';
 import Settings from './Settings';
+import ReviewForm from './ReviewForm';
 
 import Dashboard from "./components/Dashboard/dashboard";
 // import UserHomePage from "./components/UserHome/UserHomePage";
@@ -67,7 +71,6 @@ function App() {
         }
         getData()
     }, [])
-
     return (
         <BrowserRouter>
             <Routes>
@@ -88,5 +91,4 @@ function App() {
         </BrowserRouter>
     )
 }
-
-export default App
+export default App;
