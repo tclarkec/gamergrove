@@ -2,7 +2,7 @@ import os
 from psycopg_pool import ConnectionPool
 from psycopg import connect, sql, errors
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from fastapi import(HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
@@ -14,7 +14,7 @@ class HttpError(BaseModel):
 class LibraryInBase(BaseModel):
     wishlist: bool
     game_id: int
-    board_id: int
+    board_id: Optional[int]
 
 class LibraryIn(LibraryInBase):
     account_id: int
@@ -26,7 +26,7 @@ class LibraryOut(BaseModel):
     id: int
     wishlist: bool
     game_id: int
-    board_id: int
+    board_id: Optional[int]
     account_id: int
 
 class LibraryQueries:
@@ -168,45 +168,45 @@ class LibraryQueries:
                     )
                 return True
 
-    def update_library_entry(self, id: int, library_dict: LibraryIn) -> LibraryOut:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    id_check = db.execute(
-                        """
-                        SELECT * FROM libraries
-                        WHERE id = %s
-                        """,
-                        [id]
-                    )
+    # def update_library_entry(self, id: int, library_dict: LibraryIn) -> LibraryOut:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as db:
+    #                 id_check = db.execute(
+    #                     """
+    #                     SELECT * FROM libraries
+    #                     WHERE id = %s
+    #                     """,
+    #                     [id]
+    #                 )
 
-                    id_row = id_check.fetchone()
-                    if id_row is None:
-                        raise HTTPException(
-                            status_code=status.HTTP_404_NOT_FOUND,
-                            detail="A library entry with that id does not exist in the database"
-                        )
+    #                 id_row = id_check.fetchone()
+    #                 if id_row is None:
+    #                     raise HTTPException(
+    #                         status_code=status.HTTP_404_NOT_FOUND,
+    #                         detail="A library entry with that id does not exist in the database"
+    #                     )
 
-                    account_id_check=db.execute(
-                        """
-                        UPDATE libraries
-                        SET wishlist = %s,
-                            game_id = %s,
-                            board_id = %s,
-                            account_id = %s
-                        WHERE id = %s AND account_id = %s
-                        """,
-                        [
-                            library_dict["wishlist"],
-                            library_dict["game_id"],
-                            library_dict["board_id"],
-                            library_dict["account_id"],
-                            id,
-                            library_dict["account_id"]
-                        ]
-                    )
-                if account_id_check.rowcount <= 0:
-                    raise HTTPException(
-                        status_code=status.HTTP_401_UNAUTHORIZED,
-                        detail="You are attempting to update a library entry that you did not create"
-                    )
-                return LibraryOut(id=id, **library_dict)
+    #                 account_id_check=db.execute(
+    #                     """
+    #                     UPDATE libraries
+    #                     SET wishlist = %s,
+    #                         game_id = %s,
+    #                         board_id = %s,
+    #                         account_id = %s
+    #                     WHERE id = %s AND account_id = %s
+    #                     """,
+    #                     [
+    #                         library_dict["wishlist"],
+    #                         library_dict["game_id"],
+    #                         library_dict["board_id"],
+    #                         library_dict["account_id"],
+    #                         id,
+    #                         library_dict["account_id"]
+    #                     ]
+    #                 )
+    #             if account_id_check.rowcount <= 0:
+    #                 raise HTTPException(
+    #                     status_code=status.HTTP_401_UNAUTHORIZED,
+    #                     detail="You are attempting to update a library entry that you did not create"
+    #                 )
+    #             return LibraryOut(id=id, **library_dict)

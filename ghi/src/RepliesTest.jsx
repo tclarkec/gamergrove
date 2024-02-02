@@ -1,8 +1,8 @@
 import React from 'react'
-import './Landing.css'
+import './components/Home/Landing.css'
 
-const LogOutTest = () => {
-    const handleLogOut = async () => {
+const RepliesTest = () => {
+    const openReplyWindow = async () => {
         const logOutUrl = 'http://localhost:8000/token';
 
         const fetchConfig = {
@@ -46,11 +46,11 @@ const LogOutTest = () => {
         </div>
         <div>
             <button onClick={()=> {
-                handleLogOut()
-            }} className="btn btn-danger">Logout</button>
+                openReplyWindow()
+            }} className="btn btn-primary">Reply</button>
         </div>
     </div>
   )
 }
 
-export default LogOutTest;
+export default RepliesTest;

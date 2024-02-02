@@ -1,3 +1,4 @@
+import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Nav.css';
@@ -12,6 +13,8 @@ const RAWG_API_KEY = 'd22338aa7fed46008950bf356f3a0786'
 const Nav = () => {
   const [display, handleDisplay] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const { token } = useAuthContext();
+
   const avatarContainerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -180,6 +183,69 @@ const Nav = () => {
     setShowDropdown(true);
   };
 
+
+  const handleLogOut = async () => {
+      const logOutUrl = 'http://localhost:8000/token';
+
+      const fetchConfig = {
+          method: "delete",
+          credentials: 'include',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      };
+
+      const response = await fetch (logOutUrl, fetchConfig);
+      if (!response.ok) {
+          throw new Error('Failed to log out');
+      }
+  }
+
+  if (token) {
+    return (
+    <div className={`nav ${display && 'nav__black'}`}>
+      <nav>
+        <div className='nav__contents'>
+          <div className='ncontainer expanded'>
+            <form onSubmit={searchGames}>
+              <input onChange={handleSearchChange} placeholder='Search for game titles...' className='js-search' type='text' />
+              <i className='fa fa-search'></i>
+            </form>
+          </div>
+
+          <img className='nav__logo' src={logo} alt='' />
+
+          <div
+            ref={avatarContainerRef}
+            className='nav__avatar-container'
+            onClick={handleDropdownClick} // Change to handleDropdownClick
+          >
+            <img
+              className='nav__avatar'
+              src='https://i.postimg.cc/SQCfRFsN/image-9.png'
+              alt=''
+            />
+            {showDropdown && (
+              <div className='nav__dropdown' onClick={stopPropagation}>
+                <a href="http://localhost:5173/dashboard">
+                <div className='nav__dropdown-item, font-drop'>Dashboard</div>
+                </a>
+                <a href="http://localhost:5173/settings">
+                <div className='nav__dropdown-item, font-drop'>Settings</div>
+                </a>
+                <a href="http://localhost:5173/logout" onClick={()=>{
+                  handleLogOut();
+                }}>
+                <div className='nav__dropdown-item, font-drop'>Logout</div>
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+    </div>
+  );
+  } else {
   return (
     <div className={`nav ${display && 'nav__black'}`}>
       <nav>
@@ -208,12 +274,8 @@ const Nav = () => {
                 <a href="http://localhost:5173/login">
                 <div className='nav__dropdown-item, font-drop'>Login_____</div>
                 </a>
+                <a href="http://localhost:5173/signup">
                 <div className='nav__dropdown-item, font-drop'>Sign Up___</div>
-                <a href="http://localhost:5173/dashboard">
-                <div className='nav__dropdown-item, font-drop'>Dashboard_</div>
-                </a>
-                <a href="http://localhost:5173/logout">
-                <div className='nav__dropdown-item, font-drop'>Logout____</div>
                 </a>
               </div>
             )}
@@ -223,5 +285,6 @@ const Nav = () => {
     </div>
   );
 };
+}
 
 export default Nav;

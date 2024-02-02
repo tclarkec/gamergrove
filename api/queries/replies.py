@@ -11,12 +11,10 @@ class HttpError(BaseModel):
     detail: str
 
 class ReplyInBase(BaseModel):
-    title: str
     body: str
     review_id: int
 
 class ReplyInUpdate(BaseModel):
-    title: str
     body: str
 
 class ReplyIn(ReplyInBase):
@@ -24,7 +22,6 @@ class ReplyIn(ReplyInBase):
 
 class ReplyOut(BaseModel):
     id: int
-    title: str
     body: str
     review_id: int
     account_id: int
@@ -110,19 +107,16 @@ class ReplyQueries:
                 try:
                     result = db.execute(
                         """
-                        INSERT INTO replies (title,
-                        body,
+                        INSERT INTO replies (body,
                         account_id,
                         review_id)
-                        VALUES (%s, %s, %s, %s)
+                        VALUES (%s, %s, %s)
                         RETURNING id,
-                        title,
                         body,
                         review_id,
                         account_id;
                         """,
                         [
-                            reply_dict["title"],
                             reply_dict["body"],
                             reply_dict["account_id"],
                             reply_dict["review_id"]
@@ -195,12 +189,10 @@ class ReplyQueries:
                 account_id_check = db.execute(
                     """
                     UPDATE replies
-                    SET title = %s,
-                        body = %s
+                    SET body = %s
                     WHERE id = %s AND review_id = %s AND account_id = %s
                     """,
                     [
-                        reply_dict["title"],
                         reply_dict["body"],
                         id,
                         reply_dict["review_id"],

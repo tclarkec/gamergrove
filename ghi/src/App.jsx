@@ -15,12 +15,12 @@ import GameDetails from './components/GameDetails/gameDetails';
 import Login from './Login';
 import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
-import LogOutTest from './components/Home/LogOutTest';
+import LogOutTest from './LogOutTest';
 import Settings from './Settings';
 import ReviewForm from './ReviewForm';
 import SearchResults from './components/SearchResults/SearchResults';
 
-
+import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
 
 
@@ -70,24 +70,26 @@ function App() {
         getData()
     }, [])
     return (
-        <BrowserRouter>
-            <Routes>
-
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<LogOutTest />} />
-                {/* <Route path="/signup/account" element={<SignUpAccount />} /> */}
-                {/* <Route path="/signup/user" element={<SignUpUser />} /> */}
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/boards" element={<BoardForm />} />
-                <Route path="/games" element={<Listgames />} />
-                <Route path="/gamedetails" element={<GameDetails />} />
-                <Route path="/games/:id" element={<GameDetails />} />
-                <Route path="/boards/:id" element={<BoardPage />} />
+        <AuthProvider baseUrl = 'http://localhost:8000'>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/logout" element={<LogOutTest />} />
+                    <Route path="/signup" element={<SignUpForm />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/boards/create" element={<BoardForm />} />
+                    <Route path="/reviews/create" element={<ReviewForm />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/games" element={<Listgames />} />
+                    <Route path="/replies/create" element={<RepliesTest />} />
+                    <Route path="/games/:id" element={<GameDetails />} />
+                    <Route path="/boards/:id" element={<BoardPage />} />
                     <Route path="/search" element={<SearchResults />} />
-        </Routes>
-        </BrowserRouter>
+      
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
 export default App;
