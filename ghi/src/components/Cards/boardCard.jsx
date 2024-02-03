@@ -128,6 +128,10 @@ function BoardCard() {
     userSavedBoards.includes(boardData.id)
   );
 
+  if (filteredBoardDataList.length === 0) {
+    return <p>No boards available.</p>;
+  }
+
   return (
     <div className='bcard-container'>
       {filteredBoardDataList.map((boardData) => (

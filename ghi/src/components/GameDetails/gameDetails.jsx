@@ -29,6 +29,19 @@ function GameDetails() {
     return null;
   }
 
+
+   const getRecommendation = (rating) => {
+    if (rating >= 4.3) {
+      return "Highly Recommended";
+    } else if (rating >= 3.7) {
+      return "Recommended";
+    } else if (rating >= 2.5) {
+      return "Okay";
+    } else {
+      return "Not Recommended";
+    }
+  };
+
   return (
     <div>
       <SideMenu />
@@ -46,7 +59,7 @@ function GameDetails() {
           <br />
           <br />
           <br />
-          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3>
+          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3><p className='recommendation'>{getRecommendation(gameData.rating)}</p>
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
           <button className='GDButton'>Add to Wishlist</button>

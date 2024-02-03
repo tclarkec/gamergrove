@@ -9,11 +9,19 @@ async function fetchAccountId() {
     credentials: 'include',
   };
 
-  const response = await fetch(tokenUrl, fetchConfig);
+  try {
+    const response = await fetch(tokenUrl, fetchConfig);
 
-  if (response.ok) {
-    const data = await response.json();
-    return data.account.id;
+    if (response.ok) {
+      const data = await response.json();
+      return data.account.id;
+    } else {
+      console.error('Error fetching account ID:', response.status);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching account ID:', error);
+    return null;
   }
 }
 
@@ -26,9 +34,13 @@ function ReviewCard() {
 
     try {
       const response = await fetch(reviewsUrl, { credentials: 'include' });
-      const reviewsData = await response.json();
 
-      setUserReviews(reviewsData);
+      if (response.ok) {
+        const reviewsData = await response.json();
+        setUserReviews(reviewsData);
+      } else {
+        console.error('Error fetching user reviews:', response.status);
+      }
     } catch (error) {
       console.error('Error fetching user reviews:', error);
     }
@@ -36,8 +48,8 @@ function ReviewCard() {
 
   const fetchGameDetails = async (gameId) => {
     try {
-      // Make an API call to get game details based on gameId
       const response = await fetch(`http://localhost:8000/api/games/${gameId}`);
+
       if (response.ok) {
         const gameData = await response.json();
         return gameData;
@@ -62,6 +74,11 @@ function ReviewCard() {
 
   useEffect(() => {
     const fetchGameDetailsForReviews = async () => {
+      if (!Array.isArray(userReviews)) {
+        console.error('Invalid userReviews data:', userReviews);
+        return;
+      }
+
       const gameDetailsPromises = userReviews.map(async (review) => {
         if (review.game_id) {
           return await fetchGameDetails(review.game_id);
@@ -70,47 +87,52 @@ function ReviewCard() {
         }
       });
 
-      const fetchedGameDetailsList = await Promise.all(gameDetailsPromises);
-      setGameDetailsList(fetchedGameDetailsList);
+      try {
+        const fetchedGameDetailsList = await Promise.all(gameDetailsPromises);
+        setGameDetailsList(fetchedGameDetailsList);
+      } catch (error) {
+        console.error('Error fetching game details for reviews:', error);
+      }
     };
 
-    // Trigger the second API call once userReviews are fetched
     if (userReviews.length > 0) {
       fetchGameDetailsForReviews();
     }
   }, [userReviews]);
 
+  if (gameDetailsList.length === 0) {
+    return <p>No reviews available.</p>;
+  }
 
   const handleLinkClick = (e) => {
     console.log('Link clicked');
     e.stopPropagation();
   };
 
-return (
-<div>
-  {gameDetailsList.map((gameDetails) => (
-    <div key={gameDetails.id} className="rcard">
-      <div className="card-content">
-        <div className="card-photo">
-          <img src={gameDetails?.background_img} alt="Card Photo" />
-        </div>
-        <div className="card-details">
-          <Link to={`/games/${gameDetails.id}`} onClick={handleLinkClick}>
-            <div className="card-title">{gameDetails?.name}</div>
-          </Link>
-          <hr className="rsolid" />
-          <div className="side-by-side">
-            <div className="link-container">
-              {/* Additional content here */}
+  return (
+    <div>
+      {gameDetailsList.map((gameDetails) => (
+        <div key={gameDetails.id} className="rcard">
+          <div className="card-content">
+            <div className="card-photo">
+              <img src={gameDetails?.background_img} alt="Card Photo" />
+            </div>
+            <div className="card-details">
+              <Link to={`/games/${gameDetails.id}`} onClick={handleLinkClick}>
+                <div className="card-title">{gameDetails?.name}</div>
+              </Link>
+              <hr className="rsolid" />
+              <div className="side-by-side">
+                <div className="link-container">
+                  {/* Additional content here */}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
-  ))}
-</div>
-
-);
+  );
 }
 
 export default ReviewCard;

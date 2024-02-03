@@ -10,12 +10,12 @@ useEffect(() => {
       const response = await fetch(`http://localhost:8000/api/screenshots/${rawgPk}`);
       const data = await response.json();
 
-      console.log('Fetched screenshots data:', data);
 
-      
+
+
       setScreenshots(Array.isArray(data) ? data.slice(0, 3) : []);
     } catch (error) {
-      console.error('Error fetching screenshots:', error);
+      
     }
   };
 

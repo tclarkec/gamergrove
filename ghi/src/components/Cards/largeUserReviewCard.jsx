@@ -3,17 +3,25 @@ import './userReviewCard.css';
 
 function LargeUserReviewCard({ gameId }) {
   const [userReviews, setUserReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchReviewsForGame = async (gameId) => {
     const reviewsUrl = `http://localhost:8000/api/reviews/games/${gameId}`;
 
     try {
       const response = await fetch(reviewsUrl);
-      const reviewsData = await response.json();
 
-      setUserReviews(reviewsData);
+      if (response.status === 404) {
+        console.warn(`No reviews found for game with ID ${gameId}`);
+        setUserReviews([]);
+      } else {
+        const reviewsData = await response.json();
+        setUserReviews(reviewsData);
+      }
     } catch (error) {
       console.error('Error fetching reviews:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,8 +67,8 @@ function LargeUserReviewCard({ gameId }) {
         ))
       ) : (
         <p style={{ textAlign: 'center', marginRight: '250px' }}>
-        No reviews available for this game.
-      </p>
+          No reviews available for this game.
+        </p>
       )}
     </div>
   );
