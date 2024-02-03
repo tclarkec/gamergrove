@@ -52,14 +52,12 @@ function ReviewForm(){
             }
         };
 
-        console.log(formData);
-
         const response = await fetch(reviewUrl, fetchConfig);
         if (response.ok) {
             // navigate("/reviews");
             setFormData(initialData);
         } else {
-            throw new Error('Failed to create board')
+            throw new Error('Failed to create review')
         }
     }
     return (

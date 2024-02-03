@@ -254,3 +254,30 @@ input[type=text] {
   background: linear-gradient(to right, #FFFFFF 0%, #464747 #F9F9F9 100%);
   outline: none;
 }
+
+.white-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  width: 500px; /* Set a width as needed */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px; /* Adjust margin-bottom to reduce space */
+}
+
+.star-rating {
+  background-color: white;
+  border-radius: 5px; /* Adjust border radius as needed */
+}
+
+label[for='rating'] {
+  color: darkgray; /* Set the gray color you prefer */
+  font-family: 'K2D';
+}
