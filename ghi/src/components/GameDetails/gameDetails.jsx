@@ -8,36 +8,95 @@ import LargeUserReviewCard from '../Cards/largeUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
 
+const fetchUserName = async () => {
+  const tokenUrl = `http://localhost:8000/token`;
 
+  const fetchConfig = {
+    credentials: 'include',
+  };
+
+  const response = await fetch(tokenUrl, fetchConfig);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.account.username;
+  }
+};
+
+const saved_username = await fetchUserName();
+
+const fetchAccount = async () => {
+  const accountUrl = `http://localhost:8000/api/accounts/${saved_username}`;
+
+  const response = await fetch(accountUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+};
+
+const account_data = await fetchAccount();
 
 function GameDetails() {
+
   const { id } = useParams();
 
-  const initialData = {
+  const wishListData = {
+  wishlist: true,
+  game_id: id
+  }
+
+  const initialReviewData = {
     title:"",
     body:"",
     game_id: id,
     rating: ""
   }
 
+
+
   const [gameData, setGameData] = useState(null);
 
-  const [formData, setFormData] = useState(initialData);
+  const [wishListText, setWishListText] = useState('Add to Wishlist')
+
+  const [reviewFormData, setReviewFormData] = useState(initialReviewData);
 
   const[submittedReview, setSubmittedReview] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchGamesData = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/games/${id}`);
         const data = await response.json();
         setGameData(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching games data:', error);
       }
     };
 
-    fetchData();
+    const fetchLibraryData = async() => {
+      try {
+        const libraryUrl = `http://localhost:8000/api/users/libraries/${account_data.id}`;
+
+        const fetchConfig = {
+          credentials: 'include'
+        };
+
+        const response = await fetch(libraryUrl, fetchConfig);
+        const data = await response.json();
+        if (response.ok && data[data.length-1]["wishlist"] === true) {
+          setWishListText('Added to Wishlist!');
+        }
+
+      } catch (error) {
+        console.error('Error fetching library data', error);
+      }
+
+    };
+
+    fetchGamesData();
+    fetchLibraryData();
   }, [id]);
 
   if (!gameData) {
@@ -58,26 +117,51 @@ function GameDetails() {
   };
 
   const handleFormChange = (e) => {
-    setFormData({
-        ...formData,
+    setReviewFormData({
+        ...reviewFormData,
         [e.target.name]:e.target.value
     })
 }
   const handleStarClick = (selectedRating) => {
-    setFormData({
-      ...formData,
+    setReviewFormData({
+      ...reviewFormData,
       rating: selectedRating,
     });
   };
 
-const handleSubmit = async (event) => {
+const handleWishListClick = async () => {
+  const libraryUrl = 'http://localhost:8000/api/libraries'
+
+  const fetchConfig = {
+    method: "post",
+    body: JSON.stringify(wishListData),
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const response = await fetch(libraryUrl, fetchConfig);
+    if (response.ok) {
+      console.log('Nice!')
+    } else {
+      console.error('Failed to add to wishlist. Server response:', response);
+      throw new Error('Failed to add to wishlist');
+    }
+  } catch (error) {
+    console.error('Error adding to wishlist:', error);
+  }
+};
+
+const handleReviewSubmit = async (event) => {
     event.preventDefault();
 
     const reviewUrl = 'http://localhost:8000/api/reviews'
 
     const fetchConfig = {
         method: "post",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(reviewFormData),
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
@@ -87,19 +171,20 @@ const handleSubmit = async (event) => {
     const response = await fetch(reviewUrl, fetchConfig);
     if (response.ok) {
         // navigate("/reviews");
-        setFormData(initialData);
+        setReviewFormData(initialReviewData);
         setSubmittedReview(true);
     } else {
         throw new Error('Failed to create review')
     }
   }
 
-  let messageClasses = 'alert alert-success d-none mb-0';
-  let formClasses = '';
+  let messageReviewClasses = 'alert alert-success d-none mb-0';
+  let formReviewClasses = '';
   if (submittedReview) {
-    messageClasses = 'alert alert-success mb-0';
-    formClasses = 'd-none';
+    messageReviewClasses = 'alert alert-success mb-0';
+    formReviewClasses = 'd-none';
   }
+
 
   return (
     <div>
@@ -121,7 +206,9 @@ const handleSubmit = async (event) => {
           <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3><p className='recommendation'>{getRecommendation(gameData.rating)}</p>
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
-          <button className='GDButton' style={{color:'black', width: 'fit-content'}}>Add to Wishlist</button>
+          <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
+            handleWishListClick();
+          }}>{wishListText}</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}}>Add to Board</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>{gameData.rating_count} ratings</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Ovr. Rating: {"⭐".repeat(gameData.rating.toFixed(1))} {(gameData.rating.toFixed(1))}</button>
@@ -195,19 +282,19 @@ const handleSubmit = async (event) => {
           <br/>
           <br/>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginBottom: '20px' }}>Write a Review</h1>
-          <form onSubmit={handleSubmit} id="create-review">
+          <form onSubmit={handleReviewSubmit} id="create-review">
           <div className='rcontainer-title'>
-            <input onChange={handleFormChange} placeholder='Review Title...' required type='text' name='title' id='title' className='form-control' value={formData.title} />
+            <input onChange={handleFormChange} placeholder='Review Title...' required type='text' name='title' id='title' className='form-control' value={reviewFormData.title} />
           </div>
           <div className='rcontainer'>
-            <input onChange={handleFormChange} placeholder='Write a review...' required type='text' name='body' id='body' className='form-control' value={formData.body} />
+            <input onChange={handleFormChange} placeholder='Write a review...' required type='text' name='body' id='body' className='form-control' value={reviewFormData.body} />
           </div>
       <div className='rcontainer'>
         <div className='white-container'>
           <label htmlFor='rating' style={{marginBottom: '0rem'}} >Give a rating out of 5:</label>
           <div className='rating-container'>
             <div className='star-rating'>
-              <StarRating rating={formData.rating} onStarClick={handleStarClick} />
+              <StarRating rating={reviewFormData.rating} onStarClick={handleStarClick} />
             </div>
           </div>
         </div>
@@ -219,7 +306,7 @@ const handleSubmit = async (event) => {
           <br />
           <br />
       <div className='rcontainer' style={{marginTop: '10px'}}>
-        <div className={messageClasses} id="success-message">
+        <div className={messageReviewClasses} id="success-message">
             Your review has been submitted!
         </div>
       </div>

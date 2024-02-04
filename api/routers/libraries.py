@@ -15,7 +15,7 @@ from queries.boards import(
 router = APIRouter()
 
 
-@router.post("/api/libraries/", response_model=Union[LibraryOut, HttpError])
+@router.post("/api/libraries", response_model=Union[LibraryOut, HttpError])
 async def create_library_entry(
     entry: LibraryInBase,
     request: Request,
@@ -39,7 +39,7 @@ async def create_library_entry(
     created_entry = queries.create_library_entry(library_dict)
     return created_entry
 
-@router.get("/api/users/libraries/{account_id}/", response_model=Union[List[LibraryOut], HttpError])
+@router.get("/api/users/libraries/{account_id}", response_model=Union[List[LibraryOut], HttpError])
 async def get_library(
     queries: LibraryQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
@@ -47,7 +47,7 @@ async def get_library(
     account_id = account_data['id']
     return queries.get_library(account_id)
 
-@router.get("/api/libraries/{id}/", response_model=Union[LibraryOut,HttpError])
+@router.get("/api/libraries/{id}", response_model=Union[LibraryOut,HttpError])
 async def get_library_entry(
     id: int,
     queries: LibraryQueries = Depends(),
