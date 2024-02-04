@@ -1,3 +1,4 @@
+import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -40,6 +41,8 @@ const fetchAccount = async () => {
 const account_data = await fetchAccount();
 
 function GameDetails() {
+
+  const { token } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -227,6 +230,7 @@ const handleReviewSubmit = async (event) => {
   }
 
 
+  if (token) {
   return (
     <div>
       <SideMenu />
@@ -355,7 +359,7 @@ const handleReviewSubmit = async (event) => {
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
           <div className='moveright' >
-            <LargeUserReviewCard gameId={gameData.id} />
+            <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
           </div>
 
         </div>
@@ -363,6 +367,7 @@ const handleReviewSubmit = async (event) => {
       </div>
     </div>
   );
+}
 }
 
 export default GameDetails;

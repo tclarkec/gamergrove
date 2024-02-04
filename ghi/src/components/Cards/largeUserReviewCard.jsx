@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from 'react-router-dom';
 import './userReviewCard.css';
+import StarRating from '../../StarRating';
 
-function LargeUserReviewCard({ gameId }) {
+function LargeUserReviewCard({ gameId, accountId }) {
+  const { token } = useAuthContext();
+  const navigate = useNavigate();
   const [userReviews, setUserReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,17 +41,39 @@ function LargeUserReviewCard({ gameId }) {
           <div key={review.id} className="urcard">
             <div className="urcard-title">{review.title}</div>
             <div className="urcard-date">9/3/2023</div>
-            <div className="urcard-edit-delete">edit | delete</div>
+            <div>
+              {review.account_id === accountId && (
+                <>
+                  <button
+                    className="urcard-edit-delete"
+                    style={{ color: 'black' }}
+                    onClick={() => {
+                      navigate(`/reviews/update/${review.id}/${review.game_id}`)
+                    }}
+                  >
+                    edit
+                  </button>{' '}
+                  | delete
+                </>
+              )}
+            </div>
             <div className="urline"></div>
             <div className="urcard-content">
-              <div className="urcard-photo">
-                <img
-                  src="https://www.shareicon.net/data/512x512/2016/08/18/809170_user_512x512.png"
-                  alt="User"
-                />
+              <div className="urcontainer-title">
+                <p>Title: {review.title}</p>
               </div>
-              <div className="urcard-details" style={{ color: 'black' }}>
-                <p>{review.body}</p>
+              <div className="urcontainer">
+                <p>Review: {review.body}</p>
+              </div>
+              <div className="urcontainer">
+                <div className="white-container">
+                  <p>Rating: {review.rating}</p>
+                  <div className="rating-container">
+                    <div className="star-rating">
+                      <StarRating rating={review.rating} />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div>

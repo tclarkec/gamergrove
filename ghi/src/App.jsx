@@ -18,7 +18,7 @@ import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
 import LogOut from './LogOut';
 import Settings from './Settings';
-import ReviewForm from './ReviewForm';
+import UpdateReviewForm from './UpdateReviewForm';
 import SearchResults from './components/SearchResults/SearchResults';
 
 import RepliesTest from './RepliesTest';
@@ -83,8 +83,8 @@ function App() {
                     <Route path="/signup" element={<SignUpForm />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/boards/create" element={<BoardForm />} />
-                    <Route path="/reviews/create" element={<ReviewForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/reviews/update/:review_id/:game_id" element={<UpdateReviewForm />} />
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
                     <Route path="/games/:id" element={<GameDetails />} />
