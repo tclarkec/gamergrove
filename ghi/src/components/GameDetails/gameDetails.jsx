@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './gameDetails.css';
 import ReviewCard from '../Cards/reviewCard.jsx';
 import SideMenu from '../Home/Menu';
@@ -40,12 +41,15 @@ const account_data = await fetchAccount();
 
 function GameDetails() {
 
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
   const wishListData = {
-  wishlist: true,
-  game_id: id
+    wishlist: true,
+    game_id: id
   }
+
 
   const initialReviewData = {
     title:"",
@@ -154,6 +158,10 @@ const handleWishListClick = async () => {
   }
 };
 
+const handleBoardClick = async () => {
+  navigate(`/games/${id}/addtoboard`);
+}
+
 const handleReviewSubmit = async (event) => {
     event.preventDefault();
 
@@ -209,7 +217,9 @@ const handleReviewSubmit = async (event) => {
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
             handleWishListClick();
           }}>{wishListText}</button>
-          <button className='GDButton' style={{color:'black', width: 'fit-content'}}>Add to Board</button>
+          <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
+            handleBoardClick();
+          }}>Add to Board</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>{gameData.rating_count} ratings</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Ovr. Rating: {"⭐".repeat(gameData.rating.toFixed(1))} {(gameData.rating.toFixed(1))}</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Released: {gameData.dates}</button>
