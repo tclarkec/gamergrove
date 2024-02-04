@@ -50,6 +50,11 @@ function GameDetails() {
     game_id: id
   }
 
+  const removeWishListData = {
+    wishlist: false,
+    game_id: id
+  }
+
 
   const initialReviewData = {
     title:"",
@@ -134,32 +139,60 @@ function GameDetails() {
   };
 
 const handleWishListClick = async () => {
-  const libraryUrl = 'http://localhost:8000/api/libraries'
+  if (wishListText === 'Add to Wishlist') {
+    const addEntryUrl = 'http://localhost:8000/api/libraries';
 
-  const fetchConfig = {
-    method: "post",
-    body: JSON.stringify(wishListData),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
+    const addEntryFetchConfig = {
+      method: "post",
+      body: JSON.stringify(wishListData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-  try {
-    const response = await fetch(libraryUrl, fetchConfig);
-    if (response.ok) {
-      console.log('Nice!')
-    } else {
-      console.error('Failed to add to wishlist. Server response:', response);
-      throw new Error('Failed to add to wishlist');
+    try {
+      const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
+      if (addEntryResponse.ok) {
+        setWishListText('Added to Wishlist!');
+        console.log('Nice!');
+      } else {
+        console.error('Failed to add to wishlist. Server response:', response);
+        throw new Error('Failed to add to wishlist');
+      }
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
     }
-  } catch (error) {
-    console.error('Error adding to wishlist:', error);
+  } else if (wishListText === 'Added to Wishlist!') {
+    const removeEntryUrl = 'http://localhost:8000/api/libraries';
+
+    const removeEntryFetchConfig = {
+      method: "post",
+      body: JSON.stringify(removeWishListData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const removeEntryResponse = await fetch(removeEntryUrl, removeEntryFetchConfig);
+      if (removeEntryResponse.ok) {
+        setWishListText('Add to Wishlist');
+        console.log('Nice!');
+      } else {
+        console.error('Failed to remove from wishlist. Server response:', response);
+        throw new Error('Failed to remove from wishlist');
+      }
+    } catch (error) {
+      console.error('Error removing from wishlist:', error);
+    }
   }
 };
 
 const handleBoardClick = async () => {
   navigate(`/games/${id}/addtoboard`);
+  window.location.reload();
 }
 
 const handleReviewSubmit = async (event) => {

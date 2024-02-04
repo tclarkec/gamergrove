@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import './components/Cards/boardCard.css';
 import { Link } from 'react-router-dom';
 
@@ -62,6 +63,7 @@ async function fetchGameDetails(gameId) {
 function AddToBoard() {
   const [boardDataList, setBoardDataList] = useState([]);
   const [userSavedBoards, setUserSavedBoards] = useState([]);
+  const { id } = useParams();
 
   const fetchData = async (userId) => {
     const boardUrl = `http://localhost:8000/api/boards/users/${userId}`;
@@ -161,31 +163,33 @@ function AddToBoard() {
 
 };
 
-const boardDataInput = fetchLibraryData();
 
-
-const handleBoardClick = async () => {
-  const libraryUrl = 'http://localhost:8000/api/libraries'
-
-  const fetchConfig = {
-    method: "post",
-    body: JSON.stringify(boardDataInput),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
+const handleBoardClick = async (gameId, boardId) => {
   try {
+    const userId = await fetchUserName(); // Fetch userId here
+    const libraryData = await fetchLibraryData(userId, gameId, boardId); // Pass userId as an argument
+
+    const libraryUrl = 'http://localhost:8000/api/libraries';
+
+    const fetchConfig = {
+      method: "post",
+      body: JSON.stringify(libraryData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
     const response = await fetch(libraryUrl, fetchConfig);
+
     if (response.ok) {
-      console.log('Nice!')
+      console.log('Nice!');
     } else {
-      console.error('Failed to add to wishlist. Server response:', response);
-      throw new Error('Failed to add to wishlist');
+      console.error('Failed to add to board. Server response:', response);
+      throw new Error('Failed to add to board');
     }
   } catch (error) {
-    console.error('Error adding to wishlist:', error);
+    console.error('Error adding to board:', error);
   }
 };
 
@@ -203,7 +207,9 @@ const handleBoardClick = async () => {
         <div key={boardData.id} className='card' style={{ width: '20rem' }}>
           <img src={boardData.cover_photo} className='card-img-top' alt={`Board Cover for ${boardData.board_name}`} style={{ borderRadius: '20px 20px 0 0 ' }} />
           <div className='card-body'>
-            <a href={`/games/${gameId}`} className='board-link'>
+          <a href={`/games/${id}`} className='board-link' onClick={() => {
+            handleBoardClick(gameId, boardId);
+          }}>
             <h5 className='card-title1'>{boardData.board_name}</h5>
           </a>
             <hr className='bsolid' />
