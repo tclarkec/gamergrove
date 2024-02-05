@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import './userReviewCard.css';
 import StarRating from '../../StarRating';
 
+
 function LargeUserReviewCard({ gameId, accountId }) {
   const { token } = useAuthContext();
   const navigate = useNavigate();
   const [userReviews, setUserReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpvoted, setIsUpvoted] = useState(false);
+  const [isDownvoted, setIsDownvoted] = useState(false);
 
   const fetchReviewsForGame = async (gameId) => {
     const reviewsUrl = `http://localhost:8000/api/reviews/games/${gameId}`;
@@ -30,9 +33,160 @@ function LargeUserReviewCard({ gameId, accountId }) {
     }
   };
 
+  const fetchVotesForUser = async (accountId) => {
+    const votesUrl = `http://localhost:8000/api/votes/users/${accountId}`;
+
+    const votesConfig = {
+      credentials: 'include'
+    };
+
+    try {
+      const response = await fetch(votesUrl, votesConfig);
+      const votesData = await response.json();
+
+      if (response.status === 404) {
+        console.warn(`No votes found for user`);
+
+      } else if (response.ok && votesData[votesData.length-1]["upvote"] === true) {
+        setIsUpvoted(true);
+      } else if (response.ok && votesData[votesData.length-1]["downvote"] === true) {
+        setIsDownvoted(true);
+      }
+    } catch (error) {
+      console.error('Error fetching votes', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
     fetchReviewsForGame(gameId);
-  }, [gameId]);
+    fetchVotesForUser(accountId);
+  }, [gameId, accountId]);
+
+  const handleUpVoteClick = async (reviewId) => {
+   if (isUpvoted === false) {
+    const upVoteData = {
+      "review_id": reviewId,
+      "upvote": true,
+      "downvote": false
+    }
+
+    const voteUrl = 'http://localhost:8000/api/votes';
+
+    const voteFetchConfig = {
+      method: "post",
+      body: JSON.stringify (upVoteData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const voteResponse = await fetch(voteUrl, voteFetchConfig);
+      if (voteResponse.ok) {
+        console.log('Upvote registered!')
+        setIsUpvoted(true);
+      } else {
+        console.error('Failed to register upvote. Server response: ', response);
+        throw new Error('Failed to create upvote')
+      }
+    } catch (error) {
+      console.error ('Error creating upvote', error);
+    }
+  } else if (isUpvoted === true) {
+    const upVoteData = {
+      "review_id": reviewId,
+      "upvote": false,
+      "downvote": false
+    }
+
+    const voteUrl = 'http://localhost:8000/api/votes';
+
+    const voteFetchConfig = {
+      method: "post",
+      body: JSON.stringify (upVoteData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const voteResponse = await fetch(voteUrl, voteFetchConfig);
+      if (voteResponse.ok) {
+        console.log('Upvote removed!')
+        setIsUpvoted(false);
+      } else {
+        console.error('Failed to remove upvote. Server response: ', response);
+        throw new Error('Failed to remove upvote')
+      }
+    } catch (error) {
+      console.error ('Error removing upvote', error);
+    }
+  }
+}
+
+  const handleDownVoteClick = async (reviewId) => {
+   if (isDownvoted === false ) {
+    const downVoteData = {
+      "review_id": reviewId,
+      "upvote": false,
+      "downvote": true
+    }
+
+    const voteUrl = 'http://localhost:8000/api/votes';
+
+    const voteFetchConfig = {
+      method: "post",
+      body: JSON.stringify (downVoteData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const voteResponse = await fetch(voteUrl, voteFetchConfig);
+      if (voteResponse.ok) {
+        console.log('Downvote registered!')
+        setIsDownvoted(true);
+      } else {
+        console.error('Failed to register downvote. Server response: ', response);
+        throw new Error('Failed to create downvote')
+      }
+    } catch (error) {
+      console.error ('Error creating downvote', error);
+    }
+  } else if (isDownvoted === true) {
+    const downVoteData = {
+      "review_id": reviewId,
+      "upvote": false,
+      "downvote": false
+    }
+
+    const voteUrl = 'http://localhost:8000/api/votes';
+
+    const voteFetchConfig = {
+      method: "post",
+      body: JSON.stringify (downVoteData),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const voteResponse = await fetch(voteUrl, voteFetchConfig);
+      if (voteResponse.ok) {
+        console.log('Downvote removed!')
+        setIsDownvoted(false);
+      } else {
+        console.error('Failed to remove downvote. Server response: ', response);
+        throw new Error('Failed to remove downvote')
+      }
+    } catch (error) {
+      console.error ('Error removing downvote', error);
+    }
+  }
+}
 
   return (
     <div>
@@ -66,7 +220,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
               )}
             </div>
             <div className="urline"></div>
-            <div className="urcard-content">
+            <div style={{color: 'white'}} className="urcard-content">
               <div className="urcontainer-title">
                 <p>Title: {review.title}</p>
               </div>
@@ -74,28 +228,38 @@ function LargeUserReviewCard({ gameId, accountId }) {
                 <p>Review: {review.body}</p>
               </div>
               <div className="urcontainer">
-                <div className="white-container">
                   <p>Rating: {review.rating}</p>
                   <div className="rating-container">
                     <div className="star-rating">
                       <StarRating rating={review.rating} />
                     </div>
                   </div>
-                </div>
               </div>
             </div>
             <div>
+              <button onClick = {() => {
+                handleUpVoteClick(review.id)
+              }}
+              style={{ backgroundColor: isUpvoted ? 'green' : 'transparent' }}
+              >
               <img
                 className="thumbs-up"
-                src="https://i.postimg.cc/N0md97zp/thumbsup.png"
+                src="https://i.postimg.cc/dV4GtWb9/Thumbs-Up-White.png"
                 alt="Thumbs Up"
               />
+              </button>
               <p className="urp">34</p>
+              <button onClick = {() => {
+                handleDownVoteClick(review.id)
+              }}
+              style={{ backgroundColor: isDownvoted ? 'red' : 'transparent' }}
+              >
               <img
                 className="thumbs-down"
-                src="https://i.postimg.cc/m2W27bkj/thumbsdown.png"
+                src="https://i.postimg.cc/fyNVvm4L/Thumbsdown-White.png"
                 alt="Thumbs Down"
               />
+              </button>
               <p className="urp2">13</p>
             </div>
           </div>
