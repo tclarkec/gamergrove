@@ -74,9 +74,12 @@ function UserReviewCard() {
             <div className="urcard-title">{review.title}</div>
             <div className="urcard-date">9/3/2023</div>
             <div>
-              <button className="urcard-edit-delete" style={{ color: 'black' }} onClick={() => {
+              <button className="urcard-edit" style={{ color: 'black' }} onClick={() => {
                 navigate(`/reviews/update/${review.id}/${review.game_id}`)
-              }}>edit</button> | delete
+              }}>Edit</button> |
+              <button className="urcard-delete" style={{ color: 'black' }} onClick={() => {
+                      navigate(`/reviews/delete/${review.id}`)
+              }}>Delete</button>
             </div>
             <div className="urline"></div>
             <div className="urcard-content">

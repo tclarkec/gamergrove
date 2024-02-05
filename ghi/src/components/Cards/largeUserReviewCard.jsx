@@ -45,15 +45,23 @@ function LargeUserReviewCard({ gameId, accountId }) {
               {review.account_id === accountId && (
                 <>
                   <button
-                    className="urcard-edit-delete"
+                    className="urcard-edit"
                     style={{ color: 'black' }}
                     onClick={() => {
                       navigate(`/reviews/update/${review.id}/${review.game_id}`)
                     }}
                   >
-                    edit
+                    Edit
                   </button>{' '}
-                  | delete
+                  <button
+                    className="urcard-delete"
+                    style={{ color: 'black' }}
+                    onClick={() => {
+                      navigate(`/reviews/delete/${review.id}`)
+                    }}
+                  >
+                    Delete
+                  </button>{' '}
                 </>
               )}
             </div>
