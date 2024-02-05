@@ -111,3 +111,9 @@ input[type=text] {
   padding: 7px;
   margin-left: 10px;
 }
+
+.loader {
+  margin: auto;
+  width: min-content;
+  margin-top: 50px;
+}

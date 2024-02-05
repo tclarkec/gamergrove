@@ -24,7 +24,6 @@ import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
 
 
-
 // All your environment variables in vite are in this object
 console.table(import.meta.env)
 // When using environment variables, you should do a check to see if
@@ -86,7 +85,7 @@ function App() {
                     <Route path="/games/:id" element={<GameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />
                     <Route path="/search" element={<SearchResults />} />
-      
+
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
