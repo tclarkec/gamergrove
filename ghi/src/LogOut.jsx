@@ -8,8 +8,12 @@ const containerStyle = {
   justifyContent: 'center',
 };
 
-function LogOutTest() {
+function LogOut() {
   const navigate = useNavigate();
+  const handleBackToHomepage = () => {
+    navigate("/");
+    window.location.reload();
+    };
 
   return (
     <div style={containerStyle}>
@@ -18,11 +22,11 @@ function LogOutTest() {
           <div>
             You have been logged out!
           </div>
-          <button onClick={() => { navigate("/"); }}> Back to Homepage </button>
+          <button onClick={handleBackToHomepage}> Back to Homepage </button>
         </div>
       </div>
     </div>
   );
 }
 
-export default LogOutTest;
+export default LogOut;

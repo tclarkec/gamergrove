@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './userReviewCard.css';
+import StarRating from '../../StarRating'; // Make sure to adjust the path based on your project structure
+import {useNavigate} from 'react-router-dom';
 
 async function fetchAccountId() {
   const tokenUrl = `http://localhost:8000/token`;
@@ -25,6 +27,8 @@ async function fetchAccountId() {
 }
 
 function UserReviewCard() {
+  const navigate = useNavigate();
+
   const [userReviews, setUserReviews] = useState([]);
 
   const fetchUserReviews = async (accountId) => {
@@ -53,7 +57,7 @@ function UserReviewCard() {
         fetchUserReviews(accountId);
       } else {
         console.error('Error fetching account ID');
-        setUserReviews([]); 
+        setUserReviews([]);
       }
     };
 
@@ -69,15 +73,28 @@ function UserReviewCard() {
           <div key={review.id} className="urcard">
             <div className="urcard-title">{review.title}</div>
             <div className="urcard-date">9/3/2023</div>
-            <div className="urcard-edit-delete">edit | delete</div>
+            <div>
+              <button className="urcard-edit" style={{ color: 'black' }} onClick={() => {
+                navigate(`/reviews/update/${review.id}/${review.game_id}`)
+              }}>Edit</button> |
+              <button className="urcard-delete" style={{ color: 'black' }} onClick={() => {
+                      navigate(`/reviews/delete/${review.id}`)
+              }}>Delete</button>
+            </div>
             <div className="urline"></div>
             <div className="urcard-content">
               <div className="urcard-photo">
                 <img src="https://www.shareicon.net/data/512x512/2016/08/18/809170_user_512x512.png" alt="User" />
               </div>
               <div className="urcard-details" style={{ color: 'black' }}>
-                {/* You can limit this to 715 characters */}
                 <p>{review.body}</p>
+                {review.rating && (
+                  <div className="rating-container">
+                    <div className="star-rating">
+                      <StarRating rating={review.rating} />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div>

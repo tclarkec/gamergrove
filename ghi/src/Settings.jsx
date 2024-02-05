@@ -166,7 +166,7 @@ function Settings() {
               }}
             >
               <div className="offset-3 col-6">
-                <h2 className="card-header">Account Settings</h2>
+                <h4 className="card-header">Account Settings</h4>
                 <div className={warningClasses} id="warning-message">
                   Your passwords don't match!
                 </div>

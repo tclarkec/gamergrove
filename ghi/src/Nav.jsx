@@ -168,6 +168,7 @@ const Nav = () => {
       console.log("Games that resulted in the search")
       console.log(searchResults)
       navigate("/search", { state: searchResults });
+      window.location.reload()
     }
 
 
@@ -283,10 +284,10 @@ const Nav = () => {
             {showDropdown && (
               <div className='nav__dropdown' onClick={stopPropagation}>
                 <a href="http://localhost:5173/login">
-                <div className='nav__dropdown-item, font-drop'>Login_____</div>
+                <div className='nav__dropdown-item, font-drop'>Login</div>
                 </a>
                 <a href="http://localhost:5173/signup">
-                <div className='nav__dropdown-item, font-drop'>Sign Up___</div>
+                <div className='nav__dropdown-item, font-drop'>Sign Up</div>
                 </a>
               </div>
             )}

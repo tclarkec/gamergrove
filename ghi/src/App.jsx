@@ -13,15 +13,19 @@ import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
 
 import Login from './Login';
+import WelcomeBack from './WelcomeBack';
 import BoardForm from './BoardForm';
 import SignUpForm from './SignUpForm'
-import LogOutTest from './LogOutTest';
+import LogOut from './LogOut';
 import Settings from './Settings';
-import ReviewForm from './ReviewForm';
+import UpdateReviewForm from './UpdateReviewForm';
+import DeleteReviewForm from './DeleteReviewForm';
 import SearchResults from './components/SearchResults/SearchResults';
 
 import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
+
+import AddToBoard from './AddToBoard';
 
 
 // All your environment variables in vite are in this object
@@ -74,12 +78,14 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/logout" element={<LogOutTest />} />
+                    <Route path="/login/welcomeback" element={<WelcomeBack />} />
+                    <Route path="/logout" element={<LogOut />} />
                     <Route path="/signup" element={<SignUpForm />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/boards/create" element={<BoardForm />} />
-                    <Route path="/reviews/create" element={<ReviewForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/reviews/update/:review_id/:game_id" element={<UpdateReviewForm />} />
+                    <Route path="/reviews/delete/:id" element={<DeleteReviewForm />} />
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
                     <Route path="/games/:id" element={<GameDetails />} />
