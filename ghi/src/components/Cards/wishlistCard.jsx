@@ -1,51 +1,92 @@
-import React from 'react';
+import { React, useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
+
 import './wishlistCard.css';
 
+async function fetchUserName() {
+  const tokenUrl = `http://localhost:8000/token`;
+
+  const fetchConfig = {
+    credentials: 'include',
+  };
+
+  const response = await fetch(tokenUrl, fetchConfig);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.account.id;
+  }
+}
+
 function WishlistCard() {
-  return (
-    <div className="wcard">
-      <div className="wcard-content">
-        <div className="wcard-photo">
-          <img src="https://i.redd.it/qfddfjyvagd91.jpg" alt="Card Photo" />
-        </div>
-        <div className="wcard-details">
-          <div className="wcard-title">Game Title</div>
-          <hr className="solid" />
-          <div className="wcard-description">
-            <div className="side-by-side">
-              <div className="link-container">
-                <a href="https://www.example.com/link1" target="_blank" rel="noopener noreferrer">
-                  Details
-                </a>
+  const [wishlistGames, setWishlistGames] = useState([]);
+
+  const fetchData = async (userId) => {
+    try {
+      const libraryUrl = `http://localhost:8000/api/users/libraries/${userId}`;
+      const libraryConfig = {
+        credentials: 'include',
+      };
+
+      const response = await fetch(libraryUrl, libraryConfig);
+      const libraryData = await response.json();
+
+      const wishlistGameIds = libraryData
+        .filter((item) => item.wishlist === true)
+        .map((item) => item.game_id);
+
+      const uniqueGameIds = Array.from(new Set(wishlistGameIds));
+
+      const gameDetailsPromises = uniqueGameIds.map((gameId) =>
+        fetch(`http://localhost:8000/api/games/${gameId}`).then((response) =>
+          response.json()
+        )
+      );
+
+      const wishlistGames = await Promise.all(gameDetailsPromises);
+
+      setWishlistGames(wishlistGames);
+    } catch (error) {
+      console.error('Error fetching:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = await fetchUserName();
+      await fetchData(userId);
+    };
+
+    fetchUserData();
+  }, []);
+
+return (
+  <div>
+    {wishlistGames.map((game, index) => (
+      <div key={`${game.id}-${index}`} className="wishlistcard">
+        <div className="wcard-content">
+          <div className="wcard-details">
+            <div className="wcard-item">
+              <Link to={`/games/${game.id}`} className="wcard-item">
+              <p className='gamename'>{game.name}</p>
+              </Link>
+              <div className="wcard-photo">
+                <img src={game.background_img} alt={game.name} />
               </div>
-              <span>|</span>
-              <div className="link-container">
-                <a href="https://www.example.com/link2" target="_blank" rel="noopener noreferrer">
-                  Remove
-                </a>
-              </div>
+              {/* Add your other content here */}
             </div>
           </div>
-          <div className="gcontent-capsules">
-            <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="25px" height="25px" alt="Icon 1" />
-            <img
-              src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-              width="25px"
-              height="25px"
-              alt="Icon 2"
-            />
-            <img src="https://i.postimg.cc/R0qXLppc/image-3.png" width="25px" height="25px" alt="Icon 3" />
-            <img
-              src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-              width="25px"
-              height="25px"
-              alt="Icon 4"
-            />
-          </div>
         </div>
+
       </div>
-    </div>
-  );
+    ))}
+
+  </div>
+);
+
+
+
+
 }
 
 export default WishlistCard;

@@ -66,7 +66,9 @@ const SideMenu = () => {
                     </ul>
                     <div className="small-space"></div>
                     <hr className='solid' />
+                    <a href="http://localhost:5173/games">
                     <p className='all-games' >All Games</p>
+                    </a>
                     <hr className='solid'/>
                     <ul>
 

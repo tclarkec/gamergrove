@@ -172,7 +172,7 @@
   align-items: right;
 
   margin-right: 5px;
-  margin-left: 50px;
+  margin-left: 320px;
 }
 
 .moveright {
@@ -280,4 +280,9 @@ input[type=text] {
 label[for='rating'] {
   color: darkgray; /* Set the gray color you prefer */
   font-family: 'K2D';
+}
+
+.rec {
+  color: red;
+  font-size: 24px;
 }
