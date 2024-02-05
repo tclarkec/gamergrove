@@ -25,13 +25,13 @@ function Dashboard() {
         <input id="radio2" type="radio" name="css-tabs" />
         <input id="radio3" type="radio" name="css-tabs" />
         <input id="radio4" type="radio" name="css-tabs" />
-        {/* <input id="radio5" type="radio" name="css-tabs" /> */}
+        <input id="radio5" type="radio" name="css-tabs" />
         <div id="tabs">
           <label htmlFor="radio1" id="tab1">Boards</label>
           <label htmlFor="radio2" id="tab2">Reviews</label>
           <label htmlFor="radio3" id="tab3">Games</label>
           <label htmlFor="radio4" id="tab4">Wishlist</label>
-          {/* <label htmlFor="radio5" id="tab5">Settings</label> */}
+          <label htmlFor="radio5" id="tab5">Settings</label>
         </div>
         <div id="content">
           <section id="content1">
@@ -61,9 +61,9 @@ function Dashboard() {
 
             </div>
           </section>
-          {/* <section id="content5">
+          <section id="content5">
             <Settings />
-          </section> */}
+          </section>
           </div>
 
       </main>

@@ -151,7 +151,7 @@ class LibraryQueries:
                         detail="A library with that id does not exist in the database"
                     )
 
-                account_id_check=db.execute(
+                account_id_check = db.execute(
                     """
                     DELETE FROM libraries
                     WHERE id = %s AND account_id = %s

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Settings.css';
 
 const containerStyle = {
   minHeight: '100vh',
@@ -139,8 +140,8 @@ function Settings() {
   }
 
   return (
-    <div style={{ position: 'relative', ...containerStyle }}>
-      <button
+    <div>
+      {/* <button
         onClick={() => {
           navigate('/');
         }}
@@ -152,10 +153,10 @@ function Settings() {
         }}
       >
         Back to Homepage
-      </button>
-      <div style={{ ...centerVertically, width: '100%' }}>
-        <div className="card text-bg-light mb-3">
-          <div className="container">
+      </button> */}
+      <div style = {{ alignItems: 'center'}}>
+        <div className="settingscard">
+          <div className="settingscard">
             <div
               className="row"
               style={{
@@ -165,13 +166,13 @@ function Settings() {
                 marginRight: '7%',
               }}
             >
-              <div className="offset-3 col-6">
+              <div className="settingscard">
                 <h4 className="card-header">Account Settings</h4>
                 <div className={warningClasses} id="warning-message">
                   Your passwords don't match!
                 </div>
                 <form onSubmit={handleSubmit} id="create-profile">
-                  <div className="form-floating mb-3">
+                  <div className="settingscard">
                     <label htmlFor="username">Username</label>
                     <input
                       onChange={handleFormChange}

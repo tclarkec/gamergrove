@@ -118,13 +118,13 @@ function GameDetails() {
 
    const getRecommendation = (rating) => {
     if (rating >= 4.3) {
-      return "Highly Recommended";
+      return "Highly Recommended 🔥🏆 ";
     } else if (rating >= 3.7) {
-      return "Recommended";
+      return "Recommended 💣";
     } else if (rating >= 2.5) {
-      return "Okay";
+      return "Okay 🕯️";
     } else {
-      return "Not Recommended";
+      return "Not Recommended 🛑";
     }
   };
 
@@ -306,8 +306,6 @@ const handleReviewSubmit = async (event) => {
               <p className='text-title'>About Game:</p>
               <p className='text'> {gameData.description} </p>
               <br />
-              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
-              <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
               <br />
@@ -332,6 +330,7 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
+              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
             </div>
           </div>
           <br/>
@@ -366,9 +365,9 @@ const handleReviewSubmit = async (event) => {
         </div>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
-          <div className='moveright' >
+          {/* <div className='moveright' > */}
             <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
-          </div>
+          {/* </div> */}
 
         </div>
         <br />

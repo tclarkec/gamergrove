@@ -71,38 +71,43 @@ function UserReviewCard() {
       ) : (
         userReviews.map((review) => (
           <div key={review.id} className="urcard">
+            <div className="urcard-contenet">
             <div className="urcard-title">{review.title}</div>
-            <div className="urcard-date">9/3/2023</div>
-            <div>
-              <button className="urcard-edit" style={{ color: 'black' }} onClick={() => {
-                navigate(`/reviews/update/${review.id}/${review.game_id}`)
-              }}>Edit</button> |
-              <button className="urcard-delete" style={{ color: 'black' }} onClick={() => {
-                      navigate(`/reviews/delete/${review.id}`)
-              }}>Delete</button>
+
+
             </div>
             <div className="urline"></div>
             <div className="urcard-content">
-              <div className="urcard-photo">
+              {/* <div className="urcard-photo">
                 <img src="https://www.shareicon.net/data/512x512/2016/08/18/809170_user_512x512.png" alt="User" />
-              </div>
-              <div className="urcard-details" style={{ color: 'black' }}>
+              </div> */}
+              <div className="urcard-details" style={{ color: 'black', flex: '2', textAlign: 'right' }}>
                 <p>{review.body}</p>
                 {review.rating && (
                   <div className="rating-container">
                     <div className="star-rating">
                       <StarRating rating={review.rating} />
+
                     </div>
+                    <div>
+                    <button className="urcard-edit-delete" style={{ color: 'black' }} onClick={() => {
+                      navigate(`/reviews/update/${review.id}/${review.game_id}`)
+                    }}>Edit</button> |
+                    <button className="urcard-edit-delete" style={{ color: 'black' }} onClick={() => {
+                            navigate(`/reviews/delete/${review.id}`)
+                    }}>Delete</button>
                   </div>
+                  </div>
+
                 )}
               </div>
             </div>
-            <div>
+            {/* <div>
               <img className="thumbs-up" src="https://i.postimg.cc/N0md97zp/thumbsup.png" alt="Thumbs Up" />
               <p className="urp">34</p>
               <img className="thumbs-down" src="https://i.postimg.cc/m2W27bkj/thumbsdown.png" alt="Thumbs Down" />
               <p className="urp2">13</p>
-            </div>
+            </div> */}
           </div>
         ))
       )}

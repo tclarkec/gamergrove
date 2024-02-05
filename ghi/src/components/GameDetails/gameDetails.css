@@ -26,7 +26,7 @@
     margin-top: 0px;
     text-align: right;
 
-    margin-right: 20px;
+    margin-right: 50px;
     margin-top: -35px;
     font-family: "K2D";
     position: relative;
@@ -170,9 +170,9 @@
 
   opacity: 0;
   align-items: right;
-
+  position: relative;
   margin-right: 5px;
-  margin-left: 320px;
+  margin-left: 300px;
 }
 
 .moveright {
@@ -201,8 +201,9 @@ h1.gameTitle {
     text-align: right;
     margin-right: 50px;
     margin-top: 10px;
-    font-weight: bold;
+    font-weight: bolder;
     position: relative;
+    color: white;
 
 }
 
@@ -283,6 +284,11 @@ label[for='rating'] {
 }
 
 .rec {
-  color: red;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
   font-size: 24px;
+  text-align: right;
+  margin-right: 20px;
+  background-color: rgba(0, 0, 0, 0.532);
+  border-radius: 20px;
 }
