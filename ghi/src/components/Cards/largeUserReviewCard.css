@@ -97,7 +97,7 @@
   width: 25px;
   height: 25px;
   margin-left: 660px;
-  position: fixed; /* Adjust margin as needed */
+  position: fixed;
 }
 
 .thumbs-down {
