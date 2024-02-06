@@ -105,6 +105,7 @@ function GameDetails() {
 
   }
 
+
   useEffect(() => {
     const fetchGamesData = async () => {
       try {
@@ -125,14 +126,21 @@ function GameDetails() {
         };
 
         const response = await fetch(libraryUrl, fetchConfig);
+
+        if (response.ok) {
         const data = await response.json();
-        if (response.ok && data[data.length-1]["wishlist"] === true) {
-          setWishListText('Added to Wishlist!');
+        for (const entry of data) {
+          if (entry["account_id"] === account_data.id && entry["game_id"] == id && entry["wishlist"] === true) {
+            setWishListText('Added to Wishlist!');
+          }
+
+        }
         }
 
       } catch (error) {
         console.error('Error fetching library data', error);
       }
+
 
     };
     fetchGamesData();
