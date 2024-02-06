@@ -239,9 +239,6 @@ const Nav = () => {
                 <a href="http://localhost:5173/dashboard">
                 <div className='nav__dropdown-item, font-drop'>Dashboard</div>
                 </a>
-                <a href="http://localhost:5173/settings">
-                <div className='nav__dropdown-item, font-drop'>Settings</div>
-                </a>
                 <a href="http://localhost:5173/logout" onClick={()=>{
                   handleLogOut();
                 }}>
