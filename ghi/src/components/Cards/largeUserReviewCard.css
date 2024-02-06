@@ -2,10 +2,10 @@
 
 
 .largercard {
-    background-color: #2e2e2e;
+    background-color: #222222;
     width: 800px;
     height: 250px;
-    border: 1px solid black;
+    border: 100px solid black;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -150,13 +150,13 @@ function GameDetails() {
 
    const getRecommendation = (rating) => {
     if (rating >= 4.3) {
-      return "Highly Recommended";
+      return "Highly Recommended 🔥🏆 ";
     } else if (rating >= 3.7) {
-      return "Recommended";
+      return "Recommended 💣";
     } else if (rating >= 2.5) {
-      return "Okay";
+      return "Okay 🕯️";
     } else {
-      return "Not Recommended";
+      return "Not Recommended 🛑";
     }
   };
 
@@ -271,7 +271,8 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3><p className='recommendation'>{getRecommendation(gameData.rating)}</p>
+          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3>
+
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
@@ -294,6 +295,7 @@ const handleReviewSubmit = async (event) => {
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>{gameData.rating_count} ratings</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Ovr. Rating: {"⭐".repeat(gameData.rating.toFixed(1))} {(gameData.rating.toFixed(1))}</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Released: {gameData.dates}</button>
+
           <img
             className='GDIcon1'
             src="https://i.postimg.cc/nrDT7szB/image-5.png"
@@ -343,12 +345,16 @@ const handleReviewSubmit = async (event) => {
               <br />
               <p className='text-genres-dev'>Developers:</p>
               <p className='text-title1'>{gameData.developers}</p>
+
             </div>
             <div className="flex-item">
-              {/* empty at the moment :/ */}
+
+
+              <br />
             </div>
             <div className="flex-item">
               <h1 className="gameTitle">{gameData.name}</h1>
+
               <img
                 className="divider"
                 src="https://i.postimg.cc/6pP3GtxW/image-11.png"
@@ -358,6 +364,7 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
+              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
             </div>
           </div>
           <br/>
@@ -392,9 +399,9 @@ const handleReviewSubmit = async (event) => {
         </div>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
-          <div className='moveright' >
+          {/* <div className='moveright' > */}
             <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
-          </div>
+          {/* </div> */}
 
         </div>
         <br />
