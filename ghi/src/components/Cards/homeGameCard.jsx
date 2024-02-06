@@ -2,9 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 import './homeGameCard.css';
+import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";
 // Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
 function HomeGameCard( {games}) {
   const [gameDataList, setGameDataList] = useState([]);
+  const [show, setShow] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const handleItemClick = (event, index, data) => {
+    console.log(`[MenuItem] ${data} clicked`);
+    setShow(false); // you should handle your menu visibility yourself
+  };
+  const handleSubMenuClick = (event, index, data) => {
+    console.log(`[SubMenu] ${data} clicked`);
+  };
+  const handleDisplayClick = (event, position) => {
+    console.log(`[Display] ${position} clicked`);
+  };
+
 
   const fetchData = async () => {
     try {
@@ -50,6 +64,9 @@ function HomeGameCard( {games}) {
       return null;
     }
   };
+
+
+
 
 
 // Used games as a prop to have as a callBack in Rows, but resulted in blank screen
@@ -119,9 +136,59 @@ function HomeGameCard( {games}) {
             <p>{parse(gameData.description.slice(0, 200))}</p>
           </div>
           <div className="hgbutton">
-            <button>
+            <button onClick={(e) => {
+                  e.preventDefault();
+                  setShow(true);
+                  setPosition({ });
+                  }}
+
+                  >
               <b>Options</b>
             </button>
+              <div
+
+              >
+                <Menu
+
+                  centerX={position.x}
+                  centerY={position.y}
+                  innerRadius={38}
+                  outerRadius={80}
+                  show={show}
+                  animation={["fade", "scale"]}
+                  animationTimeout={150}
+                >
+                  {/* Populate your menu here */}
+                  <MenuItem onItemClick={handleItemClick} data="Save to Board">
+                    Review
+                  </MenuItem>
+                  <MenuItem onItemClick={handleItemClick} data="Save to Board">
+                    Wish
+                  </MenuItem>
+                  <MenuItem onItemClick={handleItemClick} data="Save to Board">
+                    Details
+                  </MenuItem>
+                  <SubMenu
+                    onDisplayClick={handleDisplayClick}
+                    onItemClick={handleSubMenuClick}
+                    itemView="Add to Board"
+                    data="2. Sub Menu"
+                    displayPosition="bottom"
+                  >
+                    <MenuItem onItemClick={handleItemClick} data="2.1. Item">
+                      Board 1
+                    </MenuItem>
+                    <MenuItem onItemClick={handleItemClick} data="2.2. Item">
+                      Board 2
+                    </MenuItem>
+                    <MenuItem onItemClick={handleItemClick} data="2.3. Item">
+                      Board 3
+                    </MenuItem>
+
+                  </SubMenu>
+                </Menu>
+              </div>
+
           </div>
         </div>
       ))}
