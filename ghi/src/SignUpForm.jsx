@@ -89,7 +89,6 @@ function SignUpForm() {
         login(accountFormData.username, accountFormData.password);
         setAccountFormData(initialAccountData);
         setPasswordConfirm('');
-        setCreatedAccount(true);
 
         document.getElementById('password-confirm').value = ''
         navigate("/");
