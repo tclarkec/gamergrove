@@ -44,14 +44,28 @@ useEffect(() => {
 
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}?platform=${platform}`);
+
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+
       const data = await response.json();
-      return data[0]?.url;
+
+
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
+
+      }
+
+
+
+
     } catch (error) {
       console.error('Cant find the store you are looking for', error);
       return null;
     }
   };
+
 
   return (
     <div>

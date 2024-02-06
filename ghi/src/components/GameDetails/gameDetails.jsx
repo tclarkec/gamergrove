@@ -262,12 +262,22 @@ const handleReviewSubmit = async (event) => {
 
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}?platform=${platform}`);
+
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+
       const data = await response.json();
 
 
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
 
-      return data[0]?.url;
+      }
+
+
+
+
     } catch (error) {
       console.error('Cant find the store you are looking for', error);
       return null;
@@ -343,7 +353,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 2"
-            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+            onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
           />
           )}
           {gameData.nintendo && (
@@ -353,7 +363,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 3"
-            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+            onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
           />
           )}
           {gameData.pc && (
@@ -363,7 +373,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 4"
-            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+            onClick={() => handleClick('PC', gameData.rawg_pk)}
           />
           )}
 
@@ -499,7 +509,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 2"
-            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+            onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
           />
           )}
           {gameData.nintendo && (
@@ -509,7 +519,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 3"
-            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+            onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
           />
           )}
           {gameData.pc && (
@@ -519,7 +529,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 4"
-            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+            onClick={() => handleClick('PC', gameData.rawg_pk)}
           />
           )}
 
