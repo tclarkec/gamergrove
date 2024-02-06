@@ -29,6 +29,9 @@ function HomeGameCard( {games}) {
     try {
       const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}?platform=${platform}`);
       const data = await response.json();
+
+      console.log(data)
+
       return data[0]?.url;
     } catch (error) {
       console.error('Cant find the store you are looking for', error);
@@ -69,10 +72,10 @@ function HomeGameCard( {games}) {
                 alt="Icon 2"
                 onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
               />
-            {/* )} */}
+             {/* )} */}
 
 
-            {/* {gameData.Nintendo && ( */}
+           {/* {gameData.Nintendo && ( */}
               <img
                 src="https://i.postimg.cc/R0qXLppc/image-3.png"
                 width="15px"

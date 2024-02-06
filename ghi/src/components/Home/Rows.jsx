@@ -4,6 +4,8 @@ import HomeGameCard from '../Cards/homeGameCard.jsx';
 
 const Rows = () => {
     const [gameDataList, setGameDataList] = useState([]);
+    // Line 8 is new Data, Trial and Error
+    const [selectedGenre, setSelectedGenre] = useState(null);
 
     const fetchData = async () => {
         try {
@@ -25,7 +27,10 @@ const Rows = () => {
             if (!organizedGames[game.genre]) {
                 organizedGames[game.genre] = [];
             }
-            organizedGames[game.genre].push(game);
+            // Line 30 is new data
+            if (!selectedGenre || game.genre === selectedGenre) {
+                organizedGames[game.genre].push(game);
+            }
         });
         return organizedGames;
     };
