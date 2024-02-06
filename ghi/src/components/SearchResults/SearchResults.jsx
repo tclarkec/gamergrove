@@ -25,6 +25,7 @@ const SearchResults = () => {
                 games.push(d)
             }
         }
+        console.log(games)
         setSearchGames(games)
         } catch (error) {
         console.error('Error fetching data:', error);

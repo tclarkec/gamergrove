@@ -112,16 +112,16 @@ const Nav = () => {
 
               for (const pl of platforms) {
                 if (pl === 'Xbox') {
-                  gameData.Xbox = 'True'
+                  gameData.Xbox = 'true'
                 }
                 if (pl === 'PlayStation') {
-                  gameData.PlayStation = 'True'
+                  gameData.PlayStation = 'true'
                 }
                 if (pl === 'Nintendo') {
-                  gameData.Nintendo = 'True'
+                  gameData.Nintendo = 'true'
                 }
                 if (pl === 'PC') {
-                  gameData.PC = 'True'
+                  gameData.PC = 'true'
                 }
               }
               try {
