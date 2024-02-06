@@ -10,6 +10,13 @@ import LargeUserReviewCard from '../Cards/largeUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
 
+const containerStyle = {
+  minHeight: '100vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
+
 const fetchUserName = async () => {
   const tokenUrl = `http://localhost:8000/token`;
 
@@ -106,10 +113,30 @@ function GameDetails() {
       }
 
     };
-
+    if (token) {
     fetchGamesData();
     fetchLibraryData();
-  }, [id]);
+    }
+  }, [id, token]);
+
+  if (!token) {
+    return (
+      <div style={containerStyle}>
+        <div className="card text-bg-light mb-3">
+          <div className="card-body">
+            <div>
+              <h1>Please either login or signup to view game details! 🫶 🫰</h1>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
+              <button onClick={() => navigate('/')}> Back to Homepage </button>
+              <button onClick={() => navigate('/signup')}> Sign Up </button>
+              <button onClick={() => navigate('/login')}> Log In </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!gameData) {
     return null;
