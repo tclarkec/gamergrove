@@ -459,19 +459,19 @@ const handleReviewSubmit = async (event) => {
           <div className='rcontainer-title'>
             <input onClick={() => {
               navigate(`/games/${gameData.id}/nonuser`)
-            }} placeholder='Review Title...' required type='text' name='title' id='title' className='form-control' value={reviewFormData.title} />
+            }} placeholder='Review Title...' required type='text' name='title' id='title'/>
           </div>
           <div className='rcontainer'>
             <input onClick={() => {
               navigate(`/games/${gameData.id}/nonuser`)
-            }} placeholder='Write a review...' required type='text' name='body' id='body' className='form-control' value={reviewFormData.body} />
+            }} placeholder='Write a review...' required type='text' name='body' id='body'/>
           </div>
       <div className='rcontainer'>
         <div className='white-container'>
           <label htmlFor='rating' style={{marginBottom: '0rem'}} >Give a rating out of 5:</label>
           <div className='rating-container'>
             <div className='star-rating'>
-              <StarRating rating={reviewFormData.rating} onStarClick={() => {
+              <StarRating onStarClick={() => {
                 navigate(`/games/${gameData.id}/nonuser`)
               }} />
             </div>
