@@ -176,32 +176,9 @@ const handleWishListClick = async () => {
     } catch (error) {
       console.error('Error adding to wishlist:', error);
     }
-  } else if (wishListText === 'Added to Wishlist!') {
-    const removeEntryUrl = 'http://localhost:8000/api/libraries';
 
-    const removeEntryFetchConfig = {
-      method: "post",
-      body: JSON.stringify(removeWishListData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    try {
-      const removeEntryResponse = await fetch(removeEntryUrl, removeEntryFetchConfig);
-      if (removeEntryResponse.ok) {
-        setWishListText('Add to Wishlist');
-        console.log('Nice!');
-      } else {
-        console.error('Failed to remove from wishlist. Server response:', response);
-        throw new Error('Failed to remove from wishlist');
-      }
-    } catch (error) {
-      console.error('Error removing from wishlist:', error);
-    }
-  }
-};
+  };
+}
 
 const handleBoardClick = async () => {
   navigate(`/games/${id}/addtoboard`);
@@ -224,7 +201,6 @@ const handleReviewSubmit = async (event) => {
 
     const response = await fetch(reviewUrl, fetchConfig);
     if (response.ok) {
-        // navigate("/reviews");
         setReviewFormData(initialReviewData);
         setSubmittedReview(true);
     } else {
@@ -263,7 +239,9 @@ const handleReviewSubmit = async (event) => {
           <hr className='gamessolid' />
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
             handleWishListClick();
-          }}>{wishListText}</button>
+          }}
+          disabled = {wishListText === 'Added to Wishlist!' }
+          >{wishListText}</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
             handleBoardClick();
           }}>Add to Board</button>
