@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './boardCard.css';
-import { Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 async function fetchUserName() {
   const tokenUrl = `http://localhost:8000/token`;
@@ -58,6 +58,7 @@ async function fetchGameDetails(gameId) {
 }
 
 function BoardCard() {
+  const navigate = useNavigate();
   const [boardDataList, setBoardDataList] = useState([]);
   const [userSavedBoards, setUserSavedBoards] = useState([]);
 
@@ -129,7 +130,16 @@ function BoardCard() {
   );
 
   if (filteredBoardDataList.length === 0) {
-    return <p>No boards available.</p>;
+    return (
+      <>
+    <p>No boards available.</p>
+    <div>
+    <button onClick={()=>{
+      navigate('/boards/create')
+    }}> Create a board </button>
+    </div>
+      </>
+    )
   }
 
   return (
