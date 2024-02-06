@@ -39,7 +39,7 @@ const Rows = () => {
 
     return (
         <div>
-            
+
 
             {Object.keys(organizedGamesByGenre).map((genre) => (
                 <div key={genre} className='row'>
