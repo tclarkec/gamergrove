@@ -73,7 +73,7 @@ function WishlistCard() {
   }, []);
 
   const filteredUserLibrary = userLibrary.filter((libraryData) =>
-    userWishlistGames.includes(libraryData.id)
+    userWishlistGames.includes(libraryData.id) && libraryData.wishlist === true
   );
 
   if (filteredUserLibrary.length === 0) {
@@ -108,6 +108,8 @@ function WishlistCard() {
     }
 }
 
+console.log(filteredUserLibrary);
+
 return (
     <div>
       {wishlistGames.map((game, index) => (
@@ -129,7 +131,7 @@ return (
                       margin: '10px',
                     }}
                   >
-                  {userLibrary.map(entry => (
+                  {filteredUserLibrary.map(entry => (
                     <div key={`wishlist-entry-${entry.id}`}>
                       <button onClick={() => handleRemove(entry.id, entry.account_id)}>
                         Remove
