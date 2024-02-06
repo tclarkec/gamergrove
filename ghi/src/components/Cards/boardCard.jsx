@@ -132,7 +132,7 @@ function BoardCard() {
   if (filteredBoardDataList.length === 0) {
     return (
       <>
-    <p>No boards available.</p>
+    <p style={{color:'white'}}>No boards created.</p>
     <div>
     <button onClick={()=>{
       navigate('/boards/create')

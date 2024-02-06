@@ -22,6 +22,7 @@ async function fetchUserName() {
 function WishlistCard() {
   const [wishlistGames, setWishlistGames] = useState([]);
   const [wishlistLibrary, setWishlistLibrary] = useState([]);
+  const [userWishlistGames, setUserWishlistGames] = useState([]);
 
   const fetchData = async (userId) => {
     try {
@@ -51,6 +52,9 @@ function WishlistCard() {
       const wishlistGames = await Promise.all(gameDetailsPromises);
 
       setWishlistGames(wishlistGames);
+
+      setUserWishlistGames(libraryData.map((entry) => entry.id));
+
     }
 
 
@@ -67,6 +71,16 @@ function WishlistCard() {
 
     fetchUserData();
   }, []);
+
+  const filteredWishListLibrary = wishlistLibrary.filter((libraryData) =>
+    userWishlistGames.includes(libraryData.id)
+  );
+
+  if (filteredWishListLibrary.length === 0) {
+    return (
+      <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
+    )
+  }
 
 
   const handleRemove = async (libraryId, userId) => {
