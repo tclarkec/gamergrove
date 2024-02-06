@@ -143,6 +143,12 @@ function BoardCard() {
   }
 
   return (
+  <>
+  <div>
+    <button onClick={()=>{
+      navigate('/boards/create')
+    }}> Create a board </button>
+  </div>
   <div className='bcard-container'>
     {filteredBoardDataList.map((boardData) => (
       <div key={boardData.id} className='card' style={{ width: '20rem' }}>
@@ -172,6 +178,7 @@ function BoardCard() {
       </div>
     ))}
   </div>
+</>
 );
 
 }
