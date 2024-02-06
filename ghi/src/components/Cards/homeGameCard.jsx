@@ -32,7 +32,7 @@ function HomeGameCard( {games}) {
       const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}?platform=${platform}`);
       const data = await response.json();
 
-      console.log(data)
+     
 
       return data[0]?.url;
     } catch (error) {
