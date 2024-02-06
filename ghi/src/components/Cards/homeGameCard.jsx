@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
 import './homeGameCard.css';
 // Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
 function HomeGameCard( {games}) {
@@ -104,7 +105,7 @@ function HomeGameCard( {games}) {
 
           </div>
           <div className="hgcontent-body">
-            <p>{gameData.description.slice(0, 200)}</p>
+            <p>{parse(gameData.description.slice(0, 200))}</p>
           </div>
           <div className="hgbutton">
             <button>
