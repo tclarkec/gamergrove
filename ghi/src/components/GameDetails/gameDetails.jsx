@@ -10,6 +10,7 @@ import LargeUserReviewCard from '../Cards/largeUserReviewCard';
 import LargeNonUserReviewCard from '../Cards/largeNonUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
+import UserReviewCard from "../Cards/userReviewCard";
 
 const containerStyle = {
   minHeight: '100vh',
@@ -338,7 +339,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'> {gameData.description} </p>
+              <p dangerouslySetInnerHTML={{ __html: gameData.description }} />
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
@@ -365,7 +366,10 @@ const handleReviewSubmit = async (event) => {
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
               <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
+
             </div>
+
+
           </div>
           <br/>
           <br/>
@@ -393,15 +397,15 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div style={{marginTop: '10px'}}>
         <div className={messageReviewClasses} id="success-message">
             Your review has been submitted!
         </div>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
-          {/* <div className='moveright' > */}
+          <div className='moveright' >
             <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
-          {/* </div> */}
+          </div>
 
         </div>
         <br />
@@ -504,6 +508,8 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
+              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
+
             </div>
           </div>
           <br/>
@@ -538,7 +544,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div style={{marginTop: '10px'}}>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
           <div className='moveright' >

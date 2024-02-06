@@ -104,7 +104,7 @@ function HomeGameCard( {games}) {
 
           </div>
           <div className="hgcontent-body">
-            <p>{gameData.description.slice(0, 200)}</p>
+           <p dangerouslySetInnerHTML={{ __html: gameData.description.slice(0, 150) }} />
           </div>
           <div className="hgbutton">
             <button>
