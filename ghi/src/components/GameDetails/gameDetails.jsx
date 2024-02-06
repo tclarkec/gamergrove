@@ -10,7 +10,7 @@ import LargeUserReviewCard from '../Cards/largeUserReviewCard';
 import LargeNonUserReviewCard from '../Cards/largeNonUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
-import UserReviewCard from "../Cards/userReviewCard";
+import parse from 'html-react-parser';
 
 const containerStyle = {
   minHeight: '100vh',
@@ -339,7 +339,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p dangerouslySetInnerHTML={{ __html: gameData.description }} />
+              <p className='text'>{parse(gameData.description)}</p>
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
@@ -486,7 +486,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'> {gameData.description} </p>
+              <p className='text'> {parse(gameData.description)} </p>
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>

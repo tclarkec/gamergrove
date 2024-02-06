@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Nav from '../../Nav.jsx';
 import SideMenu from '../Home/Menu.jsx';
+import parse from 'html-react-parser';
 
 
 const SearchResults = () => {
@@ -105,7 +106,7 @@ useEffect(() => {
                 />
             </div>
             <div className="hgcontent-body">
-                <p>{gameData.description.slice(0, 200)}</p>
+                <p>{parse(gameData.description.slice(0, 200))}</p>
             </div>
             <div className="hgbutton">
                 <button>

@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import './gameDetails.css';
+import parse from 'html-react-parser';
 
 const containerStyle = {
   minHeight: '100vh',
