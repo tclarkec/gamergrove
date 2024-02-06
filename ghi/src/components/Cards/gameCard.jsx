@@ -89,7 +89,9 @@ function GameCard() {
           />
           </div>
           <div className='gcontent-body'>
-            <p>{gameData.description.slice(0, 200)}</p>
+            <p dangerouslySetInnerHTML={{ __html: gameData.description.slice(0, 200) }} />
+            {/* Currently not working to get the ptag to be removed from our frontend home page Maybe its an
+            OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>
           <div className='gbutton'>
             <button>

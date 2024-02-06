@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Menu.css';
 
-const SideMenu = () => {
+const SideMenu = ({ onSelectGenre }) => {
 
     const [menuWidth, setMenuWidth] = useState(250);
 
@@ -9,7 +9,7 @@ const SideMenu = () => {
         if (window.innerWidth <= 768) {
             setMenuWidth(window.innerWidth);
         } else {
-            setMenuWidth(250); // Set your default width
+            setMenuWidth(250);
         }
     };
 
@@ -58,11 +58,12 @@ const SideMenu = () => {
                     <p>Genres</p>
                     <hr className='solid'/>
                     <ul>
-                        <li>- Action</li>
-                        <li>- Strategy</li>
-                        <li>- RPG</li>
-                        <li>- Shooter</li>
-                        <li>- Adventure</li>
+                        <li onClick={() => onSelectGenre(null)}>- All Genres</li>
+                        <li onClick={() => onSelectGenre('Action')}>- Action</li>
+                        <li onClick={() => onSelectGenre('Strategy')}>- Strategy</li>
+                        <li onClick={() => onSelectGenre('RPG')}>- RPG</li>
+                        <li onClick={() => onSelectGenre('Shooter')}>- Shooter</li>
+                        <li onClick={() => onSelectGenre('Adventure')}>- Adventure</li>
                     </ul>
                     <div className="small-space"></div>
                     <hr className='solid' />
