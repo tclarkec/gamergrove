@@ -35,7 +35,6 @@ const SideMenu = ({ onSelectGenre }) => {
 
     const handleGenreClick = (event) => {
         const page = event.target.value
-        console.log(page)
         // navigate(`/games/${page}`)
     }
 

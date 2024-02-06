@@ -44,14 +44,28 @@ useEffect(() => {
 
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}?platform=${platform}`);
+
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+
       const data = await response.json();
-      return data[0]?.url;
+
+
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
+
+      }
+
+
+
+
     } catch (error) {
       console.error('Cant find the store you are looking for', error);
       return null;
     }
   };
+
 
   return (
     <div>
@@ -76,34 +90,45 @@ useEffect(() => {
                 </div>
             </Link>
             <div className="hgcontent-capsules">
-                <img
+            {gameData.xbox && (
+              <img
                 src="https://i.postimg.cc/nrDT7szB/image-5.png"
                 width="15px"
                 height="15px"
                 alt="Icon 1"
                 onClick={() => handleClick('Xbox', gameData.rawg_pk)}
-                />
+              />
+            )}
+
+            {gameData.playstation && (
                 <img
                 src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
                 width="15px"
                 height="15px"
                 alt="Icon 2"
                 onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
-                />
-                <img
+              />
+            )}
+
+
+           {gameData.nintendo && (
+              <img
                 src="https://i.postimg.cc/R0qXLppc/image-3.png"
                 width="15px"
                 height="15px"
                 alt="Icon 3"
                 onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
-                />
-                <img
+              />
+            )}
+            {gameData.pc && (
+              <img
                 src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
                 width="15px"
                 height="15px"
                 alt="Icon 4"
                 onClick={() => handleClick('PC', gameData.rawg_pk)}
-                />
+              />
+            )}
             </div>
             <div className="hgcontent-body">
                 <p>{parse(gameData.description.slice(0, 200))}</p>

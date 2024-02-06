@@ -45,7 +45,6 @@ const Nav = () => {
   const handleSearchChange = (e) => {
     let text = e.target.value;
     let result = text.replaceAll(" ", "+")
-    console.log(result)
     setSearchTerms(result)
   }
 
@@ -112,16 +111,16 @@ const Nav = () => {
 
               for (const pl of platforms) {
                 if (pl === 'Xbox') {
-                  gameData.Xbox = 'True'
+                  gameData.Xbox = 'true'
                 }
                 if (pl === 'PlayStation') {
-                  gameData.PlayStation = 'True'
+                  gameData.PlayStation = 'true'
                 }
                 if (pl === 'Nintendo') {
-                  gameData.Nintendo = 'True'
+                  gameData.Nintendo = 'true'
                 }
                 if (pl === 'PC') {
-                  gameData.PC = 'True'
+                  gameData.PC = 'true'
                 }
               }
               try {
@@ -165,8 +164,7 @@ const Nav = () => {
           }
         }
       }
-      console.log("Games that resulted in the search")
-      console.log(searchResults)
+      
       navigate("/search", { state: searchResults });
       window.location.reload()
     }

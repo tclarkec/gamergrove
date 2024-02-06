@@ -27,18 +27,29 @@ function HomeGameCard( { games } ) {
 
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}?platform=${platform}`);
+
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+
       const data = await response.json();
 
-      console.log(data)
 
-      return data[0]?.url;
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
+
+      }
+
+
+
+
     } catch (error) {
       console.error('Cant find the store you are looking for', error);
       return null;
     }
   };
 
+<<<<<<< HEAD
   const game = games[0]
   // console.log(game)
 
@@ -46,6 +57,8 @@ function HomeGameCard( { games } ) {
   useEffect(() => {
     fetchData();
   }, []);
+=======
+>>>>>>> kyle-dev
 
 // Used games as a prop to have as a callBack in Rows, but resulted in blank screen
 // gameDataList in line 43 possibly change to games prop
@@ -69,6 +82,7 @@ function HomeGameCard( { games } ) {
             </div>
           </Link>
           <div className="hgcontent-capsules">
+<<<<<<< HEAD
             {gameData.Xbox ?
               // <img
               //   src="https://i.postimg.cc/nrDT7szB/image-5.png"
@@ -80,6 +94,19 @@ function HomeGameCard( { games } ) {
                 'Xbox' : '' }
 
             {/* {gameData.PlayStation && (
+=======
+            {gameData.xbox && (
+              <img
+                src="https://i.postimg.cc/nrDT7szB/image-5.png"
+                width="15px"
+                height="15px"
+                alt="Icon 1"
+                onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+              />
+            )}
+
+            {gameData.playstation && (
+>>>>>>> kyle-dev
                 <img
                 src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
                 width="15px"
@@ -87,10 +114,17 @@ function HomeGameCard( { games } ) {
                 alt="Icon 2"
                 onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
               />
+<<<<<<< HEAD
               )}
 
 
             {gameData.Nintendo && (
+=======
+            )}
+
+
+           {gameData.nintendo && (
+>>>>>>> kyle-dev
               <img
                 src="https://i.postimg.cc/R0qXLppc/image-3.png"
                 width="15px"
@@ -99,7 +133,11 @@ function HomeGameCard( { games } ) {
                 onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
               />
             )}
+<<<<<<< HEAD
              {gameData.PC && (
+=======
+            {gameData.pc && (
+>>>>>>> kyle-dev
               <img
                 src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
                 width="15px"
@@ -107,7 +145,11 @@ function HomeGameCard( { games } ) {
                 alt="Icon 4"
                 onClick={() => handleClick('PC', gameData.rawg_pk)}
               />
+<<<<<<< HEAD
             )} */}
+=======
+            )}
+>>>>>>> kyle-dev
 
           </div>
           <div className="hgcontent-body">
