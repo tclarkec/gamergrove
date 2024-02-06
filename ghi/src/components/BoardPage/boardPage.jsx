@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+
 import './boardPage.css';
 import '../Cards/boardGameCard.css'
 import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
 import BoardGameCard from '../Cards/boardGameCard';
+
+
 
 async function fetchBoardDetails(boardId) {
   const boardUrl = `http://localhost:8000/api/boards/${boardId}`;
@@ -78,8 +81,11 @@ async function fetchUserName() {
 
 function BoardPage() {
   const { id: boardId } = useParams();
+  const navigate = useNavigate();
   const [boardData, setBoardData] = useState(null);
   const [gamesData, setGamesData] = useState([]);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,14 +113,38 @@ function BoardPage() {
     fetchData();
   }, [boardId]);
 
+    const handleDeleteBoard = async () => {
+    try {
+      const accountId = await fetchUserName();
+      const deleteUrl = `http://localhost:8000/api/boards/${boardId}/${accountId}`;
+
+      const deleteConfig = {
+        method: 'DELETE',
+        credentials: 'include',
+      };
+
+      const response = await fetch(deleteUrl, deleteConfig);
+
+      if (response.ok) {
+        navigate('/');
+      } else {
+        console.error('Error deleting board:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error deleting board:', error);
+    }
+  };
+
   if (!boardData || !gamesData) {
     return null;
   }
 
   return (
-  <div className="board-page-container">
-    <Nav />
+    <div>
+       <Nav />
     <SideMenu />
+  <div className="board-page-container">
+
 
     <div className="cover-photo-container">
       <img
@@ -134,7 +164,13 @@ function BoardPage() {
           <BoardGameCard key={gameData.id} gameData={gameData} />
         ))}
       </div>
+      <br />
+       <Link to="#" className='deleteboard' onClick={handleDeleteBoard}>
+          <span>Delete Board</span>
+        </Link>
+      <br />
     </div>
+          </div>
   </div>
 );
 

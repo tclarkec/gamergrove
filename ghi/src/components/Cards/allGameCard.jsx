@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
-import './homeGameCard.css';
-// Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
-function HomeGameCard( {games} ) {
+import './allGameCard.css';
+
+function AllGameCard( {games} ) {
   const [gameDataList, setGameDataList] = useState([]);
 
   const fetchData = async () => {
@@ -44,16 +44,16 @@ function HomeGameCard( {games} ) {
 // Used games as a prop to have as a callBack in Rows, but resulted in blank screen
 // gameDataList in line 43 possibly change to games prop
   return (
-    <div className='hgcard-container'>
+    <div className='agcard-container'>
       {games.map((gameData) => (
-        <div key={gameData.id} className='hgcard'>
+        <div key={gameData.id} className='agcard'>
           <Link to={`/games/${gameData.id}`}>
             <img
               src={gameData.background_img}
-              className="hgcard-img"
+              className="agcard-img"
               alt={`Card for ${gameData.name}`}
             />
-            <div className="hgcontent-head">
+            <div className="agcontent-head">
               <h2>
                 {gameData.name.length > 20
                   ? `${gameData.name.slice(0, 20)}..`
@@ -62,7 +62,7 @@ function HomeGameCard( {games} ) {
               </h2>
             </div>
           </Link>
-          <div className="hgcontent-capsules">
+          <div className="agcontent-capsules">
             {/* {gameData.Xbox && ( */}
               <img
                 src="https://i.postimg.cc/nrDT7szB/image-5.png"
@@ -84,7 +84,7 @@ function HomeGameCard( {games} ) {
              {/* )} */}
 
 
-           {/* {gameData.Nintendo && ( */}
+           {/* {gameData.Nintendo and ( */}
               <img
                 src="https://i.postimg.cc/R0qXLppc/image-3.png"
                 width="15px"
@@ -104,18 +104,10 @@ function HomeGameCard( {games} ) {
             {/* )} */}
 
           </div>
-          <div className="hgcontent-body">
-
-            <div className='hgcontent-body'>
-              {gameData.description.length > 165 && (
-            <p>{parse(`${gameData.description.slice(0, 165)}..`)}</p>
-          )}
-            </div>
-
-
-
+          <div className="agcontent-body">
+            <p>{parse(gameData.description.slice(0, 150))}</p>
           </div>
-          <div className="hgbutton">
+          <div className="agbutton">
             <button>
               <b>Options</b>
             </button>
@@ -123,7 +115,8 @@ function HomeGameCard( {games} ) {
         </div>
       ))}
     </div>
-  );
+);
+
 }
 
-export default HomeGameCard;
+export default AllGameCard;

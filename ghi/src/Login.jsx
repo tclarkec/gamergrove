@@ -20,6 +20,7 @@ const LoginForm = () => {
     login(username, password);
     e.target.reset();
     navigate("/");
+    // window.location.reload();
   };
 
   return (

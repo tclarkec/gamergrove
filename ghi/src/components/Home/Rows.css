@@ -42,7 +42,7 @@
 }
 
 .line {
-    width: 90%;
+    width: 100%;
     height: 3px;
     background: linear-gradient(to right, #ff10bf, #009dff);
     z-index: 1;
