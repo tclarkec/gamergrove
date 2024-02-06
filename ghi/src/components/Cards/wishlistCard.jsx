@@ -21,7 +21,7 @@ async function fetchUserName() {
 
 function WishlistCard() {
   const [wishlistGames, setWishlistGames] = useState([]);
-  const [wishlistLibrary, setWishlistLibrary] = useState([]);
+  const [userLibrary, setUserLibrary] = useState([]);
   const [userWishlistGames, setUserWishlistGames] = useState([]);
 
   const fetchData = async (userId) => {
@@ -34,7 +34,7 @@ function WishlistCard() {
       const response = await fetch(libraryUrl, libraryConfig);
       if (response.ok) {
       const libraryData = await response.json();
-      setWishlistLibrary(libraryData);
+      setUserLibrary(libraryData);
 
       const wishlistGameIds = libraryData
         .filter((item) => item.wishlist === true)
@@ -72,11 +72,11 @@ function WishlistCard() {
     fetchUserData();
   }, []);
 
-  const filteredWishListLibrary = wishlistLibrary.filter((libraryData) =>
+  const filteredUserLibrary = userLibrary.filter((libraryData) =>
     userWishlistGames.includes(libraryData.id)
   );
 
-  if (filteredWishListLibrary.length === 0) {
+  if (filteredUserLibrary.length === 0) {
     return (
       <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
     )
@@ -98,7 +98,11 @@ function WishlistCard() {
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
       console.log('Game removed from wishlist!');
-      fetchData();
+      setUserLibrary(prevUserLibrary => prevUserLibrary.filter(item => item.id !== libraryId));
+
+      setWishlistGames(prevWishlistGames => prevWishlistGames.filter(game => game.id !== libraryId));
+
+      setUserWishlistGames(prevUserWishlistGames => prevUserWishlistGames.filter(entryId => entryId !== libraryId));
     } else {
       throw new Error('Failed to remove game from wishlist')
     }
@@ -125,7 +129,7 @@ return (
                       margin: '10px',
                     }}
                   >
-                  {wishlistLibrary.map(entry => (
+                  {userLibrary.map(entry => (
                     <div key={`wishlist-entry-${entry.id}`}>
                       <button onClick={() => handleRemove(entry.id, entry.account_id)}>
                         Remove
