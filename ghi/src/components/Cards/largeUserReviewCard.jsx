@@ -65,21 +65,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
   }, [gameId, accountId]);
 
   const handleUpVoteClick = async (reviewId) => {
-    const updatedReviews = userReviews.map((review) => {
-      if (review.id === reviewId) {
-        return {
-          ...review,
-          upvoted: !review.upvoted,
-          downvoted: false,
-        };
-      }
-      return review;
-    });
-
-    setUserReviews(updatedReviews);
-
-    setUserReviews(updatedReviews);
-
    if (isUpvoted == false && isDownvoted == true) {
     const removeDownvoteData = {
       "review_id": reviewId,
@@ -200,20 +185,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
 }
 
   const handleDownVoteClick = async (reviewId) => {
-    const updatedReviews = userReviews.map((review) => {
-      if (review.id === reviewId) {
-        return {
-          ...review,
-          downvoted: !review.downvoted,
-          upvoted: false,
-        };
-      }
-      return review;
-    });
-
-    setUserReviews(updatedReviews);
-
-    setUserReviews(updatedReviews);
     if (isDownvoted === false && isUpvoted == true) {
     const removeUpvoteData = {
       "review_id": reviewId,
@@ -384,14 +355,29 @@ function LargeUserReviewCard({ gameId, accountId }) {
                   </div>
               </div>
             </div>
-<div>
-              <button onClick={() => handleUpVoteClick(review.id)} style={{ backgroundColor: review.upvoted ? 'green' : 'transparent' }}>
-                <img className="thumbs-up" src="https://i.postimg.cc/dV4GtWb9/Thumbs-Up-White.png" alt="Thumbs Up" />
-                <p className="urp" style={{ color: 'white', margin: '0', fontWeight: 'bold', textAlign: 'center' }}>{review.upvote_count}</p>
+            <div>
+              <button onClick = {() => {
+                handleUpVoteClick(review.id)
+              }}
+              style={{ backgroundColor: isUpvoted ? 'green' : 'transparent' }}
+              >
+              <img
+                className="thumbs-up"
+                src="https://i.postimg.cc/dV4GtWb9/Thumbs-Up-White.png"
+                alt="Thumbs Up"
+              />
+              <p className="urp" style={{ color: 'white', margin: '0', fontWeight: 'bold', textAlign: 'center' }}>{review.upvote_count}</p>
               </button>
-
-              <button onClick={() => handleDownVoteClick(review.id)} style={{ backgroundColor: review.downvoted ? 'red' : 'transparent' }}>
-                <img className="thumbs-down" src="https://i.postimg.cc/fyNVvm4L/Thumbsdown-White.png" alt="Thumbs Down" />
+              <button onClick = {() => {
+                handleDownVoteClick(review.id)
+              }}
+              style={{ backgroundColor: isDownvoted ? 'red' : 'transparent' }}
+              >
+              <img
+                className="thumbs-down"
+                src="https://i.postimg.cc/fyNVvm4L/Thumbsdown-White.png"
+                alt="Thumbs Down"
+              />
               </button>
             </div>
           </div>
@@ -403,6 +389,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
       )}
     </div>
   );
-};
+}
 
 export default LargeUserReviewCard;

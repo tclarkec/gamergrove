@@ -11,6 +11,7 @@ import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
 import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
+import NonUserGameDetails from './components/GameDetails/nonUserGameDetails';
 
 import Login from './Login';
 import WelcomeBack from './WelcomeBack';
@@ -89,6 +90,7 @@ function App() {
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
                     <Route path="/games/:id" element={<GameDetails />} />
+                    <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />
                     <Route path="/search" element={<SearchResults />} />
 
