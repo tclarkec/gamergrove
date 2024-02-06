@@ -379,10 +379,10 @@ const handleReviewSubmit = async (event) => {
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
-            navigate('/games/nonuser');
+            navigate(`/games/${gameData.id}/nonuser`);
           }}>{wishListText}</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
-            navigate('/games/nonuser');
+            navigate(`/games/${gameData.id}/nonuser`);
           }}>Add to Board</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>{gameData.rating_count} ratings</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Ovr. Rating: {"⭐".repeat(gameData.rating.toFixed(1))} {(gameData.rating.toFixed(1))}</button>
@@ -458,12 +458,12 @@ const handleReviewSubmit = async (event) => {
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginBottom: '20px' }}>Write a Review</h1>
           <div className='rcontainer-title'>
             <input onClick={() => {
-              navigate('/games/nonuser')
+              navigate(`/games/${gameData.id}/nonuser`)
             }} placeholder='Review Title...' required type='text' name='title' id='title' className='form-control' value={reviewFormData.title} />
           </div>
           <div className='rcontainer'>
             <input onClick={() => {
-              navigate('/games/nonuser')
+              navigate(`/games/${gameData.id}/nonuser`)
             }} placeholder='Write a review...' required type='text' name='body' id='body' className='form-control' value={reviewFormData.body} />
           </div>
       <div className='rcontainer'>
@@ -472,13 +472,13 @@ const handleReviewSubmit = async (event) => {
           <div className='rating-container'>
             <div className='star-rating'>
               <StarRating rating={reviewFormData.rating} onStarClick={() => {
-                navigate('/games/nonuser')
+                navigate(`/games/${gameData.id}/nonuser`)
               }} />
             </div>
           </div>
         </div>
         <button style={{marginTop: '20px'}} onClick = {() => {
-          navigate('/games/nonuser')
+          navigate(`/games/${gameData.id}/nonuser`)
         }}>Submit</button>
       </div>
           <br />

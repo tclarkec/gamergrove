@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './gameDetails.css';
 
 const containerStyle = {
@@ -10,6 +10,8 @@ const containerStyle = {
 
 function nonUserGameDetails() {
     const navigate = useNavigate();
+    const { id } = useParams();
+
     return (
         <div style={containerStyle}>
             <div className="card text-bg-light mb-3">
@@ -18,7 +20,7 @@ function nonUserGameDetails() {
                 <h1>Either login or sign up to interact with this game! 🫶🫰</h1>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
-                <button onClick={() => navigate('/')}> Back to Homepage </button>
+                <button onClick={() => navigate(`/games/${id}`)}> Back to Game Details </button>
                 <button onClick={() => navigate('/signup')}> Sign Up </button>
                 <button onClick={() => navigate('/login')}> Log In </button>
                 </div>

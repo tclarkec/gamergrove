@@ -91,7 +91,7 @@ function App() {
                     <Route path="/games" element={<Listgames />} />
                     <Route path="/replies/create" element={<RepliesTest />} />
                     <Route path="/games/:id" element={<GameDetails />} />
-                    <Route path="/games/nonuser" element={<NonUserGameDetails />} />
+                    <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />
                     <Route path="/search" element={<SearchResults />} />
                     <Route path="/games/:id/addtoboard" element={<AddToBoard />} />

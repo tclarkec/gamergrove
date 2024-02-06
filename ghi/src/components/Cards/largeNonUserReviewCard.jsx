@@ -49,7 +49,7 @@ function LargeNonUserReviewCard({ gameId }) {
                     className="urcard-edit"
                     style={{ color: 'black' }}
                     onClick={() => {
-                      navigate('/games/nonuser')
+                      navigate(`/games/${gameId}/nonuser`)
                     }}
                   >
                     Edit
@@ -58,7 +58,7 @@ function LargeNonUserReviewCard({ gameId }) {
                     className="urcard-delete"
                     style={{ color: 'black' }}
                     onClick={() => {
-                      navigate('/games/nonuser')
+                      navigate(`/games/${gameId}/nonuser`)
                     }}
                   >
                     Delete
@@ -85,7 +85,7 @@ function LargeNonUserReviewCard({ gameId }) {
             </div>
             <div>
               <button onClick = {() => {
-                navigate('/games/nonuser')
+                navigate(`/games/${gameId}/nonuser`)
               }}
               style = {{ backgroundColor: 'transparent'}}
               >
@@ -97,7 +97,7 @@ function LargeNonUserReviewCard({ gameId }) {
               <p className="urp" style={{ color: 'white', margin: '0', fontWeight: 'bold', textAlign: 'center' }}>{review.upvote_count}</p>
               </button>
               <button onClick = {() => {
-                navigate('/games/nonuser')
+                navigate(`/games/${gameId}/nonuser`)
               }}
               style = {{ backgroundColor: 'transparent'}}
               >
