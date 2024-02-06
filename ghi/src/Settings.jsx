@@ -246,14 +246,14 @@ function Settings() {
                     </div>
                     <div
                       className="row justify-content-center"
-                      style={{ backgroundColor: 'transparent' }}
+                      style={{ backgroundColor: 'transparent', flexWrap: 'wrap' }}
                     >
-                      <div className="col-12 d-flex justify-content-center align-items-center mb-3">
+
                         {icons.map((icon, index) => (
                           <div
                             key={icon.id}
                             className="text-center"
-                            style={{ marginRight: '30px' }}
+                            style={{ marginRight: '30px', marginBottom: '15px'  }}
                           >
                             <p>{String.fromCharCode(65 + index)}</p>
                             <img
@@ -265,7 +265,7 @@ function Settings() {
                           </div>
                         ))}
                       </div>
-                    </div>
+
                   </div>
 
                   <div className="form-floating mb-3">

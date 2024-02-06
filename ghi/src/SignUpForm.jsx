@@ -1,6 +1,7 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Settings.css';
 
 const containerStyle = {
   minHeight: '100vh',
@@ -120,12 +121,12 @@ function SignUpForm() {
         <div className="card text-bg-light mb-3">
           <div className="container">
             <div className="row" style={{ backgroundColor: 'transparent', paddingLeft: '11%', marginLeft: '0%', marginRight: '7%' }}>
-              <div className="offset-3 col-6">
+              <div className="offset-2 col-8">
                 <h2 className="card-header">Create account</h2>
                 <div className={warningClasses} id="warning-message">
                   Your passwords don't match!
                 </div>
-                <div className="card-body">
+                <div style={{ width: '100%'}}>
                   <form onSubmit={handleSubmit} id="create-account">
                     <div className="form-floating mb-3">
                       <label htmlFor="username">Username</label>
@@ -156,22 +157,31 @@ function SignUpForm() {
                         <select onChange={handleFormChange} required name="icon_id" id="icon_id" className="form-select" value={accountFormData.icon_id}>
                           <option value="">Choose your icon</option>
                           {icons.map(icon => (
-                            <option key={icon.id} value={icon.id} style={{ textAlign: 'center' }}>
+                            <option key={icon.id} value={icon.id} style={{ textAlign: 'center', flexWrap: 'wrap'  }}>
                               {icon.name}
                             </option>
                           ))}
                         </select>
                       </div>
-                      <div className="row justify-content-center" style={{ backgroundColor: 'transparent' }}>
-                        <div className="col-12 d-flex justify-content-center align-items-center mb-3">
-                          {icons.map((icon, index) => (
-                            <div key={icon.id} className="text-center" style={{ marginRight: '30px', display: 'flex', flexDirection: 'column' }}>
-                              <p>{String.fromCharCode(65 + index)}</p>
-                              <img src={icon.icon_url} alt={icon.name} width="50" height="50" />
-                            </div>
-                          ))}
-                        </div>
+                <div style={{ backgroundColor: 'transparent', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {icons.map((icon, index) => (
+                      <div
+                        key={icon.id}
+                        className="text-center"
+                        // style={{ margin: '20px', marginBottom: '15px'}}
+                      >
+                        <p>{String.fromCharCode(65 + index)}</p>
+                        <img
+                          src={icon.icon_url}
+                          alt={icon.name}
+                          width="50"
+                          height="50"
+                        />
                       </div>
+                    ))}
+                  </div>
+
+
                     </div>
                     <div className="mb-3"></div>
                     <button>Create</button>
