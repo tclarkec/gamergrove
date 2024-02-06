@@ -24,6 +24,7 @@ function WishlistCard() {
   const [userLibrary, setUserLibrary] = useState([]);
   const [userWishlistGames, setUserWishlistGames] = useState([]);
 
+
   const fetchData = async (userId) => {
     try {
       const libraryUrl = `http://localhost:8000/api/users/libraries/${userId}`;
@@ -32,6 +33,7 @@ function WishlistCard() {
       };
 
       const response = await fetch(libraryUrl, libraryConfig);
+      console.log(response);
       if (response.ok) {
       const libraryData = await response.json();
       setUserLibrary(libraryData);
@@ -55,8 +57,12 @@ function WishlistCard() {
 
       setUserWishlistGames(libraryData.map((entry) => entry.id));
 
-    }
 
+      } else if (response.status === 404) {
+        return (
+      <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
+        )
+      }
 
     } catch (error) {
       console.error('Error fetching:', error);
@@ -83,30 +89,45 @@ function WishlistCard() {
   }
 
 
-  const handleRemove = async (libraryId, userId) => {
+  const handleRemove = async (gameId, userId) => {
+     try {
+    const userId = await fetchUserName();
+    const libraryUrl = `http://localhost:8000/api/users/libraries/${userId}`;
+    const libraryConfig = {
+      credentials: 'include',
+    };
 
-    const url = `http://localhost:8000/api/libraries/${libraryId}/${userId}`
+    const libraryResponse = await fetch(libraryUrl, libraryConfig);
+    const libraryData = await libraryResponse.json();
+
+    const filteredLibraryData = libraryData.filter((libraryEntry) =>
+      libraryEntry.game_id === gameId && libraryEntry.wishlist === true
+    );
+
+    console.log(filteredLibraryData);
+
+    const url = `http://localhost:8000/api/libraries/${filteredLibraryData[0].id}/${userId}`;
 
     const fetchConfig = {
       method: 'delete',
       credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }
+        'Content-Type': 'application/json',
+      },
+    };
 
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
       console.log('Game removed from wishlist!');
-      setUserLibrary(prevUserLibrary => prevUserLibrary.filter(item => item.id !== libraryId));
+      fetchData(userId);
 
-      setWishlistGames(prevWishlistGames => prevWishlistGames.filter(game => game.id !== libraryId));
-
-      setUserWishlistGames(prevUserWishlistGames => prevUserWishlistGames.filter(entryId => entryId !== libraryId));
     } else {
-      throw new Error('Failed to remove game from wishlist')
+      throw new Error('Failed to remove game from wishlist');
     }
-}
+  } catch (error) {
+    console.error('Error removing game from wishlist:', error);
+  }
+};
 
 console.log(filteredUserLibrary);
 
@@ -131,13 +152,9 @@ return (
                       margin: '10px',
                     }}
                   >
-                  {filteredUserLibrary.map(entry => (
-                    <div key={`wishlist-entry-${entry.id}`}>
-                      <button onClick={() => handleRemove(entry.id, entry.account_id)}>
+                      <button onClick={() => handleRemove(game.id, fetchUserName())}>
                         Remove
                       </button>
-                    </div>
-                  ))}
                   </div>
                 </div>
               </div>
