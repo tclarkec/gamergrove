@@ -55,7 +55,7 @@ const Rows = ({ selectedGenre, onSelectGenre }) => {
             className='genre-link'
             onClick={() => handleGenreClick(genre)}
           >
-            <h3>{`${genre} Games →`}</h3>
+            <h3>{`${genre} Games`}</h3>
           </NavLink>
           <div className="line"></div>
           <div className='row__posters'>
