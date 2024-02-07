@@ -34,7 +34,7 @@ function WishlistCard() {
       };
 
       const response = await fetch(libraryUrl, libraryConfig);
-      console.log(response);
+
       if (response.ok) {
       const libraryData = await response.json();
       setUserLibrary(libraryData);
@@ -110,7 +110,6 @@ function WishlistCard() {
       libraryEntry.game_id === gameId && libraryEntry.wishlist === true
     );
 
-    console.log(filteredLibraryData);
 
     const url = `http://localhost:8000/api/libraries/${filteredLibraryData[0].id}/${userId}`;
 
@@ -134,8 +133,6 @@ function WishlistCard() {
     console.error('Error removing game from wishlist:', error);
   }
 };
-
-console.log(filteredUserLibrary);
 
 return (
     <div>
