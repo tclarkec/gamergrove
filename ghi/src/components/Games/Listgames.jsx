@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 const Listgames = () => {
   const location = useLocation();
   const data = location.state;
-  const genre = data?.state || '';  
+  const genre = data?.state || '';
   const [games, setGames] = useState([]);
 
   const fetchGames = async () => {

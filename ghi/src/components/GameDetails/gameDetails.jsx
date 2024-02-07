@@ -565,8 +565,9 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
-              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
-
+              <div class="container">
+                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
             </div>
           </div>
           <br/>
