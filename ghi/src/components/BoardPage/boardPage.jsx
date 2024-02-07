@@ -96,19 +96,26 @@ function BoardPage() {
         const accountId = await fetchUserName();
 
         const libraryData = await fetchGamesForBoard(accountId, boardId);
-
+        console.log(libraryData)
         const gamesForBoard = libraryData
           .filter((item) => item.board_id === parseInt(boardId, 10))
           .map((item) => item.game_id);
-
-        const gameDetailsPromises = gamesForBoard.map((gameId) => fetchGameDetails(gameId));
+          const gameDetailsPromises = gamesForBoard.map((gameId) => fetchGameDetails(gameId));
         const gamesForBoardDetails = await Promise.all(gameDetailsPromises);
-
+        for (const game of gamesForBoardDetails){
+          for (const entry of libraryData){
+            if (entry.game_id == game.id){
+              game.library_id = entry.id
+              game.account_id = entry.account_id
+          }
+        }
+      }
+        console.log(gamesForBoardDetails)
         setGamesData(gamesForBoardDetails);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    };
+    }
 
     fetchData();
   }, [boardId]);
