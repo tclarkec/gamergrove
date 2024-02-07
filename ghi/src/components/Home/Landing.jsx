@@ -5,19 +5,20 @@ import Nav from '../../Nav.css';
 import './Menu';
 import './Rows';
 import HomeGameCard from '../Cards/homeGameCard.jsx';
+import Icon from "../Icon/icon.jsx";
 
 const Landing = () => {
   return (
     <header>
       <br />
       <br />
+       <Icon />
       <h3 className='homeH3'>New Releases →</h3>
       <div className="homeline"></div>
       <div className="hero-carousel-container">
         <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
-
               <img src="https://cdn.vox-cdn.com/thumbor/zolpTPkKQn-mLAk6QRNSLcD9PzI=/0x0:1920x1080/1920x0/filters:focal(0x0:1920x1080):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/25173694/Switch_MarioVSDonkeyKong_scrn_06.jpg" className="d-block w-100" alt="..." />
             </div>
             <div className="carousel-item">

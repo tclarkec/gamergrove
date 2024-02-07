@@ -32,21 +32,20 @@
     margin-left: -40px;
     cursor: pointer;
     padding: 16px;
-    z-index: 1;
+    z-index: 2;
 }
 
 
 .nav__avatar {
-    cursor: pointer;
-    position: fixed;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    top: 20px;
-    padding-bottom: 5px;
-    object-fit: contain;
-     /* z-index: 1; */
-
+  cursor: pointer;
+  position: fixed;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  top: 20px;
+  padding-bottom: 5px;
+  object-fit: contain;
+  z-index: 3; /* Ensure this is higher than the z-index of .nav__dropdown */
 }
 
 /* Search bar */
@@ -80,11 +79,17 @@ input[type=text] {
 
 
 /* Navigation DROP DOWN */
+.nav__avatar-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 4;
+}
 
 .nav__dropdown {
   position: absolute;
-  top: calc(100% - 35px);
-  right: 20px;
+  top: calc(100% - 0px);
+  right: 20px; /* Adjust this value as needed */
   background-color: rgb(0, 0, 0);
   border: 3px solid #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

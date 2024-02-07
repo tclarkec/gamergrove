@@ -36,7 +36,7 @@ function BoardForm(){
 
         const response = await fetch(boardUrl, fetchConfig);
         if (response.ok) {
-            // navigate("/reviews");
+            navigate("/dashboard");
             setFormData(initialData);
         } else {
             throw new Error('Failed to create review')

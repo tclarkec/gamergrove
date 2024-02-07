@@ -28,7 +28,7 @@ const SideMenu = ({ onSelectGenre }) => {
                     gameGenres.push(game.genre)
                 }
             }
-            console.log(gameGenres)
+            
             setGenres(gameGenres)
         }
     }

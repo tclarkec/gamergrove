@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import Nav from '../../Nav.jsx';
 import SideMenu from '../Home/Menu.jsx';
 import parse from 'html-react-parser';
+import './SearchResults.css';
 
 
 const SearchResults = () => {
@@ -69,7 +70,9 @@ useEffect(() => {
 
   return (
     <div>
-        <Nav />
+      <Nav />
+    <div className='searchbody'>
+        
         <SideMenu />
         <div className='hgcard-container'>
         {searchGames.map((gameData) => (
@@ -141,6 +144,7 @@ useEffect(() => {
             </div>
         ))}
         </div>
+    </div>
     </div>
   );
 }
