@@ -122,3 +122,13 @@
             background-color: grey;
             transition: 0.5s;
         }
+
+        .menu-wrapper {
+        --__reactRadialMenu__menu-bgColor: #a5e7eeb9;
+        --__reactRadialMenu__separator-color: rgba(0, 0, 0, 0.773);
+        --__reactRadialMenu__item-color: #030303;
+        --__reactRadialMenu__activeItem-color: #fff;
+        --__reactRadialMenu__activeItem-bgColor: #c234dba0;
+        --__reactRadialMenu__arrow-color: #6f6e77;
+        --__reactRadialMenu__activeArrow-color: #fff;
+        }

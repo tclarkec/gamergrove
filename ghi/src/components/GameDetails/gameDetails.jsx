@@ -1,5 +1,5 @@
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './gameDetails.css';
@@ -11,6 +11,7 @@ import LargeNonUserReviewCard from '../Cards/largeNonUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
 import parse from 'html-react-parser';
+import { useLocation } from "react-router-dom";
 
 const containerStyle = {
   minHeight: '100vh',
@@ -51,6 +52,27 @@ const account_data = await fetchAccount();
 
 
 function GameDetails() {
+
+  const location = useLocation();
+  const place = location.state
+  console.log(place)
+  const lastHash = useRef('');
+  useEffect(() => {
+    if (place) {
+      lastHash.current = place.slice(1); // safe hash for further use after navigation
+    }
+
+    if (lastHash.current && document.getElementById(lastHash.current)) {
+      setTimeout(() => {
+        document
+          .getElementById(lastHash.current)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        lastHash.current = '';
+      }, 100);
+    }
+  }, [place]);
+
+
 
   const { token } = useAuthContext();
 
@@ -438,7 +460,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div className='rcontainer' id='review' style={{marginTop: '10px'}}>
         <div className={messageReviewClasses} id="success-message">
             Your review has been submitted!
         </div>
