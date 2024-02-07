@@ -12,8 +12,10 @@ function LargeUserReviewCard({ gameId, accountId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [isDownvoted, setIsDownvoted] = useState(false);
+  const [userVotes, setUserVotes] = useState([])
 
   const fetchReviewsForGame = async (gameId) => {
+    const votes = await fetchVotesForUser();
     const reviewsUrl = `http://localhost:8000/api/reviews/games/${gameId}`;
 
     try {
@@ -24,6 +26,28 @@ function LargeUserReviewCard({ gameId, accountId }) {
         setUserReviews([]);
       } else {
         const reviewsData = await response.json();
+        for (const r of reviewsData) {
+          let change = 0
+          console.log(votes)
+          for (const v of votes) {
+            if (r.id == v.review_id) {
+              change = 1
+              if (v.upvote) {
+                r.upvote = true
+                r.downvote = false
+              } else {
+                r.upvote = false
+                r.downvote = true
+              }
+            }
+          }
+          if (change === 0) {
+            r.upvote = undefined
+            r.downvote = undefined
+          } else {
+            change = 0
+          }
+        }
         setUserReviews(reviewsData);
       }
     } catch (error) {
@@ -33,288 +57,198 @@ function LargeUserReviewCard({ gameId, accountId }) {
     }
   };
 
-  const fetchVotesForUser = async (accountId) => {
-    const votesUrl = `http://localhost:8000/api/votes/users/${accountId}`;
+  const fetchVotesForUser = async () => {
+    const user = await fetchUserName();
+    const votesUrl = `http://localhost:8000/api/votes/users/${user}`;
 
     const votesConfig = {
       credentials: 'include'
     };
 
-    try {
+
       const response = await fetch(votesUrl, votesConfig);
       const votesData = await response.json();
+      const votes = []
+      for (const v of votesData) {
+        votes.push(v)
 
-      if (response.status === 404) {
-        console.warn(`No votes found for user`);
-
-      } else if (response.ok && votesData[votesData.length-1]["upvote"] === true) {
-        setIsUpvoted(true);
-      } else if (response.ok && votesData[votesData.length-1]["downvote"] === true) {
-        setIsDownvoted(true);
       }
-    } catch (error) {
-      console.error('Error fetching votes', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+      return votes
+
+
+      // if (response.status === 404) {
+      //   console.warn(`No votes found for user`);
+
+      // } else if (response.ok && votesData[votesData.length-1]["upvote"] === true) {
+    //     setIsUpvoted(true);
+    //   } else if (response.ok && votesData[votesData.length-1]["downvote"] === true) {
+    //     setIsDownvoted(true);
+    //   }
+    // } catch (error) {
+    //   console.error('Error fetching votes', error);
+    // } finally {
+    //   setIsLoading(false);
+
+  };
 
   useEffect(() => {
     fetchReviewsForGame(gameId);
-    fetchVotesForUser(accountId);
+    fetchVotesForUser();
   }, [gameId, accountId]);
 
+  async function fetchUserName() {
+  const tokenUrl = `http://localhost:8000/token`;
+  const fetchConfig = {
+    credentials: 'include',
+    redirect: 'follow',
+  };
+
+  const response = await fetch(tokenUrl, fetchConfig);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.account.id;
+  }
+  }
+  const [voted, setVoted] = useState(false)
+
+
   const handleUpVoteClick = async (reviewId, gameId) => {
-  console.log(reviewId)
-   if (isUpvoted == false && isDownvoted == true) {
-    const removeDownvoteData = {
-      "review_id": reviewId,
-      "upvote": false,
-      "downvote": false
-    }
-    const removeDownvoteUrl = 'http://localhost:8000/api/votes';
+    setVoted(false)
+    const user = await fetchUserName();
 
-    const removeDownvoteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (removeDownvoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const removeDownvoteResponse = await fetch(removeDownvoteUrl, removeDownvoteFetchConfig);
-      if (removeDownvoteResponse.ok) {
-        console.log('Downvote removed')
-        setIsDownvoted(false);
-        fetchReviewsForGame(gameId);
-      } else {
-        console.error('Failed to remove downvote. Server response: ', response);
-        throw new Error('Failed to remove downvote')
-      }
-    } catch (error) {
-      console.error ('Error removing downvote', error);
-    }
 
     const upVoteData = {
       "review_id": reviewId,
       "upvote": true,
       "downvote": false
     }
+    console.log(user)
+    console.log(upVoteData)
+    if (user) {
+      const voteUrl = `http://localhost:8000/api/votes/users/${user}`
+      const postUrl = 'http://localhost:8000/api/votes'
+      const response = await fetch(voteUrl, { credentials: 'include' });
+      if (response.ok) {
+        const votes = await response.json()
+        console.log(votes)
 
-    const voteUrl = 'http://localhost:8000/api/votes';
 
-    const voteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (upVoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const voteResponse = await fetch(voteUrl, voteFetchConfig);
-      if (voteResponse.ok) {
-        console.log('Upvote registered!')
-        setIsUpvoted(true);
-        fetchReviewsForGame(gameId);
+
+        for (const v of votes) {
+          if (v.account_id == user && v.review_id == reviewId ) {
+            console.log(v.id)
+            setVoted(true)
+            const upVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`;
+            const fetchConfig = {
+              method: 'put',
+              body: JSON.stringify(upVoteData),
+              credentials: 'include',
+              headers: {
+                "Content-Type": 'application/json'
+              }
+            }
+            const upVoteResponse = await fetch(upVoteUrl, fetchConfig)
+            fetchReviewsForGame(gameId)
+            return
+
+          }
+        }
+
+        console.log('Trying to post')
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(upVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const upVoteResponse = await fetch(postUrl, fetchConfig)
+          fetchReviewsForGame(gameId)
+
+
       } else {
-        console.error('Failed to register upvote. Server response: ', response);
-        throw new Error('Failed to create upvote')
+        console.log('Trying to post')
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(upVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const upVoteResponse = await fetch(postUrl, fetchConfig)
+          fetchReviewsForGame(gameId)
       }
-    } catch (error) {
-      console.error ('Error creating upvote', error);
-    }
-   }
-    if (isUpvoted === false && isDownvoted == false) {
-    const upVoteData = {
-      "review_id": reviewId,
-      "upvote": true,
-      "downvote": false
-    }
-
-    const voteUrl = 'http://localhost:8000/api/votes';
-
-    const voteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (upVoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const voteResponse = await fetch(voteUrl, voteFetchConfig);
-      if (voteResponse.ok) {
-        console.log('Upvote registered!')
-        setIsUpvoted(true);
-        fetchReviewsForGame(gameId);
-      } else {
-        console.error('Failed to register upvote. Server response: ', response);
-        throw new Error('Failed to create upvote')
-      }
-    } catch (error) {
-      console.error ('Error creating upvote', error);
-    }
-  } else if (isUpvoted === true) {
-    const upVoteData = {
-      "review_id": reviewId,
-      "upvote": false,
-      "downvote": false
-    }
-
-    const voteUrl = 'http://localhost:8000/api/votes';
-
-    const voteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (upVoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const voteResponse = await fetch(voteUrl, voteFetchConfig);
-      if (voteResponse.ok) {
-        console.log('Upvote removed!')
-        setIsUpvoted(false);
-        fetchReviewsForGame(gameId);
-      } else {
-        console.error('Failed to remove upvote. Server response: ', response);
-        throw new Error('Failed to remove upvote')
-      }
-    } catch (error) {
-      console.error ('Error removing upvote', error);
     }
   }
-}
+
 
   const handleDownVoteClick = async (reviewId, gameId) => {
-    if (isDownvoted === false && isUpvoted == true) {
-    const removeUpvoteData = {
-      "review_id": reviewId,
-      "upvote": false,
-      "downvote": false
-    }
-
-    const removeUpvoteUrl = 'http://localhost:8000/api/votes';
-
-    const removeUpvoteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (removeUpvoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const removeUpvoteResponse = await fetch(removeUpvoteUrl, removeUpvoteFetchConfig);
-      if (removeUpvoteResponse.ok) {
-        console.log('Upvote removed!')
-        setIsUpvoted(false);
-        fetchReviewsForGame(gameId);
-      } else {
-        console.error('Failed to remove upvote. Server response: ', response);
-        throw new Error('Failed to remove upvote')
-      }
-    } catch (error) {
-      console.error ('Error removing upvote', error);
-    }
-
+    setVoted(false)
+    const user = await fetchUserName();
     const downVoteData = {
       "review_id": reviewId,
       "upvote": false,
       "downvote": true
     }
+    if (user) {
+      const voteUrl = `http://localhost:8000/api/votes/users/${user}`
+      const postUrl = 'http://localhost:8000/api/votes'
+      const response = await fetch(voteUrl, { credentials: 'include' });
+      if (response.ok) {
+        const votes = await response.json()
 
-    const voteUrl = 'http://localhost:8000/api/votes';
 
-    const voteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (downVoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const voteResponse = await fetch(voteUrl, voteFetchConfig);
-      if (voteResponse.ok) {
-        console.log('Downvote registered!')
-        setIsDownvoted(true);
-        fetchReviewsForGame(gameId);
+
+        for (const v of votes) {
+          console.log(v)
+          if (v.account_id == user && v.review_id == reviewId ) {
+            console.log(v.id)
+            setVoted(true)
+            const downVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`
+            const fetchConfig = {
+              method: 'put',
+              body: JSON.stringify(downVoteData),
+              credentials: 'include',
+              headers: {
+                "Content-Type": 'application/json'
+              }
+            }
+            const downVoteResponse = await fetch(downVoteUrl, fetchConfig)
+            fetchReviewsForGame(gameId)
+            return
+          }
+        }
+
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(downVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const downVoteResponse = await fetch(postUrl, fetchConfig)
+          fetchReviewsForGame(gameId)
+
+
+
       } else {
-        console.error('Failed to register downvote. Server response: ', response);
-        throw new Error('Failed to create downvote')
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(downVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const downVoteResponse = await fetch(postUrl, fetchConfig)
+          fetchReviewsForGame(gameId)
       }
-    } catch (error) {
-      console.error ('Error creating downvote', error);
-    }
-
-  }
-
-    if (isDownvoted === false && isUpvoted == false) {
-    const downVoteData = {
-      "review_id": reviewId,
-      "upvote": false,
-      "downvote": true
-    }
-
-    const voteUrl = 'http://localhost:8000/api/votes';
-
-    const voteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (downVoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const voteResponse = await fetch(voteUrl, voteFetchConfig);
-      if (voteResponse.ok) {
-        console.log('Downvote registered!')
-        setIsDownvoted(true);
-        fetchReviewsForGame(gameId);
-      } else {
-        console.error('Failed to register downvote. Server response: ', response);
-        throw new Error('Failed to create downvote')
-      }
-    } catch (error) {
-      console.error ('Error creating downvote', error);
-    }
-  } else if (isDownvoted === true) {
-    const downVoteData = {
-      "review_id": reviewId,
-      "upvote": false,
-      "downvote": false
-    }
-
-    const voteUrl = 'http://localhost:8000/api/votes';
-
-    const voteFetchConfig = {
-      method: "post",
-      body: JSON.stringify (downVoteData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      const voteResponse = await fetch(voteUrl, voteFetchConfig);
-      if (voteResponse.ok) {
-        console.log('Downvote removed!')
-        setIsDownvoted(false);
-        fetchReviewsForGame(gameId);
-      } else {
-        console.error('Failed to remove downvote. Server response: ', response);
-        throw new Error('Failed to remove downvote')
-      }
-    } catch (error) {
-      console.error ('Error removing downvote', error);
     }
   }
-}
 
   return (
     <div>
@@ -368,25 +302,26 @@ function LargeUserReviewCard({ gameId, accountId }) {
               <button onClick = {() => {
                 handleUpVoteClick(review.id, review.game_id)
               }}
-              style={{ backgroundColor: isUpvoted ? 'green' : 'transparent' }}
+              style={{ backgroundColor: review.upvote === true ? 'green' : 'transparent' }}
               >
               <img
-                className="thumbs-up"
+                className='thumb-up'
                 src="https://i.postimg.cc/dV4GtWb9/Thumbs-Up-White.png"
                 alt="Thumbs Up"
               />
               <p className="urp" style={{ color: 'white', margin: '0', fontWeight: 'bold', textAlign: 'center' }}>{review.upvote_count}</p>
               </button>
-              <button onClick = {() => {
+              <button className='down-btn' onClick = {() => {
                 handleDownVoteClick(review.id, review.game_id)
               }}
-              style={{ backgroundColor: isDownvoted ? 'red' : 'transparent' }}
+              style={{ backgroundColor: review.downvote === true ? 'red' : 'transparent' }}
               >
               <img
                 className="thumbs-down"
                 src="https://i.postimg.cc/fyNVvm4L/Thumbsdown-White.png"
                 alt="Thumbs Down"
               />
+              <p className="urp" style={{ color: 'white', marginBottom: '10', fontWeight: 'bold', textAlign: 'center' }}>{review.downvote_count}</p>
               </button>
             </div>
           </div>
