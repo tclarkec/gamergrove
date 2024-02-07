@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 
 const initialData = {
-    body:"",
-    title:"",
-    rating:""
+    board_name:"",
+    description:"",
+    cover_photo:""
 }
 
 
@@ -25,6 +25,8 @@ function BoardForm(){
 
         const boardUrl = 'http://localhost:8000/api/boards'
 
+        console.log(formData);
+
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(formData),
@@ -36,7 +38,7 @@ function BoardForm(){
 
         const response = await fetch(boardUrl, fetchConfig);
         if (response.ok) {
-            // navigate("/reviews");
+            navigate("/dashboard");
             setFormData(initialData);
         } else {
             throw new Error('Failed to create review')
@@ -61,7 +63,7 @@ function BoardForm(){
                 <label htmlFor="cover_photo">Cover photo</label>
                 <input onChange={handleFormChange} placeholder="i.e. https://media.wired.com/photos/5932b1c5aef9a462de984519/master/pass/dqixart.jpg" required type="url" name = "cover_photo" id="cover_photo" className="form-control" value={formData.cover_photo}/>
               </div>
-              <button className="btn btn-primary">Create</button>
+              <button>Create</button>
             </form>
           </div>
         </div>

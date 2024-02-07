@@ -164,7 +164,7 @@ const Nav = () => {
           }
         }
       }
-      
+
       navigate("/search", { state: searchResults });
       window.location.reload()
     }
@@ -301,9 +301,6 @@ useEffect(() => {
               <div className='nav__dropdown' onClick={stopPropagation}>
                 <a href="http://localhost:5173/dashboard">
                 <div className='nav__dropdown-item, font-drop'>Dashboard</div>
-                </a>
-                <a href="http://localhost:5173/settings">
-                <div className='nav__dropdown-item, font-drop'>Settings</div>
                 </a>
                 <a href="http://localhost:5173/" onClick={()=>{
                   handleLogOut();

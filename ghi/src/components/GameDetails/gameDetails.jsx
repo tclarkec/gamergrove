@@ -108,25 +108,30 @@ function GameDetails() {
 
   const[submittedReview, setSubmittedReview] = useState(false);
   const [boards, setBoards] = useState([]);
-  const fetchBoards = async () => {
-    const boardUrl = `http://localhost:8000/api/boards/users/${account_data.id}`
-    const fetchConfig = {
-      credentials: 'include'
-    };
-    try {
-      const boardResponse = await fetch(boardUrl, fetchConfig)
-      if (boardResponse.ok) {
-        const boardData = await boardResponse.json()
-        console.log(boardData)
-        setBoards(boardData)
-      }
-    } catch(error) {
-      console.log("Error fetching boards:", error)
-    }
-
-
-
+const fetchBoards = async () => {
+  if (!account_data || !account_data.id) {
+    console.error('Account data is undefined or missing ID.');
+    return;
   }
+
+  const boardUrl = `http://localhost:8000/api/boards/users/${account_data.id}`
+  const fetchConfig = {
+    credentials: 'include'
+  };
+
+  try {
+    const boardResponse = await fetch(boardUrl, fetchConfig)
+    if (boardResponse.ok) {
+      const boardData = await boardResponse.json()
+      console.log(boardData)
+      setBoards(boardData)
+    }
+  } catch (error) {
+    console.log("Error fetching boards:", error)
+  }
+}
+
+
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -139,25 +144,33 @@ function GameDetails() {
       }
     };
 
-    const fetchLibraryData = async() => {
-      try {
-        const libraryUrl = `http://localhost:8000/api/users/libraries/${account_data.id}`;
+    const fetchLibraryData = async () => {
+  if (!account_data || !account_data.id) {
+    console.error('Account data is undefined or missing ID.');
+    return;
+  }
 
-        const fetchConfig = {
-          credentials: 'include'
-        };
+  const libraryUrl = `http://localhost:8000/api/users/libraries/${account_data.id}`;
 
-        const response = await fetch(libraryUrl, fetchConfig);
-        const data = await response.json();
-        if (response.ok && data[data.length-1]["wishlist"] === true) {
+  const fetchConfig = {
+    credentials: 'include'
+  };
+
+  try {
+    const response = await fetch(libraryUrl, fetchConfig);
+
+    if (response.ok) {
+      const data = await response.json();
+      for (const entry of data) {
+        if (entry["account_id"] === account_data.id && entry["game_id"] == id && entry["wishlist"] === true) {
           setWishListText('Added to Wishlist!');
         }
-
-      } catch (error) {
-        console.error('Error fetching library data', error);
       }
-
-    };
+    }
+  } catch (error) {
+    console.error('Error fetching library data', error);
+  }
+};
     fetchGamesData();
     if (token) {
     fetchLibraryData();
@@ -471,7 +484,7 @@ const handleReviewSubmit = async (event) => {
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
           <div className='moveright' >
-            <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
+            <LargeUserReviewCard gameId={gameData.id} accountId={account_data?.id} />
           </div>
 
         </div>

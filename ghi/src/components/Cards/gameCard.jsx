@@ -59,6 +59,14 @@ function GameCard() {
     userSavedGames.includes(gameData.id)
   );
 
+  if (filteredGameDataList.length === 0) {
+    return (
+      <>
+      <p style={{color:'white'}}>No games added to a board or your wishlist.</p>
+      </>
+    )
+  }
+
   return (
     <div className='gcard-container'>
       {filteredGameDataList.map((gameData) => (

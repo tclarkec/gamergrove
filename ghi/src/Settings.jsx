@@ -123,6 +123,8 @@ function Settings() {
         setUpdatedAccount(true);
 
         document.getElementById('password-confirm').value = '';
+
+        fetchAccount();
       } else {
         throw new Error('Failed to update account settings');
       }
@@ -246,14 +248,14 @@ function Settings() {
                     </div>
                     <div
                       className="row justify-content-center"
-                      style={{ backgroundColor: 'transparent', flexWrap: 'wrap' }}
+                      style={{ backgroundColor: 'transparent' }}
                     >
-
+                      <div className="col-12 d-flex justify-content-center align-items-center mb-3">
                         {icons.map((icon, index) => (
                           <div
                             key={icon.id}
                             className="text-center"
-                            style={{ marginRight: '30px', marginBottom: '15px'  }}
+                            style={{ marginRight: '30px' }}
                           >
                             <p>{String.fromCharCode(65 + index)}</p>
                             <img
@@ -265,7 +267,7 @@ function Settings() {
                           </div>
                         ))}
                       </div>
-
+                    </div>
                   </div>
 
                   <div className="form-floating mb-3">
@@ -298,7 +300,7 @@ function Settings() {
                     />
                   </div>
                   <div className="mb-3">
-                    <button className="btn btn-primary">Update</button>
+                    <button>Update</button>
                   </div>
                 </form>
               </div>

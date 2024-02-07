@@ -7,7 +7,7 @@ import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";
 import { useNavigate } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 // Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
-function HomeGameCard( {games} ) {
+function HomeGameCard( { games }  ) {
   const [gameDataList, setGameDataList] = useState([]);
   const [id, setId] = useState('');
   const [show, setShow] = useState(false);
@@ -24,6 +24,7 @@ function HomeGameCard( {games} ) {
   };
   const navigate = useNavigate();
   const { token } = useAuthContext();
+
 
 
   const fetchData = async () => {
