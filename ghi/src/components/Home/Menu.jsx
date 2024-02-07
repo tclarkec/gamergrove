@@ -67,7 +67,7 @@ const SideMenu = ({ onSelectGenre }) => {
                     <p className='space'>New Releases</p>
                     <hr className='solid' />
                     <ul>
-                        <li>- Last 30 Days</li>
+                        <li className='linkside'>- Last 30 Days</li>
                         <li>- This Week</li>
                         <li>- Coming Soon</li>
                     </ul>
@@ -87,7 +87,7 @@ const SideMenu = ({ onSelectGenre }) => {
 
                         {genres.map(genre => {
                             return(
-                                <li><NavLink to="/games" state={{ state: genre }} >- {genre}</NavLink></li>
+                                <li className='linkside'><NavLink to="/games" state={{ state: genre }} >- {genre}</NavLink></li>
                             )
 
                         })}

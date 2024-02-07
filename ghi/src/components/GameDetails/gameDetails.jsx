@@ -417,8 +417,12 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
-              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
+              <div class="container">
+                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
             </div>
+
+
           </div>
           <br/>
           <br/>
@@ -446,15 +450,15 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div style={{marginTop: '10px'}}>
         <div className={messageReviewClasses} id="success-message">
             Your review has been submitted!
         </div>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
-          {/* <div className='moveright' > */}
+          <div className='moveright' >
             <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
-          {/* </div> */}
+          </div>
 
         </div>
         <br />
@@ -569,6 +573,9 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
+              <div class="container">
+                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
             </div>
           </div>
           <br/>
@@ -603,7 +610,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div style={{marginTop: '10px'}}>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
           <div className='moveright' >

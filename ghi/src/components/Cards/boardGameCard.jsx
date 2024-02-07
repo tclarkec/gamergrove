@@ -1,8 +1,7 @@
-// BoardGameCard.jsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './boardGameCard.css';
+import parse from 'html-react-parser';
 
 function BoardGameCard({ gameData }) {
   return (
@@ -33,7 +32,7 @@ function BoardGameCard({ gameData }) {
           />
         </div>
         <div className='board-game-content-body'>
-          <p>{gameData.description.slice(0, 200)}</p>
+          <p>{parse(gameData.description.slice(0, 150))}</p>
         </div>
         <div className='board-game-button'>
           <button>

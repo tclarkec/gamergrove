@@ -19,7 +19,8 @@ const LoginForm = () => {
     e.preventDefault();
     login(username, password);
     e.target.reset();
-    navigate("/login/welcomeback");
+    navigate("/");
+    // window.location.reload();
   };
 
   return (

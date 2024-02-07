@@ -12,15 +12,14 @@
 
         .hgcard {
             background-color: #353536;
-            margin: 0px auto;
+            margin: 0px;
             padding: 15px;
-            width:230px;
+            width: calc(20% - 15px);
+            min-width: 200px;
             height: 320px;
             transition-duration: 2s;
             border-radius: 20px;
             margin-top: 50px;
-
-
 
         }
 
@@ -34,7 +33,7 @@
 
         .hgcard-img {
             background-color: black;
-            width: 200px;
+            width: 100%;
             height: 120px;
             border-radius: 20px 20px 0px 0px;
             /* position: relative; */
@@ -98,9 +97,10 @@
         }
 
         .hgbutton {
-            margin: 10px 0px;
+            /* margin: 10px 0px; */
             text-align: right;
             color: black;
+            margin-top: auto;
 
         }
 
@@ -118,7 +118,7 @@
             box-shadow: 0px 8px 10px black;
         }
 
-        .hbutton button:hover {
+        .hgbutton button:hover {
             background-color: grey;
             transition: 0.5s;
         }
