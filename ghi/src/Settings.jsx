@@ -123,6 +123,8 @@ function Settings() {
         setUpdatedAccount(true);
 
         document.getElementById('password-confirm').value = '';
+
+        fetchAccount();
       } else {
         throw new Error('Failed to update account settings');
       }
