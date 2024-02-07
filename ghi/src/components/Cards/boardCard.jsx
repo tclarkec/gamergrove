@@ -145,6 +145,7 @@ function BoardCard() {
   return (
   <>
   <div>
+    <br />
     <button onClick={()=>{
       navigate('/boards/create')
     }}> Create a board </button>

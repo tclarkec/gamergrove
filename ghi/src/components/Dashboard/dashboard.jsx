@@ -38,7 +38,7 @@ function Dashboard() {
           <section id="content1">
             <div>
             <BoardCard />
-            <Icon />
+            
 
 
 

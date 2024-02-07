@@ -2,8 +2,10 @@ import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from "react";
 import {useNavigate} from 'react-router-dom';
-// import Hero from "./Hero";
+import Hero from "./Hero";
 import { useRef } from "react";
+
+import './Hero.css'
 
 
 const containerStyle = {
@@ -52,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      {/* <Hero /> */}
+
       <button
         onClick={() => { navigate("/"); }}
         style={{
@@ -64,7 +66,10 @@ const LoginForm = () => {
       >
         Back to Homepage
       </button>
+      <div>
+        <Hero />
     <div style={containerStyle}>
+
     <div className="card text-bg-light mb-3">
       <div className="offset-3 col-6">
       <h5 className="card-header">Login</h5>
@@ -97,6 +102,7 @@ const LoginForm = () => {
         </form>
       </div>
     </div>
+  </div>
   </div>
   </div>
   </div>

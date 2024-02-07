@@ -1,32 +1,21 @@
-/* .herocontainer {
-    padding-top: 230px;
-    margin-top: 90px;
+.hero-container {
+  position: relative;
 }
 
-Its only working in the Menu CSS which is causing issues to
-get it to align correctly on the login page
-
+@keyframes bounceUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
 
 .heroimg {
-    width: 200px;
-    Adjust width as needed
-    position: absolute;
-    top: 140px;
-    left: 50%;
-    margin-left: 40px;
-    transform: translate(-50%, -50%);
-      Center the image
-    z-index: 2;
-      Ensure the image appears on top
-    animation: floating 3s ease-in-out infinite;
+  animation: bounceUpDown 2s infinite;
+  margin-bottom: -330px;
+  margin-left: 790px;
+  z-index: 1;
+  position: relative;
 
 }
-
-@keyframes floating {
-    0%, 100% {
-        transform: translate(0, -10px);
-    }
-    50% {
-        transform: translate(0, 10px);
-    }
-} */
