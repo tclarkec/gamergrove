@@ -27,6 +27,7 @@ import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
 
 import AddToBoard from './AddToBoard';
+import UpdateBoardForm from './UpdateBoardForm';
 
 
 // All your environment variables in vite are in this object
@@ -92,6 +93,7 @@ function App() {
                     <Route path="/games/:id" element={<GameDetails />} />
                     <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />
+                    <Route path="/boards/update/:id" element={<UpdateBoardForm />} />
                     <Route path="/search" element={<SearchResults />} />
 
                 </Routes>

@@ -49,8 +49,8 @@ function BoardForm(){
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create a review</h1>
-            <form onSubmit={handleSubmit} id="create-review">
+            <h1>Create a board</h1>
+            <form onSubmit={handleSubmit} id="create-board">
               <div className="form-floating mb-3">
                 <label htmlFor="board_name">Title</label>
                 <input onChange={handleFormChange} placeholder="i.e. Collector's Edition" required type="text" name = "board_name" id="board_name" className="form-control" value={formData.board_name}/>

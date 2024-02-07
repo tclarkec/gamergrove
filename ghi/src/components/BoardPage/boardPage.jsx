@@ -165,6 +165,11 @@ function BoardPage() {
         ))}
       </div>
       <br />
+      <Link to={`/boards/update/${boardId}`} className='updateboard'>
+        <span>Update Board</span>
+      </Link>
+      <br />
+      <br />
        <Link to="#" className='deleteboard' onClick={handleDeleteBoard}>
           <span>Delete Board</span>
         </Link>
