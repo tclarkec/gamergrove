@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
+import { useNavigate } from 'react-router-dom';
+import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
-import './homeGameCard.css';
-import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";
-import { useNavigate } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
-// Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
-function HomeGameCard( { games }  ) {
+import './allGameCard.css';
+
+function AllGameCard( {games} ) {
   const [gameDataList, setGameDataList] = useState([]);
+  const navigate = useNavigate();
+  const { token } = useAuthContext();
   const [id, setId] = useState('');
   const [show, setShow] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const handleItemClick = (event, index, data) => {
-    console.log(`[MenuItem] ${data} clicked`);
-    setShow(false); // you should handle your menu visibility yourself
-  };
-  const handleSubMenuClick = (event, index, data) => {
-    console.log(`[SubMenu] ${data} clicked`);
-  };
-  const handleDisplayClick = (event, position) => {
-    console.log(`[Display] ${position} clicked`);
-  };
-  const navigate = useNavigate();
-  const { token } = useAuthContext();
-
-
 
   const fetchData = async () => {
     try {
@@ -183,22 +170,20 @@ function HomeGameCard( { games }  ) {
 
 
 
-
-
 // Used games as a prop to have as a callBack in Rows, but resulted in blank screen
 // gameDataList in line 43 possibly change to games prop
 if (token) {
-  return (
-    <div className='hgcard-container'>
+  return(
+  <div className='agcard-container'>
       {games.map((gameData) => (
-        <div key={gameData.id} className='hgcard'>
+        <div key={gameData.id} className='agcard'>
           <Link to={`/games/${gameData.id}`}>
             <img
               src={gameData.background_img}
-              className="hgcard-img"
+              className="agcard-img"
               alt={`Card for ${gameData.name}`}
             />
-            <div className="hgcontent-head">
+            <div className="agcontent-head">
               <h2>
                 {gameData.name.length > 20
                   ? `${gameData.name.slice(0, 20)}..`
@@ -207,7 +192,7 @@ if (token) {
               </h2>
             </div>
           </Link>
-          <div className="hgcontent-capsules">
+          <div className="agcontent-capsules">
             {gameData.xbox && (
               <img
                 src="https://i.postimg.cc/nrDT7szB/image-5.png"
@@ -226,7 +211,7 @@ if (token) {
                 alt="Icon 2"
                 onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
               />
-            )}
+             )}
 
 
            {gameData.nintendo && (
@@ -249,18 +234,10 @@ if (token) {
             )}
 
           </div>
-          <div className="hgcontent-body">
-
-            <div className='hgcontent-body'>
-              {gameData.description.length > 165 && (
-            <p>{parse(`${gameData.description.slice(0, 165)}..`)}</p>
-          )}
-            </div>
-
-
-
+          <div className="agcontent-body">
+            <p>{parse(gameData.description.slice(0, 150))}</p>
           </div>
-          <div className="hgbutton">
+          <div className="agbutton">
             <button onClick={(e) => {
                   e.preventDefault();
                   setShow(!show);
@@ -326,19 +303,19 @@ if (token) {
         </div>
       ))}
     </div>
-  );
+);
 } else {
   return (
-    <div className='hgcard-container'>
+    <div className='agcard-container'>
       {games.map((gameData) => (
-        <div key={gameData.id} className='hgcard'>
+        <div key={gameData.id} className='agcard'>
           <Link to={`/games/${gameData.id}`}>
             <img
               src={gameData.background_img}
-              className="hgcard-img"
+              className="agcard-img"
               alt={`Card for ${gameData.name}`}
             />
-            <div className="hgcontent-head">
+            <div className="agcontent-head">
               <h2>
                 {gameData.name.length > 20
                   ? `${gameData.name.slice(0, 20)}..`
@@ -347,7 +324,7 @@ if (token) {
               </h2>
             </div>
           </Link>
-          <div className="hgcontent-capsules">
+          <div className="agcontent-capsules">
             {gameData.xbox && (
               <img
                 src="https://i.postimg.cc/nrDT7szB/image-5.png"
@@ -366,7 +343,7 @@ if (token) {
                 alt="Icon 2"
                 onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
               />
-            )}
+             )}
 
 
            {gameData.nintendo && (
@@ -389,29 +366,20 @@ if (token) {
             )}
 
           </div>
-          <div className="hgcontent-body">
-            <p>{parse(gameData.description.slice(0, 200))}</p>
+          <div className="agcontent-body">
+            <p>{parse(gameData.description.slice(0, 150))}</p>
           </div>
-          <div className="hgbutton">
-            <button onClick={(e) => {
-                  e.preventDefault();
-                  setShow(true);
-                  setPosition({ });
-                  setId(gameData.id)
-                  }}
-
-                  >
+          <div className="agbutton">
+            <button>
               <b>Options</b>
             </button>
-
-
           </div>
         </div>
       ))}
     </div>
-  );
-}
+);
 
-}
 
-export default HomeGameCard;
+}}
+
+export default AllGameCard;

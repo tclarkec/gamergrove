@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from 'react-router-dom';
-import './userReviewCard.css';
+import './largeUserReviewCard.css';
 import StarRating from '../../StarRating';
 
 
@@ -41,12 +41,12 @@ function LargeNonUserReviewCard({ gameId }) {
     <div>
       {Array.isArray(userReviews) && userReviews.length > 0 ? (
         userReviews.map((review) => (
-          <div key={review.id} className="urcard">
-            <div className="urcard-title">{review.title}</div>
-            <div className="urcard-date">9/3/2023</div>
+          <div key={review.id} className="largercard">
+            <div className="lurcard-title">{review.title}</div>
+            <div className="lurcard-date">9/3/2023</div>
             <div>
                   <button
-                    className="urcard-edit"
+                    className="lurcard-edit"
                     style={{ color: 'black' }}
                     onClick={() => {
                       navigate(`/games/${gameId}/nonuser`)
@@ -55,7 +55,7 @@ function LargeNonUserReviewCard({ gameId }) {
                     Edit
                   </button>{' '}
                   <button
-                    className="urcard-delete"
+                    className="lurcard-delete"
                     style={{ color: 'black' }}
                     onClick={() => {
                       navigate(`/games/${gameId}/nonuser`)
@@ -66,15 +66,15 @@ function LargeNonUserReviewCard({ gameId }) {
 
 
             </div>
-            <div className="urline"></div>
+            <div className="lurline"></div>
             <div style={{color: 'white'}} className="urcard-content">
-              <div className="urcontainer-title">
+              <div className="lurcontainer-title">
                 <p>Title: {review.title}</p>
               </div>
-              <div className="urcontainer">
+              <div className="lurcontainer">
                 <p>Review: {review.body}</p>
               </div>
-              <div className="urcontainer">
+              <div className="lurcontainer">
                   <p>Rating: {review.rating}</p>
                   <div className="rating-container">
                     <div className="star-rating">

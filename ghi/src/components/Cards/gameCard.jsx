@@ -59,6 +59,14 @@ function GameCard() {
     userSavedGames.includes(gameData.id)
   );
 
+  if (filteredGameDataList.length === 0) {
+    return (
+      <>
+      <p style={{color:'white'}}>No games added to a board or your wishlist.</p>
+      </>
+    )
+  }
+
   return (
     <div className='gcard-container'>
       {filteredGameDataList.map((gameData) => (
@@ -90,7 +98,7 @@ function GameCard() {
           />
           </div>
           <div className='gcontent-body'>
-            <p>{parse(gameData.description)}</p>
+            <p>{parse(gameData.description.slice(0, 200))}</p>
             {/* Currently not working to get the ptag to be removed from our frontend home page Maybe its an
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>

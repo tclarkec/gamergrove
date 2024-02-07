@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from 'react-router-dom';
-import './userReviewCard.css';
+import './largeUserReviewCard.css';
 import StarRating from '../../StarRating';
 
 
@@ -64,7 +64,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
     fetchVotesForUser(accountId);
   }, [gameId, accountId]);
 
-  const handleUpVoteClick = async (reviewId) => {
+  const handleUpVoteClick = async (reviewId, gameId) => {
+  console.log(reviewId)
    if (isUpvoted == false && isDownvoted == true) {
     const removeDownvoteData = {
       "review_id": reviewId,
@@ -86,6 +87,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (removeDownvoteResponse.ok) {
         console.log('Downvote removed')
         setIsDownvoted(false);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to remove downvote. Server response: ', response);
         throw new Error('Failed to remove downvote')
@@ -115,6 +117,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (voteResponse.ok) {
         console.log('Upvote registered!')
         setIsUpvoted(true);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to register upvote. Server response: ', response);
         throw new Error('Failed to create upvote')
@@ -145,6 +148,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (voteResponse.ok) {
         console.log('Upvote registered!')
         setIsUpvoted(true);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to register upvote. Server response: ', response);
         throw new Error('Failed to create upvote')
@@ -174,6 +178,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (voteResponse.ok) {
         console.log('Upvote removed!')
         setIsUpvoted(false);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to remove upvote. Server response: ', response);
         throw new Error('Failed to remove upvote')
@@ -184,7 +189,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
   }
 }
 
-  const handleDownVoteClick = async (reviewId) => {
+  const handleDownVoteClick = async (reviewId, gameId) => {
     if (isDownvoted === false && isUpvoted == true) {
     const removeUpvoteData = {
       "review_id": reviewId,
@@ -207,6 +212,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (removeUpvoteResponse.ok) {
         console.log('Upvote removed!')
         setIsUpvoted(false);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to remove upvote. Server response: ', response);
         throw new Error('Failed to remove upvote')
@@ -236,6 +242,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (voteResponse.ok) {
         console.log('Downvote registered!')
         setIsDownvoted(true);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to register downvote. Server response: ', response);
         throw new Error('Failed to create downvote')
@@ -268,6 +275,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (voteResponse.ok) {
         console.log('Downvote registered!')
         setIsDownvoted(true);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to register downvote. Server response: ', response);
         throw new Error('Failed to create downvote')
@@ -297,6 +305,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       if (voteResponse.ok) {
         console.log('Downvote removed!')
         setIsDownvoted(false);
+        fetchReviewsForGame(gameId);
       } else {
         console.error('Failed to remove downvote. Server response: ', response);
         throw new Error('Failed to remove downvote')
@@ -339,14 +348,14 @@ function LargeUserReviewCard({ gameId, accountId }) {
               )}
             </div>
             <div className="lurline"></div>
-            <div style={{color: 'white'}} className="urcard-content">
-              <div className="urcontainer-title">
+            <div style={{color: 'white'}} className="lurcard-content">
+              <div className="lurcontainer-title">
                 <p>Title: {review.title}</p>
               </div>
-              <div className="ulrcontainer">
+              <div className="lurcard-details">
                 <p>Review: {review.body}</p>
               </div>
-              <div className="urcontainer">
+              <div className="lurcard-details">
                   <p>Rating: {review.rating}</p>
                   <div className="rating-container">
                     <div className="star-rating">
@@ -357,7 +366,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
             </div>
             <div>
               <button onClick = {() => {
-                handleUpVoteClick(review.id)
+                handleUpVoteClick(review.id, review.game_id)
               }}
               style={{ backgroundColor: isUpvoted ? 'green' : 'transparent' }}
               >
@@ -369,7 +378,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
               <p className="urp" style={{ color: 'white', margin: '0', fontWeight: 'bold', textAlign: 'center' }}>{review.upvote_count}</p>
               </button>
               <button onClick = {() => {
-                handleDownVoteClick(review.id)
+                handleDownVoteClick(review.id, review.game_id)
               }}
               style={{ backgroundColor: isDownvoted ? 'red' : 'transparent' }}
               >

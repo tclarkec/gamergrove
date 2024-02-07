@@ -2,7 +2,6 @@ import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState, useEffect } from "react";
 import {useNavigate} from 'react-router-dom';
-// import Hero from "./Hero";
 import { useRef } from "react";
 
 
@@ -16,6 +15,7 @@ const containerStyle = {
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginSubmitted, setLoginSubmitted] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
   const { login } = useToken();
   const { token } = useAuthContext();
@@ -24,24 +24,35 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginUrl = `http://localhost:8000/token`;
-    const form = new FormData();
-    form.append("username", username);
-    form.append("password", password);
-    const loginConfig = {
-      method: 'post',
-      body: form
-    }
+    setLoginSubmitted(true);
+    login(username, password)
 
-    const response = await fetch(loginUrl, loginConfig);
-    if (response.ok) {
-      login(username, password)
-      navigate('/login/welcomeback');
-    } else {
-      setIncorrectLogin(true);
-    }
 
   };
+
+  console.log(loginSubmitted);
+
+  useEffect(() => {
+    const fetchToken = async (e) => {
+      const tokenUrl = `http://localhost:8000/token`;
+      const fetchConfig = {
+        credentials: 'include'
+      };
+
+      const response = await fetch(tokenUrl, fetchConfig);
+      console.log(response);
+      if (response.ok) {
+          navigate('/login/welcomeback');
+      } else {
+        setIncorrectLogin(true);
+      }
+    }
+    if (loginSubmitted){
+      fetchToken()
+      }
+
+  },
+  [ loginSubmitted, token])
 
   let messageClasses = 'alert alert-danger d-none mb-0';
   let formClasses = '';
@@ -52,7 +63,6 @@ const LoginForm = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      {/* <Hero /> */}
       <button
         onClick={() => { navigate("/"); }}
         style={{

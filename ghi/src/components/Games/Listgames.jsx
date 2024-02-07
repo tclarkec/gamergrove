@@ -1,61 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import Menu from '../Home/Menu.jsx';
 import Nav from '../../Nav.jsx';
-import HomeGameCard from '../Cards/homeGameCard.jsx';
+import AllGameCard from '../Cards/allGameCard.jsx';
 import './Listgames.css';
+import SideMenu from '../Home/Menu.jsx';
 import { useLocation } from 'react-router-dom';
-
 
 const Listgames = () => {
   const location = useLocation();
-  const data = location.state
-  const genre = data.state
-  console.log(genre.length > 2)
+  const data = location.state;
+  const genre = data?.state || '';
   const [games, setGames] = useState([]);
+
   const fetchGames = async () => {
-    const url = 'http://localhost:8000/api/games'
-    const response = await fetch(url)
+    try {
+      const url = 'http://localhost:8000/api/games';
+      const response = await fetch(url);
 
-    if (response.ok) {
-      const fetchedGames = []
-      const data = await response.json()
-      if (genre.length > 2) {
-        for (const game of data) {
-          if (game.genre === genre) {
-            fetchedGames.push(game)
-          }
-        }
-      } else {
-        for (const game of data) {
-          fetchedGames.push(game)
-        }
+      if (response.ok) {
+        const fetchedGames = await response.json();
+        const filteredGames = genre.length > 2
+          ? fetchedGames.filter((game) => game.genre === genre)
+          : fetchedGames;
+
+        setGames(filteredGames);
       }
-      setGames(fetchedGames)
+    } catch (error) {
+      console.error('Error fetching games:', error);
     }
-
-  }
-
+  };
 
   useEffect(() => {
     fetchGames();
-    }, []);
-
+  }, [genre]);
 
   return (
-
     <div>
+      <Nav />
+     <h1 className='titlegames'>Games/{genre ? genre : 'All Games'}</h1>
 
-        <h1>{genre}</h1>
-        {games.map(g => {
-          return(
-            <h3 key={g.id}>{g.name}</h3>
-          )
+      <body className='allgamesbody'>
 
-        })}
+        <SideMenu />
+
+        {games.length > 0 && <AllGameCard games={games} />}
+
+        {/* <h1>{genre}</h1>
+        {games.map((g) => (
+          <h3 key={g.id}>{g.name}</h3>
+        ))} */}
+      </body>
     </div>
-
-
-  )
-}
+  );
+};
 
 export default Listgames;

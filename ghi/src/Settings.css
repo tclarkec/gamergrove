@@ -2,3 +2,10 @@
     width: 600px;
     color: red;
 }
+
+.rowoffive {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}

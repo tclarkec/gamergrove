@@ -101,7 +101,7 @@ function ReviewCard() {
   }, [userReviews]);
 
   if (gameDetailsList.length === 0) {
-    return <p>No reviews available.</p>;
+    return <p style={{color:'white'}}>No reviews available.</p>;
   }
 
   const handleLinkClick = (e) => {

@@ -45,6 +45,7 @@ function Dashboard() {
           <section id="content2">
 
             <CombinedCards />
+            <br />
 
 
 

@@ -35,7 +35,18 @@
   padding: 0px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 13px;
+  font-size: 14px;
+  color: white;
+}
+
+.linkside {
+  margin: 5px 0;
+  padding: 0px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+  color: white;
+
 }
 
 .side-menu li:hover {
@@ -71,8 +82,8 @@ hr.dotted {
 
 .home {
     background-clip: text;
-    color: transparent;
-    background-image: linear-gradient(to right, #1084ff, #ff00fb);
+    color: blueviolet;
+    background-color: black;
     background-size: 60% 100%;
     z-index: 1;
 }

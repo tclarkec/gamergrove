@@ -1,5 +1,5 @@
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './gameDetails.css';
@@ -11,6 +11,7 @@ import LargeNonUserReviewCard from '../Cards/largeNonUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
 import parse from 'html-react-parser';
+import { useLocation } from "react-router-dom";
 
 const containerStyle = {
   minHeight: '100vh',
@@ -52,6 +53,27 @@ const account_data = await fetchAccount();
 
 function GameDetails() {
 
+  const location = useLocation();
+  const place = location.state
+  console.log(place)
+  const lastHash = useRef('');
+  useEffect(() => {
+    if (place) {
+      lastHash.current = place.slice(1); // safe hash for further use after navigation
+    }
+
+    if (lastHash.current && document.getElementById(lastHash.current)) {
+      setTimeout(() => {
+        document
+          .getElementById(lastHash.current)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        lastHash.current = '';
+      }, 100);
+    }
+  }, [place]);
+
+
+
   const { token } = useAuthContext();
 
   const navigate = useNavigate();
@@ -86,25 +108,30 @@ function GameDetails() {
 
   const[submittedReview, setSubmittedReview] = useState(false);
   const [boards, setBoards] = useState([]);
-  const fetchBoards = async () => {
-    const boardUrl = `http://localhost:8000/api/boards/users/${account_data.id}`
-    const fetchConfig = {
-      credentials: 'include'
-    };
-    try {
-      const boardResponse = await fetch(boardUrl, fetchConfig)
-      if (boardResponse.ok) {
-        const boardData = await boardResponse.json()
-        console.log(boardData)
-        setBoards(boardData)
-      }
-    } catch(error) {
-      console.log("Error fetching boards:", error)
-    }
-
-
-
+const fetchBoards = async () => {
+  if (!account_data || !account_data.id) {
+    console.error('Account data is undefined or missing ID.');
+    return;
   }
+
+  const boardUrl = `http://localhost:8000/api/boards/users/${account_data.id}`
+  const fetchConfig = {
+    credentials: 'include'
+  };
+
+  try {
+    const boardResponse = await fetch(boardUrl, fetchConfig)
+    if (boardResponse.ok) {
+      const boardData = await boardResponse.json()
+      console.log(boardData)
+      setBoards(boardData)
+    }
+  } catch (error) {
+    console.log("Error fetching boards:", error)
+  }
+}
+
+
 
   useEffect(() => {
     const fetchGamesData = async () => {
@@ -117,25 +144,33 @@ function GameDetails() {
       }
     };
 
-    const fetchLibraryData = async() => {
-      try {
-        const libraryUrl = `http://localhost:8000/api/users/libraries/${account_data.id}`;
+    const fetchLibraryData = async () => {
+  if (!account_data || !account_data.id) {
+    console.error('Account data is undefined or missing ID.');
+    return;
+  }
 
-        const fetchConfig = {
-          credentials: 'include'
-        };
+  const libraryUrl = `http://localhost:8000/api/users/libraries/${account_data.id}`;
 
-        const response = await fetch(libraryUrl, fetchConfig);
-        const data = await response.json();
-        if (response.ok && data[data.length-1]["wishlist"] === true) {
+  const fetchConfig = {
+    credentials: 'include'
+  };
+
+  try {
+    const response = await fetch(libraryUrl, fetchConfig);
+
+    if (response.ok) {
+      const data = await response.json();
+      for (const entry of data) {
+        if (entry["account_id"] === account_data.id && entry["game_id"] == id && entry["wishlist"] === true) {
           setWishListText('Added to Wishlist!');
         }
-
-      } catch (error) {
-        console.error('Error fetching library data', error);
       }
-
-    };
+    }
+  } catch (error) {
+    console.error('Error fetching library data', error);
+  }
+};
     fetchGamesData();
     if (token) {
     fetchLibraryData();
@@ -409,8 +444,12 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
-              <p class='rec'>Recommendation: {getRecommendation(gameData.rating)}</p>
+              <div class="container">
+                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
             </div>
+
+
           </div>
           <br/>
           <br/>
@@ -438,15 +477,15 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div className='rcontainer' id='review' style={{marginTop: '10px'}}>
         <div className={messageReviewClasses} id="success-message">
             Your review has been submitted!
         </div>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
-          {/* <div className='moveright' > */}
-            <LargeUserReviewCard gameId={gameData.id} accountId={account_data.id} />
-          {/* </div> */}
+          <div className='moveright' >
+            <LargeUserReviewCard gameId={gameData.id} accountId={account_data?.id} />
+          </div>
 
         </div>
         <br />
@@ -561,6 +600,9 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
+              <div class="container">
+                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
             </div>
           </div>
           <br/>
@@ -595,7 +637,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-      <div className='rcontainer' style={{marginTop: '10px'}}>
+      <div style={{marginTop: '10px'}}>
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
           <div className='moveright' >

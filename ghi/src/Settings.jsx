@@ -123,6 +123,8 @@ function Settings() {
         setUpdatedAccount(true);
 
         document.getElementById('password-confirm').value = '';
+
+        fetchAccount();
       } else {
         throw new Error('Failed to update account settings');
       }
@@ -321,7 +323,7 @@ function Settings() {
                     />
                   </div>
                   <div className="mb-3">
-                    <button className="btn btn-primary">Update</button>
+                    <button>Update</button>
                   </div>
 
 
