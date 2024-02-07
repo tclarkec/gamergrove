@@ -15,7 +15,6 @@ const containerStyle = {
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginSubmitted, setLoginSubmitted] = useState(false);
   const [incorrectLogin, setIncorrectLogin] = useState(false);
   const { login } = useToken();
   const { token } = useAuthContext();
@@ -24,35 +23,24 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoginSubmitted(true);
-    login(username, password)
+    const loginUrl = `http://localhost:8000/token`;
+    const form = new FormData();
+    form.append("username", username);
+    form.append("password", password);
+    const loginConfig = {
+      method: 'post',
+      body: form
+    }
 
+    const response = await fetch(loginUrl, loginConfig);
+    if (response.ok) {
+      login(username, password)
+      navigate('/login/welcomeback');
+    } else {
+      setIncorrectLogin(true);
+    }
 
   };
-
-  console.log(loginSubmitted);
-
-  useEffect(() => {
-    const fetchToken = async (e) => {
-      const tokenUrl = `http://localhost:8000/token`;
-      const fetchConfig = {
-        credentials: 'include'
-      };
-
-      const response = await fetch(tokenUrl, fetchConfig);
-      console.log(response);
-      if (response.ok) {
-          navigate('/login/welcomeback');
-      } else {
-        setIncorrectLogin(true);
-      }
-    }
-    if (loginSubmitted){
-      fetchToken()
-      }
-
-  },
-  [ loginSubmitted, token])
 
   let messageClasses = 'alert alert-danger d-none mb-0';
   let formClasses = '';
