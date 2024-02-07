@@ -132,6 +132,29 @@ function Settings() {
     }
   };
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    const confirmed = window.confirm("Are you sure you want to delete your account?");
+    if (confirmed) {
+      try {
+        const deleteAccount = await fetch(`http://localhost:8000/api/accounts/${account_data.id}/${saved_username}`, {
+          method: "DELETE",
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (deleteAccount.ok) {
+          navigate('/');
+        } else {
+          throw new Error("Sorry, can't delete account");
+        }
+      } catch (error) {
+        console.error("Error deleting account", error);
+      }
+    }
+  };
+
   let messageClasses = 'alert alert-success d-none mb-0';
   let formClasses = '';
   if (updatedAccount) {
@@ -299,6 +322,14 @@ function Settings() {
                   </div>
                   <div className="mb-3">
                     <button className="btn btn-primary">Update</button>
+                  </div>
+
+
+
+
+
+                  <div className="mb-3">
+                    <button onClick={handleDelete} className="btn btn-danger">Delete Account</button>
                   </div>
                 </form>
               </div>

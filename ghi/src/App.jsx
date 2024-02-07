@@ -25,7 +25,7 @@ import SearchResults from './components/SearchResults/SearchResults';
 
 import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
-
+import Hero from './Hero';
 import AddToBoard from './AddToBoard';
 
 
@@ -93,6 +93,7 @@ function App() {
                     <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />
                     <Route path="/search" element={<SearchResults />} />
+                    <Route path="/dogo" element={<Hero />} />
 
                 </Routes>
             </BrowserRouter>

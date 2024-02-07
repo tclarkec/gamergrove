@@ -1,6 +1,7 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom';
+// import Hero from "./Hero";
 
 const containerStyle = {
   minHeight: '100vh',
@@ -24,6 +25,7 @@ const LoginForm = () => {
 
   return (
     <div style={{ position: 'relative' }}>
+      {/* <Hero /> */}
       <button
         onClick={() => { navigate("/"); }}
         style={{

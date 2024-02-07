@@ -80,3 +80,33 @@ hr.dotted {
 .small-space {
             margin-bottom: 10px;
         }
+
+
+
+
+  /* .heroimg { */
+      /* width: 25%; */
+      /* margin-left: 18rem;
+      top: 300px; */
+      /* margin-top: 300px; */
+
+      /* z-index: 4; */
+  /* Floating is being called and activated on line 67 */
+      /* animation-name: floating;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out; */
+
+
+    /* } */
+      /* @keyframes floating { */
+        /* 0% {
+          transform: translate(0, 0px);
+        }
+        50% {
+          transform: translate(0, 10px);
+        }
+        100% {
+          transform: translate(0, -0px);
+        }
+      } */
