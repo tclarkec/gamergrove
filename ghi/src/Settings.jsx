@@ -298,7 +298,7 @@ function Settings() {
                     />
                   </div>
                   <div className="mb-3">
-                    <button className="btn btn-primary">Update</button>
+                    <button>Update</button>
                   </div>
                 </form>
               </div>

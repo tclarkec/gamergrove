@@ -21,6 +21,7 @@ async function fetchUserName() {
 
 function WishlistCard() {
   const [wishlistGames, setWishlistGames] = useState([]);
+  const [lastGameRemoved, setLastGameRemoved] = useState(false);
   const [userLibrary, setUserLibrary] = useState([]);
   const [userWishlistGames, setUserWishlistGames] = useState([]);
 
@@ -58,12 +59,10 @@ function WishlistCard() {
       setUserWishlistGames(libraryData.map((entry) => entry.id));
 
 
-      } else if (response.status === 404) {
-        return (
-      <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
-        )
-      }
+      } else {
+          setLastGameRemoved(true);
 
+    }
     } catch (error) {
       console.error('Error fetching:', error);
     }
@@ -77,6 +76,13 @@ function WishlistCard() {
 
     fetchUserData();
   }, []);
+
+
+  if(lastGameRemoved === true){
+    return (
+      <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
+    )
+  }
 
   const filteredUserLibrary = userLibrary.filter((libraryData) =>
     userWishlistGames.includes(libraryData.id) && libraryData.wishlist === true
