@@ -19,7 +19,7 @@ const LoginForm = () => {
     e.preventDefault();
     login(username, password);
     e.target.reset();
-    navigate("/");
+    navigate("/login/welcomeback");
     // window.location.reload();
   };
 

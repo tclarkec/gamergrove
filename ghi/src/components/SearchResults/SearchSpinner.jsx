@@ -14,7 +14,7 @@ const Spinner = () => {
     const searchGames = async (event) => {
         event.preventDefault()
         const searchResults = [];
-        const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${term}&page=1&page_size=10`;
+        const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${term}&page=1&page_size=20`;
         const gamesUrl = 'http://localhost:8000/api/games';
 
         const answer = await fetch(gamesUrl);

@@ -26,7 +26,7 @@ def seed_data():
                     ('S', 'https://i.postimg.cc/28B1WS7H/dfkhk4t-983e5687-c0a0-41fe-8db3-77916fb3d5f4.png'),
                     ('D', 'https://i.postimg.cc/0NH6mMFB/destiny-2-2017-round-folder-icon-by-deoxsis-dbrp3zf-fullview.png'),
                     ('Z', 'https://i.postimg.cc/brqjwLLc/ddxpyca-15f46729-593d-46e3-b1a8-41f7649e3ffc.png'),
-                    ('COD', 'https://i.postimg.cc/brqjwLLc/ddxpyca-15f46729-593d-46e3-b1a8-41f7649e3ffc.png');
+                    ('COD', 'https://i.postimg.cc/sg8wsbMN/Call-of-Duty-PNG-Clipart.png');
 
                     INSERT INTO gamesdb ("name", description, rating, dates, background_img, Xbox, PlayStation, Nintendo, PC, rating_count, rating_total, genre, developers, rawg_pk, reviews_count)
                     VALUES

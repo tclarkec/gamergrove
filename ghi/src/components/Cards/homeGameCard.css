@@ -14,7 +14,7 @@
             background-color: #353536;
             margin: 0px;
             padding: 15px;
-            width: calc(20% - 15px);
+            width: 225px;
             min-width: 200px;
             height: 320px;
             transition-duration: 2s;
@@ -78,6 +78,7 @@
             font-size: 16px;
             font-family: 'K2D', sans-serif;
             color: rgb(255, 255, 255);
+            font-weight: bold;
             top: 0px;
             left: 12px;
             position: relative;

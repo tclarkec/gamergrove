@@ -126,7 +126,7 @@ function BoardPage() {
       const response = await fetch(deleteUrl, deleteConfig);
 
       if (response.ok) {
-        navigate('/');
+        navigate('/dashboard');
       } else {
         console.error('Error deleting board:', response.statusText);
       }
