@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import parse from 'html-react-parser';
 import { Link } from 'react-router-dom';
 import './gameCard.css';
 
@@ -97,7 +98,7 @@ function GameCard() {
           />
           </div>
           <div className='gcontent-body'>
-            <p dangerouslySetInnerHTML={{ __html: gameData.description.slice(0, 200) }} />
+            <p>{parse(gameData.description)}</p>
             {/* Currently not working to get the ptag to be removed from our frontend home page Maybe its an
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>

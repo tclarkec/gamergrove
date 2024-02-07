@@ -11,6 +11,7 @@ const Rows = () => {
         try {
             const response = await fetch('http://localhost:8000/api/games');
             const data = await response.json();
+            console.log(data)
             setGameDataList(data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -39,7 +40,7 @@ const Rows = () => {
 
     return (
         <div>
-            
+
 
             {Object.keys(organizedGamesByGenre).map((genre) => (
                 <div key={genre} className='row'>

@@ -21,10 +21,10 @@ class GameIn(BaseModel):
     rating: float
     dates: date
     background_img: str
-    Xbox: bool = False
-    PlayStation: bool = False
-    Nintendo: bool = False
-    PC: bool = False
+    Xbox: bool
+    PlayStation: bool
+    Nintendo: bool
+    PC: bool
     rating_count: float
     rating_total: float
     genre: str
@@ -39,10 +39,10 @@ class GameOut(BaseModel):
     rating: float
     dates: date
     background_img: str
-    Xbox: bool = False
-    PlayStation: bool = False
-    Nintendo: bool = False
-    PC: bool = False
+    xbox: bool
+    playstation: bool
+    nintendo: bool
+    pc: bool
     rating_count: float
     rating_total: float
     genre: str
@@ -67,8 +67,10 @@ class GameQueries:
                         record = {}
                         for row in rows:
                             for i, column in enumerate(db.description):
+
                                 record[column.name] = row[i]
                             games.append(GameOut(**record))
+
                         return games
                     raise HTTPException(
                         status_code=status.HTTP_404_NOT_FOUND,

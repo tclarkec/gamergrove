@@ -10,6 +10,7 @@ import LargeUserReviewCard from '../Cards/largeUserReviewCard';
 import LargeNonUserReviewCard from '../Cards/largeNonUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from '../../StarRating';
+import parse from 'html-react-parser';
 
 const containerStyle = {
   minHeight: '100vh',
@@ -260,6 +261,37 @@ const handleReviewSubmit = async (event) => {
     formReviewClasses = 'd-none';
   }
 
+  const handleClick = async (platform, rawg_pk) => {
+    const storeUrl = await fetchStoreUrl(platform, rawg_pk);
+    if (storeUrl) {
+      window.location.href = storeUrl;
+    }
+  };
+
+  const fetchStoreUrl = async (platform, rawg_pk) => {
+    try {
+
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+
+      const data = await response.json();
+
+
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
+
+      }
+
+
+
+
+    } catch (error) {
+      console.error('Cant find the store you are looking for', error);
+      return null;
+    }
+  };
+
 
   if (token) {
   return (
@@ -310,35 +342,48 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 1"
+
           />
+          {gameData.xbox && (
           <img
             className='GDIcon'
             src="https://i.postimg.cc/nrDT7szB/image-5.png"
             width="35px"
             height="35px"
             alt="Icon 1"
+            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
           />
+          )}
+          {gameData.playstation && (
           <img
             className='GDIcon'
             src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
             width="35px"
             height="35px"
             alt="Icon 2"
+            onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
           />
+          )}
+          {gameData.nintendo && (
           <img
             className='GDIcon'
             src="https://i.postimg.cc/R0qXLppc/image-3.png"
             width="35px"
             height="35px"
             alt="Icon 3"
+            onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
           />
+          )}
+          {gameData.pc && (
           <img
             className='GDIcon'
             src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
             width="35px"
             height="35px"
             alt="Icon 4"
+            onClick={() => handleClick('PC', gameData.rawg_pk)}
           />
+          )}
 
           <br />
           <div className="flex-container">
@@ -346,7 +391,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'> {gameData.description} </p>
+              <p className='text'>{parse(gameData.description)}</p>
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
@@ -455,34 +500,46 @@ const handleReviewSubmit = async (event) => {
             height="35px"
             alt="Icon 1"
           />
+          {gameData.xbox && (
           <img
             className='GDIcon'
             src="https://i.postimg.cc/nrDT7szB/image-5.png"
             width="35px"
             height="35px"
             alt="Icon 1"
+            onClick={() => handleClick('Xbox', gameData.rawg_pk)}
           />
+          )}
+          {gameData.playstation && (
           <img
             className='GDIcon'
             src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
             width="35px"
             height="35px"
             alt="Icon 2"
+            onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
           />
+          )}
+          {gameData.nintendo && (
           <img
             className='GDIcon'
             src="https://i.postimg.cc/R0qXLppc/image-3.png"
             width="35px"
             height="35px"
             alt="Icon 3"
+            onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
           />
+          )}
+          {gameData.pc && (
           <img
             className='GDIcon'
             src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
             width="35px"
             height="35px"
             alt="Icon 4"
+            onClick={() => handleClick('PC', gameData.rawg_pk)}
           />
+          )}
 
           <br />
           <div className="flex-container">
@@ -490,7 +547,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'> {gameData.description} </p>
+              <p className='text'> {parse(gameData.description)} </p>
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
