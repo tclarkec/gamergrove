@@ -1,3 +1,7 @@
+.boardbody{
+  width: 1000px;
+}
+
 .board-page-container {
   position: relative;
 }
@@ -15,15 +19,17 @@
 
 .content-container {
   position: absolute;
+  width: 85%;
   top: 200px;
   left: 200px;
-  z-index: 1;
+
 }
 
 .BoardPageTitle {
   color: white;
   font-size: 36px;
   margin-bottom: 10px;
+  position: relative;
 
 }
 
@@ -31,18 +37,21 @@
   color: white;
   font-size: 20px;
   margin-bottom: 10px;
+  margin-right: 20px;
+  text-align: right;
 
 }
 
 .BoardPageDescription span {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 5px;
+
 }
 
 
 .BoardPageTitle span {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 5px;
 }
@@ -54,4 +63,23 @@
   border: none;
   margin: 10px 0;
   width: 98%;
+}
+
+.deleteboard {
+  text-align: right;
+  font-family: K2D;
+  color: rgb(255, 255, 255);
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.deleteboard span {
+  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.button {
+  align-self: right;
+  color: transparent;
 }

@@ -8,13 +8,27 @@
     margin-top: 0;
 } */
 
+.allgamesbody {
+    margin-left: 225px;
+    margin-top: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 25px;  */
+}
+
+.allgamesbody > * {
+    flex: 1 1 calc(20% - 25px); /* 20% width for each card, considering the gap */
+}
 
 
 
 .titlegames {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     margin-left: 200px;
     margin-top: 120px;
+    margin-bottom: -180px;
+    background-color: #0000003b;
+    padding-left: 10px;
 
 
 }

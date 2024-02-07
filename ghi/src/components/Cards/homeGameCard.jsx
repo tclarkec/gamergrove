@@ -7,7 +7,7 @@ import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";
 import { useNavigate } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 // Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
-function HomeGameCard( {games}) {
+function HomeGameCard( {games} ) {
   const [gameDataList, setGameDataList] = useState([]);
   const [id, setId] = useState('');
   const [show, setShow] = useState(false);
@@ -249,7 +249,15 @@ if (token) {
 
           </div>
           <div className="hgcontent-body">
-            <p>{parse(gameData.description.slice(0, 200))}</p>
+
+            <div className='hgcontent-body'>
+              {gameData.description.length > 165 && (
+            <p>{parse(`${gameData.description.slice(0, 165)}..`)}</p>
+          )}
+            </div>
+
+
+
           </div>
           <div className="hgbutton">
             <button onClick={(e) => {

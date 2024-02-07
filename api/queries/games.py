@@ -53,29 +53,29 @@ class GameOut(BaseModel):
 
 class GameQueries:
     def get_all_games(self) -> List[GameOut]:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        SELECT *
-                        FROM gamesdb
-                        """
-                    )
-                    rows = db.fetchall()
-                    games = []
-                    if rows:
-                        record = {}
-                        for row in rows:
-                            for i, column in enumerate(db.description):
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    SELECT *
+                    FROM gamesdb
+                    """
+                )
+                rows = db.fetchall()
+                games = []
+                if rows:
+                    record = {}
+                    for row in rows:
+                        for i, column in enumerate(db.description):
 
-                                record[column.name] = row[i]
-                            games.append(GameOut(**record))
+                            record[column.name] = row[i]
+                        games.append(GameOut(**record))
 
-                        return games
-                    raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail="Could not find the games in the database"
-                    )
+                    return games
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could not find the games in the database"
+                )
 
     def get_game(self, id: int) -> GameOut:
         with pool.connection() as conn:
@@ -167,6 +167,7 @@ class GameQueries:
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="That game already exists in the database"
                     )
+
     def update_game(self, id: int, games_dict: GameIn) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -197,10 +198,10 @@ class GameQueries:
                             games_dict["rating"],
                             games_dict["dates"],
                             games_dict["background_img"],
-                            games_dict["Xbox"],
-                            games_dict["PlayStation"],
-                            games_dict["Nintendo"],
-                            games_dict["PC"],
+                            games_dict["xbox"],
+                            games_dict["playstation"],
+                            games_dict["nintendo"],
+                            games_dict["pc"],
                             games_dict["rating_count"],
                             games_dict["rating_total"],
                             games_dict["genre"],
@@ -213,7 +214,7 @@ class GameQueries:
                     return GameOut(id=id, **games_dict)
                 except ValueError:
                     raise HTTPException(
-                        status_code = status.HTTP_400_BAD_REQUEST,
+                        status_code=status.HTTP_400_BAD_REQUEST,
                         detail="Error updating game"
                     )
 

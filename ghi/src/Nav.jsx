@@ -207,6 +207,71 @@ const Nav = () => {
       }
   }
 
+  const [userIcon, setUserIcon] = useState('https://i.postimg.cc/SQCfRFsN/image-9.png');
+const [username, setUsername] = useState('');
+
+useEffect(() => {
+  console.log('Username:', username);
+  const fetchUserIcon = async () => {
+    try {
+      if (!username) {
+        console.log('Username is empty.');
+        return;
+      }
+
+      // Step 1: Fetch user data from the accounts API
+      const accountsUrl = `http://localhost:8000/api/accounts/${username}`;
+      const response = await fetch(accountsUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        console.error('Error fetching user data:', response.status, response.statusText);
+        return;
+      }
+
+      const userData = await response.json();
+      console.log('User Data:', userData);
+
+      // Step 2: Fetch icon data using the icon ID obtained from user data
+      const iconId = userData.icon_id; // Update this based on your actual property name
+      if (!iconId) {
+        console.log('Icon ID is missing in user data.');
+        return;
+      }
+
+      const iconsUrl = `http://localhost:8000/api/icons/${iconId}`;
+      const iconResponse = await fetch(iconsUrl);
+
+      if (!iconResponse.ok) {
+        console.error('Error fetching icon data:', iconResponse.status, iconResponse.statusText);
+        return;
+      }
+
+      const iconData = await iconResponse.json();
+      console.log('Icon Data:', iconData);
+
+      // Set the user icon URL based on the icon data
+      setUserIcon(iconData.icon_url);
+    } catch (error) {
+      console.error('Error fetching user icon:', error);
+    }
+  };
+
+  if (token) {
+    fetchUserIcon();
+  }
+}, [token, username]);
+
+
+
+
+
+
+
   if (token) {
     return (
     <div className={`nav ${display && 'nav__black'}`}>
@@ -229,7 +294,7 @@ const Nav = () => {
           >
             <img
               className='nav__avatar'
-              src='https://i.postimg.cc/SQCfRFsN/image-9.png'
+              src={userIcon}  // Use the fetched user icon
               alt=''
             />
             {showDropdown && (
@@ -240,7 +305,7 @@ const Nav = () => {
                 <a href="http://localhost:5173/settings">
                 <div className='nav__dropdown-item, font-drop'>Settings</div>
                 </a>
-                <a href="http://localhost:5173/logout" onClick={()=>{
+                <a href="http://localhost:5173/" onClick={()=>{
                   handleLogOut();
                 }}>
                 <div className='nav__dropdown-item, font-drop'>Logout</div>
