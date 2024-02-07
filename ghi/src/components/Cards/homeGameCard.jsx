@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import './homeGameCard.css';
 import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";
 // Set the prop to games in the HomeCard to get that to populate properly, potentially(Originally empty)
-function HomeGameCard( {games} ) {
+function HomeGameCard( { games }  ) {
   const [gameDataList, setGameDataList] = useState([]);
   const [show, setShow] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -20,6 +20,7 @@ function HomeGameCard( {games} ) {
   };
 
 
+
   const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:8000/api/games');
@@ -30,9 +31,6 @@ function HomeGameCard( {games} ) {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleClick = async (platform, rawg_pk) => {
     const storeUrl = await fetchStoreUrl(platform, rawg_pk);
