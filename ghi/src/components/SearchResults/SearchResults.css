@@ -130,5 +130,12 @@
         }
 
         .search-div {
+            margin-left: 180px;
+            margin-top: 150px;
+            color: black;
+            background-color: black;
+        }
+
+        html {
             background-color: black;
         }
