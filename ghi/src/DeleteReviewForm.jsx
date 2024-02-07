@@ -73,7 +73,7 @@ const DeleteReviewForm = () => {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `http://localhost:8000/api/reviews/users/${id}/${accountId}`;
+    const deleteUrl = `http://localhost:8000/api/reviews/${id}/${accountId}`;
 
     const deleteConfig = {
       method: "delete",

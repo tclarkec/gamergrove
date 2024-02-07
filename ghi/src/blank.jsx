@@ -1,128 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import StarRating from './StarRating';
+import React from 'react';
+import './dashboard.css';
 
-async function fetchAccountId() {
-  const tokenUrl = `http://localhost:8000/token`;
+import BoardCard from '../Cards/boardCard.jsx';
+import ReviewCard from '../Cards/reviewCard.jsx';
+import GameCard from '../Cards/gameCard.jsx';
+import WishlistCard from '../Cards/wishlistCard.jsx';
+import UserReviewCard from '../Cards/userReviewCard';
+import SideMenu from '../Home/Menu';
+import Nav from '../../Nav';
+import CombinedCards from '../Cards/combinedCards';
+import Settings from '../../Settings.jsx';
 
-  const fetchConfig = {
-    credentials: 'include',
-  };
-
-  try {
-    const response = await fetch(tokenUrl, fetchConfig);
-
-    if (response.ok) {
-      const data = await response.json();
-      return data.account.id;
-    } else {
-      console.error('Error fetching account ID:', response.status);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error fetching account ID:', error);
-    return null;
-  }
-}
-
-function UpdateReviewForm() {
-  const navigate = useNavigate();
-  const { review_id, game_id } = useParams();
-  const initialData = {
-    title: "",
-    body: "",
-    game_id: game_id,
-    rating: ""
-  };
-
-  const [formData, setFormData] = useState(initialData);
-  const [accountId, setAccountId] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const fetchedAccountId = await fetchAccountId();
-      if (fetchedAccountId) {
-        setAccountId(fetchedAccountId);
-        console.log('Got account id!');
-      } else {
-        console.error('Error fetching account ID');
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleStarClick = (selectedRating) => {
-    setFormData({
-      ...formData,
-      rating: selectedRating,
-    });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const reviewUrl = `http://localhost:8000/api/reviews/users/${review_id}/${accountId}`;
-
-    const fetchConfig = {
-      method: "put",
-      body: JSON.stringify(formData),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    try {
-      const response = await fetch(reviewUrl, fetchConfig);
-      if (response.ok) {
-        navigate("/dashboard");
-        setFormData(initialData);
-      } else {
-        throw new Error('Failed to update review');
-      }
-    } catch (error) {
-      console.error('Error updating review:', error);
-    }
-  };
-
+function Dashboard() {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1>Update a review</h1>
-            <form onSubmit={handleSubmit} id="create-board">
-              <div className="form-floating mb-3">
-                <label htmlFor="title">Title</label>
-                <input onChange={handleFormChange} placeholder="i.e. The Best Game of 2023" required type="text" name="title" id="title" className="form-control" value={formData.title} />
-              </div>
-              <div className="form-floating mb-3">
-                <label htmlFor="body">Body</label>
-                <textarea onChange={handleFormChange} placeholder="i.e. A groundbreaking FPS" name="body" id="body" className="form-control" value={formData.body} rows="3"></textarea>
-              </div>
-              <div className="form-floating mb-3">
-                <label htmlFor='rating' style={{ marginBottom: '0rem' }}>Give a rating out of 5:</label>
-                <div className='rating-container d-flex justify-content-center'>
-                  <div className='star-rating'>
-                    <StarRating rating={formData.rating} onStarClick={handleStarClick} />
-                  </div>
-                </div>
-              </div>
-              <button>Update</button>
-            </form>
-          </div>
+    <div>
+      <SideMenu />
+      <Nav />
+      <main>
+        <h1>User Dashboard!</h1>
+
+        {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
+
+        <input id="radio1" type="radio" name="css-tabs" defaultChecked />
+        <input id="radio2" type="radio" name="css-tabs" />
+        <input id="radio3" type="radio" name="css-tabs" />
+        <input id="radio4" type="radio" name="css-tabs" />
+        <input id="radio5" type="radio" name="css-tabs" />
+        <div id="tabs">
+          <label htmlFor="radio1" id="tab1">Boards</label>
+          <label htmlFor="radio2" id="tab2">Reviews</label>
+          <label htmlFor="radio3" id="tab3">Games</label>
+          <label htmlFor="radio4" id="tab4">Wishlist</label>
+          <label htmlFor="radio5" id="tab5">Settings</label>
         </div>
-      </div>
+        <div id="content">
+          <section id="content1">
+            <div>
+            <BoardCard />
+
+
+
+            </div>
+          </section>
+          <section id="content2">
+
+            <CombinedCards />
+            <br />
+
+
+
+          </section>
+          <section id="content3">
+             <div className='gcard-container'>
+             <GameCard />
+
+            </div>
+          </section>
+          <section id="content4">
+            <div>
+            <WishlistCard />
+
+            </div>
+          </section>
+          <section id="content5">
+            <Settings />
+          </section>
+          </div>
+
+      </main>
     </div>
   );
 }
 
-export default UpdateReviewForm;
+export default Dashboard;
