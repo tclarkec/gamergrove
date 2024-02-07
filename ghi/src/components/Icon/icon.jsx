@@ -20,15 +20,15 @@ const Icon = () => {
 
         const userData = await response.json();
 
-        console.log('User Data:', userData);
+        
 
-        // Assuming userData includes "account" with "icon_id"
+
         const { account } = userData;
         const { icon_id } = account;
 
-        console.log('Icon ID:', icon_id);
 
-        // Make a call to api/icons/id to get the icon_url
+
+
         const iconResponse = await fetch(`http://localhost:8000/api/icons/${icon_id}`);
         if (!iconResponse.ok) {
           throw new Error(`Error fetching icon information. Status: ${iconResponse.status}`);
@@ -36,9 +36,9 @@ const Icon = () => {
 
         const iconData = await iconResponse.json();
 
-        console.log('Icon Data:', iconData);
 
-        // Set the icon_url in the state
+
+
         setIconUrl(iconData.icon_url);
       } catch (error) {
         console.error('Error fetching user icon information:', error);

@@ -14,10 +14,10 @@ const Landing = () => {
     fetch('http://localhost:8000/api/games')
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        
         const filteredGames = data.filter(game => game.rating > 4.30);
         console.log('Filtered games:', filteredGames);
-        setGames(filteredGames);
+
       })
       .catch(error => console.error('Error fetching games:', error));
   }, []);
