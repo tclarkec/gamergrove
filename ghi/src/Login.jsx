@@ -24,10 +24,13 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoginSubmitted(true);
     login(username, password)
 
 
   };
+
+  console.log(loginSubmitted);
 
   useEffect(() => {
     const fetchToken = async (e) => {
@@ -43,11 +46,13 @@ const LoginForm = () => {
       } else {
         setIncorrectLogin(true);
       }
-    };
+    }
+    if (loginSubmitted){
+      fetchToken()
+      }
 
-    fetchToken()
   },
-  [handleSubmit(), token])
+  [ loginSubmitted, token])
 
   let messageClasses = 'alert alert-danger d-none mb-0';
   let formClasses = '';
