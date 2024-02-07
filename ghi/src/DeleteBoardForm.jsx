@@ -114,4 +114,4 @@ const DeleteBoardForm = () => {
   );
 }
 
-export default DeleteReviewForm;
+export default DeleteBoardForm;
