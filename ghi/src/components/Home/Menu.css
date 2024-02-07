@@ -82,7 +82,7 @@ hr.dotted {
 
 .home {
     background-clip: text;
-    color: transparent;
+    color: blueviolet;
     background-color: black;
     background-size: 60% 100%;
     z-index: 1;
