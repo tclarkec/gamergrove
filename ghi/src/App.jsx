@@ -27,6 +27,7 @@ import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
 
 import AddToBoard from './AddToBoard';
+import DeleteBoardForm from './DeleteBoardForm';
 import UpdateBoardForm from './UpdateBoardForm';
 
 
@@ -85,6 +86,7 @@ function App() {
                     <Route path="/signup" element={<SignUpForm />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/boards/create" element={<BoardForm />} />
+                    <Route path="/boards/delete/:id" element={<DeleteBoardForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/reviews/update/:review_id/:game_id" element={<UpdateReviewForm />} />
                     <Route path="/reviews/delete/:id" element={<DeleteReviewForm />} />

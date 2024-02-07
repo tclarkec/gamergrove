@@ -170,7 +170,7 @@ function BoardPage() {
       </Link>
       <br />
       <br />
-       <Link to="#" className='deleteboard' onClick={handleDeleteBoard}>
+       <Link to={`/boards/delete/${boardId}`} className='deleteboard'>
           <span>Delete Board</span>
         </Link>
       <br />
