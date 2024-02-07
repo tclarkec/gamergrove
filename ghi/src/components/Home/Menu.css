@@ -83,7 +83,7 @@ hr.dotted {
 .home {
     background-clip: text;
     color: transparent;
-    background-image: linear-gradient(to right, #1084ff, #ff00fb);
+    background-color: black;
     background-size: 60% 100%;
     z-index: 1;
 }

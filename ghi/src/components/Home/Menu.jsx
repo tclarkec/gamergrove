@@ -63,13 +63,7 @@ const SideMenu = ({ onSelectGenre }) => {
 
                     <div className="small-space"></div>
 
-                    <p className='space'>New Releases</p>
-                    <hr className='solid' />
-                    <ul>
-                        <li className='linkside'>- Last 30 Days</li>
-                        <li>- This Week</li>
-                        <li>- Coming Soon</li>
-                    </ul>
+                    <NavLink to="/games" state={{ state: ''}} >All Games</NavLink>
                     <div className="small-space"></div>
                     <p>Consoles</p>
                     <hr className='solid' />
@@ -98,7 +92,7 @@ const SideMenu = ({ onSelectGenre }) => {
                     </ul>
                     <div className="small-space"></div>
                     <hr className='solid' />
-                    <NavLink to="/games" state={{ state: ''}} >All Games</NavLink>
+
                     <hr className='solid'/>
                     <ul>
 
