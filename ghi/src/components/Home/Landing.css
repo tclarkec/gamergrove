@@ -9,12 +9,13 @@
 }
 .hero-carousel-container {
   background-color: #1a1a1a;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   margin: 0px auto;
   margin-top: 10px;
   margin-right: 225px;
   width: 60%;
+  height: 60%;
   max-width: 1200px;
   border-radius: 50px;
   z-index: 0;
@@ -26,7 +27,7 @@
   display: flex;
   transition: transform 450ms ease-in-out;
   /* border-radius: 20px; */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .carousel-item {
   min-width: 100%; /* Ensure each item takes the full width */
@@ -55,4 +56,15 @@ header {
     height: 3px;
     background: linear-gradient(to right, #ff10bf, #009dff);
     box-shadow: 0px 2px 40px rgba(119, 0, 255, 0.1);
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 10px; /* Adjust the bottom value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+  color: rgb(255, 0, 234);
+  z-index: 3;
 }

@@ -326,8 +326,10 @@ useEffect(() => {
 
     } else {
   return (
-    <div className='search-div'>
-        <Nav />
+    <div>
+      <Nav />
+    <div className='searchbody'>
+
         <SideMenu />
         <div className='search-results-container'>
             <div className='shgcard-container'>
