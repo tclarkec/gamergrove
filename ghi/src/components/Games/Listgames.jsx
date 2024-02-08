@@ -15,7 +15,7 @@ const Listgames = () => {
 
   const platforms = ['xbox', 'playstation', 'pc', 'nintendo'];
 
-  if(platforms.includes(data.state) === false ) {
+  if (platforms.includes(data.state) === false) {
     const genre = data?.state || '';
 
     const fetchGames = async () => {
@@ -26,16 +26,8 @@ const Listgames = () => {
         if (response.ok) {
           const fetchedGames = await response.json();
           const filteredGames = genre.length > 2
-          ? fetchedGames.filter((game) => game.genre === genre)
-          : fetchedGames;
-
-        setGames(filteredGames);
-      }
-    } catch (error) {
-      console.error('Error fetching games:', error);
-    }
-  };
-
+            ? fetchedGames.filter((game) => game.genre === genre)
+            : fetchedGames;
           setTitle(genre);
           setGames(filteredGames);
         }
@@ -48,7 +40,7 @@ const Listgames = () => {
     useEffect(() => {
       fetchGames();
     }, [genre]);
-  } else if (platforms.includes(data.state)){
+  } else if (platforms.includes(data.state)) {
     const platform = data.state
     const fetchGames = async () => {
       try {
@@ -77,22 +69,19 @@ const Listgames = () => {
   return (
     <div>
       <Nav />
-     <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
+      <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
 
-      <div className='allgamesbody'>
+      <body className='allgamesbody'>
 
         <SideMenu />
 
         {games.length > 0 && <AllGameCard games={games} />}
 
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <h5 style={{ textAlign: 'center', marginLeft: '150px', fontFamily: 'K2D'}}>End Results</h5>
+        {/* <h1>{genre}</h1>
+        {games.map((g) => (
+          <h3 key={g.id}>{g.name}</h3>
+        ))} */}
+      </body>
     </div>
   );
 };
