@@ -295,7 +295,7 @@ if (token) {
                   <MenuItem onItemClick={handleDetailClick} data={gameData.id} >
                     Details
                   </MenuItem>
-                  {boardDataList.length > 1 ?
+                  {boardDataList.length > 0 ?
                   <SubMenu
                     onDisplayClick={handleDisplayClick}
                     onItemClick={handleSubMenuClick}
