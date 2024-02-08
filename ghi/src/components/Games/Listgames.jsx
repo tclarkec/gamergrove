@@ -26,8 +26,8 @@ const Listgames = () => {
         if (response.ok) {
           const fetchedGames = await response.json();
           const filteredGames = genre.length > 2
-            ? fetchedGames.filter((game) => game.genre === genre)
-            : fetchedGames;
+          ? fetchedGames.filter((game) => game.genre === genre)
+          : fetchedGames;
           setTitle(genre);
           setGames(filteredGames);
         }
@@ -82,6 +82,9 @@ const Listgames = () => {
           <h3 key={g.id}>{g.name}</h3>
         ))} */}
       </body>
+      <br />
+      <h5 style={{textAlign: 'center', fontFamily: 'K2D', marginLeft: '100px'}}>End of Results</h5>
+      <br />
     </div>
   );
 };

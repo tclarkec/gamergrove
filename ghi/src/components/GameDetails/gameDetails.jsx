@@ -55,7 +55,7 @@ function GameDetails() {
 
   const location = useLocation();
   const place = location.state
-  console.log(place)
+
   const lastHash = useRef('');
   useEffect(() => {
     if (place) {
@@ -123,7 +123,7 @@ const fetchBoards = async () => {
     const boardResponse = await fetch(boardUrl, fetchConfig)
     if (boardResponse.ok) {
       const boardData = await boardResponse.json()
-      console.log(boardData)
+
       setBoards(boardData)
     }
   } catch (error) {
@@ -226,7 +226,6 @@ const handleWishListClick = async () => {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
         setWishListText('Added to Wishlist!');
-        console.log('Nice!');
       } else {
         console.error('Failed to add to wishlist. Server response:', response);
         throw new Error('Failed to add to wishlist');
@@ -542,6 +541,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 1"
+            type='button'
             onClick={() => handleClick('Xbox', gameData.rawg_pk)}
           />
           )}
@@ -552,6 +552,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 2"
+            type='button'
             onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
           />
           )}
@@ -562,6 +563,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 3"
+            type='button'
             onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
           />
           )}
@@ -572,6 +574,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 4"
+            type='button'
             onClick={() => handleClick('PC', gameData.rawg_pk)}
           />
           )}

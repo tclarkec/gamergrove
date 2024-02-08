@@ -16,14 +16,14 @@ function HomeGameCard( { games }  ) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleItemClick = (event, index, data) => {
-    console.log(`[MenuItem] ${data} clicked`);
+
     setShow(false);
   };
   const handleSubMenuClick = (event, index, data) => {
-    console.log(`[SubMenu] ${data} clicked`);
+
   };
   const handleDisplayClick = (event, position) => {
-    console.log(`[Display] ${position} clicked`);
+    
   };
   const navigate = useNavigate();
   const { token } = useAuthContext();
@@ -148,7 +148,7 @@ function HomeGameCard( { games }  ) {
     try {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
-        console.log('Nice!');
+
       } else {
         console.error('Failed to add to wishlist. Server response:', response);
         throw new Error('Failed to add to wishlist');
@@ -167,7 +167,7 @@ function HomeGameCard( { games }  ) {
     stuff.wishlist = false;
     stuff.game_id = data[1];
     stuff.board_id = board;
-    console.log(stuff)
+
     const fetchConfig = {
       method: 'post',
       body: JSON.stringify(stuff),

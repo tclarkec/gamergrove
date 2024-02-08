@@ -18,7 +18,7 @@ const Landing = () => {
       .then(response => response.json())
       .then(data => {
 
-        const filteredGames = data.filter(game => game.rating > 4.30);
+        const filteredGames = data.filter(game => game.rating > 4.35);
         setGames(filteredGames);
 
       })

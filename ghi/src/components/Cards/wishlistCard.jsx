@@ -12,26 +12,26 @@ async function fetchUserName() {
     return data.account.id;
   }
 }
-const handleClick = async (platform, rawg_pk) => {
-  const storeUrl = await fetchStoreUrl(platform, rawg_pk);
-  if (storeUrl) {
-    window.location.href = storeUrl;
-  }
-};
-const fetchStoreUrl = async (platform, rawg_pk) => {
-  try {
-    const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
-    const data = await response.json();
-    for (const link of data) {
-      if (link.platform === platform) {
-        return link.url
-      }
+  const handleClick = async (platform, rawg_pk) => {
+    const storeUrl = await fetchStoreUrl(platform, rawg_pk);
+    if (storeUrl) {
+      window.location.href = storeUrl;
     }
-  } catch (error) {
-    console.error('Cant find the store you are looking for', error);
-    return null;
-  }
-};
+  };
+  const fetchStoreUrl = async (platform, rawg_pk) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+      const data = await response.json();
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
+      }
+    } catch (error) {
+      console.error('Cant find the store you are looking for', error);
+      return null;
+    }
+  };
 function WishlistCard() {
   const [wishlistGames, setWishlistGames] = useState([]);
   const [lastGameRemoved, setLastGameRemoved] = useState(false);
@@ -45,23 +45,23 @@ function WishlistCard() {
       };
       const response = await fetch(libraryUrl, libraryConfig);
       if (response.ok) {
-        const libraryData = await response.json();
-        setUserLibrary(libraryData);
-        const wishlistGameIds = libraryData
-          .filter((item) => item.wishlist === true)
-          .map((item) => item.game_id);
-        const uniqueGameIds = Array.from(new Set(wishlistGameIds));
-        const gameDetailsPromises = uniqueGameIds.map((gameId) =>
-          fetch(`http://localhost:8000/api/games/${gameId}`).then((response) =>
-            response.json()
-          )
-        );
-        const wishlistGames = await Promise.all(gameDetailsPromises);
-        setWishlistGames(wishlistGames);
-        setUserWishlistGames(libraryData.map((entry) => entry.id));
+      const libraryData = await response.json();
+      setUserLibrary(libraryData);
+      const wishlistGameIds = libraryData
+        .filter((item) => item.wishlist === true)
+        .map((item) => item.game_id);
+      const uniqueGameIds = Array.from(new Set(wishlistGameIds));
+      const gameDetailsPromises = uniqueGameIds.map((gameId) =>
+        fetch(`http://localhost:8000/api/games/${gameId}`).then((response) =>
+          response.json()
+        )
+      );
+      const wishlistGames = await Promise.all(gameDetailsPromises);
+      setWishlistGames(wishlistGames);
+      setUserWishlistGames(libraryData.map((entry) => entry.id));
       } else {
-        setLastGameRemoved(true);
-      }
+          setLastGameRemoved(true);
+    }
     } catch (error) {
       console.error('Error fetching:', error);
     }
@@ -73,7 +73,7 @@ function WishlistCard() {
     };
     fetchUserData();
   }, []);
-  if (lastGameRemoved === true) {
+  if(lastGameRemoved === true){
     return (
       <p style={{ color: 'white' }}> No games saved to your wishlist yet. </p>
     )
@@ -87,113 +87,121 @@ function WishlistCard() {
     )
   }
   const handleRemove = async (gameId, userId) => {
-    try {
-      const userId = await fetchUserName();
-      const libraryUrl = `http://localhost:8000/api/users/libraries/${userId}`;
-      const libraryConfig = {
-        credentials: 'include',
-      };
-      const libraryResponse = await fetch(libraryUrl, libraryConfig);
-      const libraryData = await libraryResponse.json();
-      const filteredLibraryData = libraryData.filter((libraryEntry) =>
-        libraryEntry.game_id === gameId && libraryEntry.wishlist === true
-      );
-      const url = `http://localhost:8000/api/libraries/${filteredLibraryData[0].id}/${userId}`;
-      const fetchConfig = {
-        method: 'delete',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      const response = await fetch(url, fetchConfig);
-      if (response.ok) {
-        console.log('Game removed from wishlist!');
-        fetchData(userId);
-      } else {
-        throw new Error('Failed to remove game from wishlist');
-      }
-    } catch (error) {
-      console.error('Error removing game from wishlist:', error);
+     try {
+    const userId = await fetchUserName();
+    const libraryUrl = `http://localhost:8000/api/users/libraries/${userId}`;
+    const libraryConfig = {
+      credentials: 'include',
+    };
+    const libraryResponse = await fetch(libraryUrl, libraryConfig);
+    const libraryData = await libraryResponse.json();
+    const filteredLibraryData = libraryData.filter((libraryEntry) =>
+      libraryEntry.game_id === gameId && libraryEntry.wishlist === true
+    );
+    const url = `http://localhost:8000/api/libraries/${filteredLibraryData[0].id}/${userId}`;
+    const fetchConfig = {
+      method: 'delete',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await fetch(url, fetchConfig);
+    if (response.ok) {
+
+      fetchData(userId);
+    } else {
+      throw new Error('Failed to remove game from wishlist');
     }
-  };
-  console.log(wishlistGames);
-  return (
+  } catch (error) {
+    console.error('Error removing game from wishlist:', error);
+  }
+};
+
+return (
     <div>
       {wishlistGames.map((game, index) => (
         <div key={`${game.id}-${index}`} className="wishlistcard">
           <div className="wcard-content">
             <div className="wcard-details">
               {/* <div className="wcard-item"> */}
-              <div className='wcontent-capsules'>
-                {game.xbox && (
+                <div className='wcontent-capsules'>
                   <img
-                    className='GDIcon'
-                    src="https://i.postimg.cc/nrDT7szB/image-5.png"
-                    width="25px"
-                    height="25px"
-                    alt="Icon 1"
-                    type="button"
-                    onClick={() => handleClick('Xbox', game.rawg_pk)}
-                  />
-                )}
-                {game.playstation && (
-                  <img
-                    className='GDIcon'
-                    src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-                    width="25px"
-                    height="25px"
-                    alt="Icon 2"
-                    type="button"
-                    onClick={() => handleClick('PlayStation', game.rawg_pk)}
-                  />
-                )}
-                {game.nintendo && (
-                  <img
-                    className='GDIcon'
-                    src="https://i.postimg.cc/R0qXLppc/image-3.png"
-                    width="25px"
-                    height="25px"
-                    alt="Icon 3"
-                    type="button"
-                    onClick={() => handleClick('Nintendo', game.rawg_pk)}
-                  />
-                )}
-                {game.pc && (
-                  <img
-                    className='GDIcon'
-                    src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-                    width="25px"
-                    height="25px"
-                    alt="Icon 4"
-                    type="button"
-                    onClick={() => handleClick('PC', game.rawg_pk)}
-                  />
-                )}
-              </div>
-              <p className='gamename'>{game.name}</p>
-              <Link to={`/games/${game.id}`}>
-                <div className="wcard-photo" style={{ position: 'relative' }}>
-                  <img src={game.background_img} alt={game.name} />
+                      className='icon2'
+                      src="https://i.postimg.cc/nrDT7szB/image-5.png"
+                      width="5px"
+                      height="5px"
+                      alt="Icon 1"
+                      style={{ opacity: '0'}}
+                    />
+                  {game.xbox && (
+                    <img
+                      className='GDIcon'
+                      src="https://i.postimg.cc/nrDT7szB/image-5.png"
+                      width="25px"
+                      height="25px"
+                      alt="Icon 1"
+                      type="button"
+                      onClick={() => handleClick('Xbox', game.rawg_pk)}
+                    />
+                    )}
+                  {game.playstation && (
+                    <img
+                      className='GDIcon'
+                      src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
+                      width="25px"
+                      height="25px"
+                      alt="Icon 2"
+                      type="button"
+                      onClick={() => handleClick('PlayStation', game.rawg_pk)}
+                    />
+                    )}
+                  {game.nintendo && (
+                    <img
+                      className='GDIcon'
+                      src="https://i.postimg.cc/R0qXLppc/image-3.png"
+                      width="25px"
+                      height="25px"
+                      alt="Icon 3"
+                      type="button"
+                      onClick={() => handleClick('Nintendo', game.rawg_pk)}
+                    />
+                    )}
+                  {game.pc && (
+                    <img
+                      className='GDIcon'
+                      src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+                      width="25px"
+                      height="25px"
+                      alt="Icon 4"
+                      type="button"
+                      onClick={() => handleClick('PC', game.rawg_pk)}
+                    />
+                    )}
                 </div>
-              </Link>
-              <div
-                className="remove-button-wrapper"
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  margin: '10px',
-                }}
-              >
-                <button onClick={() => handleRemove(game.id, fetchUserName())}>
-                  Remove
-                </button>
+                  <p className='gamename'>{game.name}</p>
+                <Link to={`/games/${game.id}`}>
+                  <div className="wcard-photo" style={{ position: 'relative' }}>
+                    <img src={game.background_img} alt={game.name} />
+                  </div>
+                </Link>
+                  <div
+                    className="remove-button-wrapper"
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                      margin: '10px',
+                    }}
+                  >
+                      <button onClick={() => handleRemove(game.id, fetchUserName())}>
+                        Remove
+                      </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        // </div>
+          // </div>
       ))}
     </div>
   );
