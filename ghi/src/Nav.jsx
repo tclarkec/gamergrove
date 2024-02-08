@@ -10,8 +10,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 import Icon from "./components/Icon/icon.jsx";
 
 
-
-const RAWG_API_KEY = 'd22338aa7fed46008950bf356f3a0786'
+const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 const Nav = () => {
   const [display, handleDisplay] = useState(false);
