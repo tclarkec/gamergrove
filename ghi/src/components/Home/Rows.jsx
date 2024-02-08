@@ -36,27 +36,18 @@ const Rows = ({ selectedGenre, onSelectGenre }) => {
 
   const organizedGamesByGenre = organizeGamesByGenre();
 
-  const handleGenreClick = (genre) => {
-    onSelectGenre(genre);
-    // Navigate to the '/games' page with the selected genre in the state
-    navigate('/games', { state: { genre } });
-  };
+  // const handleGenreClick = (genre) => {
+  //   onSelectGenre(genre);
+  //   // Navigate to the '/games' page with the selected genre in the state
+  //   navigate('/games', { state: { genre } });
+  // };
 
   return (
     <div>
       {Object.keys(organizedGamesByGenre).map((genre) => (
         <div key={genre} className='row'>
           {/* Use NavLink to make the genre name a clickable link */}
-          <NavLink
-            to={{
-              pathname: '/games',
-              state: { genre: genre },
-            }}
-            className='genre-link'
-            onClick={() => handleGenreClick(genre)}
-          >
             <h3>{`${genre} Games`}</h3>
-          </NavLink>
           <div className="line"></div>
           <div className='row__posters'>
             <HomeGameCard games={organizedGamesByGenre[genre].slice(0, 5)} />

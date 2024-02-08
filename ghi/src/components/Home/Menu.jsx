@@ -3,7 +3,10 @@ import './Menu.css';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
-const SideMenu = ({ onSelectGenre }) => {
+const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
+
+    const [platforms, setPlatforms] = useState([]);
+
 
     const [menuWidth, setMenuWidth] = useState(250);
     const navigate = useNavigate();
@@ -32,6 +35,32 @@ const SideMenu = ({ onSelectGenre }) => {
         }
     }
 
+    // const fetchPlatforms = async () => {
+    //     try {
+    //         const response = await fetch('http://localhost:8000/api/platforms');
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             setPlatforms(data);
+    //         } else {
+    //             console.error('Failed to fetch platforms:', response.statusText);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching platforms:', error);
+    //     }
+    // };
+
+    // const handlePlatformClick = (platform) => {
+    //     onSelectPlatform(platform);
+    // };
+
+    // useEffect(() => {
+    //     fetchPlatforms();
+    // }, []);
+
+
+
+
+
     const handleGenreClick = (event) => {
         const page = event.target.value
         // navigate(`/games/${page}`)
@@ -47,7 +76,7 @@ const SideMenu = ({ onSelectGenre }) => {
         };
     }, []);
 
-// Maybe do like a recently purchased Games or Save or some sort that redirects yout to a particular page
+
 
     return (
             <div className="side-menu">
@@ -73,6 +102,17 @@ const SideMenu = ({ onSelectGenre }) => {
                         <li>- PC</li>
                         <li>- Nintendo</li>
                     </ul>
+
+
+                    {/* <ul>
+                        {platforms.map((platform) => (
+                            <li key={platform} onClick={() => handlePlatformClick(platform)}>
+                                - {platform}
+                            </li>
+                        ))}
+                    </ul> */}
+
+
                     <div className="small-space"></div>
                     <p>Genres</p>
                     <hr className='solid'/>
