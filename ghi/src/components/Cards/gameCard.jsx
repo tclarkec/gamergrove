@@ -51,13 +51,26 @@ function GameCard() {
       const userId = await fetchUserName();
       fetchData(userId);
     };
-
+    
     fetchUserData();
   }, []);
 
   const filteredGameDataList = gameDataList.filter((gameData) =>
     userSavedGames.includes(gameData.id)
   );
+  console.log(filteredGameDataList)
+
+  const gamesList = []
+  const gameIDList = []
+  for (const game of filteredGameDataList) {
+    if (gameIDList.includes(game.id)) {
+      continue
+    } else {
+      gameIDList.push(game.id)
+      gamesList.push(game)
+    }
+  }
+  console.log(gamesList)
 
   if (filteredGameDataList.length === 0) {
     return (
@@ -69,7 +82,7 @@ function GameCard() {
 
   return (
     <div className='gcard-container'>
-      {filteredGameDataList.map((gameData) => (
+      {gamesList.map((gameData) => (
         <div key={gameData.id} className='gcard'>
           <Link to={`/games/${gameData.id}`}>
           <img
@@ -103,7 +116,7 @@ function GameCard() {
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>
           <div className='gbutton'>
-            
+
           </div>
         </div>
       ))}
