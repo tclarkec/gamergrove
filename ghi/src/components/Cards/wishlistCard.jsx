@@ -157,13 +157,15 @@ return (
                       alt="Icon 4"
                     />
                     </div>
-                <Link to={`/games/${game.id}`} className="wcard-item">
+
                   <p className='gamename'>{game.name}</p>
 
-                </Link>
-                <div className="wcard-photo" style={{ position: 'relative' }}>
-                  <img src={game.background_img} alt={game.name} />
 
+                <Link to={`/games/${game.id}`} className="wcard-item">
+                  <div className="wcard-photo" style={{ position: 'relative' }}>
+                    <img src={game.background_img} alt={game.name} />
+                  </div>
+                </Link>
                   <div
                     className="remove-button-wrapper"
                     style={{
@@ -182,7 +184,7 @@ return (
               </div>
             </div>
           </div>
-        </div>
+        
       ))}
     </div>
   );
