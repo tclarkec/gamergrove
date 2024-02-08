@@ -61,7 +61,7 @@ const DeleteReviewForm = () => {
       const fetchedAccountId = await fetchAccountId();
       if (fetchedAccountId) {
         setAccountId(fetchedAccountId);
-        console.log('Got account id!');
+        
       } else {
         console.error('Error fetching account ID');
       }

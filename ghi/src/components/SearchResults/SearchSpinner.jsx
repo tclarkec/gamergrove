@@ -46,7 +46,7 @@ const Spinner = () => {
                     platforms.push(p.platform['name']);
                     }
                 }
-                console.log(gameDetail)
+
                 gameData.name = gameDetail.name
                 gameData.description = gameDetail.description
                 gameData.rating = gameDetail.rating
@@ -85,7 +85,7 @@ const Spinner = () => {
                     gameData.PC = 'True'
                     }
                 }
-                // console.log(gameData)
+
                 const fetchConfig = {
                     method: 'post',
                     body: JSON.stringify(gameData),
@@ -123,8 +123,7 @@ const Spinner = () => {
             }
             }
         }
-        // console.log("Games that resulted in the search")
-        // console.log(searchResults)
+        
         navigate("/search/results", { state: searchResults });
         }
 

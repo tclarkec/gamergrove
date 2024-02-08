@@ -30,7 +30,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
         if (votes.length > 0) {
           for (const r of reviewsData) {
           let change = 0
-          console.log(votes)
+
           for (const v of votes) {
             if (r.id == v.review_id) {
               setVoted(true)
@@ -180,7 +180,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
 
       } else {
-        console.log('Trying to post')
+        
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify(upVoteData),

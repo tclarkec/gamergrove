@@ -118,13 +118,13 @@ function Settings() {
 
       const updateResponse = await fetch(updateUrl, updateFetchConfig);
       if (updateResponse.ok) {
-        setAccountFormData(initialAccountData);
+        setAccountFormData(accountFormData);
         setPasswordConfirm('');
         setUpdatedAccount(true);
 
         document.getElementById('password-confirm').value = '';
 
-        fetchAccount();
+
       } else {
         throw new Error('Failed to update account settings');
       }
