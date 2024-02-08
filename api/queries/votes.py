@@ -141,46 +141,46 @@ class VoteQueries:
                         detail="Error creating vote"
                     )
 
-    # def update_vote(self, id: int, vote_dict: VoteIn) -> VoteOut:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as db:
-    #                 id_check = db.execute(
-    #                     """
-    #                     SELECT * FROM votes
-    #                     WHERE id = %s
-    #                     """,
-    #                     [id]
-    #                 )
+    def update_vote(self, id: int, vote_dict: VoteIn) -> VoteOut:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    id_check = db.execute(
+                        """
+                        SELECT * FROM votes
+                        WHERE id = %s
+                        """,
+                        [id]
+                    )
 
-    #                 id_row = id_check.fetchone()
-    #                 if id_row is None:
-    #                     raise HTTPException(
-    #                         status_code=status.HTTP_404_NOT_FOUND,
-    #                         detail="A vote with that id does not exist in the database"
-    #                     )
+                    id_row = id_check.fetchone()
+                    if id_row is None:
+                        raise HTTPException(
+                            status_code=status.HTTP_404_NOT_FOUND,
+                            detail="A vote with that id does not exist in the database"
+                        )
 
-    #                 account_id_check=db.execute(
-    #                     """
-    #                     UPDATE votes
-    #                     SET account_id = %s,
-    #                         review_id = %s,
-    #                         upvote = %s,
-    #                         downvote = %s
-    #                     WHERE id = %s AND account_id = %s
-    #                     """,
-    #                     [
-    #                         vote_dict["account_id"],
-    #                         vote_dict["review_id"],
-    #                         vote_dict["upvote"],
-    #                         vote_dict["downvote"],
-    #                         id,
-    #                         vote_dict["account_id"]
-    #                     ]
-    #                 )
-    #             print(account_id_check.rowcount)
-    #             if account_id_check.rowcount <= 0:
-    #                 raise HTTPException(
-    #                     status_code=status.HTTP_401_UNAUTHORIZED,
-    #                     detail="You are attempting to update a vote that you did not create"
-    #                 )
-    #             return VoteOut(id=id, **vote_dict)
+                    db.execute(
+                        """
+                        UPDATE votes
+                        SET account_id = %s,
+                            review_id = %s,
+                            upvote = %s,
+                            downvote = %s
+                        WHERE id = %s AND account_id = %s
+                        """,
+                        [
+                            vote_dict["account_id"],
+                            vote_dict["review_id"],
+                            vote_dict["upvote"],
+                            vote_dict["downvote"],
+                            id,
+                            vote_dict["account_id"]
+                        ]
+                    )
+                # print(account_id_check.rowcount)
+                # if account_id_check.rowcount <= 0:
+                #     raise HTTPException(
+                #         status_code=status.HTTP_401_UNAUTHORIZED,
+                #         detail="You are attempting to update a vote that you did not create"
+                #     )
+                return VoteOut(id=id, **vote_dict)

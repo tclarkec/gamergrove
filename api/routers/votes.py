@@ -71,32 +71,32 @@ async def get_review_votes(
 ):
     return queries.get_review_votes(review_id)
 
-# @router.put("/api/votes/{id}/{account_id}", response_model=Union[VoteOut, HttpError])
-# async def update_vote(
-#     id: int,
-#     vote: VoteInUpdate,
-#     response: Response,
-#     queries: VoteQueries = Depends(),
-#     review_queries: ReviewQueries = Depends(),
-#     account_data: dict = Depends(authenticator.get_current_account_data)
-# ):
-#     vote_details = queries.get_vote(id).dict()
+@router.put("/api/votes/{id}/{account_id}", response_model=Union[VoteOut, HttpError])
+async def update_vote(
+    id: int,
+    vote: VoteInUpdate,
+    response: Response,
+    queries: VoteQueries = Depends(),
+    review_queries: ReviewQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data)
+):
+    vote_details = queries.get_vote(id).dict()
 
-#     account_id = account_data["id"]
-#     review_id = vote_details["review_id"]
+    account_id = account_data["id"]
+    review_id = vote_details["review_id"]
 
-#     vote_dict = vote.dict()
-#     vote_dict["account_id"] = account_id
-#     vote_dict["review_id"] = review_id
+    vote_dict = vote.dict()
+    vote_dict["account_id"] = account_id
+    vote_dict["review_id"] = review_id
 
-#     review_dict = review_queries.get_review(review_id).dict()
-#     del review_dict["id"]
+    review_dict = review_queries.get_review(review_id).dict()
+    del review_dict["id"]
 
-#     if vote_dict["upvote"] == True:
-#         review_dict["upvote_count"] += 1
-#     elif vote_dict["downvote"] == True:
-#         review_dict["upvote_count"] -= 1
-#     review_queries.update_review(review_id, review_dict)
+    if vote_dict["upvote"] == True:
+        review_dict["upvote_count"] += 1
+    elif vote_dict["downvote"] == True:
+        review_dict["upvote_count"] -= 1
+    review_queries.update_review(review_id, review_dict)
 
-#     updated_vote = queries.update_vote(id,vote_dict)
-#     return updated_vote
+    updated_vote = queries.update_vote(id,vote_dict)
+    return updated_vote
