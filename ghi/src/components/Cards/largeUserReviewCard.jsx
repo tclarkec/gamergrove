@@ -14,7 +14,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
   const [isDownvoted, setIsDownvoted] = useState(false);
   const [userVotes, setUserVotes] = useState([])
 
-  const fetchReviewsForGame = async (gameId) => {
+    const fetchReviewsForGame = async (gameId) => {
     const votes = await fetchVotesForUser();
     const reviewsUrl = `http://localhost:8000/api/reviews/games/${gameId}`;
 
@@ -32,7 +32,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
           console.log(votes)
           for (const v of votes) {
             if (r.id == v.review_id) {
-              change = 1
+              change++
               if (v.upvote) {
                 r.upvote = true
                 r.downvote = false
@@ -42,15 +42,16 @@ function LargeUserReviewCard({ gameId, accountId }) {
               }
             }
           }
-        }
-
-          if (change === 0) {
+         if (change === 0) {
             r.upvote = undefined
             r.downvote = undefined
           } else {
             change = 0
           }
+
         }
+
+    }
         setUserReviews(reviewsData);
       }
     } catch (error) {
@@ -70,13 +71,20 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
 
       const response = await fetch(votesUrl, votesConfig);
-      const votesData = await response.json();
-      const votes = []
-      for (const v of votesData) {
-        votes.push(v)
+      if (response.ok) {
+        const votesData = await response.json();
 
+        const votes = []
+        for (const v of votesData) {
+          votes.push(v)
+
+        }
+        return votes
+
+      } else {
+        return 0
       }
-      return votes
+
 
 
       // if (response.status === 404) {
