@@ -268,13 +268,14 @@ function LargeUserReviewCard({ gameId, accountId }) {
       {Array.isArray(userReviews) && userReviews.length > 0 ? (
         userReviews.map((review) => (
           <div key={review.id} className="largercard">
+            <div className='fixed-element'>
             <div className="lurcard-title">{review.title}</div>
-            <div className="lurcard-date">9/3/2023</div>
+            </div>
             <div>
               {review.account_id === accountId && (
                 <>
                   <button
-                    className="lurcard-edit"
+                    className="lurcard-edit-delete"
                     style={{ color: 'black' }}
                     onClick={() => {
                       navigate(`/reviews/update/${review.id}/${review.game_id}`)
@@ -284,7 +285,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
                   </button>{' '}
                   <button
                     className="lurcard-delete"
-                    style={{ color: 'black' }}
+                    style={{ color: 'black', fontFamily: 'K2D', fontSize: '18px' }}
                     onClick={() => {
                       navigate(`/reviews/delete/${review.id}`)
                     }}
@@ -296,16 +297,14 @@ function LargeUserReviewCard({ gameId, accountId }) {
             </div>
             <div className="lurline"></div>
             <div style={{color: 'white'}} className="lurcard-content">
-              <div className="lurcontainer-title">
-                <p>Title: {review.title}</p>
-              </div>
+
               <div className="lurcard-details">
-                <p>Review: {review.body}</p>
+                <p>{review.body}</p>
               </div>
-              <div className="lurcard-details">
+              <div className="lurcard-date">
                   <p>Rating: {review.rating}</p>
                   <div className="rating-container">
-                    <div className="star-rating">
+                    <div className="star-rating" style={{ marginBottom: '-250px', position: 'relative'}}>
                       <StarRating rating={review.rating} />
                     </div>
                   </div>

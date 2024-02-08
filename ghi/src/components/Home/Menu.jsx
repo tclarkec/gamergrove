@@ -81,8 +81,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
     return (
             <div className="side-menu">
                 <ul>
-                    <br />
-                    <br />
+                    
                     <a href="http://localhost:5173/">
                     <h5 className='home'>Home Page</h5>
                     </a>

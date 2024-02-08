@@ -199,9 +199,8 @@ useEffect(() => {
           <div>
              <Nav />
              <SideMenu />
-            <div className='search-results-container'>
-              <h2 className='shghead'>Search Results</h2>
-              <br/>
+            <div className='allgamesbody'>
+
 
                 <div>
                 {searchGames.map((gameData) => (
@@ -328,11 +327,13 @@ useEffect(() => {
                             </Menu>
                         </div>
 
+
                     </div>
                     </div>
                 ))}
                 </div>
                 </div>
+                 <h5 style={{ textAlign: 'center', marginLeft: '150px', fontFamily: 'K2D'}}>End Results</h5>
             </div>
             );
 
@@ -407,11 +408,14 @@ useEffect(() => {
                     <b>Options</b>
                   </button>
                 </div>
+                 <h5 style={{ textAlign: 'center', marginLeft: '150px', fontFamily: 'K2D'}}>End Results</h5>
               </div>
             ))}
           </div>
+
         </div>
       </div>
+
     </div>
   );
 }
