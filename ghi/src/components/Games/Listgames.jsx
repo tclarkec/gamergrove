@@ -5,40 +5,71 @@ import './Listgames.css';
 import SideMenu from '../Home/Menu.jsx';
 import { useLocation } from 'react-router-dom';
 
+
 const Listgames = () => {
+  const [games, setGames] = useState([]);
+  const [title, setTitle] = useState('');
 
   const location = useLocation();
   const data = location.state;
-  const genre = data?.state || '';
-  const [games, setGames] = useState([]);
 
-  const fetchGames = async () => {
-    try {
-      const url = 'http://localhost:8000/api/games';
-      const response = await fetch(url);
+  const platforms = ['xbox', 'playstation', 'pc', 'nintendo'];
 
-      if (response.ok) {
-        const fetchedGames = await response.json();
-        const filteredGames = genre.length > 2
+  if(platforms.includes(data.state) === false ) {
+    const genre = data?.state || '';
+
+    const fetchGames = async () => {
+      try {
+        const url = 'http://localhost:8000/api/games';
+        const response = await fetch(url);
+
+        if (response.ok) {
+          const fetchedGames = await response.json();
+          const filteredGames = genre.length > 2
           ? fetchedGames.filter((game) => game.genre === genre)
           : fetchedGames;
-
-        setGames(filteredGames);
+          setTitle(genre);
+          setGames(filteredGames);
+        }
+      } catch (error) {
+        console.error('Error fetching games:', error);
       }
-    } catch (error) {
-      console.error('Error fetching games:', error);
-    }
-  };
-  
+    };
 
-  useEffect(() => {
-    fetchGames();
-  }, [genre]);
+
+    useEffect(() => {
+      fetchGames();
+    }, [genre]);
+  } else if (platforms.includes(data.state)){
+    const platform = data.state
+    const fetchGames = async () => {
+      try {
+        const url = 'http://localhost:8000/api/games';
+        const response = await fetch(url);
+
+        if (response.ok) {
+          const fetchedGames = await response.json();
+          const filteredGames = platform.length > 2
+            ? fetchedGames.filter((game) => game[`${platform}`] === true)
+            : fetchedGames;
+          setTitle(platform);
+          setGames(filteredGames);
+        }
+      } catch (error) {
+        console.error('Error fetching games:', error);
+      }
+    };
+
+
+    useEffect(() => {
+      fetchGames();
+    }, [platform]);
+  }
 
   return (
     <div>
       <Nav />
-     <h1 className='titlegames'>Games/{genre ? genre : 'All Games'}</h1>
+     <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
 
       <body className='allgamesbody'>
 

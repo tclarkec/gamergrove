@@ -10,7 +10,6 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 import Icon from "./components/Icon/icon.jsx";
 
 
-const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 const Nav = () => {
   const [display, handleDisplay] = useState(false);
@@ -52,6 +51,7 @@ const Nav = () => {
     event.preventDefault()
     setSearching(!searching)
     const searchResults = [];
+    const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
     const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${searchTerms}&page=1&page_size=5`;
     const gamesUrl = 'http://localhost:8000/api/games';
 

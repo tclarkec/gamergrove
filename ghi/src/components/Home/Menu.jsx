@@ -35,27 +35,27 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
         }
     }
 
-    // const fetchPlatforms = async () => {
-    //     try {
-    //         const response = await fetch('http://localhost:8000/api/platforms');
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             setPlatforms(data);
-    //         } else {
-    //             console.error('Failed to fetch platforms:', response.statusText);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching platforms:', error);
-    //     }
-    // };
+    const fetchPlatforms = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/platforms');
+            if (response.ok) {
+                const data = await response.json();
+                setPlatforms(data);
+            } else {
+                console.error('Failed to fetch platforms:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching platforms:', error);
+        }
+    };
 
-    // const handlePlatformClick = (platform) => {
-    //     onSelectPlatform(platform);
-    // };
+    const handlePlatformClick = (platform) => {
+        onSelectPlatform(platform);
+    };
 
-    // useEffect(() => {
-    //     fetchPlatforms();
-    // }, []);
+    useEffect(() => {
+        fetchPlatforms();
+    }, []);
 
 
 
@@ -97,10 +97,10 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
                     <p>Consoles</p>
                     <hr className='solid' />
                     <ul>
-                        <li>- Xbox</li>
-                        <li>- Playstation</li>
-                        <li>- PC</li>
-                        <li>- Nintendo</li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'xbox' }} >- Xbox</NavLink></li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'playstation' }} >- PlayStation</NavLink></li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'pc' }} >- PC</NavLink></li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'nintendo' }} >- Nintendo</NavLink></li>
                     </ul>
 
 
