@@ -226,18 +226,16 @@ return (
 
                 <Link to={`/games/${game.id}`}>
                   <div className="wcard-photo" style={{ position: 'relative' }}>
-                  <img src={game.background_img} alt={game.name} />
-                </div>
-                <Link to={`/games/${game.id}`}>
-                  <p className='gamename'>{game.name}</p>
+                    <img src={game.background_img} alt={game.name} />
+                  </div>
                 </Link>
                   <div
                     className="remove-button-wrapper"
                     style={{
                       position: 'absolute',
                       bottom: 0,
-                      right: 75,
-                      margin: '-70px',
+                      right: 0,
+                      margin: '10px',
                     }}
                   >
 
@@ -248,7 +246,7 @@ return (
                 </div>
               </div>
             </div>
-          </div>
+          // </div>
 
       ))}
     </div>
