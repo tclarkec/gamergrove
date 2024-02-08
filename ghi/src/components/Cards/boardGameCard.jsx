@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import './boardGameCard.css';
 import parse from 'html-react-parser';
 
-function BoardGameCard({ gameData, onDelete }) {
+function BoardGameCard({ gameData, onGameRemoval }) {
   console.log(gameData)
   const navigate = useNavigate ();
 
@@ -29,7 +29,7 @@ function BoardGameCard({ gameData, onDelete }) {
 
       if (response.ok) {
 
-        window.location.reload()
+        return 'Game removed!'
 
         }
 
@@ -75,7 +75,7 @@ function BoardGameCard({ gameData, onDelete }) {
       </Link>
         <div className='board-game-button'>
           <button onClick={() =>
-            {handleDelete(gameData.library_id, gameData.account_id)}}>
+            {onGameRemoval(gameData.library_id, gameData.account_id)}}>
             <b>Remove Game</b>
           </button>
         </div>

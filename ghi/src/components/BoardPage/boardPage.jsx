@@ -33,9 +33,14 @@ async function fetchGamesForBoard(accountId, boardId) {
 
   try {
     const response = await fetch(libraryUrl, libraryConfig);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const libraryData = await response.json();
 
-    return libraryData;
+    return Array.isArray(libraryData) ? libraryData : [];
   } catch (error) {
     console.error('Error fetching games data:', error);
     return [];
@@ -85,40 +90,75 @@ function BoardPage() {
   const [boardData, setBoardData] = useState(null);
   const [gamesData, setGamesData] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const boardDetails = await fetchBoardDetails(boardId);
+      setBoardData(boardDetails);
+
+      const accountId = await fetchUserName();
+
+      const libraryData = await fetchGamesForBoard(accountId, boardId);
+      console.log(libraryData);
+
+      if (!Array.isArray(libraryData)) {
+        console.error('Invalid library data received:', libraryData);
+        return;
+      }
+      const gamesForBoard = libraryData
+        .filter((item) => item.board_id === parseInt(boardId, 10))
+        .map((item) => item.game_id);
+        const gameDetailsPromises = gamesForBoard.map((gameId) => fetchGameDetails(gameId));
+      const gamesForBoardDetails = await Promise.all(gameDetailsPromises);
+      for (const game of gamesForBoardDetails){
+        for (const entry of libraryData){
+          if (entry.game_id == game.id){
+            game.library_id = entry.id
+            game.account_id = entry.account_id
+        }
+      }
+    }
+      console.log(gamesForBoardDetails)
+      setGamesData(gamesForBoardDetails);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const boardDetails = await fetchBoardDetails(boardId);
-        setBoardData(boardDetails);
-
-        const accountId = await fetchUserName();
-
-        const libraryData = await fetchGamesForBoard(accountId, boardId);
-        console.log(libraryData)
-        const gamesForBoard = libraryData
-          .filter((item) => item.board_id === parseInt(boardId, 10))
-          .map((item) => item.game_id);
-          const gameDetailsPromises = gamesForBoard.map((gameId) => fetchGameDetails(gameId));
-        const gamesForBoardDetails = await Promise.all(gameDetailsPromises);
-        for (const game of gamesForBoardDetails){
-          for (const entry of libraryData){
-            if (entry.game_id == game.id){
-              game.library_id = entry.id
-              game.account_id = entry.account_id
-          }
-        }
-      }
-        console.log(gamesForBoardDetails)
-        setGamesData(gamesForBoardDetails);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
     fetchData();
   }, [boardId]);
+
+  const handleGameRemoval = async (id, account_id,) => {
+    try {
+      const libUrl = `http://localhost:8000/api/libraries/${id}`
+      const libResponse = await fetch(libUrl);
+      const libData = await libResponse.json();
+      const boardID = libData.board_id
+     const url = `http://localhost:8000/api/libraries/${id}/${account_id}`
+     const fetchConfig = {
+
+       method: "DELETE",
+       credentials: 'include',
+       headers: {
+         'Content-Type': 'application/json',
+
+        }
+        };
+      const response = await fetch (url, fetchConfig)
+      const answer = await response.json()
+      console.log(answer)
+
+      if (response.ok) {
+        console.log('Game removed!')
+        fetchData();
+        }
+
+    } catch (error) {
+      console.error("Error deleting game:", error);
+    }
+
+  };
 
   if (!boardData || !gamesData) {
     return null;
@@ -146,7 +186,13 @@ function BoardPage() {
 
       <div className='board-game-card-container'>
         {gamesData.map((gameData) => (
-          <BoardGameCard key={gameData.id} gameData={gameData} />
+          <BoardGameCard
+          key={gameData.id}
+          gameData={gameData}
+          onGameRemoval={(libraryId, accountId) =>
+          handleGameRemoval(libraryId, accountId)
+        }
+          />
         ))}
       </div>
       <br />
