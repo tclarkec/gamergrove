@@ -26,7 +26,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
         setUserReviews([]);
       } else {
         const reviewsData = await response.json();
-        for (const r of reviewsData) {
+        if (votes.length > 0) {
+          for (const r of reviewsData) {
           let change = 0
           console.log(votes)
           for (const v of votes) {
@@ -41,6 +42,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
               }
             }
           }
+        }
+
           if (change === 0) {
             r.upvote = undefined
             r.downvote = undefined
