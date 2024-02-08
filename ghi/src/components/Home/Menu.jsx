@@ -90,6 +90,8 @@ const SideMenu = ({ onSelectGenre }) => {
                         <li onClick={() => onSelectGenre('Shooter')}>- Shooter</li>
                         <li onClick={() => onSelectGenre('Adventure')}>- Adventure</li> */}
                     </ul>
+                    <br />
+                    <br />
                     <div className="small-space"></div>
                     <hr className='solid' />
 

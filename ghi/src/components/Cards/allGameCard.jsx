@@ -14,7 +14,6 @@ function AllGameCard( {games} ) {
   const [show, setShow] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-
   const handleSubMenuClick = (event, index, data) => {
     console.log(`[SubMenu] ${data} clicked`);
   };
