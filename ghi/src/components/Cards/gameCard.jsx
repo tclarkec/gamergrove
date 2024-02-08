@@ -81,7 +81,8 @@ function GameCard() {
             <h2>{gameData.name.slice(0, 20)}</h2>
           </div>
           </Link>
-          <div className='gcontent-capsules'>
+          <br/>
+          {/* <div className='gcontent-capsules'>
             <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="25px" height="25px" alt="Icon 1" />
           <img
             src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
@@ -96,14 +97,14 @@ function GameCard() {
             height="25px"
             alt="Icon 4"
           />
-          </div>
+          </div> */}
           <div className='gcontent-body'>
             <p>{parse(gameData.description.slice(0, 200))}</p>
             {/* Currently not working to get the ptag to be removed from our frontend home page Maybe its an
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>
           <div className='gbutton'>
-            
+
           </div>
         </div>
       ))}

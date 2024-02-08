@@ -12,13 +12,30 @@ import CombinedCards from '../Cards/combinedCards';
 import Settings from '../../Settings.jsx';
 import Icon from '../Icon/icon';
 
+const fetchUserName = async () => {
+  const tokenUrl = `http://localhost:8000/token`;
+
+  const fetchConfig = {
+    credentials: 'include',
+  };
+
+  const response = await fetch(tokenUrl, fetchConfig);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.account.username;
+  }
+};
+
+const saved_username = await fetchUserName()
+
 function Dashboard() {
   return (
     <div>
       <SideMenu />
       <Nav />
       <main>
-        <h1>User Dashboard!</h1>
+        <h1 >{saved_username}'s Dashboard 🎛️ 🖥️ 📟</h1>
 
         {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
 
@@ -38,7 +55,7 @@ function Dashboard() {
           <section id="content1">
             <div>
             <BoardCard />
-            
+
 
 
 

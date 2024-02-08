@@ -28,6 +28,14 @@ const Listgames = () => {
           const filteredGames = genre.length > 2
           ? fetchedGames.filter((game) => game.genre === genre)
           : fetchedGames;
+
+        setGames(filteredGames);
+      }
+    } catch (error) {
+      console.error('Error fetching games:', error);
+    }
+  };
+
           setTitle(genre);
           setGames(filteredGames);
         }
@@ -71,17 +79,20 @@ const Listgames = () => {
       <Nav />
      <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
 
-      <body className='allgamesbody'>
+      <div className='allgamesbody'>
 
         <SideMenu />
 
         {games.length > 0 && <AllGameCard games={games} />}
 
-        {/* <h1>{genre}</h1>
-        {games.map((g) => (
-          <h3 key={g.id}>{g.name}</h3>
-        ))} */}
-      </body>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <h5 style={{ textAlign: 'center', marginLeft: '150px', fontFamily: 'K2D'}}>End Results</h5>
     </div>
   );
 };

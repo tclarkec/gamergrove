@@ -8,11 +8,11 @@ const containerStyle = {
   justifyContent: 'center',
 };
 
-function LogOut() {
-  const navigate = useNavigate();
-  const handleBackToHomepage = () => {
-    navigate("/");
-    window.location.reload();
+function Welcome() {
+    const navigate = useNavigate();
+    const handleBackToHomepage = () => {
+        navigate("/");
+        window.location.reload();
     };
 
   return (
@@ -20,7 +20,7 @@ function LogOut() {
       <div className="card text-bg-light mb-3">
         <div className="card-body">
           <div>
-            You have been logged out!
+            Welcome to GamerGrove! We hope you have a blast! 🫶 🫰
           </div>
           <button onClick={handleBackToHomepage}> Back to Homepage </button>
         </div>
@@ -29,4 +29,4 @@ function LogOut() {
   );
 }
 
-export default LogOut;
+export default Welcome;

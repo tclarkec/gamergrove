@@ -95,7 +95,8 @@ const DeleteReviewForm = () => {
     }
   };
 
-  const handleBackToDashboard = () => {
+  const handleBackToDashboard = (event) => {
+    event.preventDefault();
     navigate("/dashboard");
   };
 

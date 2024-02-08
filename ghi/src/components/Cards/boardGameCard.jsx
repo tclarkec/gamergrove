@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './boardGameCard.css';
 import parse from 'html-react-parser';
 
-function BoardGameCard({ gameData, onDelete }) {
+function BoardGameCard({ gameData, onGameRemoval }) {
+  console.log(gameData)
   const navigate = useNavigate ();
 
   const handleDelete = async (id, account_id) => {
     try {
+      const libUrl = `http://localhost:8000/api/libraries/${id}`
+      const libResponse = await fetch(libUrl);
+      const libData = await libResponse.json();
+      const boardID = libData.board_id
      const url = `http://localhost:8000/api/libraries/${id}/${account_id}`
      const fetchConfig = {
 
@@ -19,10 +24,21 @@ function BoardGameCard({ gameData, onDelete }) {
         }
         };
       const response = await fetch (url, fetchConfig)
+      const answer = await response.json()
+      console.log(answer)
+
+      if (response.ok) {
+
+        return 'Game removed!'
+
+        }
+
+
+
     } catch (error) {
       console.error("Error deleting game:", error);
     }
-    navigate('/dashboard')
+
   };
 
 
@@ -59,7 +75,7 @@ function BoardGameCard({ gameData, onDelete }) {
       </Link>
         <div className='board-game-button'>
           <button onClick={() =>
-            {handleDelete(gameData.library_id, gameData.account_id)}}>
+            {onGameRemoval(gameData.library_id, gameData.account_id)}}>
             <b>Remove Game</b>
           </button>
         </div>

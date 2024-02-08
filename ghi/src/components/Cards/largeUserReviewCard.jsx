@@ -13,6 +13,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [isDownvoted, setIsDownvoted] = useState(false);
   const [userVotes, setUserVotes] = useState([])
+  const [voted, setVoted] = useState(false)
 
     const fetchReviewsForGame = async (gameId) => {
     const votes = await fetchVotesForUser();
@@ -32,6 +33,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
           console.log(votes)
           for (const v of votes) {
             if (r.id == v.review_id) {
+              setVoted(true)
               change++
               if (v.upvote) {
                 r.upvote = true
@@ -121,11 +123,9 @@ function LargeUserReviewCard({ gameId, accountId }) {
     return data.account.id;
   }
   }
-  const [voted, setVoted] = useState(false)
 
 
   const handleUpVoteClick = async (reviewId, gameId) => {
-    setVoted(false)
     const user = await fetchUserName();
 
 
@@ -134,39 +134,39 @@ function LargeUserReviewCard({ gameId, accountId }) {
       "upvote": true,
       "downvote": false
     }
-    console.log(user)
-    console.log(upVoteData)
     if (user) {
       const voteUrl = `http://localhost:8000/api/votes/users/${user}`
       const postUrl = 'http://localhost:8000/api/votes'
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
-        console.log(votes)
 
 
 
         for (const v of votes) {
           if (v.account_id == user && v.review_id == reviewId ) {
-            console.log(v.id)
-            setVoted(true)
-            const upVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`;
-            const fetchConfig = {
-              method: 'put',
-              body: JSON.stringify(upVoteData),
-              credentials: 'include',
-              headers: {
-                "Content-Type": 'application/json'
+            if (v.upvote == true) {
+
+              return
+
+            } else {
+              const upVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`;
+              const fetchConfig = {
+                method: 'put',
+                body: JSON.stringify(upVoteData),
+                credentials: 'include',
+                headers: {
+                  "Content-Type": 'application/json'
+                }
               }
+              const upVoteResponse = await fetch(upVoteUrl, fetchConfig)
+              fetchReviewsForGame(gameId)
+              return
             }
-            const upVoteResponse = await fetch(upVoteUrl, fetchConfig)
-            fetchReviewsForGame(gameId)
-            return
+
 
           }
         }
-
-        console.log('Trying to post')
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify(upVoteData),
@@ -197,7 +197,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
 
   const handleDownVoteClick = async (reviewId, gameId) => {
-    setVoted(false)
     const user = await fetchUserName();
     const downVoteData = {
       "review_id": reviewId,
@@ -214,22 +213,25 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
 
         for (const v of votes) {
-          console.log(v)
           if (v.account_id == user && v.review_id == reviewId ) {
-            console.log(v.id)
-            setVoted(true)
-            const downVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`
-            const fetchConfig = {
-              method: 'put',
-              body: JSON.stringify(downVoteData),
-              credentials: 'include',
-              headers: {
-                "Content-Type": 'application/json'
+            if (v.downvote == true) {
+              return
+            } else {
+              const downVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`
+              const fetchConfig = {
+                method: 'put',
+                body: JSON.stringify(downVoteData),
+                credentials: 'include',
+                headers: {
+                  "Content-Type": 'application/json'
+                }
               }
+              const downVoteResponse = await fetch(downVoteUrl, fetchConfig)
+              fetchReviewsForGame(gameId)
+              return
+
             }
-            const downVoteResponse = await fetch(downVoteUrl, fetchConfig)
-            fetchReviewsForGame(gameId)
-            return
+
           }
         }
 
@@ -332,7 +334,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
                 src="https://i.postimg.cc/fyNVvm4L/Thumbsdown-White.png"
                 alt="Thumbs Down"
               />
-              <p className="urp" style={{ color: 'white', marginBottom: '10', fontWeight: 'bold', textAlign: 'center' }}>{review.downvote_count}</p>
+
               </button>
             </div>
           </div>

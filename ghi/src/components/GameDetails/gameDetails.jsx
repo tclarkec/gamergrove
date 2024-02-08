@@ -378,6 +378,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 1"
+            type="button"
             onClick={() => handleClick('Xbox', gameData.rawg_pk)}
           />
           )}
@@ -388,6 +389,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 2"
+            type="button"
             onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
           />
           )}
@@ -398,6 +400,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 3"
+            type="button"
             onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
           />
           )}
@@ -408,6 +411,7 @@ const handleReviewSubmit = async (event) => {
             width="35px"
             height="35px"
             alt="Icon 4"
+            type="button"
             onClick={() => handleClick('PC', gameData.rawg_pk)}
           />
           )}

@@ -148,7 +148,7 @@ function BoardCard() {
     <br />
     <button onClick={()=>{
       navigate('/boards/create')
-    }}> Create a board </button>
+    }} style={{ marginLeft: '840px'}}> Create a board </button>
   </div>
   <div className='bcard-container'>
     {filteredBoardDataList.map((boardData) => (
