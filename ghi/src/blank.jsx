@@ -1,116 +1,75 @@
-import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import { useState, useEffect } from "react";
-import {useNavigate} from 'react-router-dom';
-import { useRef } from "react";
+import React from 'react';
+import './dashboard.css';
 
+import BoardCard from '../Cards/boardCard.jsx';
+import ReviewCard from '../Cards/reviewCard.jsx';
+import GameCard from '../Cards/gameCard.jsx';
+import WishlistCard from '../Cards/wishlistCard.jsx';
+import UserReviewCard from '../Cards/userReviewCard';
+import SideMenu from '../Home/Menu';
+import Nav from '../../Nav';
+import CombinedCards from '../Cards/combinedCards';
+import Settings from '../../Settings.jsx';
 
-const containerStyle = {
-  minHeight: '100vh',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
-const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginSubmitted, setLoginSubmitted] = useState(false);
-  const [incorrectLogin, setIncorrectLogin] = useState(false);
-  const { login } = useToken();
-  const { token } = useAuthContext();
-  const navigate = useNavigate();
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoginSubmitted(true);
-    login(username, password)
-
-
-  };
-
-  console.log(loginSubmitted);
-
-  useEffect(() => {
-    const fetchToken = async (e) => {
-      const tokenUrl = `http://localhost:8000/token`;
-      const fetchConfig = {
-        credentials: 'include'
-      };
-
-      const response = await fetch(tokenUrl, fetchConfig);
-      console.log(response);
-      if (response.ok) {
-          navigate('/login/welcomeback');
-      } else {
-        setIncorrectLogin(true);
-      }
-    }
-    if (loginSubmitted){
-      fetchToken()
-      }
-
-  },
-  [ loginSubmitted, token])
-
-  let messageClasses = 'alert alert-danger d-none mb-0';
-  let formClasses = '';
-  if (incorrectLogin) {
-    messageClasses = 'alert alert-danger mb-0';
-    formClasses = 'd-none';
-  }
-
+function Dashboard() {
   return (
-    <div style={{ position: 'relative' }}>
-      <button
-        onClick={() => { navigate("/"); }}
-        style={{
-          position: 'absolute',
-          top: '0',
-          left: '0',
-          margin: '10px',
-        }}
-      >
-        Back to Homepage
-      </button>
-    <div style={containerStyle}>
-    <div className="card text-bg-light mb-3">
-      <div className="offset-3 col-6">
-      <h5 className="card-header">Login</h5>
-      <div className="card-body">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="mb-3">
-            <label className="form-label">Username:</label>
-            <input
-              name="username"
-              type="text"
-              className="form-control"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password:</label>
-            <input
-              name="password"
-              type="password"
-              className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <input style={{ marginBottom: '15px' }} type="submit" value="Login" />
-          </div>
-          <div className={messageClasses} id="failure-message">
-            Incorrect username or password...
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  </div>
-  </div>
-  );
-};
+    <div>
+      <SideMenu />
+      <Nav />
+      <main>
+        <h1>User Dashboard!</h1>
 
-export default LoginForm;
+        {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
+
+        <input id="radio1" type="radio" name="css-tabs" defaultChecked />
+        <input id="radio2" type="radio" name="css-tabs" />
+        <input id="radio3" type="radio" name="css-tabs" />
+        <input id="radio4" type="radio" name="css-tabs" />
+        <input id="radio5" type="radio" name="css-tabs" />
+        <div id="tabs">
+          <label htmlFor="radio1" id="tab1">Boards</label>
+          <label htmlFor="radio2" id="tab2">Reviews</label>
+          <label htmlFor="radio3" id="tab3">Games</label>
+          <label htmlFor="radio4" id="tab4">Wishlist</label>
+          <label htmlFor="radio5" id="tab5">Settings</label>
+        </div>
+        <div id="content">
+          <section id="content1">
+            <div>
+            <BoardCard />
+
+
+
+            </div>
+          </section>
+          <section id="content2">
+
+            <CombinedCards />
+            <br />
+
+
+
+          </section>
+          <section id="content3">
+             <div className='gcard-container'>
+             <GameCard />
+
+            </div>
+          </section>
+          <section id="content4">
+            <div>
+            <WishlistCard />
+
+            </div>
+          </section>
+          <section id="content5">
+            <Settings />
+          </section>
+          </div>
+
+      </main>
+    </div>
+  );
+}
+
+export default Dashboard;

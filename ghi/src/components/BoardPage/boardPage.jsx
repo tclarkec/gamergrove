@@ -113,28 +113,6 @@ function BoardPage() {
     fetchData();
   }, [boardId]);
 
-    const handleDeleteBoard = async () => {
-    try {
-      const accountId = await fetchUserName();
-      const deleteUrl = `http://localhost:8000/api/boards/${boardId}/${accountId}`;
-
-      const deleteConfig = {
-        method: 'DELETE',
-        credentials: 'include',
-      };
-
-      const response = await fetch(deleteUrl, deleteConfig);
-
-      if (response.ok) {
-        navigate('/dashboard');
-      } else {
-        console.error('Error deleting board:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error deleting board:', error);
-    }
-  };
-
   if (!boardData || !gamesData) {
     return null;
   }
@@ -165,7 +143,12 @@ function BoardPage() {
         ))}
       </div>
       <br />
-       <Link to="#" className='deleteboard' onClick={handleDeleteBoard}>
+      <Link to={`/boards/update/${boardId}`} className='updateboard'>
+        <span>Update Board</span>
+      </Link>
+      <br />
+      <br />
+       <Link to={`/boards/delete/${boardId}`} className='deleteboard'>
           <span>Delete Board</span>
         </Link>
       <br />

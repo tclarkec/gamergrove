@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import StarRating from './StarRating';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const fetchUserName = async () => {
   const tokenUrl = `http://localhost:8000/token`;
@@ -32,13 +31,13 @@ const fetchAccount = async () => {
 
 const account_data = await fetchAccount();
 
-async function fetchReviews(id) {
-  const reviewUrl = `http://localhost:8000/api/reviews/${id}`;
-  const reviewConfig = {
+async function fetchBoards(id) {
+  const boardUrl = `http://localhost:8000/api/boards/${id}`;
+  const boardConfig = {
     credentials: 'include'
   };
 
-  const response = await fetch(reviewUrl, reviewConfig);
+  const response = await fetch(boardUrl, boardConfig);
 
   if (response.ok) {
     const data = await response.json();
@@ -46,27 +45,25 @@ async function fetchReviews(id) {
   }
 }
 
-function UpdateReviewForm() {
+function UpdateBoardForm() {
   const navigate = useNavigate();
-  const { review_id, game_id } = useParams();
+  const { id } = useParams();
   const [formData, setFormData] = useState({
-    title: '',
-    body: '',
-    game_id: `${game_id}`,
-    rating: ''
+    board_name: '',
+    description: '',
+    cover_photo: ''
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const reviewData = await fetchReviews(review_id);
+        const boardData = await fetchBoards(id);
 
-        if (reviewData) {
+        if (boardData) {
           setFormData({
-            title: reviewData.title || '',
-            body: reviewData.body || '',
-            game_id: reviewData.game_id,
-            rating: reviewData.rating || ''
+            board_name: boardData.board_name || '',
+            description: boardData.description || '',
+            cover_photo: boardData.cover_photo || ''
           });
         }
       } catch (error) {
@@ -75,14 +72,7 @@ function UpdateReviewForm() {
     };
 
     fetchData();
-  }, [review_id]);
-
-    const handleStarClick = (selectedRating) => {
-    setFormData({
-      ...formData,
-      rating: selectedRating,
-    });
-  };
+  }, [id]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -94,7 +84,7 @@ function UpdateReviewForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const reviewsUrl = `http://localhost:8000/api/reviews/${review_id}/${account_data.id}`;
+    const boardUrl = `http://localhost:8000/api/boards/${id}/${account_data.id}`;
 
     const fetchConfig = {
       method: 'put',
@@ -105,37 +95,32 @@ function UpdateReviewForm() {
       }
     };
 
-    const response = await fetch(reviewsUrl, fetchConfig);
+    const response = await fetch(boardUrl, fetchConfig);
 
     if (response.ok) {
-      navigate(`/games/${game_id}`);
+      navigate('/dashboard');
     } else {
-      console.error('Failed to update review');
+      console.error('Failed to update board');
     }
   };
-
-  return (
+    return (
     <div className="container">
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Update this review</h1>
+            <h1>Update a board</h1>
             <form onSubmit={handleSubmit} id="create-board">
               <div className="form-floating mb-3">
-                <label htmlFor="title">Title</label>
-                <input onChange={handleFormChange} required type="text" name="title" id="title" className="form-control" value={formData.title} />
+                <label htmlFor="board_name">Title</label>
+                <input onChange={handleFormChange} required type="text" name = "board_name" id="board_name" className="form-control" value={formData.board_name}/>
               </div>
               <div className="form-floating mb-3">
-                <label htmlFor="body">Description</label>
-                <textarea onChange={handleFormChange} required name="body" id="body" className="form-control" value={formData.body} rows="3"></textarea>
+                <label htmlFor="description">Description</label>
+                <textarea onChange={handleFormChange} required name = "description" id="description" className="form-control" value={formData.description} rows="3"></textarea>
               </div>
               <div className="form-floating mb-3">
-                <label htmlFor='rating' style={{ marginBottom: '0rem' }}>Rating out of 5:</label>
-                <div className='rating-container d-flex justify-content-center'>
-                  <div className='star-rating'>
-                    <StarRating rating={formData.rating} onStarClick={handleStarClick} />
-                  </div>
-                </div>
+                <label htmlFor="cover_photo">Cover photo</label>
+                <input onChange={handleFormChange} required type="url" name = "cover_photo" id="cover_photo" className="form-control" value={formData.cover_photo}/>
               </div>
               <button>Update</button>
             </form>
@@ -143,7 +128,9 @@ function UpdateReviewForm() {
         </div>
       </div>
     </div>
-  );
+
+
+    );
 }
 
-export default UpdateReviewForm;
+export default UpdateBoardForm;

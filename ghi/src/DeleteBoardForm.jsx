@@ -50,7 +50,7 @@ async function fetchAccountId() {
   }
 }
 
-const DeleteReviewForm = () => {
+const DeleteBoardForm = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -73,7 +73,7 @@ const DeleteReviewForm = () => {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `http://localhost:8000/api/reviews/${id}/${accountId}`;
+    const deleteUrl = `http://localhost:8000/api/boards/${id}/${accountId}`;
 
     const deleteConfig = {
       method: "delete",
@@ -88,7 +88,7 @@ const DeleteReviewForm = () => {
       if (response.ok) {
         navigate("/dashboard");
       } else {
-        throw new Error('Failed to delete review');
+        throw new Error('Failed to delete board');
       }
     } catch (error) {
       console.error('Error deleting review:', error);
@@ -104,7 +104,7 @@ const DeleteReviewForm = () => {
       <div className="card text-bg-light mb-3">
         <div className="card-body">
           <div>
-            Are you sure you want to delete this review?
+            Are you sure you want to delete this board?
           </div>
           <button style={greenButton} onClick={handleDelete}>Yes</button>
           <button style={redButton} onClick={handleBackToDashboard}>No</button>
@@ -114,4 +114,4 @@ const DeleteReviewForm = () => {
   );
 }
 
-export default DeleteReviewForm;
+export default DeleteBoardForm;

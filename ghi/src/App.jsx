@@ -27,6 +27,8 @@ import RepliesTest from './RepliesTest';
 import BoardPage from './components/BoardPage/boardPage';
 import Hero from './Hero';
 import AddToBoard from './AddToBoard';
+import DeleteBoardForm from './DeleteBoardForm';
+import UpdateBoardForm from './UpdateBoardForm';
 
 
 // All your environment variables in vite are in this object
@@ -84,6 +86,7 @@ function App() {
                     <Route path="/signup" element={<SignUpForm />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/boards/create" element={<BoardForm />} />
+                    <Route path="/boards/delete/:id" element={<DeleteBoardForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/reviews/update/:review_id/:game_id" element={<UpdateReviewForm />} />
                     <Route path="/reviews/delete/:id" element={<DeleteReviewForm />} />
@@ -92,6 +95,7 @@ function App() {
                     <Route path="/games/:id" element={<GameDetails />} />
                     <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />
+                    <Route path="/boards/update/:id" element={<UpdateBoardForm />} />
                     <Route path="/search" element={<SearchResults />} />
                     <Route path="/dogo" element={<Hero />} />
 

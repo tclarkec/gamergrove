@@ -83,7 +83,7 @@ async def create_review(
     created_review = queries.create_review(review_dict)
     return created_review
 
-@router.delete("/api/reviews/users/{id}/{account_id}", response_model=Union[bool, HttpError])
+@router.delete("/api/reviews/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_review(
     id: int,
     queries: ReviewQueries = Depends(),
@@ -106,7 +106,7 @@ async def delete_review(
     account_id = authenticate_user(review_data)
     return queries.delete_review(id, account_id)
 
-@router.put("/api/reviews/users/{id}/{account_id}", response_model=Union[ReviewOut, HttpError])
+@router.put("/api/reviews/{id}/{account_id}", response_model=Union[ReviewOut, HttpError])
 async def update_review(
     id: int,
     review: ReviewInUpdate,
