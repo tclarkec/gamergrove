@@ -18,8 +18,9 @@ import Welcome from './Welcome';
 import Login from './Login';
 import WelcomeBack from './WelcomeBack';
 import BoardForm from './BoardForm';
-import LogOut from './LogOut';
 import Settings from './Settings';
+import DeleteAccountForm from './DeleteAccountForm';
+
 import UpdateReviewForm from './UpdateReviewForm';
 import DeleteReviewForm from './DeleteReviewForm';
 import SearchResults from './components/SearchResults/SearchResults';
@@ -85,8 +86,8 @@ function App() {
                     <Route path="/signup/welcome" element={<Welcome />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/login/welcomeback" element={<WelcomeBack />} />
-                    <Route path="/logout" element={<LogOut />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="/settings/delete/:id/:username" element={<DeleteAccountForm />} />
                     <Route path="/boards/create" element={<BoardForm />} />
                     <Route path="/boards/delete/:id" element={<DeleteBoardForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />

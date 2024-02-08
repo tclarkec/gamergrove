@@ -27,53 +27,38 @@ const redButton = {
   color: 'white',
 };
 
-async function fetchAccountId() {
-  const tokenUrl = `http://localhost:8000/token`;
 
-  const fetchConfig = {
-    credentials: 'include',
-  };
-
-  try {
-    const response = await fetch(tokenUrl, fetchConfig);
-
-    if (response.ok) {
-      const data = await response.json();
-      return data.account.id;
-    } else {
-      console.error('Error fetching account ID:', response.status);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error fetching account ID:', error);
-    return null;
-  }
-}
-
-const DeleteBoardForm = () => {
+const DeleteAccountForm = () => {
   const navigate = useNavigate();
 
-  const { id } = useParams();
-  const [accountId, setAccountId] = useState(null);
+  const { id, username } = useParams();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const fetchedAccountId = await fetchAccountId();
-      if (fetchedAccountId) {
-        setAccountId(fetchedAccountId);
-        console.log('Got account id!');
-      } else {
-        console.error('Error fetching account ID');
-      }
+  const handleLogOut = async (event) => {
+    event.preventDefault();
+
+    const logOutUrl = 'http://localhost:8000/token';
+
+    const fetchConfig = {
+        method: "delete",
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     };
 
-    fetchUserData();
-  }, []);
+    const response = await fetch (logOutUrl, fetchConfig);
+    if (response.ok) {
+        navigate('/');
+        window.location.reload();
+    } else {
+        throw new Error('Failed to log out');
+    }
+}
 
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `http://localhost:8000/api/boards/${id}/${accountId}`;
+    const deleteUrl = `http://localhost:8000/api/accounts/${id}/${username}`;
 
     const deleteConfig = {
       method: "delete",
@@ -86,12 +71,12 @@ const DeleteBoardForm = () => {
     try {
       const response = await fetch(deleteUrl, deleteConfig);
       if (response.ok) {
-        navigate("/dashboard");
+        handleLogOut(event);
       } else {
-        throw new Error('Failed to delete board');
+        throw new Error('Failed to delete account');
       }
     } catch (error) {
-      console.error('Error deleting review:', error);
+      console.error('Error deleting account:', error);
     }
   };
 
@@ -105,7 +90,7 @@ const DeleteBoardForm = () => {
       <div className="card text-bg-light mb-3">
         <div className="card-body">
           <div>
-            Are you sure you want to delete this board?
+            Are you sure you want to delete this account?
           </div>
           <button style={greenButton} onClick={handleDelete}>Yes</button>
           <button style={redButton} onClick={handleBackToDashboard}>No</button>
@@ -115,4 +100,4 @@ const DeleteBoardForm = () => {
   );
 }
 
-export default DeleteBoardForm;
+export default DeleteAccountForm;
