@@ -133,18 +133,20 @@
 
         .search-results-container {
             background-color: black;
-            margin-left: 10%;
-            margin-top: 5%;
+            /* margin-left: -50%; */
+            margin-top: 10%;
+            display: flex;
+            flex-wrap: wrap;
 
         }
 
         .search-div {
-            margin-left: 180px;
+            margin-left: -150px;
             margin-top: 150px;
             color: black;
             background-color: black;
         }
 
-        html {
+        /* html {
             background-color: black;
-        }
+        } */

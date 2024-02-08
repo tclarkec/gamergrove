@@ -38,6 +38,14 @@ const SearchResults = () => {
 
     const [boardDataList, setBoardDataList] = useState([]);
 
+    const handleDisplayClick = (event, position) => {
+    console.log(`[Display] ${position} clicked`);
+  };
+
+    const handleSubMenuClick = (event, index, data) => {
+      console.log(`[SubMenu] ${data} clicked`);
+    };
+
     const fetchBoardData = async (userId) => {
         const boardUrl = `http://localhost:8000/api/boards/users/${userId}`;
         const boardConfig = {
@@ -188,11 +196,13 @@ useEffect(() => {
 
     if (token) {
         return (
-            <div className='search-div'>
-                <Nav />
+          <div>
+             <Nav />
+            <div className='search-results-container'>
+
                 <SideMenu />
 
-                <div className='shgcard-container'>
+                <div>
                 {searchGames.map((gameData) => (
                     <div key={gameData.id} className='shgcard'>
                     <Link to={`/games/${gameData.id}`}>
@@ -320,6 +330,7 @@ useEffect(() => {
                     </div>
                     </div>
                 ))}
+                </div>
                 </div>
             </div>
             );
