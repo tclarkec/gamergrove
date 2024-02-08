@@ -13,10 +13,11 @@ import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
 import NonUserGameDetails from './components/GameDetails/nonUserGameDetails';
 
+import SignUpForm from './SignUpForm';
+import Welcome from './Welcome';
 import Login from './Login';
 import WelcomeBack from './WelcomeBack';
 import BoardForm from './BoardForm';
-import SignUpForm from './SignUpForm'
 import LogOut from './LogOut';
 import Settings from './Settings';
 import UpdateReviewForm from './UpdateReviewForm';
@@ -80,10 +81,11 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/signup" element={<SignUpForm />} />
+                    <Route path="/signup/welcome" element={<Welcome />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/login/welcomeback" element={<WelcomeBack />} />
                     <Route path="/logout" element={<LogOut />} />
-                    <Route path="/signup" element={<SignUpForm />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/boards/create" element={<BoardForm />} />
                     <Route path="/boards/delete/:id" element={<DeleteBoardForm />} />

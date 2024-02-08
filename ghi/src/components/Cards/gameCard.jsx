@@ -103,9 +103,7 @@ function GameCard() {
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>
           <div className='gbutton'>
-            <button>
-              <b>Options</b>
-            </button>
+            
           </div>
         </div>
       ))}

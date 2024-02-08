@@ -92,7 +92,7 @@ function SignUpForm() {
         setPasswordConfirm('');
 
         document.getElementById('password-confirm').value = ''
-        navigate("/");
+        navigate("/signup/welcome");
       } else {
         throw new Error('Failed to create account')
       }
