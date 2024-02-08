@@ -173,14 +173,14 @@ return (
         <div key={`${game.id}-${index}`} className="wishlistcard">
           <div className="wcard-content">
             <div className="wcard-details">
-              <div className="wcard-item">
+              {/* <div className="wcard-item"> */}
                 <div className='wcontent-capsules'>
                   {game.xbox && (
                     <img
                       className='GDIcon'
                       src="https://i.postimg.cc/nrDT7szB/image-5.png"
-                      width="35px"
-                      height="35px"
+                      width="25px"
+                      height="25px"
                       alt="Icon 1"
                       type="button"
                       onClick={() => handleClick('Xbox', game.rawg_pk)}
@@ -190,8 +190,8 @@ return (
                     <img
                       className='GDIcon'
                       src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-                      width="35px"
-                      height="35px"
+                      width="25px"
+                      height="25px"
                       alt="Icon 2"
                       type="button"
                       onClick={() => handleClick('PlayStation', game.rawg_pk)}
@@ -201,8 +201,8 @@ return (
                     <img
                       className='GDIcon'
                       src="https://i.postimg.cc/R0qXLppc/image-3.png"
-                      width="35px"
-                      height="35px"
+                      width="25px"
+                      height="25px"
                       alt="Icon 3"
                       type="button"
                       onClick={() => handleClick('Nintendo', game.rawg_pk)}
@@ -212,8 +212,8 @@ return (
                     <img
                       className='GDIcon'
                       src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-                      width="35px"
-                      height="35px"
+                      width="25px"
+                      height="25px"
                       alt="Icon 4"
                       type="button"
                       onClick={() => handleClick('PC', game.rawg_pk)}
@@ -224,7 +224,7 @@ return (
                   <p className='gamename'>{game.name}</p>
 
 
-                <Link to={`/games/${game.id}`} className="wcard-item">
+                <Link to={`/games/${game.id}`}>
                   <div className="wcard-photo" style={{ position: 'relative' }}>
                     <img src={game.background_img} alt={game.name} />
                   </div>
@@ -246,7 +246,7 @@ return (
                 </div>
               </div>
             </div>
-          </div>
+          // </div>
 
       ))}
     </div>
