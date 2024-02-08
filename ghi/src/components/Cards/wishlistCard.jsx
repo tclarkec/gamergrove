@@ -108,7 +108,7 @@ function WishlistCard() {
     };
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
-      
+
       fetchData(userId);
     } else {
       throw new Error('Failed to remove game from wishlist');
