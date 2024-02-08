@@ -1,11 +1,11 @@
-import React from 'react'
+// import React from 'react'
 
-const Allgameslist = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+// const Allgameslist = () => {
+//   return (
+//     <div>
 
-export default Allgameslist
+//     </div>
+//   )
+// }
+
+// export default Allgameslist

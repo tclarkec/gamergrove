@@ -45,17 +45,28 @@ const Landing = () => {
       <Slider {...settings}>
         {games.map((game, index) => (
             <div key={index}>
+              <a href={`/games/${game.id}`}>
               <img
-                  src={game.background_img}
-                  className="d-block w-100"
-                  alt={game.title}
-                  style={{ maxHeight: '400px', maxWidth: '1000px', minHeight: '400px',
-                  objectFit: 'cover', margin: '0 auto', marginLeft: '355px', borderRadius: '40px',
-                  marginTop: '10px' }}
+                src={game.background_img}
+                className="d-block w-100"
+                alt={game.title}
+                style={{
+                  maxHeight: '400px',
+                  maxWidth: '1000px',
+                  minHeight: '400px',
+                  objectFit: 'cover',
+                  margin: '0 auto',
+                  marginLeft: '355px',
+                  borderRadius: '40px',
+                  marginTop: '10px',
+                }}
               />
-              <div className="carousel-caption">
-                  <h5 className='carousel-caption'>{game.title}</h5>
+            </a>
+              <div className="caption-container">
+              <div className="caption">
+                <h5>{game.name}</h5>
               </div>
+            </div>
             </div>
         ))}
       </Slider>

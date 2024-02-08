@@ -32,8 +32,8 @@
 } */
 
 
-.game-container {
-    margin-right: 55px; /* Adjust the margin-left to shift the game items to the right */
+/* .game-container {
+    margin-right: 55px;
   padding:  11%;
   top: 50px;
   background-color: aqua;
@@ -42,7 +42,7 @@
 
 h2 {
   font-size: 36px;
-  color: #faefef; /* Adjust color as needed */
+  color: #faefef;
   margin-bottom: 20px;
   border-left: 11%;
   top: 10px;
@@ -57,9 +57,9 @@ h2 {
 
 .row__poster {
   max-height: 325px;
-  margin-top: 20px; /* Add margin between posters */
+  margin-top: 20px;
   padding-left: 10px;
   width: 23%;
   transition: transform 450ms;
   z-index: 1;
-}
+} */

@@ -8,7 +8,7 @@
         }
 
 
-        .hgcard-container {
+        .shgcard-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
@@ -95,6 +95,20 @@
             padding: 2px;
         }
 
+        .shghead {
+            margin: 20px 0px;
+            margin-bottom: 40px;
+            font-size: 45px;
+            font-family: 'K2D';
+            color: rgb(255, 255, 255);
+            top: 0px;
+            /* left: 12px; */
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.566);
+            border-radius: 10px;
+            padding: 2px;
+        }
+
         .shgcontent-body p {
 
             font-family: sans-serif;
@@ -133,18 +147,21 @@
 
         .search-results-container {
             background-color: black;
-            margin-left: 10%;
-            margin-top: 5%;
+            /* margin-left: -50%; */
+            margin-top: 10%;
+            /* margin-left: 200px; */
+            display: flex;
+            flex-wrap: wrap;
 
         }
 
         .search-div {
-            margin-left: 180px;
+            margin-left: -150px;
             margin-top: 150px;
             color: black;
             background-color: black;
         }
 
-        html {
+        /* html {
             background-color: black;
-        }
+        } */

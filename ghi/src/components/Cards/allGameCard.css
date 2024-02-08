@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 15px;
+    color: black;
 }
 
 .agcard {
@@ -44,7 +45,7 @@
 .agcontent-capsules span:hover {
     color: black;
     border: px solid gray;
-    box-shadow: rgba(28, 28, 28, 0.3) 0px 5px 10px, rgba(59, 59, 59, 0.22) 0px 6px 3px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 10px, rgba(59, 59, 59, 0.22) 0px 6px 3px;
     transition-duration: 0.7s;
 }
 
