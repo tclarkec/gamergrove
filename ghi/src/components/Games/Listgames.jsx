@@ -6,6 +6,7 @@ import SideMenu from '../Home/Menu.jsx';
 import { useLocation } from 'react-router-dom';
 
 const Listgames = () => {
+
   const location = useLocation();
   const data = location.state;
   const genre = data?.state || '';
@@ -28,6 +29,7 @@ const Listgames = () => {
       console.error('Error fetching games:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchGames();
