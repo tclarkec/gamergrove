@@ -326,84 +326,82 @@ useEffect(() => {
 
     } else {
   return (
-    <div className='search-div'>
-        <Nav />
+    <div>
+      <Nav />
+      <div className='searchbody'>
         <SideMenu />
         <div className='search-results-container'>
-            <div className='shgcard-container'>
+          <div className='shgcard-container'>
             {searchGames.map((gameData) => (
-                <div key={gameData.id} className='shgcard'>
+              <div key={gameData.id} className='shgcard'>
                 <Link to={`/games/${gameData.id}`}>
-                    <img
+                  <img
                     src={gameData.background_img}
                     className="shgcard-img"
                     alt={`Card for ${gameData.name}`}
-                    />
-                    <div className="shgcontent-head">
+                  />
+                  <div className="shgcontent-head">
                     <h2>
-                        {gameData.name.length > 20
+                      {gameData.name.length > 20
                         ? `${gameData.name.slice(0, 20)}..`
                         : gameData.name
-                        }
+                      }
                     </h2>
-                    </div>
+                  </div>
                 </Link>
                 <div className="shgcontent-capsules">
-                {gameData.xbox && (
-                <img
-                    src="https://i.postimg.cc/nrDT7szB/image-5.png"
-                    width="15px"
-                    height="15px"
-                    alt="Icon 1"
-                    onClick={() => handleClick('Xbox', gameData.rawg_pk)}
-                />
-                )}
-
-                {gameData.playstation && (
+                  {gameData.xbox && (
                     <img
-                    src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-                    width="15px"
-                    height="15px"
-                    alt="Icon 2"
-                    onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
-                />
-                )}
-
-
-            {gameData.nintendo && (
-                <img
-                    src="https://i.postimg.cc/R0qXLppc/image-3.png"
-                    width="15px"
-                    height="15px"
-                    alt="Icon 3"
-                    onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
-                />
-                )}
-                {gameData.pc && (
-                <img
-                    src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-                    width="15px"
-                    height="15px"
-                    alt="Icon 4"
-                    onClick={() => handleClick('PC', gameData.rawg_pk)}
-                />
-                )}
+                      src="https://i.postimg.cc/nrDT7szB/image-5.png"
+                      width="15px"
+                      height="15px"
+                      alt="Icon 1"
+                      onClick={() => handleClick('Xbox', gameData.rawg_pk)}
+                    />
+                  )}
+                  {gameData.playstation && (
+                    <img
+                      src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
+                      width="15px"
+                      height="15px"
+                      alt="Icon 2"
+                      onClick={() => handleClick('PlayStation', gameData.rawg_pk)}
+                    />
+                  )}
+                  {gameData.nintendo && (
+                    <img
+                      src="https://i.postimg.cc/R0qXLppc/image-3.png"
+                      width="15px"
+                      height="15px"
+                      alt="Icon 3"
+                      onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
+                    />
+                  )}
+                  {gameData.pc && (
+                    <img
+                      src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+                      width="15px"
+                      height="15px"
+                      alt="Icon 4"
+                      onClick={() => handleClick('PC', gameData.rawg_pk)}
+                    />
+                  )}
                 </div>
                 <div className="shgcontent-body">
-                    <p>{parse(gameData.description.slice(0, 200))}</p>
+                  <p>{parse(gameData.description.slice(0, 200))}</p>
                 </div>
                 <div className="shgbutton">
-                    <button>
+                  <button>
                     <b>Options</b>
-                    </button>
+                  </button>
                 </div>
-                </div>
+              </div>
             ))}
-            </div>
+          </div>
         </div>
+      </div>
     </div>
   );
 }
 }
-
 export default SearchResults;

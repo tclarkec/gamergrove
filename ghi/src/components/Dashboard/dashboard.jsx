@@ -10,6 +10,7 @@ import SideMenu from '../Home/Menu';
 import Nav from '../../Nav';
 import CombinedCards from '../Cards/combinedCards';
 import Settings from '../../Settings.jsx';
+import Icon from '../Icon/icon';
 
 function Dashboard() {
   return (
@@ -37,6 +38,7 @@ function Dashboard() {
           <section id="content1">
             <div>
             <BoardCard />
+            
 
 
 

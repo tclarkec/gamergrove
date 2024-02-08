@@ -297,3 +297,8 @@ label[for='rating'] {
   border-radius: 20px;
   padding: 0 10px;
 }
+
+.custom-background {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}

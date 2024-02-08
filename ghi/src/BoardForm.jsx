@@ -49,7 +49,7 @@ function BoardForm(){
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create a review</h1>
+            <h1>Create a Board</h1>
             <form onSubmit={handleSubmit} id="create-review">
               <div className="form-floating mb-3">
                 <label htmlFor="board_name">Title</label>

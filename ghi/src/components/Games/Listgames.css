@@ -13,6 +13,7 @@
     margin-top: 150px;
     display: flex;
     flex-wrap: wrap;
+    background-color: black;
     /* gap: 25px;  */
 }
 

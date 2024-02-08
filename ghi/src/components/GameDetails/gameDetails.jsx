@@ -578,7 +578,9 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'> {parse(gameData.description)} </p>
+              <p className='text'>{parse(gameData.description)}</p>
+
+
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
