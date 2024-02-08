@@ -124,9 +124,9 @@
             transition: 0.5s;
         }
 
-        :root[nighteye="active"] * {
+        /* :root[nighteye="active"] * {
         mix-blend-mode: unset;
-}
+} */
 
 
         .menu-wrapper {

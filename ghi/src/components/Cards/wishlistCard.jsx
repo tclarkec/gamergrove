@@ -141,11 +141,29 @@ return (
           <div className="wcard-content">
             <div className="wcard-details">
               <div className="wcard-item">
+                <div className='wcontent-capsules'>
+                      <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="25px" height="25px" alt="Icon 1" />
+                    <img
+                      src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
+                      width="25px"
+                      height="25px"
+                      alt="Icon 2"
+                    />
+                    <img src="https://i.postimg.cc/R0qXLppc/image-3.png" width="25px" height="25px" alt="Icon 3" />
+                    <img
+                      src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+                      width="25px"
+                      height="25px"
+                      alt="Icon 4"
+                    />
+                    </div>
                 <Link to={`/games/${game.id}`} className="wcard-item">
                   <p className='gamename'>{game.name}</p>
+
                 </Link>
                 <div className="wcard-photo" style={{ position: 'relative' }}>
                   <img src={game.background_img} alt={game.name} />
+
                   <div
                     className="remove-button-wrapper"
                     style={{
@@ -155,6 +173,7 @@ return (
                       margin: '10px',
                     }}
                   >
+
                       <button onClick={() => handleRemove(game.id, fetchUserName())}>
                         Remove
                       </button>

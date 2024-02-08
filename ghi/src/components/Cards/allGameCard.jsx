@@ -13,7 +13,7 @@ function AllGameCard( {games} ) {
   const [id, setId] = useState('');
   const [show, setShow] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
- 
+
   const handleSubMenuClick = (event, index, data) => {
     console.log(`[SubMenu] ${data} clicked`);
   };
@@ -242,7 +242,7 @@ if (token) {
 
           </div>
           <div className="agcontent-body">
-            <p>{parse(gameData.description.slice(0, 150))}</p>
+            <p>{parse(gameData.description.slice(0, 200))}</p>
           </div>
           <div className="agbutton">
             <button onClick={(e) => {
@@ -374,7 +374,7 @@ if (token) {
 
           </div>
           <div className="agcontent-body">
-            <p>{parse(gameData.description.slice(0, 150))}</p>
+            <p>{parse(gameData.description.slice(0, 200))}</p>
           </div>
           <div className="agbutton">
             <button>

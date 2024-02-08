@@ -198,9 +198,10 @@ useEffect(() => {
         return (
           <div>
              <Nav />
+             <SideMenu />
             <div className='search-results-container'>
-
-                <SideMenu />
+              <h2 className='shghead'>Search Results</h2>
+              <br/>
 
                 <div>
                 {searchGames.map((gameData) => (
