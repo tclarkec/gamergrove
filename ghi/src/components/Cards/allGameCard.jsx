@@ -20,12 +20,6 @@ function AllGameCard( {games} ) {
       console.log(`[Display] ${position} clicked`);
     };
 
-  const handleSubMenuClick = (event, index, data) => {
-    console.log(`[SubMenu] ${data} clicked`);
-  };
-  const handleDisplayClick = (event, position) => {
-    console.log(`[Display] ${position} clicked`);
-  };
 
   const fetchData = async () => {
     try {
