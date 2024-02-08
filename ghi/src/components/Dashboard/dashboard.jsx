@@ -38,7 +38,7 @@ function Dashboard() {
           <section id="content1">
             <div>
             <BoardCard />
-            
+
 
 
 
@@ -64,7 +64,7 @@ function Dashboard() {
 
             </div>
           </section>
-          <section id="content5">
+          <section style={{ marginLeft: '100px'}} id="content5">
             <Settings />
           </section>
           </div>

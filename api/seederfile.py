@@ -17,16 +17,16 @@ def seed_data():
                 result = cur.execute(
                     """
                     INSERT INTO icons (name, icon_url) VALUES
-                    ('FF', 'https://i.postimg.cc/5yxsCz8C/dcf4rk1-ce5ee38e-34c1-461a-8815-5bae3cf3adfb.png'),
-                    ('GOW', 'https://i.postimg.cc/9FHTX9Gm/dc0qcnr-36005af2-9b18-4226-a2b6-952032896080.png'),
-                    ('ES', 'https://i.postimg.cc/zXfNgtw0/The-Elder-Scrolls-PNG.png'),
-                    ('F', 'https://i.postimg.cc/WzHHrnjH/dc5vmno-66ed9f57-5f93-4c8e-b0f0-07a00167fd68.png'),
-                    ('GTA', 'https://i.postimg.cc/mkz0mqds/d4tuvoq-af1bddee-8cc5-493a-8ac8-ca9328ad6622.png'),
-                    ('SM', 'https://i.postimg.cc/5t85Sm5R/dfih8sb-4c629b77-bf7f-4c27-b070-08c8950c082f.png'),
-                    ('S', 'https://i.postimg.cc/28B1WS7H/dfkhk4t-983e5687-c0a0-41fe-8db3-77916fb3d5f4.png'),
-                    ('D', 'https://i.postimg.cc/0NH6mMFB/destiny-2-2017-round-folder-icon-by-deoxsis-dbrp3zf-fullview.png'),
-                    ('Z', 'https://i.postimg.cc/brqjwLLc/ddxpyca-15f46729-593d-46e3-b1a8-41f7649e3ffc.png'),
-                    ('COD', 'https://i.postimg.cc/sg8wsbMN/Call-of-Duty-PNG-Clipart.png');
+                    ('A', 'https://i.postimg.cc/5yxsCz8C/dcf4rk1-ce5ee38e-34c1-461a-8815-5bae3cf3adfb.png'),
+                    ('B', 'https://i.postimg.cc/9FHTX9Gm/dc0qcnr-36005af2-9b18-4226-a2b6-952032896080.png'),
+                    ('C', 'https://i.postimg.cc/zXfNgtw0/The-Elder-Scrolls-PNG.png'),
+                    ('D', 'https://i.postimg.cc/WzHHrnjH/dc5vmno-66ed9f57-5f93-4c8e-b0f0-07a00167fd68.png'),
+                    ('E', 'https://i.postimg.cc/mkz0mqds/d4tuvoq-af1bddee-8cc5-493a-8ac8-ca9328ad6622.png'),
+                    ('F', 'https://i.postimg.cc/5t85Sm5R/dfih8sb-4c629b77-bf7f-4c27-b070-08c8950c082f.png'),
+                    ('G', 'https://i.postimg.cc/28B1WS7H/dfkhk4t-983e5687-c0a0-41fe-8db3-77916fb3d5f4.png'),
+                    ('H', 'https://i.postimg.cc/0NH6mMFB/destiny-2-2017-round-folder-icon-by-deoxsis-dbrp3zf-fullview.png'),
+                    ('I', 'https://i.postimg.cc/brqjwLLc/ddxpyca-15f46729-593d-46e3-b1a8-41f7649e3ffc.png'),
+                    ('J', 'https://i.postimg.cc/sg8wsbMN/Call-of-Duty-PNG-Clipart.png');
 
                     INSERT INTO gamesdb ("name", description, rating, dates, background_img, Xbox, PlayStation, Nintendo, PC, rating_count, rating_total, genre, developers, rawg_pk, reviews_count)
                     VALUES

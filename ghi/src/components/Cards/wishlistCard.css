@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
 .wcontent-capsules {
-  margin-bottom: -121px;
+  margin-bottom: -144px;
   /* z-index: 1; */
   position: relative;
-  right: -215px;
+  right: -250px;
   /* top: 15px; */
   margin-right: 10px;
   gap: 1px;
 }
 
 .wcontent-capsules img {
-  margin-top: 5px;
+  margin-top: 10px;
   display: flex;
   gap: 10px;
 }

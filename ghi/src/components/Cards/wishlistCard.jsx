@@ -158,21 +158,19 @@ return (
                     />
                     </div>
 
-                  <p className='gamename'>{game.name}</p>
-
-
-                <Link to={`/games/${game.id}`} className="wcard-item">
                   <div className="wcard-photo" style={{ position: 'relative' }}>
-                    <img src={game.background_img} alt={game.name} />
-                  </div>
+                  <img src={game.background_img} alt={game.name} />
+                </div>
+                <Link to={`/games/${game.id}`}>
+                  <p className='gamename'>{game.name}</p>
                 </Link>
                   <div
                     className="remove-button-wrapper"
                     style={{
                       position: 'absolute',
                       bottom: 0,
-                      right: 0,
-                      margin: '10px',
+                      right: 75,
+                      margin: '-70px',
                     }}
                   >
 
@@ -184,7 +182,7 @@ return (
               </div>
             </div>
           </div>
-        
+
       ))}
     </div>
   );
