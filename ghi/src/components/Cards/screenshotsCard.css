@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
-/* body {
-    background: -webkit-linear-gradient(top, rgb(255, 0, 230), rgb(0, 247, 255));
-    background: -moz-linear-gradient(top, rgb(255, 0, 230), rgb(0, 247, 255));
-    background: -o-linear-gradient(top, rgb(255, 0, 230), rgb(0, 247, 255));
-    background: linear-gradient(to bottom, rgb(255, 0, 230), rgb(0, 247, 255));
-} */
+body {
+    background: black;
+}
+
 
 
 

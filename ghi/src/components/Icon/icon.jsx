@@ -4,7 +4,7 @@ const Icon = () => {
   const [iconUrl, setIconUrl] = useState(null);
 
   useEffect(() => {
-    // Function to fetch authenticated user's information
+
     const fetchUserData = async () => {
       const tokenUrl = `http://localhost:8000/token`;
       const fetchConfig = {
@@ -19,15 +19,8 @@ const Icon = () => {
         }
 
         const userData = await response.json();
-
-        
-
-
         const { account } = userData;
         const { icon_id } = account;
-
-
-
 
         const iconResponse = await fetch(`http://localhost:8000/api/icons/${icon_id}`);
         if (!iconResponse.ok) {
@@ -36,23 +29,20 @@ const Icon = () => {
 
         const iconData = await iconResponse.json();
 
-
-
-
         setIconUrl(iconData.icon_url);
       } catch (error) {
         console.error('Error fetching user icon information:', error);
       }
     };
 
-    // Call the fetchUserData function
+
     fetchUserData();
-  }, []); // Empty dependency array ensures the effect runs once when the component mounts
+  }, []);
 
   return (
   <div>
     {iconUrl ? (
-      <img src={iconUrl} alt="User Icon" style={{ width: '50px', height: '50px' }} />
+      <img src={iconUrl} alt="User Icon" style={{ width: '60px', height: '60px' }} />
     ) : (
       <>
 

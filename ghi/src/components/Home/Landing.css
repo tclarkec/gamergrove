@@ -28,9 +28,20 @@
   transition: transform 450ms ease-in-out;
   /* border-radius: 20px; */
   /* overflow: hidden; */
+
 }
+
+
+.carousel-slide {
+
+  transition: transform 450ms ease-in-out;
+  /* border-radius: 20px; */
+  /* overflow: hidden; */
+
+}
+
 .carousel-item {
-  min-width: 100%; /* Ensure each item takes the full width */
+  min-width: 80%; /* Ensure each item takes the full width */
   border-radius: 20px;
 }
 .carousel-item img {
