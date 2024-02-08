@@ -18,6 +18,37 @@ async function fetchUserName() {
   }
 }
 
+  const handleClick = async (platform, rawg_pk) => {
+    const storeUrl = await fetchStoreUrl(platform, rawg_pk);
+    if (storeUrl) {
+      window.location.href = storeUrl;
+    }
+  };
+
+  const fetchStoreUrl = async (platform, rawg_pk) => {
+    try {
+
+      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+
+      const data = await response.json();
+
+
+      for (const link of data) {
+        if (link.platform === platform) {
+          return link.url
+        }
+
+      }
+
+
+
+
+    } catch (error) {
+      console.error('Cant find the store you are looking for', error);
+      return null;
+    }
+  };
+
 
 function WishlistCard() {
   const [wishlistGames, setWishlistGames] = useState([]);
@@ -134,6 +165,8 @@ function WishlistCard() {
   }
 };
 
+console.log(wishlistGames);
+
 return (
     <div>
       {wishlistGames.map((game, index) => (
@@ -142,21 +175,51 @@ return (
             <div className="wcard-details">
               <div className="wcard-item">
                 <div className='wcontent-capsules'>
-                      <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="25px" height="25px" alt="Icon 1" />
+                  {game.xbox && (
                     <img
+                      className='GDIcon'
+                      src="https://i.postimg.cc/nrDT7szB/image-5.png"
+                      width="35px"
+                      height="35px"
+                      alt="Icon 1"
+                      type="button"
+                      onClick={() => handleClick('Xbox', game.rawg_pk)}
+                    />
+                    )}
+                  {game.playstation && (
+                    <img
+                      className='GDIcon'
                       src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-                      width="25px"
-                      height="25px"
+                      width="35px"
+                      height="35px"
                       alt="Icon 2"
+                      type="button"
+                      onClick={() => handleClick('PlayStation', game.rawg_pk)}
                     />
-                    <img src="https://i.postimg.cc/R0qXLppc/image-3.png" width="25px" height="25px" alt="Icon 3" />
+                    )}
+                  {game.nintendo && (
                     <img
-                      src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-                      width="25px"
-                      height="25px"
-                      alt="Icon 4"
+                      className='GDIcon'
+                      src="https://i.postimg.cc/R0qXLppc/image-3.png"
+                      width="35px"
+                      height="35px"
+                      alt="Icon 3"
+                      type="button"
+                      onClick={() => handleClick('Nintendo', game.rawg_pk)}
                     />
-                    </div>
+                    )}
+                  {game.pc && (
+                    <img
+                      className='GDIcon'
+                      src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+                      width="35px"
+                      height="35px"
+                      alt="Icon 4"
+                      type="button"
+                      onClick={() => handleClick('PC', game.rawg_pk)}
+                    />
+                    )}
+                </div>
 
                   <p className='gamename'>{game.name}</p>
 
@@ -184,7 +247,7 @@ return (
               </div>
             </div>
           </div>
-        
+
       ))}
     </div>
   );
