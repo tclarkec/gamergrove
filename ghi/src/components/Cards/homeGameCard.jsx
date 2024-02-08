@@ -17,7 +17,7 @@ function HomeGameCard( { games }  ) {
 
   const handleItemClick = (event, index, data) => {
     console.log(`[MenuItem] ${data} clicked`);
-    setShow(false); 
+    setShow(false);
   };
   const handleSubMenuClick = (event, index, data) => {
     console.log(`[SubMenu] ${data} clicked`);
@@ -288,8 +288,7 @@ if (token) {
                   animationTimeout={200}
                   animateSubMenuChange={false}
                 >
-                  {/* Populate your menu here */}
-                  <MenuItem className='menuitem' onItemClick={handleReviewClick} data={gameData.id}>
+                  <MenuItem onItemClick={handleReviewClick} data={gameData.id}>
                     Review
                   </MenuItem>
                   <MenuItem onItemClick={handleWishClick} data={gameData.id}>

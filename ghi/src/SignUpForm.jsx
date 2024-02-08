@@ -121,33 +121,33 @@ function SignUpForm() {
           <div className="container">
             <div className="row" style={{ backgroundColor: 'transparent', paddingLeft: '11%', marginLeft: '0%', marginRight: '7%' }}>
               <div className="offset-2 col-8">
-                <h2 className="card-header">Create account</h2>
+                <h2 className="card-header" style={{ textAlign: 'center'}}>Create account</h2>
                 <div className={warningClasses} id="warning-message">
                   Your passwords don't match!
                 </div>
                 <div style={{ width: '100%'}}>
                   <form onSubmit={handleSubmit} id="create-account">
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-3" style={{ textAlign: 'center'}}>
                       <label htmlFor="username">Username</label>
                       <input onChange={handleFormChange} required type="text" name="username" id="username" className="form-control" value={accountFormData.username} />
                     </div>
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-3" style={{ textAlign: 'center'}}>
                       <label htmlFor="password">Password</label>
                       <input onChange={handleFormChange} required type="password" name="password" id="password" autoComplete="new-password" className="form-control" value={accountFormData.password} style={{ marginBottom: '15px' }} />
                     </div>
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-3" style={{ textAlign: 'center'}}>
                       <label htmlFor="password">Password Confirmation</label>
                       <input onChange={passwordConfirmChange} required type="password" name="password-confirm" id="password-confirm" className="form-control" style={{ marginBottom: '15px' }} />
                     </div>
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-3" style={{ textAlign: 'center'}}>
                       <label htmlFor="first_name">First name</label>
                       <input onChange={handleFormChange} required type="text" name="first_name" id="first_name" className="form-control" value={accountFormData.first_name} />
                     </div>
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-3" style={{ textAlign: 'center'}}>
                       <label htmlFor="last_name">Last name</label>
                       <input onChange={handleFormChange} required type="text" name="last_name" id="last_name" className="form-control" value={accountFormData.last_name} />
                     </div>
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-3" style={{ textAlign: 'center'}}>
                       <label htmlFor="email">Email</label>
                       <input onChange={handleFormChange} required type="email" name="email" id="email" className="form-control" value={accountFormData.email} />
                     </div>
@@ -179,11 +179,13 @@ function SignUpForm() {
                       </div>
                     ))}
                   </div>
+                  <br />
 
 
                     </div>
-                    <div className="mb-3"></div>
-                    <button>Create</button>
+                    <div className="mb-3" style={{ textAlign: 'center'}}>
+                    <button >Create</button>
+                    </div>
                   </form>
                 </div>
               </div>
