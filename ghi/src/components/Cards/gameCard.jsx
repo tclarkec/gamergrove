@@ -58,7 +58,7 @@ function GameCard() {
   const filteredGameDataList = gameDataList.filter((gameData) =>
     userSavedGames.includes(gameData.id)
   );
-  
+
 
   const gamesList = []
   const gameIDList = []
@@ -118,7 +118,7 @@ function GameCard() {
           </div> */}
           <div className='gcontent-body'>
             {gameData.description.length > 200 && (
-            <p>{parse(`${gameData.description.slice(0, 200)}..`)}</p>
+            <div>{parse(`${gameData.description.slice(0, 200)}..`)}</div>
           )}
             {/* Currently not working to get the ptag to be removed from our frontend home page Maybe its an
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}

@@ -25,7 +25,7 @@ function BoardGameCard({ gameData, onGameRemoval }) {
         };
       const response = await fetch (url, fetchConfig)
       const answer = await response.json()
-      
+
 
       if (response.ok) {
 
@@ -56,7 +56,7 @@ function BoardGameCard({ gameData, onGameRemoval }) {
 
        <br />
         <div className='board-game-content-body'>
-          <p>{parse(gameData.description.slice(0, 150))}</p>
+          <div>{parse(gameData.description.slice(0, 150))}</div>
         </div>
       </Link>
         <div className='board-game-button'>

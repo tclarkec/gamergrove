@@ -23,7 +23,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
       const response = await fetch(reviewsUrl);
 
       if (response.status === 404) {
-        console.warn(`No reviews found for game with ID ${gameId}`);
         setUserReviews([]);
       } else {
         const reviewsData = await response.json();
@@ -180,7 +179,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
 
       } else {
-        
+
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify(upVoteData),

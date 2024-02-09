@@ -23,7 +23,7 @@ function HomeGameCard( { games }  ) {
 
   };
   const handleDisplayClick = (event, position) => {
-    
+
   };
   const navigate = useNavigate();
   const { token } = useAuthContext();
@@ -72,7 +72,6 @@ function HomeGameCard( { games }  ) {
       }
       setBoardDataList(boards);
     } catch (error) {
-      console.error('Error fetching data:', error);
     }
   };
 
@@ -256,7 +255,7 @@ if (token) {
 
             <div className='hgcontent-body'>
               {gameData.description.length > 165 && (
-            <p>{parse(`${gameData.description.slice(0, 165)}..`)}</p>
+            <small>{parse(`${gameData.description.slice(0, 165)}..`)}</small>
           )}
             </div>
 

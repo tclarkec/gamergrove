@@ -421,7 +421,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'>{parse(gameData.description)}</p>
+              <div className='text'>{parse(gameData.description)}</div>
               <br />
               <p className='text-genres-dev'>Genres:</p>
               <p className='text-title1'>{gameData.genre}</p>
@@ -447,8 +447,8 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
-              <div class="container">
-                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              <div className="container">
+                <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
               </div>
             </div>
 
@@ -585,7 +585,7 @@ const handleReviewSubmit = async (event) => {
               <br />
               <br />
               <p className='text-title'>About Game:</p>
-              <p className='text'>{parse(gameData.description)}</p>
+              <div className='text'>{parse(gameData.description)}</div>
 
 
               <br />
@@ -609,8 +609,8 @@ const handleReviewSubmit = async (event) => {
               <div className='screenshotsHero'>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
-              <div class="container">
-                <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              <div className="container">
+                <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
               </div>
             </div>
           </div>
