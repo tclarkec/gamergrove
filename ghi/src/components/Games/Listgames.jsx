@@ -82,6 +82,9 @@ const Listgames = () => {
           <h3 key={g.id}>{g.name}</h3>
         ))} */}
       </body>
+      <br />
+      <h5 style={{textAlign: 'center', fontFamily: 'K2D', marginLeft: '100px'}}>End of Results</h5>
+      <br />
     </div>
   );
 };

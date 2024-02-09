@@ -5,7 +5,7 @@ import './Nav.css';
 import logo from './assets/logo.gif';
 import { render } from 'react-dom';
 import SearchResults from './components/SearchResults/SearchResults';
-import { useAsyncValue } from "react-router-dom";
+import { useAsyncValue, Link } from "react-router-dom";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Icon from "./components/Icon/icon.jsx";
 
@@ -228,8 +228,9 @@ const Nav = () => {
             </form>
           </div>
 
-
+          <Link to={"/"}>
           <img className='nav__logo' src={logo} alt='' />
+          </Link>
 
           <div
             ref={avatarContainerRef}

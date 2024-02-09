@@ -105,7 +105,7 @@ function ReviewCard() {
   }
 
   const handleLinkClick = (e) => {
-    console.log('Link clicked');
+    
     e.stopPropagation();
   };
 

@@ -183,7 +183,7 @@ const handleBoardClick = async (gameId, boardId) => {
     const response = await fetch(libraryUrl, fetchConfig);
 
     if (response.ok) {
-      console.log('Nice!');
+      
     } else {
       console.error('Failed to add to board. Server response:', response);
       throw new Error('Failed to add to board');

@@ -80,6 +80,23 @@
   padding: 5px;
 }
 
+
+.updateboard {
+  text-align: right;
+  /* margin-left: 150px; */
+  font-family: K2D;
+  color: rgb(255, 255, 255);
+  margin-right: 20px;
+  font-size: 18px;
+
+}
+
+.updateboard span {
+  background-color: rgba(25, 159, 7, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+}
+
 .button {
   align-self: right;
   color: transparent;

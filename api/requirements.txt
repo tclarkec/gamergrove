@@ -4,3 +4,4 @@ uvicorn[standard]==0.17.6
 psycopg[binary,pool]==3.1.2
 pytest
 requests==2.31.0
+

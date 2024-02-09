@@ -15,10 +15,10 @@ function AllGameCard( {games} ) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleSubMenuClick = (event, index, data) => {
-    console.log(`[SubMenu] ${data} clicked`);
+
     };
   const handleDisplayClick = (event, position) => {
-      console.log(`[Display] ${position} clicked`);
+
     };
 
 
@@ -140,7 +140,6 @@ function AllGameCard( {games} ) {
     try {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
-        console.log('Nice!');
       } else {
         console.error('Failed to add to wishlist. Server response:', response);
         throw new Error('Failed to add to wishlist');
@@ -159,7 +158,7 @@ function AllGameCard( {games} ) {
     stuff.wishlist = false;
     stuff.game_id = data[1];
     stuff.board_id = board;
-    console.log(stuff)
+
     const fetchConfig = {
       method: 'post',
       body: JSON.stringify(stuff),
@@ -280,7 +279,7 @@ if (token) {
                   <MenuItem onItemClick={handleDetailClick} data={gameData.id} >
                     Details
                   </MenuItem>
-                  {boardDataList.length > 1 ?
+                  {boardDataList.length > 0 ?
                   <SubMenu
                     onDisplayClick={handleDisplayClick}
                     onItemClick={handleSubMenuClick}

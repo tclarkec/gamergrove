@@ -51,14 +51,14 @@ function GameCard() {
       const userId = await fetchUserName();
       fetchData(userId);
     };
-    
+
     fetchUserData();
   }, []);
 
   const filteredGameDataList = gameDataList.filter((gameData) =>
     userSavedGames.includes(gameData.id)
   );
-  console.log(filteredGameDataList)
+  
 
   const gamesList = []
   const gameIDList = []
@@ -70,7 +70,7 @@ function GameCard() {
       gamesList.push(game)
     }
   }
-  console.log(gamesList)
+
 
   if (filteredGameDataList.length === 0) {
     return (
@@ -91,7 +91,12 @@ function GameCard() {
             alt={`Card for ${gameData.name}`}
           />
           <div className='gcontent-head'>
-            <h2>{gameData.name.slice(0, 20)}</h2>
+            <h2>
+                {gameData.name.length > 17
+                  ? `${gameData.name.slice(0, 17)}..`
+                  : gameData.name
+                }
+              </h2>
           </div>
           </Link>
           <br/>
@@ -112,7 +117,9 @@ function GameCard() {
           />
           </div> */}
           <div className='gcontent-body'>
-            <p>{parse(gameData.description.slice(0, 200))}</p>
+            {gameData.description.length > 200 && (
+            <p>{parse(`${gameData.description.slice(0, 200)}..`)}</p>
+          )}
             {/* Currently not working to get the ptag to be removed from our frontend home page Maybe its an
             OS issue or maybe have to go into migrations to remove the p tags manually. So far no dice*/}
           </div>

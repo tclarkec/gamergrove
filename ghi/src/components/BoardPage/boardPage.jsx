@@ -98,7 +98,7 @@ function BoardPage() {
       const accountId = await fetchUserName();
 
       const libraryData = await fetchGamesForBoard(accountId, boardId);
-      console.log(libraryData);
+
 
       if (!Array.isArray(libraryData)) {
         console.error('Invalid library data received:', libraryData);
@@ -117,7 +117,7 @@ function BoardPage() {
         }
       }
     }
-      console.log(gamesForBoardDetails)
+
       setGamesData(gamesForBoardDetails);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -147,10 +147,10 @@ function BoardPage() {
         };
       const response = await fetch (url, fetchConfig)
       const answer = await response.json()
-      console.log(answer)
+
 
       if (response.ok) {
-        console.log('Game removed!')
+        
         fetchData();
         }
 
@@ -180,6 +180,7 @@ function BoardPage() {
     </div>
 
     <div className="content-container">
+      <br />
       <h1 className='BoardPageTitle'><span>{boardData.board_name}</span></h1>
       <hr className='boardpagehr' />
       <h1 className='BoardPageDescription'><span>{boardData.description}</span></h1>
@@ -204,6 +205,7 @@ function BoardPage() {
        <Link to={`/boards/delete/${boardId}`} className='deleteboard'>
           <span>Delete Board</span>
         </Link>
+        <br />
       <br />
     </div>
           </div>

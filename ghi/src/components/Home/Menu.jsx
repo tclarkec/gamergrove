@@ -35,36 +35,16 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
         }
     }
 
-    const fetchPlatforms = async () => {
-        try {
-            const response = await fetch('http://localhost:8000/api/platforms');
-            if (response.ok) {
-                const data = await response.json();
-                setPlatforms(data);
-            } else {
-                console.error('Failed to fetch platforms:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error fetching platforms:', error);
-        }
-    };
-
-    const handlePlatformClick = (platform) => {
-        onSelectPlatform(platform);
-    };
-
-    useEffect(() => {
-        fetchPlatforms();
-    }, []);
 
 
 
 
 
-    const handleGenreClick = (event) => {
-        const page = event.target.value
-        // navigate(`/games/${page}`)
-    }
+
+
+
+
+    
 
     useEffect(() => {
         updateMenuWidth();
@@ -81,7 +61,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
     return (
             <div className="side-menu">
                 <ul>
-                    
+
                     <a href="http://localhost:5173/">
                     <h5 className='home'>Home Page</h5>
                     </a>

@@ -39,11 +39,11 @@ const SearchResults = () => {
     const [boardDataList, setBoardDataList] = useState([]);
 
     const handleDisplayClick = (event, position) => {
-    console.log(`[Display] ${position} clicked`);
+
   };
 
     const handleSubMenuClick = (event, index, data) => {
-      console.log(`[SubMenu] ${data} clicked`);
+      
     };
 
     const fetchBoardData = async (userId) => {
@@ -157,7 +157,6 @@ useEffect(() => {
         try {
         const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
         if (addEntryResponse.ok) {
-            console.log('Nice!');
         } else {
             console.error('Failed to add to wishlist. Server response:', response);
             throw new Error('Failed to add to wishlist');
@@ -176,7 +175,7 @@ useEffect(() => {
         stuff.wishlist = false;
         stuff.game_id = data[1];
         stuff.board_id = board;
-        console.log(stuff)
+
         const fetchConfig = {
         method: 'post',
         body: JSON.stringify(stuff),
@@ -300,7 +299,7 @@ useEffect(() => {
                             <MenuItem onItemClick={handleDetailClick} data={gameData.id} >
                                 Details
                             </MenuItem>
-                            {boardDataList.length > 1 ?
+                            {boardDataList.length > 0 ?
                             <SubMenu
                                 onDisplayClick={handleDisplayClick}
                                 onItemClick={handleSubMenuClick}

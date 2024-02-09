@@ -117,6 +117,7 @@
             text-align: right;
             padding-right: 10px;
             box-shadow: 0px 8px 10px black;
+            /* position: relative; */
         }
 
         .hgbutton button:hover {
@@ -130,9 +131,9 @@
 
 
         .menu-wrapper {
-            --__reactRadialMenu__menu-bgColor: rgba(255, 0, 51, 0.219);
-            --__reactRadialMenu__separator-color: rgb(255, 255, 255);
-            --__reactRadialMenu__item-color: hsla(0,0%,75%,1);
+            --__reactRadialMenu__menu-bgColor: hsl(0deg 78.24% 17.32%);
+            --__reactRadialMenu__separator-color: hsl(0, 0, 0);
+            --__reactRadialMenu__item-color: rgb(0, 0, 0);
             --__reactRadialMenu__activeItem-color: rgb(0, 0, 0);
             --__reactRadialMenu__activeItem-bgColor: rgba(90, 47, 111, 0.603);
             --__reactRadialMenu__arrow-color: hsla(0,0%,100%,1);

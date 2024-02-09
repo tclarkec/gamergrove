@@ -24,7 +24,7 @@ function BoardForm() {
 
     const boardUrl = 'http://localhost:8000/api/boards'
 
-    console.log(formData);
+    
 
     const fetchConfig = {
       method: "post",
