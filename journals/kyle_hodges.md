@@ -157,6 +157,6 @@ Today I learned: That logiclaly handeling the user input on the front end with s
 
 ### February 9, 2024
 
-Today I worked on:
+Today I worked on: Removing all error statements from the console and adjusted styling for search results page.  Readme updated
 
-Today I learned:
+Today I learned: How to set a token as null if someone isn't logged in.

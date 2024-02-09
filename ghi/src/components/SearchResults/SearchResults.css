@@ -1,18 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=K2D:wght@100&display=swap');
 
-        .allgamesbody {
+        .sallgamesbody {
             margin-left: 225px;
             margin-top: 150px;
             display: flex;
             flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 15px;
 
-            gap: 25px;
+
         }
-
-        .allgamesbody > * {
-            flex: 1 1 calc(20% - 25px);
-        }
-
 
         .shgcard {
             background-color: #353536;
@@ -23,7 +20,6 @@
             transition-duration: 2s;
             border-radius: 20px;
             box-sizing: border-box;
-            flex: 1 1 calc(20% - 25px);
         }
 
         .shgcard:hover {
@@ -53,7 +49,6 @@
 
         .shgcontent-capsules {
             margin-top: -7px;
-            display: flex;
             gap: 5px;
             }
 
@@ -106,6 +101,9 @@
             color: white;
             text-align: center;
             margin-top: 10px;
+            content: scroll;
+            height: 50px;
+            overflow-y: hidden;
 
         }
 

@@ -207,10 +207,11 @@ useEffect(() => {
           <div>
              <Nav />
              <SideMenu />
-            <div className='allgamesbody'>
+            <div>
+              <div>
 
 
-                <div>
+                <div className='sallgamesbody'>
                 {searchGames.map((gameData) => (
                     <div key={gameData.id} className='shgcard'>
                     <Link to={`/games/${gameData.id}`}>
@@ -250,28 +251,28 @@ useEffect(() => {
                         )}
 
 
-                    {gameData.nintendo && (
-                        <img
-                            src="https://i.postimg.cc/R0qXLppc/image-3.png"
-                            width="15px"
-                            height="15px"
-                            alt="Icon 3"
-                            onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
-                        />
-                        )}
-                        {gameData.pc && (
-                        <img
-                            src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-                            width="15px"
-                            height="15px"
-                            alt="Icon 4"
-                            onClick={() => handleClick('PC', gameData.rawg_pk)}
-                        />
-                        )}
+                        {gameData.nintendo && (
+                            <img
+                                src="https://i.postimg.cc/R0qXLppc/image-3.png"
+                                width="15px"
+                                height="15px"
+                                alt="Icon 3"
+                                onClick={() => handleClick('Nintendo', gameData.rawg_pk)}
+                            />
+                            )}
+                            {gameData.pc && (
+                            <img
+                                src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
+                                width="15px"
+                                height="15px"
+                                alt="Icon 4"
+                                onClick={() => handleClick('PC', gameData.rawg_pk)}
+                            />
+                            )}
 
                     </div>
                     <div className="shgcontent-body">
-                        <div>{parse(gameData.description.slice(0, 200))}</div>
+                        <div>{parse(gameData.description.slice(0, 100))}</div>
                     </div>
                     <div className="shgbutton">
                         <button onClick={(e) => {
@@ -341,7 +342,7 @@ useEffect(() => {
                 ))}
                 </div>
                 </div>
-                 <h5 style={{ textAlign: 'center', marginLeft: '150px', fontFamily: 'K2D'}}>End Results</h5>
+              </div>
             </div>
             );
 
@@ -349,10 +350,11 @@ useEffect(() => {
   return (
     <div>
       <Nav />
-      <div className='searchbody'>
-        <SideMenu />
-        <div className='search-results-container'>
-          <div className='shgcard-container'>
+      <SideMenu />
+      <div >
+
+        <div >
+          <div className='sallgamesbody'>
             {searchGames.map((gameData) => (
               <div key={gameData.id} className='shgcard'>
                 <Link to={`/games/${gameData.id}`}>
@@ -409,14 +411,13 @@ useEffect(() => {
                   )}
                 </div>
                 <div className="shgcontent-body">
-                  <div>{parse(gameData.description.slice(0, 200))}</div>
+                  <div>{parse(gameData.description.slice(0, 100))}</div>
                 </div>
                 <div className="shgbutton">
                   <button>
                     <b>Options</b>
                   </button>
                 </div>
-                 <h5 style={{ textAlign: 'center', marginLeft: '150px', fontFamily: 'K2D'}}>End Results</h5>
               </div>
             ))}
           </div>
