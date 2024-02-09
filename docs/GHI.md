@@ -7,83 +7,106 @@ The following is the design to our project GamerGrove.
 ## Home Page
 
 This will be the first page visitors arrive to on the website.
-There will be game cards populated based on seeder data. Organized by genre and popularity. The icons at the top indicate whether a user is logged in or out. A logged in user will have a personally choosen icon on display.
+There will be game cards populated based on seeder data. Organized by genre and popularity. The icons at the top indicate whether a user is logged in or out. A logged in user will have a personally choosen icon on display. The hero carousel shows games with a rating over 4.35.
 
+LOGGED OUT
 ![Home Page - Logged Out User](https://i.postimg.cc/4NwjX7bs/GG-1.png)
 
-## Home Scent Quiz
+Logged IN
+![Home Page - Logged In User](https://i.postimg.cc/HkdZ8pz3/GG-7-Home-Page-Logged-User.png)
 
-This page will be where the visitor can take a scent finder quiz that is specific to home products - questions will be relevant to home goods like scent intensity, type of product, room size, number of rooms etc.
+## Filtered Games on Homepage based on Genre
 
-![Home Scent Quiz](wireframes/home-scent-quiz.PNG)
+The homepage shows 5 games per preselected genres.
 
-## Body Product Quiz
+![Homepage Games](https://i.postimg.cc/nL8bCsr5/GG-2.png)
 
-This page will be where the visitor can take a scent finder quiz that is specific to body products - questions will pertain to skin sensitivity, scent intensity, and types of scents.
+## All Games Page
 
-![Body Scent Quiz](wireframes/body-scent-quiz.PNG)
+All Games in the database will be shown here, based on their ids which is sorted by the date in which they were added.
 
-## Products Page(s)
+![AllGames](https://i.postimg.cc/bwkVVmYC/GG-3-All-Games-Page.png)
 
-- Home products list page
-- Body products list page
+## Games Filtered by Genre
 
-Each product linked to detail page and product can be added to cart from main or detail pages.
+Games Filtered by genres: Strategy, Action, Adventure, RPG, and shooter. New Genres are added when you search games and new genres are placed within the database.
 
-![Product List Page](wireframes/products-list-page.PNG)
+![Games Genre](https://i.postimg.cc/KzHdh46J/GG-14-Games-Filtered-Genre.png)
 
-![Product Detail Page](wireframes/product-detail-page.PNG)
+## Games Filtered by Platform
 
-## Customer Account Pages
+Games filtered by platforms: Xbox, PlayStation, PC, and Nintendo.
 
-- Wishlist page/saved items
-- Scent profile - saved quiz results
-- Order history - option to leave a review for a purchased product
-- Account information
+![Games Platforms](https://i.postimg.cc/kG89jx2x/GG-15-Games-Filtered-Platform.png)
 
-Users can visit the wishlist page which contains a list of favorited items which can be added through the products page when hovering over a specific listing.
+## Game Details Page
 
-Users can also visit a scent profile page to see their past results/recommendations for products after completing a quiz.
+Each game has their own page featuring their game title, description, screenshots, ratings, recommendation, links to buy, release date, genres, and developers. The user has the ability to add to wishlist, add to a board, view and create reviews.
 
-![Wish List](wireframes/wish-list.PNG)
+![Game Details1](https://i.postimg.cc/FHhmZkNL/GG-4-Game-Details-Page1.png)
+![Game Details2](https://i.postimg.cc/nrvbKpW2/GG-5-Game-Details-Page2.png)
 
-![Scent Profile](wireframes/scent-profile.PNG)
 
-![Order History](wireframes/order-history.PNG)
+## Game Details Page with Review
 
-## Cart/Checkout
+Example of a review left on a Games page, with the up and down vote functionality.
 
-- Can switch currency type for preferred currency (currency converter integration)
-- Can checkout as a guest, no sign in required
+![Review](https://i.postimg.cc/zDT9cDdS/GG-16-Reviews-On-Page-UPDOWNvotes.png)
 
-## About Page
 
-- Contains a brief description of Smelli Belli
-- Ingredient sourcing information (Google Maps integration)
-- FAQ
+## Login Page
 
-![About Page](wireframes/about.PNG)
+User Login page featureing a animated Meme. (Dog floats up and down.)
 
----
+![Login](https://i.postimg.cc/2S1Gg2kR/GG-6-Login-Page.png)
 
-# Employee Graphical Human Interface
+## User Dashboard
 
-## Inventory Page
+Tabbed Navigation Dashboard with 5 tabs: Boards, Reviews, Games Saved across all boards, Wishlist, and User Settings. Greeted by your own choosen username.
 
-- Table containing a list of products with the product's SKU, quantity, and price
-- Quantity is adjustable on the table
-- search bar to find a specific item to add stock to
+Boards
+![Boards](https://i.postimg.cc/QMLQwDY1/GG-8-Dashboard-Boards.png)
 
-![Inventory](wireframes/inventory.PNG)
+Reviews
+![Reviews](https://i.postimg.cc/W35JNc89/GG-9-Dashboard-Reviews.png)
 
-## New Product Form Page
+Games Saved on All Boards
+![Games](https://i.postimg.cc/mkqz930C/GG-10-Dashboard-Games-Saved.png)
 
-- A form to add new products to inventory
+Wishlist
+![Wishlist](https://i.postimg.cc/GpQ4KnWc/GG-11-Dashboard-Wishlist.png)
 
-<!-- ## Order Fulfillment
+User Settings
+![Settings](https://i.postimg.cc/8cFsTJj5/GG-12-Dashboard-Update-Settings.png)
 
-- table of orders with tags to mark status of order
-- link to a detail view containing product info, quantity, price, customer info
-- (in detail view) button to update completion of order
 
-![Order Fulfillment](wireframes/order-fufillment.PNG) -->
+## Board Page
+
+Contains Games saved to a particular board, with the ability to edit or delete the board.
+
+![Board Page](https://i.postimg.cc/nc3jqxtp/GG-13-Board-Page.png)
+
+## Update Board Form
+
+A form to edit a board.
+
+![Edit Board](https://i.postimg.cc/KYp4gDXf/GG-21-Update-Board.png)
+
+## Edit Review Form
+
+A form to edit a review you made.
+
+![Edit Review](https://i.postimg.cc/MTXMsr0g/GG-17-Update-Review-Form.png)
+
+## Create Board Form
+
+A form create a new board: Name, description, and a cover photo.
+
+![Create Board](https://i.postimg.cc/mrgSQ4ks/GG-18-Create-Board-Form.png)
+
+## Pointer Menu
+
+Animated Pointer Menu that gives user the ability to: Add to Wishlist, Add to a Board, Go to Details and Review.
+
+![Pointer Menu1](https://i.postimg.cc/tCnwxhf5/GG-19-Pointer-Menu1.png)
+![Pointer Menu2](https://i.postimg.cc/GtWMQ5Nj/GG-20-Pointer-Menu2.png)
