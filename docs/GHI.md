@@ -1,4 +1,4 @@
-# User Graphical Human Interface
+# User git Graphical Human Interface
 
 Here is the link to the original figma, with all original design: https://www.figma.com/file/F6bCqr7FiNOgbH77mJes7u/Figma-basics?type=design&node-id=1669%3A162202&mode=design&t=jOBn7HZ6vAjskb44-1
 
