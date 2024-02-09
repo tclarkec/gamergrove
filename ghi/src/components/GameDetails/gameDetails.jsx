@@ -527,6 +527,7 @@ const handleReviewSubmit = async (event) => {
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>{gameData.rating_count} ratings</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Ovr. Rating: {"⭐".repeat(gameData.rating.toFixed(1))} {(gameData.rating.toFixed(1))}</button>
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} disabled>Released: {gameData.dates}</button>
+          
           <img
             className='GDIcon1'
             src="https://i.postimg.cc/nrDT7szB/image-5.png"
@@ -612,6 +613,7 @@ const handleReviewSubmit = async (event) => {
               <div class="container">
                 <p class="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
               </div>
+
             </div>
           </div>
           <br/>
