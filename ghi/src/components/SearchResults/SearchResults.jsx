@@ -43,7 +43,7 @@ const SearchResults = () => {
   };
 
     const handleSubMenuClick = (event, index, data) => {
-      
+
     };
 
     const fetchBoardData = async (userId) => {
@@ -262,7 +262,7 @@ useEffect(() => {
 
                     </div>
                     <div className="shgcontent-body">
-                        <p>{parse(gameData.description.slice(0, 200))}</p>
+                        <div>{parse(gameData.description.slice(0, 200))}</div>
                     </div>
                     <div className="shgbutton">
                         <button onClick={(e) => {
@@ -400,7 +400,7 @@ useEffect(() => {
                   )}
                 </div>
                 <div className="shgcontent-body">
-                  <p>{parse(gameData.description.slice(0, 200))}</p>
+                  <div>{parse(gameData.description.slice(0, 200))}</div>
                 </div>
                 <div className="shgbutton">
                   <button>

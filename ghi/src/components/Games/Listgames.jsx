@@ -71,7 +71,7 @@ const Listgames = () => {
       <Nav />
      <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
 
-      <body className='allgamesbody'>
+      <div className='allgamesbody'>
 
         <SideMenu />
 
@@ -81,7 +81,7 @@ const Listgames = () => {
         {games.map((g) => (
           <h3 key={g.id}>{g.name}</h3>
         ))} */}
-      </body>
+      </div>
       <br />
       <h5 style={{textAlign: 'center', fontFamily: 'K2D', marginLeft: '100px'}}>End of Results</h5>
       <br />

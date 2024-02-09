@@ -44,7 +44,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
 
 
 
-    
+
 
     useEffect(() => {
         updateMenuWidth();
@@ -99,7 +99,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
 
                         {genres.map(genre => {
                             return(
-                                <li className='linkside'><NavLink to="/games" state={{ state: genre }} >- {genre}</NavLink></li>
+                                <li key={genre} className='linkside'><NavLink to="/games" state={{ state: genre }} >- {genre}</NavLink></li>
                             )
 
                         })}
