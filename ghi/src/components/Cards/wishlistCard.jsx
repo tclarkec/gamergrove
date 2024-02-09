@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './wishlistCard.css';
 async function fetchUserName() {
@@ -75,7 +75,7 @@ function WishlistCard() {
   }, []);
   if(lastGameRemoved === true){
     return (
-      <p style={{ color: 'white' }}> No games saved to your wishlist yet. </p>
+      <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
     )
   }
   const filteredUserLibrary = userLibrary.filter((libraryData) =>
@@ -83,7 +83,7 @@ function WishlistCard() {
   );
   if (filteredUserLibrary.length === 0) {
     return (
-      <p style={{ color: 'white' }}> No games saved to your wishlist yet. </p>
+      <p style={{color:'white'}}> No games saved to your wishlist yet. </p>
     )
   }
   const handleRemove = async (gameId, userId) => {

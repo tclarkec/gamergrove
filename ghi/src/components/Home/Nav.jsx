@@ -1,11 +1,10 @@
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Nav.css';
 import logo from '../../assets/logo.gif';
 import { render } from 'react-dom';
 import SearchResults from '../SearchResults/SearchResults';
-import { useAsyncValue, Link } from "react-router-dom";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Icon from "../Icon/icon.jsx";
 
@@ -228,9 +227,11 @@ const Nav = () => {
             </form>
           </div>
 
-          <Link to={"/"}>
-          <img className='nav__logo' src={logo} alt='' />
-          </Link>
+
+          <img className='nav__logo' src={logo} alt='' onClick={() =>
+          navigate("/")
+          } />
+
 
           <div
             ref={avatarContainerRef}

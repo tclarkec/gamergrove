@@ -110,3 +110,9 @@ Animated Pointer Menu that gives user the ability to: Add to Wishlist, Add to a 
 
 ![Pointer Menu1](https://i.postimg.cc/tCnwxhf5/GG-19-Pointer-Menu1.png)
 ![Pointer Menu2](https://i.postimg.cc/GtWMQ5Nj/GG-20-Pointer-Menu2.png)
+
+## Search Results
+
+Search results based on an input title, and fetched from rawg api then propagated into game cards.
+
+![Search Results](https://i.postimg.cc/1XxpmY8b/GG-22-Search-Results.png)

@@ -122,6 +122,7 @@ function Settings() {
 
       const updateResponse = await fetch(updateUrl, updateFetchConfig);
       if (updateResponse.ok) {
+        accountFormData.password = '';
         setAccountFormData(accountFormData);
         setPasswordConfirm('');
         setUpdatedAccount(true);

@@ -63,10 +63,12 @@ async def delete_library_entry(
 ):
     library_details = queries.get_library_entry(id).dict()
     board_id = library_details["board_id"]
-    board_dict = board_queries.get_board(board_id).dict()
-    del board_dict["id"]
-    board_dict["game_count"] -=1
-    board_queries.update_board(board_id, board_dict)
+
+    if board_id != None:
+        board_dict = board_queries.get_board(board_id).dict()
+        del board_dict["id"]
+        board_dict["game_count"] -= 1
+        board_queries.update_board(board_id, board_dict)
 
     account_id = account_data["id"]
     return queries.delete_library_entry(id, account_id)

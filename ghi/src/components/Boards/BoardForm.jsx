@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const initialData = {
   board_name: "",
   description: "",
-  cover_photo: "https://assets-global.website-files.com/618d852d383de946ce0e3fa5/6495da7241185414c12ddc02_videoGamePlanet.PNG"
+  cover_photo: "https://assets-global.website-files.com/618d852d383de946ce0e3fa5/6495da7241185414c12ddc02_videoGamePlanet-p-800.png"
 }
 
 function BoardForm() {
@@ -24,7 +24,7 @@ function BoardForm() {
 
     const boardUrl = 'http://localhost:8000/api/boards'
 
-    
+
 
     const fetchConfig = {
       method: "post",
