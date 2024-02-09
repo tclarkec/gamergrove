@@ -1,5 +1,5 @@
 import logo from '../../assets/logo.gif';
-import Nav from '../../Nav.jsx';
+import Nav from '../Home/Nav.jsx';
 import Menu from '../Home/Menu.jsx';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -123,7 +123,7 @@ const Spinner = () => {
             }
             }
         }
-        
+
         navigate("/search/results", { state: searchResults });
         }
 

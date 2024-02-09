@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from 'react-router-dom';
 import './largeUserReviewCard.css';
-import StarRating from '../../StarRating';
+import StarRating from '../GameDetails/StarRating';
 
 
 function LargeNonUserReviewCard({ gameId }) {

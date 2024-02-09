@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Nav from '../../Nav.jsx';
+import Nav from '../Home/Nav.jsx';
 import AllGameCard from '../Cards/allGameCard.jsx';
 import './Listgames.css';
 import SideMenu from '../Home/Menu.jsx';

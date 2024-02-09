@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Landing from './components/Home/Landing';
-import Nav from './Nav';
+import Nav from './components/Home/Nav';
 import Row from './components/Home/Rows'
 import Menu from './components/Home/Menu';
 // import BoardForm from './BoardForm';

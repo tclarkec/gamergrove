@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import './components/Cards/boardCard.css';
+import '../../components/Cards/boardCard.css';
 import { Link } from 'react-router-dom';
 
 async function fetchUserName() {
@@ -183,7 +183,7 @@ const handleBoardClick = async (gameId, boardId) => {
     const response = await fetch(libraryUrl, fetchConfig);
 
     if (response.ok) {
-      
+
     } else {
       console.error('Failed to add to board. Server response:', response);
       throw new Error('Failed to add to board');

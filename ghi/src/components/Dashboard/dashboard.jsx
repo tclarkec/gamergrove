@@ -7,9 +7,9 @@ import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
 import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
-import Nav from '../../Nav';
+import Nav from '../Home/Nav';
 import CombinedCards from '../Cards/combinedCards';
-import Settings from '../../Settings.jsx';
+import Settings from '../Accounts/Settings.jsx';
 import Icon from '../Icon/icon';
 
 const fetchUserName = async () => {

@@ -2,12 +2,12 @@ import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Nav.css';
-import logo from './assets/logo.gif';
+import logo from '../../assets/logo.gif';
 import { render } from 'react-dom';
-import SearchResults from './components/SearchResults/SearchResults';
+import SearchResults from '../SearchResults/SearchResults';
 import { useAsyncValue, Link } from "react-router-dom";
 import PacmanLoader from 'react-spinners/PacmanLoader';
-import Icon from "./components/Icon/icon.jsx";
+import Icon from "../Icon/icon.jsx";
 
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import StarRating from './StarRating';
+import StarRating from '../GameDetails/StarRating';
 
 const fetchUserName = async () => {
   const tokenUrl = `http://localhost:8000/token`;

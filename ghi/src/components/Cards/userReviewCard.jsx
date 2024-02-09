@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './userReviewCard.css';
-import StarRating from '../../StarRating'; // Make sure to adjust the path based on your project structure
+import StarRating from '../GameDetails/StarRating'; // Make sure to adjust the path based on your project structure
 import {useNavigate} from 'react-router-dom';
 
 async function fetchAccountId() {

@@ -4,8 +4,7 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
-import ErrorNotification from './ErrorNotification'
-import Construct from './Construct'
+
 import './App.css'
 import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
@@ -13,24 +12,23 @@ import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
 import NonUserGameDetails from './components/GameDetails/nonUserGameDetails';
 
-import SignUpForm from './SignUpForm';
-import Welcome from './Welcome';
-import Login from './Login';
-import WelcomeBack from './WelcomeBack';
-import BoardForm from './BoardForm';
-import Settings from './Settings';
-import DeleteAccountForm from './DeleteAccountForm';
+import SignUpForm from './components/Accounts/SignUpForm';
+import Welcome from './components/Accounts/Welcome';
+import Login from './components/Accounts/Login';
+import WelcomeBack from './components/Accounts/WelcomeBack';
+import BoardForm from './components/Boards/BoardForm';
+import Settings from './components/Accounts/Settings';
+import DeleteAccountForm from './components/Accounts/DeleteAccountForm';
 
-import UpdateReviewForm from './UpdateReviewForm';
-import DeleteReviewForm from './DeleteReviewForm';
+import UpdateReviewForm from './components/Reviews/UpdateReviewForm';
+import DeleteReviewForm from './components/Reviews/DeleteReviewForm';
 import SearchResults from './components/SearchResults/SearchResults';
 
-import RepliesTest from './RepliesTest';
-import BoardPage from './components/BoardPage/boardPage';
-import Hero from './Hero';
-import AddToBoard from './AddToBoard';
-import DeleteBoardForm from './DeleteBoardForm';
-import UpdateBoardForm from './UpdateBoardForm';
+import BoardPage from './components/Boards/boardPage';
+import Hero from './components/Accounts/Hero';
+import AddToBoard from './components/Boards/AddToBoard';
+import DeleteBoardForm from './components/Boards/DeleteBoardForm';
+import UpdateBoardForm from './components/Boards/UpdateBoardForm';
 
 
 // All your environment variables in vite are in this object
@@ -49,30 +47,7 @@ if (!API_HOST) {
 * @returns {React.ReactNode}
 */
 function App() {
-    // Replace this App component with your own.
-    /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
-    const [launchInfo, setLaunchInfo] = useState()
-    const [error, setError] = useState(null)
 
-    useEffect(() => {
-        async function getData() {
-            let url = `${API_HOST}/api/launch-details`
-
-            let response = await fetch(url)
-            /** @type {LaunchData} */
-            let data = await response.json()
-            if (response.ok) {
-                if (!data.launch_details) {
-                    setError('No launch data')
-                    return
-                }
-                setLaunchInfo(data.launch_details)
-            } else {
-                setError(data.message)
-            }
-        }
-        getData()
-    }, [])
     return (
         <AuthProvider baseUrl = 'http://localhost:8000'>
             <BrowserRouter>
@@ -90,7 +65,6 @@ function App() {
                     <Route path="/reviews/update/:review_id/:game_id" element={<UpdateReviewForm />} />
                     <Route path="/reviews/delete/:id" element={<DeleteReviewForm />} />
                     <Route path="/games" element={<Listgames />} />
-                    <Route path="/replies/create" element={<RepliesTest />} />
                     <Route path="/games/:id" element={<GameDetails />} />
                     <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
                     <Route path="/boards/:id" element={<BoardPage />} />

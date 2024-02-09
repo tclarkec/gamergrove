@@ -400,14 +400,12 @@ if (token) {
           <div className="hgbutton">
             <button onClick={(e) => {
                   e.preventDefault();
-                  setShow(true);
-                  setPosition({ });
-                  setId(gameData.id)
+                  navigate(`/games/${gameData.id}/nonuser`)
                   }}
 
                   >
               <b>Options</b>
-            </button>
+            </button >
 
 
           </div>

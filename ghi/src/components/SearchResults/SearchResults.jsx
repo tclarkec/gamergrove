@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import Nav from '../../Nav.jsx';
+import Nav from '../Home/Nav.jsx';
 import SideMenu from '../Home/Menu.jsx';
 import parse from 'html-react-parser';
 import { Menu, MenuItem, SubMenu } from "@spaceymonk/react-radial-menu";

@@ -31,7 +31,7 @@ Output:
 }
 ```
 
-Creating a new user, gets a token and authticates. Saves a username, email, password, first name, last name and icon id.
+Creating a new user, gets a token and authenticates. Saves a username, email, password, first name, last name and icon id.
 
 ## AUTH
 
@@ -87,7 +87,7 @@ Output:
 }
 ```
 
-The Boards api endpoint has everything to create a board, get a specific board, get all boards for a user, edit a board and to delete a board. Recieving a board name, description and cover photo. Returning an id, game count and recording the account id.
+The Boards api endpoint has everything to create a board, get a specific board, get all boards for a user, edit a board and to delete a board. Receiving a board name, description and cover photo. Returning an id, game count and recording the account id.
 
 ## Games
 
@@ -164,7 +164,7 @@ Output:
 }
 ```
 
-Gets a list or single icon from seeder date in the database. Given id will return an icons name, url and id. 
+Gets a list or single icon from seeder date in the database. Given id will return an icons name, url and id.
 
 ## Libraries
 
@@ -194,7 +194,7 @@ Output:
 }
 ```
 
-An instance of a library is created whenever someone adds a game to their board or wishlist, and when anything is deleted, it is that instance to maintain whether something is both in the wishlist and a seperate board.
+An instance of a library is created whenever someone adds a game to their board or wishlist, and when anything is deleted, it is that instance to maintain whether something is both in the wishlist and a separate board.
 
 ## Screenshots
 
@@ -314,4 +314,4 @@ Output:
 }
 ```
 
-Votes are created on reviews, you either give an upvote or downvote. The output will give an id and record the account id assocaited with that vote.
+Votes are created on reviews, you either give an upvote or downvote. The output will give an id and record the account id associated with that vote.

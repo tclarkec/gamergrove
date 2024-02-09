@@ -5,11 +5,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import './gameDetails.css';
 import ReviewCard from '../Cards/reviewCard.jsx';
 import SideMenu from '../Home/Menu';
-import Nav from '../../Nav';
+import Nav from '../Home/Nav';
 import LargeUserReviewCard from '../Cards/largeUserReviewCard';
 import LargeNonUserReviewCard from '../Cards/largeNonUserReviewCard';
 import ScreenshotsCard from '../Cards/screenshotsCard';
-import StarRating from '../../StarRating';
+import StarRating from './StarRating';
 import parse from 'html-react-parser';
 import { useLocation } from "react-router-dom";
 
