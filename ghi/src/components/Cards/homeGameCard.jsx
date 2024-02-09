@@ -391,7 +391,7 @@ if (token) {
 
           </div>
           <div className="hgcontent-body">
-            <p>{parse(gameData.description.slice(0, 200))}</p>
+            <div>{parse(gameData.description.slice(0, 200))}</div>
           </div>
           <div className="hgbutton">
             <button onClick={(e) => {

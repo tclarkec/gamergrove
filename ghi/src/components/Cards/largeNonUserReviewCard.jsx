@@ -18,7 +18,6 @@ function LargeNonUserReviewCard({ gameId }) {
       const response = await fetch(reviewsUrl);
 
       if (response.status === 404) {
-        console.warn(`No reviews found for game with ID ${gameId}`);
         setUserReviews([]);
       } else {
         const reviewsData = await response.json();
