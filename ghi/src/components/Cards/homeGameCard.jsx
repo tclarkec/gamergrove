@@ -259,7 +259,7 @@ if (token) {
 
             <div className='hgcontent-body'>
               {gameData.description.length > 165 && (
-            <small>{parse(`${gameData.description.slice(0, 165)}..`)}</small>
+            <small style={{color: "white"}}>{parse(`${gameData.description.slice(0, 165)}..`)}</small>
           )}
             </div>
 

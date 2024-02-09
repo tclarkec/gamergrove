@@ -251,7 +251,7 @@ if (token) {
 
           </div>
           <div className="agcontent-body">
-            <small>{parse(gameData.description.slice(0, 200))}</small>
+            <small style={{color: "white"}}>{parse(gameData.description.slice(0, 200))}</small>
           </div>
           <div className="agbutton">
             <button onClick={(e) => {
@@ -383,7 +383,7 @@ if (token) {
 
           </div>
           <div className="agcontent-body">
-            <div>{parse(gameData.description.slice(0, 200))}</div>
+            <div style={{color: "white"}}>{parse(gameData.description.slice(0, 200))}</div>
           </div>
           <div className="agbutton">
             <button>

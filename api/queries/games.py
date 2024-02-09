@@ -101,8 +101,11 @@ class GameQueries:
                 )
 
     def create_game(self, game_dict: GameIn) -> GameOut:
-        print("------------------------------------")
-        print(game_dict)
+        description = game_dict["description"]
+        if "<p>" not in description[:3]:
+            description = "<p>" + description + "</p>"
+            game_dict["description"] = description
+
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 try:
