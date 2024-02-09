@@ -130,7 +130,9 @@ Today I learned: Our back end was never putting in our game platforms correctly 
 
 Today I worked on: A LOT OF STUFF.  Menu Links, Seeder file, Pointer Menu
 
-Today I learned: 
+Cameron and I paired programmed for most of the day working through getting the right information in seeder file.  Additionally, we fixed the side bar navlinks to auto populate based on database genre information. Lastly I incorporated an animated pointer menu with several buttons for functionality for our game cards.
+
+Today I learned: How to map links and route paths from data sets and how to style my pointer menu from the module's documentation.
 
 
 ### February 7, 2024
