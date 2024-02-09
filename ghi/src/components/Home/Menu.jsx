@@ -63,7 +63,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
                 <ul>
 
                     <a href="http://localhost:5173/">
-                    <h5 className='home'>Home Page</h5>
+                    <h5 className='home' style={{ fontFamily: 'K2D'}}>Home Page</h5>
                     </a>
                     <div className="small-space"></div>
 
@@ -71,7 +71,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
 
                     <div className="small-space"></div>
 
-                    <NavLink to="/games" state={{ state: ''}} >All Games</NavLink>
+                    <NavLink to="/games" state={{ state: ''}} style={{ fontFamily: 'K2D'}}>All Games</NavLink>
                     <div className="small-space"></div>
                     <p>Consoles</p>
                     <hr className='solid' />

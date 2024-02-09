@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Landing.css';
-import Nav from '../../Nav.css';
 import './Menu';
 import './Rows';
-import HomeGameCard from '../Cards/homeGameCard.jsx';
-import Icon from '../Icon/icon.jsx';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';

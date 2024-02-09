@@ -267,7 +267,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
       {Array.isArray(userReviews) && userReviews.length > 0 ? (
         userReviews.map((review) => (
           <div key={review.id} className="largercard">
-            <div className='fixed-element'>
+            <div>
             <div className="lurcard-title">{review.title}</div>
             </div>
             <div>
@@ -303,13 +303,14 @@ function LargeUserReviewCard({ gameId, accountId }) {
               <div className="lurcard-date">
                   <p>Rating: {review.rating}</p>
                   <div className="rating-container">
-                    <div className="star-rating" style={{ marginBottom: '-250px', position: 'relative'}}>
+                    <div className="star-rating" style={{ marginRight: '-30px', marginBottom: '-250px', position: 'relative'}}>
                       <StarRating rating={review.rating} />
                     </div>
                   </div>
               </div>
+
             </div>
-            <div>
+            <div className='divthumbs'>
               <button onClick = {() => {
                 handleUpVoteClick(review.id, review.game_id)
               }}

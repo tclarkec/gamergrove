@@ -48,11 +48,11 @@
     padding: 0px;
     color: black;
     font-family: 'K2D';
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
-    margin-top: 30px;
-    /* margin-left: 150px; */
-    /* margin-right: 40px; */
+    margin-top: 10px;
+    margin-left: 100px;
+    margin-right: -50px;
     position: relative;
 
 
@@ -63,7 +63,7 @@
     margin: 0;
     color: black;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 10px;
     /* margin-bottom: -30px; */
     font-family: 'K2D';
 
@@ -75,7 +75,7 @@
     color: rgb(0, 0, 0);
     text-align: right;
     margin-top: -25px;
-    margin-right: 40px;
+    margin-right: 45px;
     font-family: 'K2D';
     color: black;
 
@@ -93,6 +93,11 @@
 
 }
 
+.divthumbs {
+    margin-left: 10px;
+    position: relative;
+}
+
 .lurline {
     width: 90%;
     height: 3px;
@@ -107,6 +112,7 @@
   height: 25px;
   margin: auto;
   padding: 3px;
+
 
 
 }

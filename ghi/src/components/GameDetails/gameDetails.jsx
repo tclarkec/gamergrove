@@ -1,7 +1,7 @@
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './gameDetails.css';
 import ReviewCard from '../Cards/reviewCard.jsx';
 import SideMenu from '../Home/Menu';
@@ -340,7 +340,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3>
+          <h3 className='gamesh1'><Link to='/games'>Games</Link>/{gameData.name}</h3>
 
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
@@ -518,7 +518,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3><p className='recommendation'>{getRecommendation(gameData.rating)}</p>
+          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3>
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
@@ -599,7 +599,7 @@ const handleReviewSubmit = async (event) => {
               <p className='text-title1'>{gameData.developers}</p>
             </div>
             <div className="flex-item">
-              {/* empty at the moment :/ */}
+
             </div>
             <div className="flex-item">
               <h1 className="gameTitle">{gameData.name}</h1>
