@@ -160,7 +160,7 @@ function Settings() {
       >
         Back to Homepage
       </button> */}
-      <div style = {{ alignItems: 'center'}}>
+      <div style={{ alignItems: 'center' }}>
         <div className="settingscard">
           <div className="settingscard">
             <div
@@ -307,7 +307,7 @@ function Settings() {
                     <button>Update</button>
                   </div>
                   <div className="mb-3">
-                    <button style = {{backgroundColor:'red'}} type="button" onClick={() => {
+                    <button style={{ backgroundColor: 'red' }} type="button" onClick={() => {
                       navigate(`/settings/delete/${account_data.id}/${account_data.username}`)
                     }}>Delete Account</button>
                   </div>

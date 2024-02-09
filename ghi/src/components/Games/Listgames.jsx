@@ -15,7 +15,7 @@ const Listgames = () => {
 
   const platforms = ['xbox', 'playstation', 'pc', 'nintendo'];
 
-  if(platforms.includes(data.state) === false ) {
+  if (platforms.includes(data.state) === false) {
     const genre = data?.state || '';
 
     const fetchGames = async () => {
@@ -40,7 +40,7 @@ const Listgames = () => {
     useEffect(() => {
       fetchGames();
     }, [genre]);
-  } else if (platforms.includes(data.state)){
+  } else if (platforms.includes(data.state)) {
     const platform = data.state
     const fetchGames = async () => {
       try {
@@ -69,7 +69,7 @@ const Listgames = () => {
   return (
     <div>
       <Nav />
-     <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
+      <h1 className='titlegames'>Games/{title ? title : 'All Games'}</h1>
 
       <div className='allgamesbody'>
 
