@@ -1,4 +1,4 @@
-from fastapi import (APIRouter, Depends, Request, Response)
+from fastapi import (APIRouter, Depends, status, HTTPException)
 from typing import Union, List
 from queries.votes import (
     VoteInBase,
@@ -7,18 +7,17 @@ from queries.votes import (
     VoteQueries,
     HttpError
 )
-from queries.reviews import(
+from queries.reviews import (
     ReviewQueries
 )
 from authenticator import authenticator
 
 router = APIRouter()
 
+
 @router.post("/api/votes", response_model=Union[VoteOut, HttpError])
 async def create_vote(
     vote: VoteInBase,
-    request: Request,
-    response: Response,
     queries: VoteQueries = Depends(),
     review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
@@ -35,10 +34,24 @@ async def create_vote(
         review_dict["upvote_count"] += 1
     elif vote_dict["downvote"] == True:
         review_dict["upvote_count"] -= 1
+
+    try:
+        vote_history = queries.get_user_votes(account_id)
+        if vote_dict["upvote"] == False and vote_dict["downvote"] == False:
+            if vote_history[-1].upvote:
+                review_dict["upvote_count"] -= 1
+            elif vote_history[-1].downvote == True:
+                review_dict["upvote_count"] += 1
+    except Exception as e:
+        if isinstance(e, HTTPException) and e.status_code == status.HTTP_404_NOT_FOUND:
+            pass
+        else:
+            raise
     review_queries.update_review(review_id, review_dict)
 
     created_vote = queries.create_vote(vote_dict)
     return created_vote
+
 
 @router.get("/api/votes/users/{account_id}", response_model=Union[List[VoteOut], HttpError])
 async def get_user_votes(
@@ -48,6 +61,7 @@ async def get_user_votes(
     account_id = account_data["id"]
     return queries.get_user_votes(account_id)
 
+
 @router.get("/api/votes/reviews/{review_id}", response_model=Union[List[VoteOut], HttpError])
 async def get_review_votes(
     review_id: int,
@@ -55,11 +69,11 @@ async def get_review_votes(
 ):
     return queries.get_review_votes(review_id)
 
+
 @router.put("/api/votes/{id}/{account_id}", response_model=Union[VoteOut, HttpError])
 async def update_vote(
     id: int,
     vote: VoteInUpdate,
-    response: Response,
     queries: VoteQueries = Depends(),
     review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
@@ -82,5 +96,5 @@ async def update_vote(
         review_dict["upvote_count"] -= 1
     review_queries.update_review(review_id, review_dict)
 
-    updated_vote = queries.update_vote(id,vote_dict)
+    updated_vote = queries.update_vote(id, vote_dict)
     return updated_vote

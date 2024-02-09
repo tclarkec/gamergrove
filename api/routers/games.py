@@ -19,9 +19,11 @@ async def create_game(
     queries: GameQueries = Depends(),
 
 ):
+    print(game)
     game_dict = game.dict()
     created_game = queries.create_game(game_dict)
     return created_game
+
 
 @router.get("/api/games", response_model=Union[List[GameOut], HttpError])
 async def get_all_games(
@@ -29,20 +31,13 @@ async def get_all_games(
 ):
     return queries.get_all_games()
 
+
 @router.get("/api/games/{id}", response_model=GameOut)
 async def get_game(
     id: int,
     queries: GameQueries = Depends(),
 ):
     return queries.get_game(id)
-
-
-# @router.delete("/api/games/{id}", response_model=bool)
-# async def delete_games(
-#     id: int,
-#     queries: GamesQueries = Depends(),
-# ) -> bool:
-#     return queries.delete_games(id)
 
 
 @router.put("/api/games/{id}", response_model=Union[GameOut, HttpError])

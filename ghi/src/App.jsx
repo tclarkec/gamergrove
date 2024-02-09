@@ -1,25 +1,31 @@
-// This makes VSCode check types as if you are using TypeScript
-//@ts-check
 import React from 'react';
-import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
-import ErrorNotification from './ErrorNotification'
-import Construct from './Construct'
+
 import './App.css'
 import Home from './Home';
 import Dashboard from "./components/Dashboard/dashboard";
 import Listgames from './components/Games/Listgames';
 import GameDetails from './components/GameDetails/gameDetails';
+import NonUserGameDetails from './components/GameDetails/nonUserGameDetails';
 
-import Login from './Login';
-import BoardForm from './BoardForm';
-import SignUpForm from './SignUpForm'
-import LogOutTest from './components/Home/LogOutTest';
-import Settings from './Settings';
-import ReviewForm from './ReviewForm';
+import SignUpForm from './components/Accounts/SignUpForm';
+import Welcome from './components/Accounts/Welcome';
+import Login from './components/Accounts/Login';
+import WelcomeBack from './components/Accounts/WelcomeBack';
+import BoardForm from './components/Boards/BoardForm';
+import Settings from './components/Accounts/Settings';
+import DeleteAccountForm from './components/Accounts/DeleteAccountForm';
 
+import UpdateReviewForm from './components/Reviews/UpdateReviewForm';
+import DeleteReviewForm from './components/Reviews/DeleteReviewForm';
+import SearchResults from './components/SearchResults/SearchResults';
 
+import BoardPage from './components/Boards/boardPage';
+import Hero from './components/Accounts/Hero';
+import AddToBoard from './components/Boards/AddToBoard';
+import DeleteBoardForm from './components/Boards/DeleteBoardForm';
+import UpdateBoardForm from './components/Boards/UpdateBoardForm';
 
 
 // All your environment variables in vite are in this object
@@ -38,48 +44,31 @@ if (!API_HOST) {
 * @returns {React.ReactNode}
 */
 function App() {
-    // Replace this App component with your own.
-    /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
-    const [launchInfo, setLaunchInfo] = useState()
-    const [error, setError] = useState(null)
 
-    useEffect(() => {
-        async function getData() {
-            let url = `${API_HOST}/api/launch-details`
-            console.log('fastapi url: ', url)
-            let response = await fetch(url)
-            /** @type {LaunchData} */
-            let data = await response.json()
-
-            if (response.ok) {
-                if (!data.launch_details) {
-                    console.log('drat! no launch data')
-                    setError('No launch data')
-                    return
-                }
-                console.log('got launch data!')
-                setLaunchInfo(data.launch_details)
-            } else {
-                console.log('drat! something happened')
-                setError(data.message)
-            }
-        }
-        getData()
-    }, [])
     return (
         <AuthProvider baseUrl = 'http://localhost:8000'>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/logout" element={<LogOutTest />} />
                     <Route path="/signup" element={<SignUpForm />} />
+                    <Route path="/signup/welcome" element={<Welcome />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/login/welcomeback" element={<WelcomeBack />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="/settings/delete/:id/:username" element={<DeleteAccountForm />} />
                     <Route path="/boards/create" element={<BoardForm />} />
-                    <Route path="/reviews/create" element={<ReviewForm />} />
+                    <Route path="/boards/delete/:id" element={<DeleteBoardForm />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/reviews/update/:review_id/:game_id" element={<UpdateReviewForm />} />
+                    <Route path="/reviews/delete/:id" element={<DeleteReviewForm />} />
                     <Route path="/games" element={<Listgames />} />
-                    <Route path="/gamedetails" element={<GameDetails />} />
+                    <Route path="/games/:id" element={<GameDetails />} />
+                    <Route path="/games/:id/nonuser" element={<NonUserGameDetails />} />
+                    <Route path="/boards/:id" element={<BoardPage />} />
+                    <Route path="/boards/update/:id" element={<UpdateBoardForm />} />
+                    <Route path="/search" element={<SearchResults />} />
+                    <Route path="/dogo" element={<Hero />} />
+
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

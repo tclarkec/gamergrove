@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './boardCard.css';
+import { useNavigate} from 'react-router-dom';
 
 async function fetchUserName() {
   const tokenUrl = `http://localhost:8000/token`;
@@ -26,6 +27,9 @@ async function fetchGamesForBoard(boardId) {
     const response = await fetch(gamesUrl, gamesConfig);
     const gamesData = await response.json();
 
+    if (gamesData.detail) {
+      return [];
+    }
     const filteredGames = gamesData.filter(game => game.board_id === boardId);
     return filteredGames;
   } catch (error) {
@@ -57,6 +61,7 @@ async function fetchGameDetails(gameId) {
 }
 
 function BoardCard() {
+  const navigate = useNavigate();
   const [boardDataList, setBoardDataList] = useState([]);
   const [userSavedBoards, setUserSavedBoards] = useState([]);
 
@@ -69,6 +74,10 @@ function BoardCard() {
     try {
       const response = await fetch(boardUrl, boardConfig);
       const boardData = await response.json();
+
+      if (boardData.detail) {
+        return [];
+      }
 
       setUserSavedBoards(boardData.map((item) => item.id));
       setBoardDataList(boardData);
@@ -127,37 +136,59 @@ function BoardCard() {
     userSavedBoards.includes(boardData.id)
   );
 
-  return (
-    <div className='bcard-container'>
-      {filteredBoardDataList.map((boardData) => (
-        <div key={boardData.id} className='card' style={{ width: '20rem' }}>
-          <img src={boardData.cover_photo} className='card-img-top' alt={`Board Cover for ${boardData.board_name}`} style={{ borderRadius: '20px 20px 0 0 ' }} />
-          <div className='card-body'>
-            <h5 className='card-title1'>{boardData.board_name}</h5>
-            <hr className='bsolid' />
-            <p className='card-text1'>{`${boardData.game_count} Games`}</p>
-            <div className={`flex-container ${boardData.alignment}`}>
-              {boardData.games && Array.isArray(boardData.games) ? (
-                boardData.games.slice(0, 3).map((game, index) => {
-                  const key = `${game.game_id}-${boardData.id}-${index}`;
+  if (filteredBoardDataList.length === 0) {
+    return (
+      <>
+    <p style={{color:'white'}}>No boards created.</p>
+    <div>
+    <button onClick={()=>{
+      navigate('/boards/create')
+    }}> Create a board </button>
+    </div>
+      </>
+    )
+  }
 
-                  return (
-                    <div key={key} className={`flex-container ${index === 0 ? 'left' : index === 1 ? 'right' : 'center'}`}>
-                      <div style={{ borderRadius: '25px', overflow: 'hidden', boxShadow: '0px 10px 10px black', backgroundColor: game.background_img ? 'transparent' : 'black' }}>
-                        <img src={game.background_img} className='small-card-img-top' alt={`Game ${index + 2}`} />
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <p>Loading games...</p>
-              )}
-            </div>
+  return (
+  <>
+  <div>
+    <br />
+    <button onClick={()=>{
+      navigate('/boards/create')
+    }} style={{ marginLeft: '840px'}}> Create a board </button>
+  </div>
+  <div className='bcard-container'>
+    {filteredBoardDataList.map((boardData) => (
+      <div key={boardData.id} className='card' style={{ width: '20rem' }}>
+        <img src={boardData.cover_photo} className='card-img-top' alt={`Board Cover for ${boardData.board_name}`} style={{ borderRadius: '20px 20px 0 0 ' }} />
+        <div className='card-body'>
+          <a href={`/boards/${boardData.id}`} className='board-link'>
+            <h5 className='card-title1'>{boardData.board_name}</h5>
+          </a>
+          <hr className='bsolid' />
+          <p className='card-text1'>{`${boardData.game_count} Games`}</p>
+          <div className={`flex-container ${boardData.alignment}`}>
+            {[...Array(3)].map((_, index) => {
+              const game = boardData.games && boardData.games[index];
+              const key = `${game ? game.game_id : 'empty'}-${boardData.id}-${index}`;
+              const backgroundImage = game ? game.background_img : 'https://i.postimg.cc/mkwt0Hbr/black-370118-1280.png';
+
+              return (
+                <div key={key} className={`flex-container ${index === 0 ? 'left' : index === 1 ? 'right' : 'center'}`}>
+                  <div style={{ borderRadius: '25px', overflow: 'hidden', boxShadow: '0px 10px 10px black', backgroundColor: game ? 'transparent' : 'black' }}>
+                    <img src={backgroundImage} className='small-card-img-top' alt={`Game ${index + 2}`} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-      ))}
-    </div>
-  );
+      </div>
+    ))}
+  </div>
+</>
+);
+
 }
 
 export default BoardCard;

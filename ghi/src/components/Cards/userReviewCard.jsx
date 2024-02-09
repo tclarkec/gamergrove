@@ -1,32 +1,106 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './userReviewCard.css';
+import StarRating from '../GameDetails/StarRating';
+import {useNavigate} from 'react-router-dom';
+
+async function fetchAccountId() {
+  const tokenUrl = `http://localhost:8000/token`;
+
+  const fetchConfig = {
+    credentials: 'include',
+  };
+
+  try {
+    const response = await fetch(tokenUrl, fetchConfig);
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.account.id;
+    } else {
+      console.error('Error fetching account ID:', response.status);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching account ID:', error);
+    return null;
+  }
+}
 
 function UserReviewCard() {
+  const navigate = useNavigate();
+
+  const [userReviews, setUserReviews] = useState([]);
+
+  const fetchUserReviews = async (accountId) => {
+    const reviewsUrl = `http://localhost:8000/api/reviews/users/${accountId}`;
+
+    try {
+      const response = await fetch(reviewsUrl, { credentials: 'include' });
+
+      if (response.ok) {
+        const reviewsData = await response.json();
+        setUserReviews(reviewsData);
+      } else {
+        setUserReviews([]);
+      }
+    } catch (error) {
+      setUserReviews([]);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const accountId = await fetchAccountId();
+      if (accountId) {
+        fetchUserReviews(accountId);
+      } else {
+        console.error('Error fetching account ID');
+        setUserReviews([]);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
-    <div className="urcard">
-      <div className="urcard-title">Game Title</div>
-      <div className="urcard-date">9/3/2023</div>
-      <div className="urcard-edit-delete">edit | delete</div>
-      <div className="urline"></div>
-      <div className="urcard-content">
-        <div className="urcard-photo">
-          <img src="https://www.shareicon.net/data/512x512/2016/08/18/809170_user_512x512.png" />
-        </div>
-        <div className="urcard-details" style={{ color: 'black !important' }}>
-            {/* limit this to 715 characters */}
-
-            <p>1up isometric view Shoot 'em up rekt Counter-Strike multiplayer online battle arena The Legend of Zelda: Collector's Edition XP character design WWE 2K open world Third-Person. DPS Madden OHKO MMORPG feeding Assassin's Creed bullshot noob. Mudflation achievements drop-out God of War nerf accelerometer FPS tryhard dual wield cheated death job Red Dead game engine. Crowd control Grand Theft Auto IV single-player Crash Bandicoot action mute JRPG The Elder Scrolls V: Skyrim ambient occlusion.</p>
-
-        </div>
-      </div>
-      <div>
-       <img className="thumbs-up" src="https://i.postimg.cc/N0md97zp/thumbsup.png" />
-       <p className="urp">34</p>
-      <img className="thumbs-down" src="https://i.postimg.cc/m2W27bkj/thumbsdown.png" />
-      <p className="urp2">13</p>
+    <div>
+      {userReviews.length === 0 ? (
+        <p style={{color:'white'}}>No user reviews available.</p>
+      ) : (
+        userReviews.map((review) => (
+          <div key={review.id} className="urcard">
+            <div className="urcard-contenet">
+            <div className="urcard-title">{review.title}</div>
 
 
-      </div>
+            </div>
+            <div className="urline"></div>
+            <div className="urcard-content">
+
+              <div className="urcard-details" style={{ color: 'black', flex: '2', textAlign: 'right' }}>
+                <p>{review.body}</p>
+                {review.rating && (
+                  <div className="rating-container">
+                    <div className="star-rating">
+                      <StarRating rating={review.rating} />
+
+                    </div>
+                    <div>
+                    <button className="urcard-edit-delete" style={{ color: 'black' }} onClick={() => {
+                      navigate(`/reviews/update/${review.id}/${review.game_id}`)
+                    }}>Edit</button> |
+                    <button className="urcard-edit-delete" style={{ color: 'black' }} onClick={() => {
+                            navigate(`/reviews/delete/${review.id}`)
+                    }}>Delete</button>
+                  </div>
+                  </div>
+
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 }

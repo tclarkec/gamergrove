@@ -7,7 +7,29 @@ import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
 import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
-import Nav from '../../Nav';
+import Nav from '../Home/Nav';
+import CombinedCards from '../Cards/combinedCards';
+import Settings from '../Accounts/Settings.jsx';
+import Icon from '../Icon/icon';
+
+const fetchUserName = async () => {
+  const tokenUrl = `http://localhost:8000/token`;
+
+  const fetchConfig = {
+    credentials: 'include',
+  };
+
+  const response = await fetch(tokenUrl, fetchConfig);
+
+  if (response.ok) {
+    const data = await response.json();
+    if (data !== null) {
+    return data.account.username;
+    }
+  }
+};
+
+const saved_username = await fetchUserName()
 
 function Dashboard() {
   return (
@@ -15,9 +37,7 @@ function Dashboard() {
       <SideMenu />
       <Nav />
       <main>
-        <h1>User Dashboard!</h1>
-
-        {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
+        <h1 >{saved_username}'s Dashboard 🎛️ 🖥️ 📟</h1>
 
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />
@@ -38,12 +58,14 @@ function Dashboard() {
 
 
 
+
             </div>
           </section>
           <section id="content2">
 
-            <ReviewCard />
-            <UserReviewCard />
+            <CombinedCards />
+            <br />
+
 
 
           </section>
@@ -59,11 +81,10 @@ function Dashboard() {
 
             </div>
           </section>
-          <section id="content5">
-            <h3>Change User Settings</h3>
-            <p>FORM COMING SOON</p>
+          <section style={{ marginLeft: '100px'}} id="content5">
+            <Settings />
           </section>
-        </div>
+          </div>
 
       </main>
     </div>

@@ -1,9 +1,9 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
+from psycopg import errors
 from jwtdown_fastapi.authentication import Token
 from pydantic import BaseModel
-from fastapi import(HTTPException, status)
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
@@ -16,13 +16,6 @@ class AccountIn(BaseModel):
     email: str
     icon_id: int
 
-# class AccountInUpdate(BaseModel):
-#     username: str | None = None
-#     password: str | None = None
-#     first_name: str | None = None
-#     last_name: str | None = None
-#     email: str | None = None
-#     icon_id: int | None = None
 
 class AccountOut(BaseModel):
     id: int
@@ -36,9 +29,11 @@ class AccountOut(BaseModel):
 class AccountToken(Token):
     account: AccountOut
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
+
 
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
@@ -105,8 +100,8 @@ class AccountQueries:
                         )
                     elif "username" in str(e):
                         raise HTTPException(
-                        status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="That username is already taken"
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="That username is already taken"
                         )
 
     def delete(self, id: int, username: str) -> bool:
@@ -149,12 +144,12 @@ class AccountQueries:
             with conn.cursor() as db:
                 try:
                     id_check = db.execute(
-                    """
-                    SELECT * FROM accounts
-                    WHERE id = %s
-                    """,
-                    [id]
-                )
+                        """
+                        SELECT * FROM accounts
+                        WHERE id = %s
+                        """,
+                        [id]
+                    )
                     id_row = id_check.fetchone()
                     if id_row is None:
                         raise HTTPException(
@@ -219,6 +214,6 @@ class AccountQueries:
                         )
                     elif "username" in str(e):
                         raise HTTPException(
-                        status_code=status.HTTP_400_BAD_REQUEST,
-                        detail="That username is already taken"
+                            status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="That username is already taken"
                         )

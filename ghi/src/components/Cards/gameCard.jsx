@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import parse from 'html-react-parser';
+import { Link } from 'react-router-dom';
 import './gameCard.css';
 
 async function fetchUserName() {
@@ -29,6 +31,10 @@ function GameCard() {
     try {
       const response = await fetch(libraryUrl, libraryConfig);
       const libraryData = await response.json();
+
+      if (libraryData.detail) {
+        return [];
+      }
       setUserSavedGames(libraryData.map((item) => item.game_id));
 
       const gameDetailsPromises = libraryData.map((item) =>
@@ -57,41 +63,54 @@ function GameCard() {
     userSavedGames.includes(gameData.id)
   );
 
+
+  const gamesList = []
+  const gameIDList = []
+  for (const game of filteredGameDataList) {
+    if (gameIDList.includes(game.id)) {
+      continue
+    } else {
+      gameIDList.push(game.id)
+      gamesList.push(game)
+    }
+  }
+
+
+  if (filteredGameDataList.length === 0) {
+    return (
+      <>
+      <p style={{color:'white'}}>No games added to a board or your wishlist.</p>
+      </>
+    )
+  }
+
   return (
     <div className='gcard-container'>
-      {filteredGameDataList.map((gameData) => (
+      {gamesList.map((gameData) => (
         <div key={gameData.id} className='gcard'>
+          <Link to={`/games/${gameData.id}`}>
           <img
             src={gameData.background_img}
             className='gcard-img'
             alt={`Card for ${gameData.name}`}
           />
           <div className='gcontent-head'>
-            <h2>{gameData.name.slice(0, 20)}</h2>
+            <h2>
+                {gameData.name.length > 17
+                  ? `${gameData.name.slice(0, 17)}..`
+                  : gameData.name
+                }
+              </h2>
           </div>
-          <div className='gcontent-capsules'>
-            <img src="https://i.postimg.cc/nrDT7szB/image-5.png" width="25px" height="25px" alt="Icon 1" />
-          <img
-            src="https://cdn.icon-icons.com/icons2/2429/PNG/512/playstation_logo_icon_147249.png"
-            width="25px"
-            height="25px"
-            alt="Icon 2"
-          />
-          <img src="https://i.postimg.cc/R0qXLppc/image-3.png" width="25px" height="25px" alt="Icon 3" />
-          <img
-            src="https://imgtr.ee/images/2024/01/29/85a2afdfc48ffb6bf795b565eba3de63.png"
-            width="25px"
-            height="25px"
-            alt="Icon 4"
-          />
-          </div>
+          </Link>
+          <br/>
           <div className='gcontent-body'>
-            <p>{gameData.description.slice(0, 200)}</p>
+            {gameData.description.length > 200 && (
+            <div>{parse(`${gameData.description.slice(0, 200)}..`)}</div>
+          )}
           </div>
           <div className='gbutton'>
-            <button>
-              <b>Options</b>
-            </button>
+
           </div>
         </div>
       ))}

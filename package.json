@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "html-react-parser": "^5.1.2",
+    "react-alert": "^7.0.3",
+    "react-hot-toast": "^2.4.1",
+    "react-slick": "^0.30.1",
+    "react-spinners": "^0.13.8",
+    "slick-carousel": "^1.8.1"
+  }
+}

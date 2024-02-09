@@ -5,14 +5,12 @@ from fastapi import (
 from typing import Union
 from queries.accounts import (
     AccountIn,
-    # AccountInUpdate,
     AccountOut,
     AccountQueries,
     AccountToken,
     AccountForm
 )
 from authenticator import authenticator
-
 from pydantic import BaseModel
 
 
@@ -38,6 +36,7 @@ async def create_account(
     token = await authenticator.login(response, request, form, queries)
     return AccountToken(account=account, **token.dict())
 
+
 @router.get("/api/accounts/{username}", response_model=AccountOut)
 async def get_account(
     username: str,
@@ -45,7 +44,8 @@ async def get_account(
 ):
     return queries.get(username)
 
-@router.delete("/api/accounts/{id}/{username}", response_model = Union[bool, HttpError])
+
+@router.delete("/api/accounts/{id}/{username}", response_model=Union[bool, HttpError])
 async def delete_account(
     id: int,
     queries: AccountQueries = Depends(),
@@ -54,7 +54,8 @@ async def delete_account(
     username = account_data["username"]
     return queries.delete(id, username)
 
-@router.put("/api/accounts/{id}/{username}", response_model = Union[AccountToken, HttpError])
+
+@router.put("/api/accounts/{id}/{username}", response_model=Union[AccountToken, HttpError])
 async def update_account(
     id: int,
     data: AccountIn,
@@ -75,7 +76,7 @@ async def update_account(
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: dict = Depends(authenticator.get_current_account_data),
+    account: dict = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
         return {

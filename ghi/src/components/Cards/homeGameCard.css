@@ -12,15 +12,14 @@
 
         .hgcard {
             background-color: #353536;
-            margin: 0px auto;
+            margin: 0px;
             padding: 15px;
-            width:230px;
+            width: 225px;
+            min-width: 200px;
             height: 320px;
             transition-duration: 2s;
             border-radius: 20px;
             margin-top: 50px;
-
-
 
         }
 
@@ -34,11 +33,9 @@
 
         .hgcard-img {
             background-color: black;
-            width: 200px;
+            width: 100%;
             height: 120px;
             border-radius: 20px 20px 0px 0px;
-            /* position: relative; */
-            /* z-index: 0; */
             box-shadow: 0px 25px 35px black;
             margin-bottom: -50px;
 
@@ -54,16 +51,6 @@
             margin-right: 2px;
             }
 
-        /* .content-capsules span {
-            padding: 7px 15px;
-            margin-right: 5px;
-            font-family: 'K2D';
-            background-color: rgba(185, 185, 185, 0.418);
-            color: rgb(134, 134, 134);
-            border-radius: 16px;
-
-
-        } */
 
         .hgcontent-capsules span:hover {
             color: black;
@@ -76,12 +63,16 @@
 
         .hgcontent-head h2 {
             margin: 20px 0px;
-            font-size: 20px;
+            font-size: 16px;
             font-family: 'K2D', sans-serif;
-            color: white;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
             top: 0px;
             left: 12px;
             position: relative;
+            background-color: rgba(0, 0, 0, 0.566);
+            border-radius: 10px;
+            padding: 2px;
         }
 
         .hgcontent-body p {
@@ -95,9 +86,9 @@
         }
 
         .hgbutton {
-            margin: 10px 0px;
             text-align: right;
             color: black;
+            margin-top: auto;
 
         }
 
@@ -115,7 +106,18 @@
             box-shadow: 0px 8px 10px black;
         }
 
-        .hbutton button:hover {
+        .hgbutton button:hover {
             background-color: grey;
             transition: 0.5s;
+        }
+
+
+        .menu-wrapper {
+            --__reactRadialMenu__menu-bgColor: hsl(0deg 78.24% 17.32%);
+            --__reactRadialMenu__separator-color: hsl(0, 0, 0);
+            --__reactRadialMenu__item-color: rgb(0, 0, 0);
+            --__reactRadialMenu__activeItem-color: rgb(0, 0, 0);
+            --__reactRadialMenu__activeItem-bgColor: rgba(90, 47, 111, 0.603);
+            --__reactRadialMenu__arrow-color: hsla(0,0%,100%,1);
+            --__reactRadialMenu__activeArrow-color: hsla(0,0%,75%,1);
         }

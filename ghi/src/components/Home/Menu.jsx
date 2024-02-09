@@ -1,36 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import './Menu.css';
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-const SideMenu = () => {
+const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
+
+    const [platforms, setPlatforms] = useState([]);
+
 
     const [menuWidth, setMenuWidth] = useState(250);
-
+    const navigate = useNavigate();
     const updateMenuWidth = () => {
         if (window.innerWidth <= 768) {
             setMenuWidth(window.innerWidth);
         } else {
-            setMenuWidth(250); // Set your default width
+            setMenuWidth(250);
         }
     };
+    const [genres, setGenres] = useState([]);
+    const fetchGenres = async () => {
+        const url = `http://localhost:8000/api/games`;
+        const response = await fetch(url)
+        if (response.ok) {
+            const gameGenres = []
+            const data = await response.json()
+            for (const game of data) {
+                if (gameGenres.includes(game.genre)) {
+                    continue
+                } else {
+                    gameGenres.push(game.genre)
+                }
+            }
+            setGenres(gameGenres)
+        }
+    }
+
 
     useEffect(() => {
         updateMenuWidth();
         window.addEventListener('resize', updateMenuWidth);
+        fetchGenres();
 
         return () => {
             window.removeEventListener('resize', updateMenuWidth);
         };
     }, []);
 
-// Maybe do like a recently purchased Games or Save or some sort that redirects yout to a particular page
+
 
     return (
             <div className="side-menu">
                 <ul>
-                    <br />
-                    <br />
+
                     <a href="http://localhost:5173/">
-                    <h5 className='home'>Hompage</h5>
+                    <h5 className='home' style={{ fontFamily: 'K2D'}}>Home Page</h5>
                     </a>
                     <div className="small-space"></div>
 
@@ -38,35 +61,37 @@ const SideMenu = () => {
 
                     <div className="small-space"></div>
 
-                    <p className='space'>New Releases</p>
-                    <hr className='solid' />
-                    <ul>
-                        <li>- Last 30 Days</li>
-                        <li>- This Week</li>
-                        <li>- Coming Soon</li>
-                    </ul>
+                    <NavLink to="/games" state={{ state: ''}} style={{ fontFamily: 'K2D'}}>All Games</NavLink>
                     <div className="small-space"></div>
                     <p>Consoles</p>
                     <hr className='solid' />
                     <ul>
-                        <li>- Xbox</li>
-                        <li>- Playstation</li>
-                        <li>- PC</li>
-                        <li>- Nintendo</li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'xbox' }} >- Xbox</NavLink></li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'playstation' }} >- PlayStation</NavLink></li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'pc' }} >- PC</NavLink></li>
+                    <li className='linkside'><NavLink to="/games" state={{ state: 'nintendo' }} >- Nintendo</NavLink></li>
                     </ul>
+
+
+
                     <div className="small-space"></div>
                     <p>Genres</p>
                     <hr className='solid'/>
                     <ul>
-                        <li>- Action</li>
-                        <li>- Strategy</li>
-                        <li>- RPG</li>
-                        <li>- Shooter</li>
-                        <li>- Adventure</li>
+
+                        {genres.map(genre => {
+                            return(
+                                <li key={genre} className='linkside'><NavLink to="/games" state={{ state: genre }} >- {genre}</NavLink></li>
+                            )
+
+                        })}
+
                     </ul>
+                    <br />
+                    <br />
                     <div className="small-space"></div>
                     <hr className='solid' />
-                    <p className='all-games' >All Games</p>
+
                     <hr className='solid'/>
                     <ul>
 

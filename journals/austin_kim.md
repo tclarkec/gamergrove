@@ -179,3 +179,99 @@ In the morning we each worked on our own individual features and I soon realized
 Today I learned:
 
 The nature of async in JavaScript is still unpredictable and should not be relied upon when attempting to make fetch requests to endpoints in a particular order - we had trouble setting the state of our loaded-in games after getting a response back from the get_all_games endpoint.
+
+### February 1, 2024
+
+Today I worked on:
+
+* Creating a component which allows a user to update their account settings, creating a form component which allows a user to create a board, updated the create_library_entry endpoint to account for no board_id, updating the replies table to exclude a title column, and began the replies front-end component.
+
+At the current moment, a user can only update their account settings if they also submit a value for their password. This is because the account settings work as an update form and the way we have our backend set up, when an account is updated, some value has to be input into the JSON body request for each table column value corresponding to that account. I have set up the component so that whenever the account settings page is mounted, each account column value populates each field of the update settings form but because we only store the hashed password in the database, the actual password must be input by the user to submit the update form, even if they aren't trying to change their password. I was able to finish and test the board form, added some logic to the create_library_entry endpoint so that a game can be added to the user's wishlist without adding it to a board, and cleaned up the replies table in our database before starting the front-end component.
+
+Today I learned:
+
+The pains of authentication and how working on the front-end is a fantastic way to find either design flaws or things you want to change in the back-end.
+
+### February 2, 2024
+
+Today I worked on:
+
+* Making our dropdown nav dynamic and based on whether a user is signed in or not
+
+If a user is signed in and a token is active, I made it to where the jsx returned in the nav bar shows the dashboard, settings, and logout buttons whereas if the user is not signed and a token is not active, the jsx returned in the nav bar shows the signup and login buttons.
+
+Today I learned:
+
+Since if conditionals cannot be explicitly used in JSX, sometimes it may be easier to conditionally the JSX being returned as a whole.
+
+### February 3, 2024
+
+Today I worked on:
+
+* Allowing a user to submit a review to a game on the games-detail page.
+
+The challenging part of implementing this feature was getting the CSS/formatting to look how I wanted. I also made it to where the number of stars a user clicked for the rating would translate into an integer that would be used by the review form sent to the database. I also updated the gamesDetail page to dynamically show the updated ratings and overall rating count for that page as a number of stars.
+
+Today I learned:
+
+The importance of specificity in CSS and keeping track of the cascade flow.
+
+### February 4, 2024
+
+Today I worked on:
+
+* Allowing a user on the frontend to add and remove games from a wishlist via the click of a button and being able to update reviews from the games detail page and dashboard.
+
+The difficult part of this was getting the button to dynamically change to say 'Added to wishlist!' once it was clicked. This required me to utilize the useState hook and state changes more effectively. I also realized that there were async fetching issues happening whenever a user would log out and log back in, so I put in my code a way to manually refresh the browser upon logging in and out.
+
+Today I learned:
+
+The best way to combat async fetching issues is to use the updating of state.
+
+### February 5, 2024
+
+Today I worked on:
+
+* Allowing a user to delete a review from both the dashboard and games detail page, upvoting and downvoting a review with a single click, and getting the color of whatever button the user pressed to persist even after refreshing or navigating to a different component.
+
+Some issues I ran into with this was I either could get the user vote color change to persist on the page but have it affect every other review (on the front end) or make the color change specific to that review but not have it persist. Need to revisit this...
+
+Today I learned:
+
+Need to really emphasize the updating of state as opposed to relying on asynchronous fetching if I want something to force a dynamic re-rendering of the page after something is changed in the frontend.
+
+### February 6, 2024
+
+Today I worked on:
+
+* Creating a games detail page for non-authenticated users that will redirect them to a prompt for them to sign-up, log-in, or go directly back to the games detail page, adding a game to the wishlist only changes the button for that specific game by that specific user, adding a button to create a board from the dashboard, fixing a bug on the create board form, and removing a game from the wishlist from the dashboard.
+
+Overall today was a very productive day, but I cannot get the page to re-render once the final wishlist card is removed from the page - there is an async fetching issue since when there are no more library entries to pull from there will be a 404 error for that request.
+
+Today I learned:
+
+Whenever dynamically removing something in our dashboard, while running a fetch request if the delete request is successful works in re-rendering the page dynamically it will fail when deleting the last instance because the fetch request will return a 404 error.
+
+### February 7, 2024
+
+Today I worked on:
+
+* Being able to fully remove wishlist cards from dashboard, fixing the site not rendering because of account data async issues, making it to where upvote_count dynamically re-renders, and login error handling if a user inputs invalid credentials.
+
+Today was a tough day. In order to account for the final wishlist card being removed, I basically created a state called lastGameRemovedTrue and if fetchData got a 404 error back when searching for library entries and not finding any (either because the user has not added anything to their wishlist or they removed the last game from it) I had it set this state to true, and if so return a message on the dashboard saying 'No games saved to wishlist.' In terms of login error handling, I originally set it up so that after a user was attempted to be logged in using the JWTdown built in function, our code would do a fetch request for a token to see if a valid one was created. However, this created a race condition since a token would also be fetched for even before the login went through. Thus, I had to deconstruct the login function provided to us by JwtDown, and make a manual post request to the login endpoint, and conditionally render an error message if the response was not ok.
+
+Today I learned:
+
+Use state when re-rendering the page!!! Ctrl/cmd clicking on a function will allow you to see the code it is made of.
+
+### February 8, 2024
+
+Today I worked on:
+
+Allowing for profile icons to load in automatically once a user signs up, adding a default cover photo value when creating a board, having a user's username show up at the top of the dashboard, when a user deletes an account also logging them out so that their token is no longer active, dynamically re-rendering the page when a game is removed from a board, and getting store icons to be clickable on a wishlist card.
+
+Today was an extremely productive day. My biggest blocker was dynamically re-rendering the page when a game is removed from a board, since the actual fetching of data happened in parent component (boardPage.jsx) whereas the delete request was made in the child component (boardGameCard.jsx). I had to create a callback in which when the 'Remove Game' button would be clicked on a board game card (in boardGameCard.jsx), this would trigger a function called onGameRemoval in which the library_id and account_id for that library entry (representing an instance of that game being added to a board) would be passed back to the boardPage.jsx parent component and used in a function called handleGameRemoval (which is called by onGameRemoval) to delete that library entry instance within the same component (boardPage.jsx) that fetches for games that have been added to that board, allowing for dynamic re-rendering even after the final game is removed from the board.
+
+Today I learned:
+
+How to implement a callback function to connect the functionalities of a parent and child component.

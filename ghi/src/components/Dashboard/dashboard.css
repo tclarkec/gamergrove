@@ -2,19 +2,18 @@
 
 body {
   background: #000000;
-  /* color: #121212; */
+  color: #000000;
   font-family: "K2D";
 }
 
 main {
-  max-width: 1100px;
-  margin: 70px; /* fill in for top menu */
+  max-width: 1400px;
+  margin: 70px;
   background: black;
   padding: 30px;
-
-  /* position: relative; */
+  position: relative;
   right: 0;
-  margin-left: 413px;
+  margin-left: 400px;
   margin-right: 0;
 }
 
@@ -23,7 +22,7 @@ input[name=css-tabs] {
 }
 
 a {
-  color: #6fffd2;
+  color: #ffffff;
 }
 
 h1 {
@@ -40,7 +39,7 @@ p {
 
 #tabs {
   padding: 0;
-  width: 1100px;
+  width: 1000px;
   margin-left: -30px;
   background: #333333;
   height: 40px;
@@ -80,12 +79,10 @@ p {
   text-transform: uppercase;
   text-align: center;
   width: 200px;
-  /* height: 100%; */
   line-height: 40px;
   margin-top: -40px;
   cursor: pointer;
   font-family: "K2D";
-  /* border-right: #ffffff solid 2px; */
 }
 
 #tabs label::before {
@@ -120,7 +117,8 @@ p {
 }
 #content {
 	position: relative;
-	/* height: 1200px; */
+	height: 1200px;
+  background-color: black;
 }
 #content::before {
 	content: "";
@@ -143,11 +141,13 @@ p {
 	border-bottom: 8px solid transparent;
 }
 #content section {
-	position: absolute;
-	transform: translateY(10px);
-	opacity: 0;
-	transition: transform 500ms, opacity 500ms;
+  position: absolute;
+  transform: translateY(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 500ms, opacity 500ms;
 }
+
 #radio1:checked ~ #content #content1,
 #radio2:checked ~ #content #content2,
 #radio3:checked ~ #content #content3,
@@ -155,17 +155,5 @@ p {
 #radio5:checked ~ #content #content5 {
   transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
 }
-
-
-
-/*
-footer {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  font-size: 13px;
-  background: #555;
-  padding: 5px 10px;
-  margin: 5px;
-} */

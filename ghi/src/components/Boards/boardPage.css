@@ -1,0 +1,102 @@
+.boardbody{
+  width: 1000px;
+}
+
+.board-page-container {
+  position: relative;
+}
+
+.cover-photo-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-photo {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  margin-top: 100px;
+}
+
+.content-container {
+  position: absolute;
+  width: 85%;
+  top: 200px;
+  left: 200px;
+
+}
+
+.BoardPageTitle {
+  color: white;
+  font-size: 36px;
+  margin-bottom: 10px;
+  position: relative;
+
+}
+
+.BoardPageDescription {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  text-align: right;
+
+}
+
+.BoardPageDescription span {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+
+}
+
+
+.BoardPageTitle span {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+
+.boardpagehr {
+  height: 3px;
+  background-color: black;
+  border: none;
+  margin: 10px 0;
+  width: 98%;
+}
+
+.deleteboard {
+  text-align: right;
+  font-family: K2D;
+  color: rgb(255, 255, 255);
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.deleteboard span {
+  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+
+.updateboard {
+  text-align: right;
+  font-family: K2D;
+  color: rgb(255, 255, 255);
+  margin-right: 20px;
+  font-size: 18px;
+
+}
+
+.updateboard span {
+  background-color: rgba(25, 159, 7, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.button {
+  align-self: right;
+  color: transparent;
+}

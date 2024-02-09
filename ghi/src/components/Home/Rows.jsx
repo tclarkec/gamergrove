@@ -1,120 +1,57 @@
-// Rows.jsx
-import React, {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Rows.css';
 import HomeGameCard from '../Cards/homeGameCard.jsx';
 
+const Rows = ({ selectedGenre, onSelectGenre }) => {
+  const [gameDataList, setGameDataList] = useState([]);
+  const navigate = useNavigate();
 
-const Rows = () => {
-    // const [games, setGames] = useState([]);
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/games');
+            const data = await response.json();
+            setGameDataList(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-    // useEffect(() => {
-    //     const fetchGames = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:8000/api/games', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({
-    //                     // Replace this with the actual game data you want to send to the backend
-    //                     name: '',
-    //                     description: '',
-    //                     rating: 5,
-    //                     background_img: ''
-    //                     // Add other fields as needed
-    //                 }),
-    //             });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    //             if (response.ok) {
-    //                 const data = await response.json();
-    //                 setGames(data);
-    //             } else {
-    //                 console.error('Could not fetch those games for you');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching games:', error);
-    //         }
-    //     };
+  const organizeGamesByGenre = () => {
+    const organizedGames = {};
+    gameDataList.forEach((game) => {
+      if (!organizedGames[game.genre]) {
+        organizedGames[game.genre] = [];
+      }
+      if (!selectedGenre || game.genre === selectedGenre) {
+        organizedGames[game.genre].push(game);
+      }
+    });
+    return organizedGames;
+  };
 
-    //     fetchGames();
-    // }, []);
+  const organizedGamesByGenre = organizeGamesByGenre();
 
 
 
-    return (
-        <div>
-            <br />
-            <br />
+  return (
+    <div>
+      {Object.keys(organizedGamesByGenre).map((genre) => (
+        <div key={genre} className='row'>
 
-        <div className='row'>
-
-            <h3>Action Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-                <HomeGameCard />
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>Strategy Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>RPG Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>Shooter Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-
-                </div>
-            </div>
-            <div className='row'>
-
-            <h3>Adventure Games →</h3>
-            <div class="line"></div>
-            <div className='row__posters'>
-
-
-
-
-
-
-                </div>
-            </div>
-           </div>
-
-
-    );
+            <h3>{`${genre} Games`}</h3>
+          <div className="line"></div>
+          <div className='row__posters'>
+            <HomeGameCard games={organizedGamesByGenre[genre].slice(0, 5)} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Rows;

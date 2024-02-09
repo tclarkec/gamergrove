@@ -1,12 +1,10 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
-from pydantic import BaseModel, ValidationError
+from psycopg import errors
+from pydantic import BaseModel
 from datetime import date
 from typing import List
-from fastapi import(HTTPException, status)
-from queries.screenshots import ScreenshotsQueries
-from queries.stores import StoresQueries
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
@@ -21,16 +19,17 @@ class GameIn(BaseModel):
     rating: float
     dates: date
     background_img: str
-    Xbox: bool = False
-    PlayStation: bool = False
-    Nintendo: bool = False
-    PC: bool = False
+    Xbox: bool
+    PlayStation: bool
+    Nintendo: bool
+    PC: bool
     rating_count: float
     rating_total: float
     genre: str
     developers: str
     rawg_pk: int
     reviews_count: int
+
 
 class GameOut(BaseModel):
     id: int
@@ -39,10 +38,10 @@ class GameOut(BaseModel):
     rating: float
     dates: date
     background_img: str
-    Xbox: bool = False
-    PlayStation: bool = False
-    Nintendo: bool = False
-    PC: bool = False
+    xbox: bool
+    playstation: bool
+    nintendo: bool
+    pc: bool
     rating_count: float
     rating_total: float
     genre: str
@@ -53,28 +52,30 @@ class GameOut(BaseModel):
 
 class GameQueries:
     def get_all_games(self) -> List[GameOut]:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        SELECT *
-                        FROM gamesdb
-                        """
-                    )
-                    rows = db.fetchall()
-                    games = []
-                    if rows:
-                        record = {}
-                        for row in rows:
-                            for i, column in enumerate(db.description):
-                                record[column.name] = row[i]
-                            games.append(GameOut(**record))
-                        return games
-                    raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail="Could not find the games in the database"
-                    )
-                
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    SELECT *
+                    FROM gamesdb
+                    """
+                )
+                rows = db.fetchall()
+                games = []
+                if rows:
+                    record = {}
+                    for row in rows:
+                        for i, column in enumerate(db.description):
+
+                            record[column.name] = row[i]
+                        games.append(GameOut(**record))
+
+                    return games
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could not find the games in the database"
+                )
+
     def get_game(self, id: int) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -99,6 +100,11 @@ class GameQueries:
                 )
 
     def create_game(self, game_dict: GameIn) -> GameOut:
+        description = game_dict["description"]
+        if "<p>" not in description[:3]:
+            description = "<p>" + description + "</p>"
+            game_dict["description"] = description
+
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 try:
@@ -142,11 +148,6 @@ class GameQueries:
                         ],
                     )
 
-                    shot = ScreenshotsQueries()
-                    shot.get_screenshots(game_dict.rawg_pk)
-                    store = StoresQueries()
-                    store.get_stores(game_dict.rawg_pk)
-
                     row = result.fetchone()
                     if row is not None:
                         record = {}
@@ -163,6 +164,7 @@ class GameQueries:
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="That game already exists in the database"
                     )
+
     def update_game(self, id: int, games_dict: GameIn) -> GameOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -193,10 +195,10 @@ class GameQueries:
                             games_dict["rating"],
                             games_dict["dates"],
                             games_dict["background_img"],
-                            games_dict["Xbox"],
-                            games_dict["PlayStation"],
-                            games_dict["Nintendo"],
-                            games_dict["PC"],
+                            games_dict["xbox"],
+                            games_dict["playstation"],
+                            games_dict["nintendo"],
+                            games_dict["pc"],
                             games_dict["rating_count"],
                             games_dict["rating_total"],
                             games_dict["genre"],
@@ -209,22 +211,6 @@ class GameQueries:
                     return GameOut(id=id, **games_dict)
                 except ValueError:
                     raise HTTPException(
-                        status_code = status.HTTP_400_BAD_REQUEST,
+                        status_code=status.HTTP_400_BAD_REQUEST,
                         detail="Error updating game"
                     )
-
-    # def delete_games(self, id: int) -> bool:
-    #     try:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as db:
-    #                 db.execute(
-    #                     """
-    #                     DELETE FROM gamesdb
-    #                     WHERE id = %s
-    #                     """,
-    #                     [id]
-    #                 )
-    #                 return True
-    #     except Exception as e:
-    #         print(e)
-    #         return False

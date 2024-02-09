@@ -1,26 +1,30 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
 from typing import List
 from pydantic import BaseModel
-from fastapi import(HTTPException, status)
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
+
 class HttpError(BaseModel):
     detail: str
+
 
 class VoteInBase(BaseModel):
     review_id: int
     upvote: bool
     downvote: bool
 
+
 class VoteInUpdate(BaseModel):
     upvote: bool
     downvote: bool
 
+
 class VoteIn(VoteInBase):
     account_id: int
+
 
 class VoteOut(BaseModel):
     id: int
@@ -28,6 +32,7 @@ class VoteOut(BaseModel):
     review_id: int
     upvote: bool
     downvote: bool
+
 
 class VoteQueries:
     def get_user_votes(self, account_id: int) -> List[VoteOut]:
@@ -142,45 +147,39 @@ class VoteQueries:
                     )
 
     def update_vote(self, id: int, vote_dict: VoteIn) -> VoteOut:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    id_check = db.execute(
-                        """
-                        SELECT * FROM votes
-                        WHERE id = %s
-                        """,
-                        [id]
-                    )
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                id_check = db.execute(
+                    """
+                    SELECT * FROM votes
+                    WHERE id = %s
+                    """,
+                    [id]
+                )
 
-                    id_row = id_check.fetchone()
-                    if id_row is None:
-                        raise HTTPException(
-                            status_code=status.HTTP_404_NOT_FOUND,
-                            detail="A vote with that id does not exist in the database"
-                        )
-
-                    account_id_check=db.execute(
-                        """
-                        UPDATE votes
-                        SET account_id = %s,
-                            review_id = %s,
-                            upvote = %s,
-                            downvote = %s
-                        WHERE id = %s AND account_id = %s
-                        """,
-                        [
-                            vote_dict["account_id"],
-                            vote_dict["review_id"],
-                            vote_dict["upvote"],
-                            vote_dict["downvote"],
-                            id,
-                            vote_dict["account_id"]
-                        ]
-                    )
-                print(account_id_check.rowcount)
-                if account_id_check.rowcount <= 0:
+                id_row = id_check.fetchone()
+                if id_row is None:
                     raise HTTPException(
-                        status_code=status.HTTP_401_UNAUTHORIZED,
-                        detail="You are attempting to update a vote that you did not create"
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="A vote with that id does not exist in the database"
                     )
-                return VoteOut(id=id, **vote_dict)
+
+                db.execute(
+                    """
+                    UPDATE votes
+                    SET account_id = %s,
+                        review_id = %s,
+                        upvote = %s,
+                        downvote = %s
+                    WHERE id = %s AND account_id = %s
+                    """,
+                    [
+                        vote_dict["account_id"],
+                        vote_dict["review_id"],
+                        vote_dict["upvote"],
+                        vote_dict["downvote"],
+                        id,
+                        vote_dict["account_id"]
+                    ]
+                )
+            return VoteOut(id=id, **vote_dict)

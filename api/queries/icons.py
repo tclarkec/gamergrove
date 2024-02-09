@@ -1,11 +1,11 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql
 from typing import List
 from pydantic import BaseModel
-from fastapi import(HTTPException, status)
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
+
 
 class IconIn(BaseModel):
     name: str
@@ -20,27 +20,27 @@ class IconOut(BaseModel):
 
 class IconQueries:
     def get_all_icons(self) -> List[IconOut]:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    db.execute(
-                        """
-                        SELECT *
-                        FROM icons
-                        """
-                    )
-                    rows = db.fetchall()
-                    icons = []
-                    if rows:
-                        record = {}
-                        for row in rows:
-                            for i, column in enumerate(db.description):
-                                record[column.name] = row[i]
-                            icons.append(IconOut(**record))
-                        return icons
-                    raise HTTPException(
-                        status_code=status.HTTP_404_NOT_FOUND,
-                        detail="Could not find the icons in the database"
-                    )
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    SELECT *
+                    FROM icons
+                    """
+                )
+                rows = db.fetchall()
+                icons = []
+                if rows:
+                    record = {}
+                    for row in rows:
+                        for i, column in enumerate(db.description):
+                            record[column.name] = row[i]
+                        icons.append(IconOut(**record))
+                    return icons
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Could not find the icons in the database"
+                )
 
     def get_icon(self, id: int) -> IconOut:
         with pool.connection() as conn:

@@ -1,9 +1,8 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
 from typing import List
 from pydantic import BaseModel
-from fastapi import(HTTPException, status)
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
