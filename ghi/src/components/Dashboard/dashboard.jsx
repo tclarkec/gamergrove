@@ -23,7 +23,9 @@ const fetchUserName = async () => {
 
   if (response.ok) {
     const data = await response.json();
+    if (data !== null) {
     return data.account.username;
+    }
   }
 };
 

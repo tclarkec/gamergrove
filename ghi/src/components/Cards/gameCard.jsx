@@ -31,6 +31,10 @@ function GameCard() {
     try {
       const response = await fetch(libraryUrl, libraryConfig);
       const libraryData = await response.json();
+
+      if (libraryData.detail) {
+        return [];
+      }
       setUserSavedGames(libraryData.map((item) => item.game_id));
 
       const gameDetailsPromises = libraryData.map((item) =>

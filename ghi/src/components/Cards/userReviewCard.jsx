@@ -41,11 +41,9 @@ function UserReviewCard() {
         const reviewsData = await response.json();
         setUserReviews(reviewsData);
       } else {
-        console.error('Error fetching user reviews:', response.status);
         setUserReviews([]); // Set an empty array in case of an error
       }
     } catch (error) {
-      console.error('Error fetching user reviews:', error);
       setUserReviews([]); // Set an empty array in case of an error
     }
   };

@@ -31,13 +31,16 @@ const fetchUserName = async () => {
 
   if (response.ok) {
     const data = await response.json();
+    if (data !== null) {
     return data.account.username;
+  }
   }
 };
 
 const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
+  if(saved_username !== undefined) {
   const accountUrl = `http://localhost:8000/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
@@ -45,6 +48,7 @@ const fetchAccount = async () => {
   if (response.ok) {
     const data = await response.json();
     return data;
+  }
   }
 };
 
@@ -110,7 +114,6 @@ function GameDetails() {
   const [boards, setBoards] = useState([]);
 const fetchBoards = async () => {
   if (!account_data || !account_data.id) {
-    console.error('Account data is undefined or missing ID.');
     return;
   }
 

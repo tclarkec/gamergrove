@@ -14,30 +14,27 @@ const Icon = () => {
       try {
         const response = await fetch(tokenUrl, fetchConfig);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const userData = await response.json();
-        const { account } = userData;
-        const { icon_id } = account;
+        if (userData !== null) {
+          const { account } = userData;
+          const { icon_id } = account;
 
-        const iconResponse = await fetch(`http://localhost:8000/api/icons/${icon_id}`);
-        if (!iconResponse.ok) {
-          throw new Error(`Error fetching icon information. Status: ${iconResponse.status}`);
+          const iconResponse = await fetch(`http://localhost:8000/api/icons/${icon_id}`);
+
+          const iconData = await iconResponse.json();
+
+          setIconUrl(iconData.icon_url);
+      }
+     } catch (error) {
+
+      }
+
         }
 
-        const iconData = await iconResponse.json();
-
-        setIconUrl(iconData.icon_url);
-      } catch (error) {
-        console.error('Error fetching user icon information:', error);
-      }
-    };
 
 
-    fetchUserData();
-  }, []);
+        fetchUserData();
+      }, []);
 
   return (
   <div>

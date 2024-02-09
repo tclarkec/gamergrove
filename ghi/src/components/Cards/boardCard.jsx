@@ -27,6 +27,9 @@ async function fetchGamesForBoard(boardId) {
     const response = await fetch(gamesUrl, gamesConfig);
     const gamesData = await response.json();
 
+    if (gamesData.detail) {
+      return [];
+    }
     const filteredGames = gamesData.filter(game => game.board_id === boardId);
     return filteredGames;
   } catch (error) {
@@ -71,6 +74,10 @@ function BoardCard() {
     try {
       const response = await fetch(boardUrl, boardConfig);
       const boardData = await response.json();
+
+      if (boardData.detail) {
+        return [];
+      }
 
       setUserSavedBoards(boardData.map((item) => item.id));
       setBoardDataList(boardData);

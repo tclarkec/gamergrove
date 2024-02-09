@@ -43,7 +43,9 @@ function AllGameCard( {games} ) {
 
   if (response.ok) {
     const data = await response.json();
-    return data.account.id;
+    if (data !== null){
+      return data.account.id;
+    }
   }
   }
 
@@ -58,6 +60,11 @@ function AllGameCard( {games} ) {
     try {
       const response = await fetch(boardUrl, boardConfig);
       const boardData = await response.json();
+
+      if (boardData.detail) {
+        return [];
+      }
+
       const boards = []
       for (const b of boardData) {
         boards.push(b)
@@ -72,7 +79,9 @@ function AllGameCard( {games} ) {
     fetchData();
     const fetchUserData = async () => {
       const userId = await fetchUserName();
+      if (userId !== undefined) {
       fetchBoardData(userId);
+      }
     }
     fetchUserData();
   }, []);

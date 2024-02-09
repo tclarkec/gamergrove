@@ -51,13 +51,16 @@ function HomeGameCard( { games }  ) {
 
   if (response.ok) {
     const data = await response.json();
+    if (data !== null) {
     return data.account.id;
+    }
   }
   }
 
   const [boardDataList, setBoardDataList] = useState([]);
 
   const fetchBoardData = async (userId) => {
+    if (userId !== undefined) {
     const boardUrl = `http://localhost:8000/api/boards/users/${userId}`;
     const boardConfig = {
       credentials: 'include',
@@ -72,6 +75,7 @@ function HomeGameCard( { games }  ) {
       }
       setBoardDataList(boards);
     } catch (error) {
+    }
     }
   };
 

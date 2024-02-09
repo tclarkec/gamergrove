@@ -39,10 +39,10 @@ function ReviewCard() {
         const reviewsData = await response.json();
         setUserReviews(reviewsData);
       } else {
-        console.error('Error fetching user reviews:', response.status);
+
       }
     } catch (error) {
-      console.error('Error fetching user reviews:', error);
+      
     }
   };
 
@@ -105,7 +105,7 @@ function ReviewCard() {
   }
 
   const handleLinkClick = (e) => {
-    
+
     e.stopPropagation();
   };
 

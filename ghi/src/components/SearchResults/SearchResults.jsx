@@ -32,7 +32,9 @@ const SearchResults = () => {
 
     if (response.ok) {
         const data = await response.json();
-        return data.account.id;
+        if (data!== null){
+          return data.account.id;
+        }
     }
     }
 
@@ -55,6 +57,11 @@ const SearchResults = () => {
         try {
         const response = await fetch(boardUrl, boardConfig);
         const boardData = await response.json();
+
+        if (boardData.detail) {
+          return [];
+        }
+
         const boards = []
         for (const b of boardData) {
             boards.push(b)
@@ -88,7 +95,9 @@ useEffect(() => {
     fetchData();
     const fetchUserData = async () => {
       const userId = await fetchUserName();
-      fetchBoardData(userId);
+      if (userId !== undefined){
+        fetchBoardData(userId);
+      }
     }
     fetchUserData();
   }, []);
