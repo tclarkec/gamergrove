@@ -1,8 +1,6 @@
-import logo from '../../assets/logo.gif';
-import Menus from '../Home/Menu.jsx';
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Nav from '../Home/Nav.jsx';
@@ -299,7 +297,7 @@ useEffect(() => {
                             animationTimeout={200}
                             animateSubMenuChange={false}
                             >
-                            {/* Populate your menu here */}
+
                             <MenuItem className='menuitem' onItemClick={handleReviewClick} data={gameData.id}>
                                 Review
                             </MenuItem>

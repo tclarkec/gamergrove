@@ -115,7 +115,6 @@
     text-align: right;
 }
 
-/* Add other styles as needed based on your design */
 .edit-form-container {
   position: fixed;
   top: 50%;
@@ -125,5 +124,5 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1000; /* Ensure the form is on top of other elements */
+  z-index: 1000; 
 }

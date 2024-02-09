@@ -148,19 +148,6 @@ function Settings() {
 
   return (
     <div>
-      {/* <button
-        onClick={() => {
-          navigate('/');
-        }}
-        style={{
-          position: 'absolute',
-          top: '0',
-          left: '0',
-          margin: '10px',
-        }}
-      >
-        Back to Homepage
-      </button> */}
       <div style={{ alignItems: 'center' }}>
         <div className="settingscard">
           <div className="settingscard">

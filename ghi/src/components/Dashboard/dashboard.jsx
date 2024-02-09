@@ -39,8 +39,6 @@ function Dashboard() {
       <main>
         <h1 >{saved_username}'s Dashboard 🎛️ 🖥️ 📟</h1>
 
-        {/* <button class='boardbutton' onclick="alert('Button clicked!')" >Click me</button> */}
-
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />
         <input id="radio3" type="radio" name="css-tabs" />

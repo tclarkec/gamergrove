@@ -9,8 +9,6 @@
             padding-right: 40px;
         }
 .link-container {
-            /* margin-right: 10px; */
-            /* margin-left: 10px; */
             margin-top: 40px;
 
         }
@@ -39,7 +37,6 @@
 
 .card-photo {
     flex: 1;
-    /* overflow: hidden; */
 }
 
 .card-photo img {
@@ -62,11 +59,7 @@
     font-family: 'K2D';
     position: relative;
     text-align: right;
-
-    /* width: 50%;
-    height: 50%; */
     font-size: 12px;
-    /* align-items: center; */
 }
 
 .card-title {
@@ -74,7 +67,6 @@
     text-align: center;
     font-size: 15px;
     margin: 0;
-    /* padding-right: 45px; */
     color: white;
     margin-top: 40px;
 }

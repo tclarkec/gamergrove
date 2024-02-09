@@ -132,26 +132,14 @@ const Nav = () => {
                 }
                 const postGames = await fetch(gamesUrl, fetchConfig);
                 if (postGames.ok) {
-                  // const screenshotData = {}
-                  // screenshotData.rawg_pk = gameData.rawg_pk
+
                   const screenshotUrl = `http://localhost:8000/api/screenshots/${gameData.rawg_pk}`
-                  // const screenshotFetchConfig = {
-                  //   method: 'get',
-                  //   body: JSON.stringify(screenshotData),
-                  //   headers: {
-                  //     "Content-Type": "application/json"
-                  //   }
-                  // }
+
                   const screenshotResults = await fetch(screenshotUrl)
 
                   const storesUrl = `http://localhost:8000/api/stores/${gameData.rawg_pk}`
                   const storeResults = await fetch(storesUrl)
-                  // const storeData = {}
-                  // storeData.rawg_pk = gameData.rawg_pk
-                  // const storeFetchConfig = {
-                  //   method: 'get',
-                  //   body: JSON.stringify(storeData)
-                  // }
+
                 }
               } catch(error) {
                 continue
@@ -183,7 +171,7 @@ const Nav = () => {
     };
   }, [showDropdown]);
 
-  // Prevent the window click event from triggering when clicking inside the dropdown
+  
   const handleDropdownClick = () => {
     setShowDropdown(true);
   };
@@ -219,8 +207,6 @@ const Nav = () => {
       <nav>
         <div className='nav__contents'>
           <div className='ncontainer expanded'>
-            {/* <Icon /> */}
-
             <form onSubmit={searchGames}>
               <input onChange={handleSearchChange} placeholder='Search for game titles...' className='js-search' type='text' />
               <i className='fa fa-search'></i>
@@ -274,7 +260,7 @@ const Nav = () => {
           <div
             ref={avatarContainerRef}
             className='nav__avatar-container'
-            onClick={handleDropdownClick} // Change to handleDropdownClick
+            onClick={handleDropdownClick}
           >
             <Icon />
             {showDropdown && (

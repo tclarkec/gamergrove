@@ -1,12 +1,10 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
-from pydantic import BaseModel, ValidationError
+from psycopg import errors
+from pydantic import BaseModel
 from datetime import date
 from typing import List
-from fastapi import(HTTPException, status)
-from queries.screenshots import ScreenshotsQueries
-from queries.stores import StoresQueries
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
@@ -31,6 +29,7 @@ class GameIn(BaseModel):
     developers: str
     rawg_pk: int
     reviews_count: int
+
 
 class GameOut(BaseModel):
     id: int
@@ -149,11 +148,6 @@ class GameQueries:
                         ],
                     )
 
-                    # shot = ScreenshotsQueries()
-                    # shot.get_screenshots(game_dict.rawg_pk)
-                    # store = StoresQueries()
-                    # store.get_stores(game_dict.rawg_pk)
-
                     row = result.fetchone()
                     if row is not None:
                         record = {}
@@ -220,19 +214,3 @@ class GameQueries:
                         status_code=status.HTTP_400_BAD_REQUEST,
                         detail="Error updating game"
                     )
-
-    # def delete_games(self, id: int) -> bool:
-    #     try:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as db:
-    #                 db.execute(
-    #                     """
-    #                     DELETE FROM gamesdb
-    #                     WHERE id = %s
-    #                     """,
-    #                     [id]
-    #                 )
-    #                 return True
-    #     except Exception as e:
-    #         print(e)
-    #         return False

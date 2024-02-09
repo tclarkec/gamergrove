@@ -189,10 +189,6 @@ function HomeGameCard( { games }  ) {
 
 
 
-
-
-// Used games as a prop to have as a callBack in Rows, but resulted in blank screen
-// gameDataList in line 43 possibly change to games prop
 if (token) {
   return (
     <div className='hgcard-container'>

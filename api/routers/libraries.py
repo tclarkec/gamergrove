@@ -3,12 +3,11 @@ from typing import Union, List
 from authenticator import authenticator
 from queries.libraries import (
     LibraryInBase,
-    LibraryInUpdate,
     LibraryOut,
     LibraryQueries,
     HttpError
 )
-from queries.boards import(
+from queries.boards import (
     BoardQueries
 )
 
@@ -39,6 +38,7 @@ async def create_library_entry(
     created_entry = queries.create_library_entry(library_dict)
     return created_entry
 
+
 @router.get("/api/users/libraries/{account_id}", response_model=Union[List[LibraryOut], HttpError])
 async def get_library(
     queries: LibraryQueries = Depends(),
@@ -47,12 +47,14 @@ async def get_library(
     account_id = account_data['id']
     return queries.get_library(account_id)
 
+
 @router.get("/api/libraries/{id}", response_model=Union[LibraryOut,HttpError])
 async def get_library_entry(
     id: int,
     queries: LibraryQueries = Depends(),
 ):
     return queries.get_library_entry(id)
+
 
 @router.delete("/api/libraries/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_library_entry(
@@ -64,7 +66,7 @@ async def delete_library_entry(
     library_details = queries.get_library_entry(id).dict()
     board_id = library_details["board_id"]
 
-    if board_id != None:
+    if board_id is not None:
         board_dict = board_queries.get_board(board_id).dict()
         del board_dict["id"]
         board_dict["game_count"] -= 1
@@ -72,25 +74,3 @@ async def delete_library_entry(
 
     account_id = account_data["id"]
     return queries.delete_library_entry(id, account_id)
-
-# @router.put("/api/libraries/{id}/{account_id}", response_model=Union[LibraryOut, HttpError])
-# async def update_library_entry(
-#     id: int,
-#     entry: LibraryInUpdate,
-#     queries: LibraryQueries = Depends(),
-#     account_data: dict = Depends(authenticator.get_current_account_data)
-# ):
-#     library_details = queries.get_library_entry(id).dict()
-
-#     account_id = account_data["id"]
-#     game_id = library_details["game_id"]
-#     board_id = library_details["board_id"]
-
-#     library_dict = entry.dict()
-#     library_dict["account_id"] = account_id
-#     library_dict["game_id"] = game_id
-#     library_dict["board_id"] = board_id
-
-
-#     updated_entry = queries.update_library_entry(id,library_dict)
-#     return updated_entry

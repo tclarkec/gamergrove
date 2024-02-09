@@ -11,7 +11,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 10px;
     margin-top: 25px;
-/*     display: flex; */
 }
 
 .lurcard-content {
@@ -38,9 +37,8 @@
 
 .fixed-element {
     position: fixed;
-    top: 50px; /* Adjust the top position as needed */
-    left: 20px; /* Adjust the left position as needed */
-    /* Additional styling if necessary */
+    top: 50px;
+    left: 20px;
 }
 
 .lurcard-details {
@@ -64,7 +62,6 @@
     color: black;
     text-align: center;
     margin-top: 10px;
-    /* margin-bottom: -30px; */
     font-family: 'K2D';
 
 }

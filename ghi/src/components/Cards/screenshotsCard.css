@@ -4,9 +4,6 @@ body {
     background: black;
 }
 
-
-
-
 .side-by-side {
             display: flex;
             justify-content: flex-end;
@@ -32,7 +29,6 @@ body {
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 10px;
-    /* opacity: .75; */
 
 }
 

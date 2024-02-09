@@ -22,17 +22,6 @@
   box-shadow: rgba(245, 20, 20, 0.425) 0px 50px 100px -20px, rgba(255, 255, 255, 0.671) 0px 30px 60px -30px, rgba(214, 214, 214, 0.54) 0px -2px 6px 0px inset;
 }
 
-/* .board-game-card {
-  background-color: #353536;
-  margin: 0px auto;
-  padding: 15px;
-  width: 330px;
-  height: auto;
-  transition-duration: 2s;
-  border-radius: 20px;
-  margin-top: 50px;
-} */
-
 .board-game-card:hover {
   transition-duration: 1s;
   box-shadow: rgba(245, 20, 20, 0.425) 0px 50px 100px -20px, rgba(255, 255, 255, 0.671) 0px 30px 60px -30px, rgba(214, 214, 214, 0.54) 0px -2px 6px 0px inset;

@@ -1,30 +1,35 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
 from typing import List
 from pydantic import BaseModel
-from fastapi import(HTTPException, status)
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
 
+
 class HttpError(BaseModel):
     detail: str
+
 
 class ReplyInBase(BaseModel):
     body: str
     review_id: int
 
+
 class ReplyInUpdate(BaseModel):
     body: str
 
+
 class ReplyIn(ReplyInBase):
     account_id: int
+
 
 class ReplyOut(BaseModel):
     id: int
     body: str
     review_id: int
     account_id: int
+
 
 class ReplyQueries:
     def get_user_replies(self, account_id: int) -> List[ReplyOut]:
@@ -52,6 +57,7 @@ class ReplyQueries:
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="No replies written by this user"
                 )
+
     def get_review_replies(self, review_id: int) -> List[ReplyOut]:
         with pool.connection() as conn:
             with conn.cursor() as db:
@@ -135,39 +141,39 @@ class ReplyQueries:
                     )
 
     def delete_reply(self, id: int, account_id: int) -> bool:
-            with pool.connection() as conn:
-                with conn.cursor() as db:
-                    id_check = db.execute(
-                        """
-                        SELECT * FROM replies
-                        WHERE id = %s
-                        """,
-                        [id]
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                id_check = db.execute(
+                    """
+                    SELECT * FROM replies
+                    WHERE id = %s
+                    """,
+                    [id]
+                )
+
+                id_row = id_check.fetchone()
+                if id_row is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_404_NOT_FOUND,
+                        detail="A reply with that id does not exist in the database"
                     )
 
-                    id_row = id_check.fetchone()
-                    if id_row is None:
-                        raise HTTPException(
-                            status_code=status.HTTP_404_NOT_FOUND,
-                            detail="A reply with that id does not exist in the database"
-                        )
-
-                    account_id_check = db.execute(
-                        """
-                        DELETE FROM replies
-                        WHERE id = %s AND account_id = %s
-                        """,
-                        [
-                            id,
-                            account_id
-                        ]
+                account_id_check = db.execute(
+                    """
+                    DELETE FROM replies
+                    WHERE id = %s AND account_id = %s
+                    """,
+                    [
+                        id,
+                        account_id
+                    ]
+                )
+                if account_id_check.rowcount == 0:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="You are attempting to delete a reply that you did not create"
                     )
-                    if account_id_check.rowcount == 0:
-                        raise HTTPException(
-                            status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="You are attempting to delete a reply that you did not create"
-                        )
-                    return True
+                return True
 
     def update_reply(self, id: int, reply_dict: ReplyIn) -> ReplyOut:
         with pool.connection() as conn:

@@ -10,8 +10,8 @@
     background-color: #353536;
     margin: 0px;
     padding: 15px;
-    width: calc(20% - 15px); /* 100% / 7 - gap */
-    min-width: 200px; /* Set a minimum width for the card */
+    width: calc(20% - 15px);
+    min-width: 200px; 
     height: 320px;
     transition-duration: 2s;
     border-radius: 20px;

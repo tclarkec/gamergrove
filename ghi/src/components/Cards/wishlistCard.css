@@ -9,7 +9,6 @@
   z-index: 1;
   position: relative;
   right: -210px;
-  /* top: 15px; */
   margin-right: 10px;
   gap: 1px;
 }
@@ -55,13 +54,8 @@
 
 .wcard-content {
   display: flex;
-  align-items: center; /* Align items vertically in the center */
+  align-items: center;
 }
-
-/* .wcard-photo {
-  flex: 1;
-  overflow: hidden;
-} */
 
 .wcard-photo img {
   width: 200px;

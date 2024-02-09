@@ -1,4 +1,4 @@
-from fastapi import (APIRouter, Depends, Request, Response)
+from fastapi import (APIRouter, Depends)
 from typing import Union, List
 from queries.replies import (
     ReplyInBase,
@@ -7,18 +7,17 @@ from queries.replies import (
     ReplyQueries,
     HttpError
     )
-from queries.reviews import(
+from queries.reviews import (
     ReviewQueries
 )
 from authenticator import authenticator
 
 router = APIRouter()
 
+
 @router.post("/api/replies", response_model=Union[ReplyOut, HttpError])
 async def create_reply(
     reply: ReplyInBase,
-    request: Request,
-    response: Response,
     queries: ReplyQueries = Depends(),
     review_queries: ReviewQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
@@ -36,6 +35,7 @@ async def create_reply(
     created_reply = queries.create_reply(reply_dict)
     return created_reply
 
+
 @router.get("/api/replies/users/{account_id}", response_model=Union[List[ReplyOut], HttpError])
 async def get_user_replies(
     queries: ReplyQueries = Depends(),
@@ -44,6 +44,7 @@ async def get_user_replies(
     account_id = account_data["id"]
     return queries.get_user_replies(account_id)
 
+
 @router.get("/api/replies/reviews/{review_id}", response_model=Union[List[ReplyOut], HttpError])
 async def get_review_replies(
     review_id: int,
@@ -51,12 +52,14 @@ async def get_review_replies(
 ):
     return queries.get_review_replies(review_id)
 
+
 @router.get("/api/replies/{id}", response_model=ReplyOut)
 async def get_reply(
     id: int,
     queries: ReplyQueries = Depends(),
 ):
     return queries.get_reply(id)
+
 
 @router.delete("/api/replies/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_reply(
@@ -80,7 +83,6 @@ async def delete_reply(
 async def update_reply(
     id: int,
     reply: ReplyInUpdate,
-    response: Response,
     queries: ReplyQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data)
 ):
@@ -93,5 +95,5 @@ async def update_reply(
     reply_dict["account_id"] = account_id
     reply_dict["review_id"] = review_id
 
-    updated_reply = queries.update_reply(id,reply_dict)
+    updated_reply = queries.update_reply(id, reply_dict)
     return updated_reply

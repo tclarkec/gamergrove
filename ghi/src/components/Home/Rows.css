@@ -19,7 +19,7 @@
   margin-bottom: 20px;
 }
 
-/* Below is what hides the scrollbar */
+
 .row__posters::-webkit-scrollbar {
   display: none;
 }
@@ -30,7 +30,7 @@
   padding-left: 10px;
   width: 23%;
   transition: transform 450ms;
-  /* z-index: 1; */
+
 }
 
 .row__poster:hover {

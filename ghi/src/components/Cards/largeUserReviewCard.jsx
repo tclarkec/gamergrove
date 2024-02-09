@@ -87,20 +87,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
       }
 
 
-
-      // if (response.status === 404) {
-      //   console.warn(`No votes found for user`);
-
-      // } else if (response.ok && votesData[votesData.length-1]["upvote"] === true) {
-    //     setIsUpvoted(true);
-    //   } else if (response.ok && votesData[votesData.length-1]["downvote"] === true) {
-    //     setIsDownvoted(true);
-    //   }
-    // } catch (error) {
-    //   console.error('Error fetching votes', error);
-    // } finally {
-    //   setIsLoading(false);
-
   };
 
   useEffect(() => {

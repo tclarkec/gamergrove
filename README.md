@@ -11,8 +11,10 @@ GamerGrove – a grove for gamers.
 - [SQL model](docs/data-model.md)
 - [GHI](docs/ghi.md)
 - [Integrations](docs/integrations.md)
+
 ## Intended market
 We are targeting gamer enthusiasts who are looking for an easy and user-friendly way to organize, procure, inspect, and collaborate on games they have interest in.
+
 ## Functionality
 - Visitors to the site can:
   - browse games that are already loaded into the site by platform and
@@ -31,8 +33,11 @@ We are targeting gamer enthusiasts who are looking for an easy and user-friendly
   - upvote/downvote reviews for a game
   - can access any of the above features from either a user dashboard or
    an 'options' pointer menu
+
 ## Project Initialization
 To fully enjoy this application on your local machine, please make sure to follow these steps:
+pull from branch
+make env
 1. Clone the repository down to your local machine
 2. CD into the new project directory
 3. Run `docker volume create postgres-data`
@@ -47,3 +52,6 @@ To fully enjoy this application on your local machine, please make sure to follo
 12. Run `npm install react-slick slick-carousel`
 13. Run `npm create vite@latest`
 14. Exit the container's CLI, and enjoy GamerGrove to its fullest!
+
+To run this application successfully, you will need the following 3rd Party API source:
+- https://rawg.io/apidocs

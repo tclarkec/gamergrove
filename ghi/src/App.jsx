@@ -1,7 +1,4 @@
-// This makes VSCode check types as if you are using TypeScript
-//@ts-check
 import React from 'react';
-import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
 

@@ -10,10 +10,10 @@ const StarRating = ({ rating, onStarClick }) => {
           style={{
             cursor: 'pointer',
             color: star <= rating ? 'gold' : 'gray',
-            fontSize: '24px', // Adjust the font size to make stars bigger
+            fontSize: '24px', 
           }}
         >
-          &#9733; {/* Unicode star character */}
+          &#9733;
         </span>
       ))}
     </div>

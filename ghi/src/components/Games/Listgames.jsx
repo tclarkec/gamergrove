@@ -77,10 +77,6 @@ const Listgames = () => {
 
         {games.length > 0 && <AllGameCard games={games} />}
 
-        {/* <h1>{genre}</h1>
-        {games.map((g) => (
-          <h3 key={g.id}>{g.name}</h3>
-        ))} */}
       </div>
       <br />
       <h5 style={{textAlign: 'center', fontFamily: 'K2D', marginLeft: '100px'}}>End of Results</h5>

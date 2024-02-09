@@ -1,11 +1,11 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql, errors
 from pydantic import BaseModel
 from typing import List
-from fastapi import(HTTPException, status)
+from fastapi import (HTTPException, status)
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))
+
 
 class HttpError(BaseModel):
     detail: str
@@ -154,7 +154,6 @@ class BoardQueries:
                         detail="You are attempting to delete a board that you did not create"
                     )
                 return True
-
 
     def update_board(self, id: int, board_dict: BoardIn) -> BoardOut:
         with pool.connection() as conn:

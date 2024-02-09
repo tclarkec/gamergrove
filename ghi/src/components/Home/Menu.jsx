@@ -36,16 +36,6 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     useEffect(() => {
         updateMenuWidth();
         window.addEventListener('resize', updateMenuWidth);
@@ -83,14 +73,6 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
                     </ul>
 
 
-                    {/* <ul>
-                        {platforms.map((platform) => (
-                            <li key={platform} onClick={() => handlePlatformClick(platform)}>
-                                - {platform}
-                            </li>
-                        ))}
-                    </ul> */}
-
 
                     <div className="small-space"></div>
                     <p>Genres</p>
@@ -103,11 +85,7 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
                             )
 
                         })}
-                        {/* <li onClick={() => onSelectGenre('Action')}>- Action</li>
-                        <li onClick={() => onSelectGenre('Strategy')}>- Strategy</li>
-                        <li onClick={() => onSelectGenre('RPG')}>- RPG</li>
-                        <li onClick={() => onSelectGenre('Shooter')}>- Shooter</li>
-                        <li onClick={() => onSelectGenre('Adventure')}>- Adventure</li> */}
+
                     </ul>
                     <br />
                     <br />

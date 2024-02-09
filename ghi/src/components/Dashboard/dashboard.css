@@ -79,12 +79,10 @@ p {
   text-transform: uppercase;
   text-align: center;
   width: 200px;
-  /* height: 100%; */
   line-height: 40px;
   margin-top: -40px;
   cursor: pointer;
   font-family: "K2D";
-  /* border-right: #ffffff solid 2px; */
 }
 
 #tabs label::before {
@@ -146,7 +144,7 @@ p {
   position: absolute;
   transform: translateY(10px);
   opacity: 0;
-  pointer-events: none; /* Add this line to prevent click events on hidden tabs */
+  pointer-events: none;
   transition: transform 500ms, opacity 500ms;
 }
 
@@ -157,18 +155,5 @@ p {
 #radio5:checked ~ #content #content5 {
   transform: translateY(0);
   opacity: 1;
-  pointer-events: auto; /* Reset pointer-events for visible tabs */
+  pointer-events: auto;
 }
-
-
-
-/*
-footer {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  font-size: 13px;
-  background: #555;
-  padding: 5px 10px;
-  margin: 5px;
-} */

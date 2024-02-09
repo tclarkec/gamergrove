@@ -42,7 +42,7 @@ function ReviewCard() {
 
       }
     } catch (error) {
-      
+
     }
   };
 
@@ -124,7 +124,7 @@ function ReviewCard() {
               <hr className="rsolid" />
               <div className="side-by-side">
                 <div className="link-container">
-                  {/* Additional content here */}
+  
                 </div>
               </div>
             </div>

@@ -1,6 +1,5 @@
 import os
 from psycopg_pool import ConnectionPool
-from psycopg import connect, sql
 
 
 pool = ConnectionPool(conninfo=os.environ.get("DATABASE_URL"))

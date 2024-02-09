@@ -47,13 +47,12 @@ class ScreenshotsQueries:
             screenshots_list.extend(self.retrieve_screenshots_from_api(rawg_pk))
 
         if not screenshots_list:
-            logging.debug("No screenshots found in both database and API.")
+
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="No screenshots found in both database and API"
             )
 
-        logging.debug("Returning Screenshots: %s", screenshots_list)
         return screenshots_list
 
     def retrieve_screenshots_from_database(self, rawg_pk: int) -> List[ScreenshotsOut]:
@@ -68,7 +67,7 @@ class ScreenshotsQueries:
                         FROM screenshots
                         WHERE rawg_pk = %s;
                         """,
-                        [str(rawg_pk)],  # Convert rawg_pk to string
+                        [str(rawg_pk)], 
                     )
                     rows = db.fetchall()
 
@@ -100,7 +99,6 @@ class ScreenshotsQueries:
                             for screenshot in screenshots:
                                 image_url = screenshot.get("image")
 
-                                # Check if the entry already exists in the database
                                 db.execute(
                                     """
                                     SELECT id

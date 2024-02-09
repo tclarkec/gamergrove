@@ -95,26 +95,13 @@ const Spinner = () => {
                 }
                 const postGames = await fetch(gamesUrl, fetchConfig);
                 if (postGames.ok) {
-                    // const screenshotData = {}
-                    // screenshotData.rawg_pk = gameData.rawg_pk
+
                     const screenshotUrl = `http://localhost:8000/api/screenshots/${gameData.rawg_pk}`
-                    // const screenshotFetchConfig = {
-                    //   method: 'get',
-                    //   body: JSON.stringify(screenshotData),
-                    //   headers: {
-                    //     "Content-Type": "application/json"
-                    //   }
-                    // }
+
                     const screenshotResults = await fetch(screenshotUrl)
 
                     const storesUrl = `http://localhost:8000/api/stores/${gameData.rawg_pk}`
                     const storeResults = await fetch(storesUrl)
-                    // const storeData = {}
-                    // storeData.rawg_pk = gameData.rawg_pk
-                    // const storeFetchConfig = {
-                    //   method: 'get',
-                    //   body: JSON.stringify(storeData)
-                    // }
                 }
 
 

@@ -167,7 +167,6 @@ function SignUpForm() {
                       <div
                         key={icon.id}
                         className="text-center"
-                        // style={{ margin: '20px', marginBottom: '15px'}}
                       >
                         <p>{String.fromCharCode(65 + index)}</p>
                         <img

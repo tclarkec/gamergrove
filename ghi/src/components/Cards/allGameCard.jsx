@@ -185,9 +185,6 @@ function AllGameCard( {games} ) {
   }
 
 
-
-// Used games as a prop to have as a callBack in Rows, but resulted in blank screen
-// gameDataList in line 43 possibly change to games prop
 if (token) {
   return(
   <div className='agcard-container'>
@@ -278,7 +275,6 @@ if (token) {
                   animationTimeout={200}
                   animateSubMenuChange={false}
                 >
-                  {/* Populate your menu here */}
                   <MenuItem className='menuitem' onItemClick={handleReviewClick} data={gameData.id}>
                     Review
                   </MenuItem>

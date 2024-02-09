@@ -12,7 +12,7 @@ from queries.games import (
     GameQueries
 )
 from authenticator import authenticator
-from typing import List, Union
+from typing import List
 
 
 router = APIRouter()
@@ -45,6 +45,7 @@ async def get_user_reviews(
     account_id = authenticate_user(review_data)
     return queries.get_user_reviews(account_id)
 
+
 @router.get("/api/reviews/{id}", response_model=Union[ReviewOut, HttpError])
 async def get_review(
     id: int,
@@ -52,10 +53,10 @@ async def get_review(
 ):
     return queries.get_review(id)
 
+
 @router.post("/api/reviews", response_model=Union[ReviewOut, HttpError])
 async def create_review(
     review: ReviewInBase,
-    response: Response,
     queries: ReviewQueries = Depends(),
     games_queries: GameQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
@@ -82,6 +83,7 @@ async def create_review(
 
     created_review = queries.create_review(review_dict)
     return created_review
+
 
 @router.delete("/api/reviews/{id}/{account_id}", response_model=Union[bool, HttpError])
 async def delete_review(
@@ -110,9 +112,8 @@ async def delete_review(
 async def update_review(
     id: int,
     review: ReviewInUpdate,
-    response: Response,
     queries: ReviewQueries = Depends(),
-    games_queries: GameQueries= Depends(),
+    games_queries: GameQueries = Depends(),
     review_data: dict = Depends(authenticator.get_current_account_data),
 ):
     review_dict = review.dict()
@@ -139,9 +140,6 @@ async def update_review(
     review_dict["game_id"] = game_id
     review_dict["replies_count"] = replies_count
     review_dict["upvote_count"] = upvote_count
-
-
-
 
     updated_review = queries.update_review(id, review_dict)
     return updated_review

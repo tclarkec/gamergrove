@@ -6,8 +6,6 @@ from fastapi import (HTTPException, status)
 import requests
 import logging
 
-# store id of 1 = PC,2 = XBOX,3 = PlayStation,6 = Nintendo
-
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -23,7 +21,6 @@ class StoresIn(BaseModel):
     url: str
     platform: str
     rawg_pk: int
-
 
 
 class StoresOut(BaseModel):
@@ -61,8 +58,8 @@ class StoresQueries:
                         logging.debug("stores from Database: %s", stores_list)
 
         except Exception as db_error:
+            logging.error(db_error)
 
-        # If not found in the database or not enough in the database, make an API call to Rawg
             api_url = f"https://api.rawg.io/api/games/{rawg_pk}/stores?key={api_key}"
             response = requests.get(api_url)
 
@@ -91,25 +88,6 @@ class StoresQueries:
                                         platform = "PlayStation"
                                     elif store_id == 6:
                                         platform = "Nintendo"
-
-
-                                    # print("store_url:", store_url)
-                                    # print("platform", platform)
-                                    # print("rawg_pk", rawg_pk)
-
-                                    # Check if the entry already exists in the database
-                                    # cur.execute(
-                                    #     """
-                                    #     SELECT id
-                                    #     FROM storesdb
-                                    #     WHERE platform = %s;
-                                    #     """,
-                                    #     [platform],
-                                    # )
-                                    # existing_store = cur.fetchone()
-
-                                    # if existing_store:
-                                    #     continue
 
                                     cur.execute(
                                         """
@@ -142,19 +120,3 @@ class StoresQueries:
 
         logging.debug("Returning stores: %s", stores_list)
         return stores_list
-
-    # def delete_stores(self, id: int) -> bool:
-    #     try:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as db:
-    #                 db.execute(
-    #                     """
-    #                     DELETE FROM stores
-    #                     WHERE id = %s
-    #                     """,
-    #                     [id]
-    #                 )
-    #                 return True
-    #     except Exception as e:
-    #         print(e)
-    #         return False

@@ -124,7 +124,7 @@ return (
         <div key={`${game.id}-${index}`} className="wishlistcard">
           <div className="wcard-content">
             <div className="wcard-details">
-              {/* <div className="wcard-item"> */}
+
                 <div className='wcontent-capsules'>
                   <img
                       className='icon2'
@@ -201,7 +201,7 @@ return (
                 </div>
               </div>
             </div>
-          // // </div>
+        
       ))}
     </div>
   );

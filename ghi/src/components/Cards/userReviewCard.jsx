@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './userReviewCard.css';
-import StarRating from '../GameDetails/StarRating'; // Make sure to adjust the path based on your project structure
+import StarRating from '../GameDetails/StarRating';
 import {useNavigate} from 'react-router-dom';
 
 async function fetchAccountId() {
@@ -41,10 +41,10 @@ function UserReviewCard() {
         const reviewsData = await response.json();
         setUserReviews(reviewsData);
       } else {
-        setUserReviews([]); // Set an empty array in case of an error
+        setUserReviews([]);
       }
     } catch (error) {
-      setUserReviews([]); // Set an empty array in case of an error
+      setUserReviews([]);
     }
   };
 
@@ -76,9 +76,7 @@ function UserReviewCard() {
             </div>
             <div className="urline"></div>
             <div className="urcard-content">
-              {/* <div className="urcard-photo">
-                <img src="https://www.shareicon.net/data/512x512/2016/08/18/809170_user_512x512.png" alt="User" />
-              </div> */}
+
               <div className="urcard-details" style={{ color: 'black', flex: '2', textAlign: 'right' }}>
                 <p>{review.body}</p>
                 {review.rating && (
@@ -100,12 +98,6 @@ function UserReviewCard() {
                 )}
               </div>
             </div>
-            {/* <div>
-              <img className="thumbs-up" src="https://i.postimg.cc/N0md97zp/thumbsup.png" alt="Thumbs Up" />
-              <p className="urp">34</p>
-              <img className="thumbs-down" src="https://i.postimg.cc/m2W27bkj/thumbsdown.png" alt="Thumbs Down" />
-              <p className="urp2">13</p>
-            </div> */}
           </div>
         ))
       )}
