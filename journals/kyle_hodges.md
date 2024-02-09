@@ -137,16 +137,22 @@ Today I learned: How to map links and route paths from data sets and how to styl
 
 ### February 7, 2024
 
-Today I worked on:
+Today I worked on: Fixing the logic for upvote or downvote on reviews
 
-Today I learned:
+I was able to get the vote buttons to transition in color and remain only for a specific review. I also routed several of the buttons on the pointer menu and programmed the logic to display the boards a user has created.
+
+Today I learned: Hash mapping on web pages is not the easiest thing to do.  Passing in state and using useLocation is a slick way of gettign data from one component to another.
 
 
 ### February 8, 2024
 
-Today I worked on:
+Today I worked on: Platfom side bar links, Vote button counter
 
-Today I learned:
+Cam and I worked on gettign the links in the nav bar to platforms working appropriately where they filter games based on the platform the game is available on.  Additionally, I helped each member of the team solve some bugs they were encountering and finally fixed the vote logic to not increment the vote count every time a user presses the button.  Essentially making it to where each user gets one counted vote per review.
+
+Lastly I began to work on unit-testing.
+
+Today I learned: That logiclaly handeling the user input on the front end with state variables is easy to prevent un-neccessary calls to the backend.
 
 
 ### February 9, 2024
