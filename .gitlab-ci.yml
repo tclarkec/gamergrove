@@ -18,12 +18,12 @@ tests:
         - pip install -r requirements.txt
         - python -m pytest
         # Run unit tests
-api-unit-tests-job:
-    variables:
-        DATABASE_URL: '${DATABASE_URL_FROM_ENV_FILE}'
-        CORS_HOST: '${CORS_HOST}'
-        SIGNING_KEY: '${SIGNING_KEY_FROM_ENV_FILE}'
-        API_KEY: '${RAWG_API_KEY}'
+    api-unit-tests-job:
+        variables:
+            DATABASE_URL: '${DATABASE_URL_FROM_ENV_FILE}'
+            CORS_HOST: '${CORS_HOST}'
+            SIGNING_KEY: '${SIGNING_KEY_FROM_ENV_FILE}'
+            API_KEY: '${RAWG_API_KEY}'
 
 
 # # Build API Image:
