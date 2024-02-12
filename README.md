@@ -1,10 +1,16 @@
 # GamerGrove
-- Clarke Carpenter
 - Austin Kim
-- Kyle Hodges
 - Cameron Ross
+- Clarke Carpenter
+- Kyle Hodges
 
 GamerGrove – a grove for gamers.
+
+## UI Screenshots For Code Sample for Airbnb Reviewers
+
+(![Alt text](<User Dashboard Created Boards.png>))
+![Alt text](<Games Added to Board.png>)
+
 
 ## Design
 - [API design](docs/apis.md)

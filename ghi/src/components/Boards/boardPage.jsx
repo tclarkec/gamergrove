@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-
 import './boardPage.css';
 import '../Cards/boardGameCard.css'
 import SideMenu from '../Home/Menu';
@@ -86,7 +85,6 @@ async function fetchUserName() {
 
 function BoardPage() {
   const { id: boardId } = useParams();
-  const navigate = useNavigate();
   const [boardData, setBoardData] = useState(null);
   const [gamesData, setGamesData] = useState([]);
 
