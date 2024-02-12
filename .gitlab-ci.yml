@@ -18,9 +18,9 @@ tests:
         - pip install -r requirements.txt
         - python -m pytest
         # Run unit tests
-    api-unit-tests-job:
-        variables:
-            SIGNING_KEY: 'does-not-matter'
+api-unit-tests-job:
+    variables:
+        SIGNING_KEY: 'does-not-matter'
 
 
 # # Build API Image:
