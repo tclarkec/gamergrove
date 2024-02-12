@@ -321,6 +321,11 @@ const handleReviewSubmit = async (event) => {
     }
   };
 
+  const handleScreenshotClick = (e) => {
+    const rawgPk = gameData.rawg_pk
+    url = `http://localhost:8000/api/screenshots/${rawgPk}`
+  }
+
 
   if (token) {
   return (
@@ -447,7 +452,7 @@ const handleReviewSubmit = async (event) => {
                 alt="Divider"
               />
 
-              <div className='screenshotsHero'>
+              <div className='screenshotsHero' onClick={handleScreenshotClick}>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
               <div className="container">
@@ -518,7 +523,7 @@ const handleReviewSubmit = async (event) => {
           <br />
           <br />
           <br />
-          <h3 className='gamesh1'>Games/Popular/{gameData.name}</h3>
+          <h3 className='gamesh1'>Games/{gameData.name}</h3>
           <h5 className='gamesh2'>Buy Here</h5>
           <hr className='gamessolid' />
           <button className='GDButton' style={{color:'black', width: 'fit-content'}} onClick={()=>{
@@ -609,7 +614,7 @@ const handleReviewSubmit = async (event) => {
                 alt="Divider"
               />
 
-              <div className='screenshotsHero'>
+              <div className='screenshotsHero' onClick={handleScreenshotClick}>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
               <div className="container">
