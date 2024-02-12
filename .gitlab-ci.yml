@@ -15,28 +15,42 @@ tests:
         - pip install flake8
         - flake8 api
         # Run unit tests
-        # - cd api
-        # - pip install -r requirements.txt
-        # - python -m pytest
+api-unit-tests-job:
+    image: python:3-bullseye
+    stage: test
+    needs:
+        - tests
+    variables:
+        DATABASE_URL: '${DATABASE_URL_FROM_ENV_FILE}'
+        CORS_HOST: '${CORS_HOST}'
+        SIGNING_KEY: '${SIGNING_KEY_FROM_ENV_FILE}'
+        API_KEY: '${RAWG_API_KEY}'
+    script:
+        - cd api
+        - pip install -r requirements.txt
+        - python -m pytest
+
+
+
 # # Build API Image:
 # # This job builds the API docker image and pushes it to the GitLab docker registry
 # # When this job finishes you will need to use the glv-cloud-cli reset command
 # # To deploy the new image
-# build-api-image:
-#   stage: build
-#   image: docker:git
-#   needs:
-#     - tests
-#   variables:
-#     GITLAB_IMAGE: ${CI_REGISTRY_IMAGE}/api
-#   before_script:
-#     # $CI_JOB_TOKEN is variable automatically added by Gitlab: see https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference
-#     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
-#   script:
-#     - docker build --tag $GITLAB_IMAGE:latest ./api
-#     - docker push $GITLAB_IMAGE:latest
-#   only:
-#     - main
+build-api-image:
+  stage: build
+  image: docker:git
+  needs:
+    - tests
+  variables:
+    GITLAB_IMAGE: ${CI_REGISTRY_IMAGE}/api
+  before_script:
+    # $CI_JOB_TOKEN is variable automatically added by Gitlab: see https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+  script:
+    - docker build --tag $GITLAB_IMAGE:latest ./api
+    - docker push $GITLAB_IMAGE:latest
+  only:
+    - main
 
 # # Build the React/JavaScript front-end
 # build-front-end-job:
