@@ -8,7 +8,7 @@ GamerGrove – a grove for gamers.
 
 ## UI Screenshots For Code Sample for Airbnb Reviewers
 
-(![Alt text](<User Dashboard Created Boards.png>))
+![Alt text](<User Dashboard Created Boards.png>)
 ![Alt text](<Games Added to Board.png>)
 
 
