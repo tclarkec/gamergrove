@@ -14,10 +14,15 @@ tests:
     script:
         - pip install flake8
         - flake8 api
-        # Run unit tests
         - cd api
         - pip install -r requirements.txt
         - python -m pytest
+        # Run unit tests
+    api-unit-tests-job:
+        variables:
+            SIGNING_KEY: 'does-not-matter'
+
+
 # # Build API Image:
 # # This job builds the API docker image and pushes it to the GitLab docker registry
 # # When this job finishes you will need to use the glv-cloud-cli reset command
