@@ -64,7 +64,7 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     # Don't forget to also replace PROJECT NAME in the npm run build line as well
-    PUBLIC_URL: https://gamergrove.gitlab.io/gamergrove/
+    VITE_PUBLIC_URL: https://gamer-grove-gamergrove-e4b66709a0ca1018f06e6423b03cd88c405f322b.gitlab.io/
     VITE_API_HOST: https://oct-2023-7-et-api.mod3projects.com
   script:
     - cd ghi
