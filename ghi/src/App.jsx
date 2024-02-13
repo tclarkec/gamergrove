@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
 
 import './App.css'
 import Home from './Home';
@@ -47,6 +48,7 @@ const basename = import.meta.env.VITE_PUBLIC_URL.replace(domain, '');
 function App() {
 
     return (
+        <AuthProvider baseUrl = {API_HOST}>
             <BrowserRouter basename={basename}>
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -71,6 +73,7 @@ function App() {
 
                 </Routes>
             </BrowserRouter>
+        </AuthProvider>
     )
 }
 export default App;
