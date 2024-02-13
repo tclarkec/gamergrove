@@ -25,15 +25,23 @@ const fetchUserName = async () => {
   }
 };
 
-const saved_username = await fetchUserName()
-
 function Dashboard() {
+  const[savedUsername, setSavedUsername] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const username = await fetchUserName();
+      setSavedUsername(username);
+    };
+  fetchData();
+  }, []);
+
   return (
     <div>
       <SideMenu />
       <Nav />
       <main>
-        <h1 >{saved_username}&apos;s Dashboard 🎛️ 🖥️ 📟</h1>
+        <h1 >{savedUsername}&apos;s Dashboard 🎛️ 🖥️ 📟</h1>
 
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />

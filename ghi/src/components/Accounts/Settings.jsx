@@ -17,42 +17,48 @@ const fetchUserName = async () => {
       return data.account.username;
   }
   }
-};
-
-const saved_username = await fetchUserName();
-
+}
 const fetchAccount = async () => {
-  if (saved_username!== undefined) {
-  const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${saved_username}`;
-
-  const response = await fetch(accountUrl);
-
+  if (savedUsername!== undefined) {
+    const accountUrl = `http://localhost:8000/api/accounts/${savedUsername}`;
+    const response = await fetch(accountUrl);
   if (response.ok) {
     const data = await response.json();
     return data;
-  }
+    }
   }
 };
 
-const account_data = await fetchAccount();
-
-let initialAccountData = {};
-
-if (account_data) {
-  initialAccountData = {
-    username: saved_username,
-    password: "",
-    first_name: account_data.first_name,
-    last_name: account_data.last_name,
-    email: account_data.email,
-    icon_id: account_data.icon_id,
-  };
-}
 
 function Settings() {
   const navigate = useNavigate();
 
   const [icons, setIcons] = useState([]);
+  const [savedUsername, setSavedUsername] = useState('');
+  const [accountData, setAccountData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const username = await fetchUserName();
+      setSavedUsername(username);
+      const account = await fetchAccount();
+      setAccountData(account);
+    };
+    fetchData();
+  }, []);
+
+let initialAccountData = {};
+
+if (accountData) {
+  initialAccountData = {
+    username: savedUsername,
+    password: "",
+    first_name: accountData.first_name,
+    last_name: accountData.last_name,
+    email: accountData.email,
+    icon_id: accountData.icon_id,
+  };
+}
   const [updatedAccount, setUpdatedAccount] = useState(false);
   const [accountFormData, setAccountFormData] = useState(initialAccountData);
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -94,7 +100,7 @@ function Settings() {
     event.preventDefault();
 
     if (passwordConfirm === accountFormData.password) {
-      const updateUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${account_data.id}/${saved_username}`;
+      const updateUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${accountData.id}/${savedUsername}`;
 
       const updateFetchConfig = {
         method: 'put',

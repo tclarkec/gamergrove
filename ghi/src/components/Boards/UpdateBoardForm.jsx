@@ -12,30 +12,26 @@ const fetchUserName = async () => {
 
   if (response.ok) {
     const data = await response.json();
-    if (data !== null){
-    return data.account.username;
-  }
-}
-};
-
-const saved_username = await fetchUserName();
-
-const fetchAccount = async () => {
-  if (saved_username!== undefined){
-  const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${saved_username}`;
-
-  const response = await fetch(accountUrl);
-
-  if (response.ok) {
-    const data = await response.json();
-    return data;
-  }
+    if (data !== null) {
+      return data.account.username;
+    }
   }
 };
 
-const account_data = await fetchAccount();
+const fetchAccount = async (username) => {
+  if (username !== undefined) {
+    const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${username}`;
 
-async function fetchBoards(id) {
+    const response = await fetch(accountUrl);
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  }
+};
+
+const fetchBoards = async (id) => {
   const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}`;
   const boardConfig = {
     credentials: 'include'
@@ -47,7 +43,7 @@ async function fetchBoards(id) {
     const data = await response.json();
     return data;
   }
-}
+};
 
 function UpdateBoardForm() {
   const navigate = useNavigate();
@@ -57,10 +53,18 @@ function UpdateBoardForm() {
     description: '',
     cover_photo: ''
   });
+  const [savedUsername, setSavedUsername] = useState('');
+  const [accountData, setAccountData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const username = await fetchUserName();
+        setSavedUsername(username);
+
+        const account = await fetchAccount(username);
+        setAccountData(account);
+
         const boardData = await fetchBoards(id);
 
         if (boardData) {
@@ -88,7 +92,7 @@ function UpdateBoardForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}/${account_data.id}`;
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}/${savedUsername}`;
 
     const fetchConfig = {
       method: 'put',
@@ -107,7 +111,8 @@ function UpdateBoardForm() {
       console.error('Failed to update board');
     }
   };
-    return (
+
+  return (
     <div className="container">
       <div className="row">
         <div className="offset-3 col-6">
@@ -116,15 +121,15 @@ function UpdateBoardForm() {
             <form onSubmit={handleSubmit} id="create-board">
               <div className="form-floating mb-3">
                 <label htmlFor="board_name">Title</label>
-                <input onChange={handleFormChange} required type="text" name = "board_name" id="board_name" className="form-control" value={formData.board_name}/>
+                <input onChange={handleFormChange} required type="text" name="board_name" id="board_name" className="form-control" value={formData.board_name} />
               </div>
               <div className="form-floating mb-3">
                 <label htmlFor="description">Description</label>
-                <textarea onChange={handleFormChange} required name = "description" id="description" className="form-control" value={formData.description} rows="3"></textarea>
+                <textarea onChange={handleFormChange} required name="description" id="description" className="form-control" value={formData.description} rows="3"></textarea>
               </div>
               <div className="form-floating mb-3">
                 <label htmlFor="cover_photo">Cover photo</label>
-                <input onChange={handleFormChange} required type="url" name = "cover_photo" id="cover_photo" className="form-control" value={formData.cover_photo}/>
+                <input onChange={handleFormChange} required type="url" name="cover_photo" id="cover_photo" className="form-control" value={formData.cover_photo} />
               </div>
               <button>Update</button>
             </form>
@@ -132,9 +137,7 @@ function UpdateBoardForm() {
         </div>
       </div>
     </div>
-
-
-    );
+  );
 }
 
 export default UpdateBoardForm;

@@ -11,6 +11,6 @@ export default defineConfig({
     },
   },
   esbuild: {
-    target: 'es2021', // or another version that supports top-level await
+    target: 'es2021'
   },
 });
