@@ -196,7 +196,7 @@ const fetchBoards = async () => {
     fetchLibraryData();
     }
     fetchBoards();
-  }, [, token]);
+  }, []);
 
 
   if (!gameData) {
@@ -363,8 +363,12 @@ const handleReviewSubmit = async (event) => {
   }
 
 
-  if (token) {
+
   return (
+    <div>
+    {token ?
+
+
     <div>
       <SideMenu />
       <Nav />
@@ -557,11 +561,8 @@ const handleReviewSubmit = async (event) => {
         <br />
       </div>
     </div>
-  );
-}
+    :
 
-  if (!token) {
-    return (
     <div>
       <SideMenu />
       <Nav />
@@ -745,8 +746,11 @@ const handleReviewSubmit = async (event) => {
 
 
     </div>
-  );
+
+
   }
+  </div>
+  );
 }
 
 export default GameDetails;

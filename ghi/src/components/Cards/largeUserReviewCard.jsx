@@ -92,7 +92,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
   useEffect(() => {
     fetchReviewsForGame(gameId);
     fetchVotesForUser();
-  }, [gameId, accountId]);
+  }, []);
 
   async function fetchUserName() {
   const tokenUrl = `http://localhost:8000/token`;

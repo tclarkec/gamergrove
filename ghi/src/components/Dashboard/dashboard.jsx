@@ -37,7 +37,7 @@ function Dashboard() {
       <SideMenu />
       <Nav />
       <main>
-        <h1 >{saved_username}'s Dashboard 🎛️ 🖥️ 📟</h1>
+        <h1 >{saved_username}&apos;s Dashboard 🎛️ 🖥️ 📟</h1>
 
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />

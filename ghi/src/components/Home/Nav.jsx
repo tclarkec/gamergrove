@@ -171,7 +171,7 @@ const Nav = () => {
     };
   }, [showDropdown]);
 
-  
+
   const handleDropdownClick = () => {
     setShowDropdown(true);
   };
@@ -203,7 +203,7 @@ const Nav = () => {
 
   if (token) {
     return (
-    <div className={`nav ${display && 'nav__black'}`}>
+    <div className={`nav`}>
       <nav>
         <div className='nav__contents'>
           <div className='ncontainer expanded'>
@@ -245,7 +245,7 @@ const Nav = () => {
   );
   } else {
   return (
-    <div className={`nav ${display && 'nav__black'}`}>
+    <div className={`nav`}>
       <nav>
         <div className='nav__contents'>
           <div className='ncontainer expanded'>

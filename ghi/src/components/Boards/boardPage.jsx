@@ -127,7 +127,7 @@ function BoardPage() {
 
   useEffect(() => {
     fetchData();
-  }, [boardId]);
+  }, []);
 
   const handleGameRemoval = async (id, account_id,) => {
     try {
