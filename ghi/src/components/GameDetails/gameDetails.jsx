@@ -12,6 +12,9 @@ import ScreenshotsCard from '../Cards/screenshotsCard';
 import StarRating from './StarRating';
 import parse from 'html-react-parser';
 import { useLocation } from "react-router-dom";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const containerStyle = {
   minHeight: '100vh',
@@ -111,6 +114,19 @@ function GameDetails() {
   const [reviewFormData, setReviewFormData] = useState(initialReviewData);
 
   const[submittedReview, setSubmittedReview] = useState(false);
+
+  const [screenshots, setScreenshots] = useState([])
+
+  const fetchScreenshots = async (rawg_pk) => {
+    const rawgPk = rawg_pk
+    const url = `http://localhost:8000/api/screenshots/${rawgPk}`
+    const response = await fetch(url)
+    if (response.ok) {
+      const data = await response.json()
+      setScreenshots(data)
+    }
+  }
+
   const [boards, setBoards] = useState([]);
 const fetchBoards = async () => {
   if (!account_data || !account_data.id) {
@@ -141,6 +157,7 @@ const fetchBoards = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/games/${id}`);
         const data = await response.json();
+        fetchScreenshots(data.rawg_pk)
         setGameData(data);
       } catch (error) {
         console.error('Error fetching games data:', error);
@@ -321,9 +338,28 @@ const handleReviewSubmit = async (event) => {
     }
   };
 
+  const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: false,
+    };
+
+
+
+
   const handleScreenshotClick = (e) => {
-    const rawgPk = gameData.rawg_pk
-    url = `http://localhost:8000/api/screenshots/${rawgPk}`
+
+    document.getElementById("big-screenshots").style.opacity = "100"
+    document.getElementById("big-screenshots").style.zIndex = "1"
+
+  }
+
+  const handleXbutton = (e) => {
+    document.getElementById("big-screenshots").style.opacity = "0"
+    document.getElementById("big-screenshots").style.zIndex = "-1"
   }
 
 
@@ -457,6 +493,25 @@ const handleReviewSubmit = async (event) => {
               </div>
               <div className="container">
                 <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
+              <div id="big-screenshots">
+                  <button onClick={handleXbutton} style={{backgroundColor: "darkgray"}}>❌</button>
+                  <Slider {...settings}>
+                    {screenshots.map((shot) => (
+                        <div key={shot.id}>
+                          <img
+                            src={shot.image_url}
+                            className="d-block w-100"
+                            style={{
+                              height: '800px',
+                              margin: 'auto',
+
+                              borderRadius: '40px',
+                            }}
+                          />
+                        </div>
+                    ))}
+                  </Slider>
               </div>
             </div>
 
@@ -615,8 +670,29 @@ const handleReviewSubmit = async (event) => {
               />
 
               <div className='screenshotsHero' onClick={handleScreenshotClick}>
-                <ScreenshotsCard rawgPk={gameData.rawg_pk} />
+                <ScreenshotsCard  rawgPk={gameData.rawg_pk} />
               </div>
+              <div id="big-screenshots">
+                  <button onClick={handleXbutton} style={{backgroundColor: "darkgray"}}>❌</button>
+                  <Slider {...settings}>
+                    {screenshots.map((shot) => (
+                        <div key={shot.id}>
+                          <img
+                            src={shot.image_url}
+                            className="d-block w-100"
+                            style={{
+                              height: '75%',
+                              margin: 'auto',
+
+                              borderRadius: '40px',
+                            }}
+                          />
+                        </div>
+                    ))}
+                  </Slider>
+              </div>
+
+
               <div className="container">
                 <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
               </div>
@@ -650,6 +726,7 @@ const handleReviewSubmit = async (event) => {
           navigate(`/games/${gameData.id}/nonuser`)
         }}>Submit</button>
       </div>
+
           <br />
           <br />
           <br />
@@ -661,9 +738,12 @@ const handleReviewSubmit = async (event) => {
             <LargeNonUserReviewCard gameId={gameData.id} />
           </div>
 
+
         </div>
         <br />
       </div>
+
+
     </div>
   );
   }
