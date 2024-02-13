@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './boardCard.css';
-import { useNavigate} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 async function fetchUserName() {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -18,7 +18,7 @@ async function fetchUserName() {
 }
 
 async function fetchGamesForBoard(boardId) {
-  const gamesUrl = `http://localhost:8000/api/users/libraries/${boardId}`;
+  const gamesUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${boardId}`;
   const gamesConfig = {
     credentials: 'include',
   };
@@ -39,7 +39,7 @@ async function fetchGamesForBoard(boardId) {
 }
 
 async function fetchGameDetails(gameId) {
-  const gameUrl = `http://localhost:8000/api/games/${gameId}`;
+  const gameUrl = `${process.env.VITE_API_HOST}/api/games/${gameId}`;
   const gameConfig = {
     credentials: 'include',
   };
@@ -66,7 +66,7 @@ function BoardCard() {
   const [userSavedBoards, setUserSavedBoards] = useState([]);
 
   const fetchData = async (userId) => {
-    const boardUrl = `http://localhost:8000/api/boards/users/${userId}`;
+    const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${userId}`;
     const boardConfig = {
       credentials: 'include',
     };

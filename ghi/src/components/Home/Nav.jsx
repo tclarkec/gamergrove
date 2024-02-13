@@ -1,10 +1,8 @@
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Nav.css';
 import logo from '../../assets/logo.gif';
-import { render } from 'react-dom';
-import SearchResults from '../SearchResults/SearchResults';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Icon from "../Icon/icon.jsx";
 
@@ -19,15 +17,6 @@ const Nav = () => {
   const navigate = useNavigate();
   const [searching, setSearching] = useState(false);
 
-
-
-  const transitionNavBar = () => {
-    handleDisplay(window.scrollY > 100);
-  };
-
-  const toggleDropdown = () => {
-    setShowDropdown((prev) => !prev);
-  };
 
   const closeDropdown = (e) => {
     if (avatarContainerRef.current && !avatarContainerRef.current.contains(e.target)) {
@@ -52,7 +41,7 @@ const Nav = () => {
     const searchResults = [];
     const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
     const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${searchTerms}&page=1&page_size=5`;
-    const gamesUrl = 'http://localhost:8000/api/games';
+    const gamesUrl = `${process.env.VITE_API_HOST}/api/games`;
 
     const answer = await fetch(gamesUrl);
     if (answer.ok) {
@@ -132,14 +121,7 @@ const Nav = () => {
                 }
                 const postGames = await fetch(gamesUrl, fetchConfig);
                 if (postGames.ok) {
-
-                  const screenshotUrl = `http://localhost:8000/api/screenshots/${gameData.rawg_pk}`
-
-                  const screenshotResults = await fetch(screenshotUrl)
-
-                  const storesUrl = `http://localhost:8000/api/stores/${gameData.rawg_pk}`
-                  const storeResults = await fetch(storesUrl)
-
+                  continue
                 }
               } catch(error) {
                 continue
@@ -178,7 +160,7 @@ const Nav = () => {
 
 
   const handleLogOut = async () => {
-      const logOutUrl = 'http://localhost:8000/token';
+      const logOutUrl = `${process.env.VITE_API_HOST}/token`;
 
       const fetchConfig = {
           method: "delete",
@@ -193,13 +175,6 @@ const Nav = () => {
           throw new Error('Failed to log out');
       }
   }
-
-
-
-
-
-
-
 
   if (token) {
     return (

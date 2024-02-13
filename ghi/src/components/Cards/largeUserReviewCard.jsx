@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from 'react-router-dom';
 import './largeUserReviewCard.css';
 import StarRating from '../GameDetails/StarRating';
 
 
 function LargeUserReviewCard({ gameId, accountId }) {
-  const { token } = useAuthContext();
   const navigate = useNavigate();
   const [userReviews, setUserReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isUpvoted, setIsUpvoted] = useState(false);
-  const [isDownvoted, setIsDownvoted] = useState(false);
-  const [userVotes, setUserVotes] = useState([])
-  const [voted, setVoted] = useState(false)
 
     const fetchReviewsForGame = async (gameId) => {
     const votes = await fetchVotesForUser();
-    const reviewsUrl = `http://localhost:8000/api/reviews/games/${gameId}`;
+    const reviewsUrl = `${process.env.VITE_API_HOST}/api/reviews/games/${gameId}`;
 
     try {
       const response = await fetch(reviewsUrl);
@@ -32,7 +25,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
           for (const v of votes) {
             if (r.id == v.review_id) {
-              setVoted(true)
               change++
               if (v.upvote) {
                 r.upvote = true
@@ -57,14 +49,12 @@ function LargeUserReviewCard({ gameId, accountId }) {
       }
     } catch (error) {
       console.error('Error fetching reviews:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const fetchVotesForUser = async () => {
     const user = await fetchUserName();
-    const votesUrl = `http://localhost:8000/api/votes/users/${user}`;
+    const votesUrl = `${process.env.VITE_API_HOST}/api/votes/users/${user}`;
 
     const votesConfig = {
       credentials: 'include'
@@ -95,7 +85,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
   }, [gameId, accountId]);
 
   async function fetchUserName() {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -114,14 +104,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
     const user = await fetchUserName();
 
 
-    const upVoteData = {
-      "review_id": reviewId,
-      "upvote": true,
-      "downvote": false
-    }
     if (user) {
-      const voteUrl = `http://localhost:8000/api/votes/users/${user}`
-      const postUrl = 'http://localhost:8000/api/votes'
+      const voteUrl = `${process.env.VITE_API_HOST}/api/votes/users/${user}`
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -135,16 +119,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
               return
 
             } else {
-              const upVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`;
-              const fetchConfig = {
-                method: 'put',
-                body: JSON.stringify(upVoteData),
-                credentials: 'include',
-                headers: {
-                  "Content-Type": 'application/json'
-                }
-              }
-              const upVoteResponse = await fetch(upVoteUrl, fetchConfig)
               fetchReviewsForGame(gameId)
               return
             }
@@ -152,29 +126,10 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
           }
         }
-        const fetchConfig = {
-            method: 'post',
-            body: JSON.stringify(upVoteData),
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-          const upVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
 
 
       } else {
-
-        const fetchConfig = {
-            method: 'post',
-            body: JSON.stringify(upVoteData),
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-          const upVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
       }
     }
@@ -183,14 +138,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
   const handleDownVoteClick = async (reviewId, gameId) => {
     const user = await fetchUserName();
-    const downVoteData = {
-      "review_id": reviewId,
-      "upvote": false,
-      "downvote": true
-    }
     if (user) {
-      const voteUrl = `http://localhost:8000/api/votes/users/${user}`
-      const postUrl = 'http://localhost:8000/api/votes'
+      const voteUrl = `${process.env.VITE_API_HOST}/api/votes/users/${user}`
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -202,16 +151,6 @@ function LargeUserReviewCard({ gameId, accountId }) {
             if (v.downvote == true) {
               return
             } else {
-              const downVoteUrl = `http://localhost:8000/api/votes/${v.id}/${user}`
-              const fetchConfig = {
-                method: 'put',
-                body: JSON.stringify(downVoteData),
-                credentials: 'include',
-                headers: {
-                  "Content-Type": 'application/json'
-                }
-              }
-              const downVoteResponse = await fetch(downVoteUrl, fetchConfig)
               fetchReviewsForGame(gameId)
               return
 
@@ -219,30 +158,11 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
           }
         }
-
-        const fetchConfig = {
-            method: 'post',
-            body: JSON.stringify(downVoteData),
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-          const downVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
 
 
 
       } else {
-        const fetchConfig = {
-            method: 'post',
-            body: JSON.stringify(downVoteData),
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-          const downVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
       }
     }

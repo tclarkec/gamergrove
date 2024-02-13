@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Settings.css';
 
-const containerStyle = {
-  minHeight: '100vh',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
-const centerVertically = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
-
 const fetchUserName = async () => {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -36,7 +23,7 @@ const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
   if (saved_username!== undefined) {
-  const accountUrl = `http://localhost:8000/api/accounts/${saved_username}`;
+  const accountUrl = `${process.env.VITE_API_HOST}/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
 
@@ -72,7 +59,7 @@ function Settings() {
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
   const fetchData = async () => {
-    const url = 'http://localhost:8000/api/icons';
+    const url = `${process.env.VITE_API_HOST}/api/icons`;
     const response = await fetch(url);
 
     if (response.ok) {
@@ -99,17 +86,15 @@ function Settings() {
   };
 
   let warningClasses = 'alert alert-warning d-none mb-0';
-  let passwordClasses = '';
   if (passwordMismatch) {
     warningClasses = 'alert alert-warning mb-0';
-    passwordClasses = 'd-none';
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (passwordConfirm === accountFormData.password) {
-      const updateUrl = `http://localhost:8000/api/accounts/${account_data.id}/${saved_username}`;
+      const updateUrl = `${process.env.VITE_API_HOST}/api/accounts/${account_data.id}/${saved_username}`;
 
       const updateFetchConfig = {
         method: 'put',
@@ -140,10 +125,8 @@ function Settings() {
   };
 
   let messageClasses = 'alert alert-success d-none mb-0';
-  let formClasses = '';
   if (updatedAccount) {
     messageClasses = 'alert alert-success mb-0';
-    formClasses = 'd-none';
   }
 
   return (

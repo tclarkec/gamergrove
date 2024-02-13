@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
 import './boardPage.css';
@@ -10,7 +10,7 @@ import BoardGameCard from '../Cards/boardGameCard';
 
 
 async function fetchBoardDetails(boardId) {
-  const boardUrl = `http://localhost:8000/api/boards/${boardId}`;
+  const boardUrl = `${process.env.VITE_API_HOST}/api/boards/${boardId}`;
   const boardConfig = {
     credentials: 'include',
   };
@@ -25,8 +25,8 @@ async function fetchBoardDetails(boardId) {
   }
 }
 
-async function fetchGamesForBoard(accountId, boardId) {
-  const libraryUrl = `http://localhost:8000/api/users/libraries/${accountId}`;
+async function fetchGamesForBoard(accountId) {
+  const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${accountId}`;
   const libraryConfig = {
     credentials: 'include',
   };
@@ -48,7 +48,7 @@ async function fetchGamesForBoard(accountId, boardId) {
 }
 
 async function fetchGameDetails(gameId) {
-  const gameUrl = `http://localhost:8000/api/games/${gameId}`;
+  const gameUrl = `${process.env.VITE_API_HOST}/api/games/${gameId}`;
   const gameConfig = {
     credentials: 'include',
   };
@@ -64,7 +64,7 @@ async function fetchGameDetails(gameId) {
 }
 
 async function fetchUserName() {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
   };
@@ -86,7 +86,6 @@ async function fetchUserName() {
 
 function BoardPage() {
   const { id: boardId } = useParams();
-  const navigate = useNavigate();
   const [boardData, setBoardData] = useState(null);
   const [gamesData, setGamesData] = useState([]);
 
@@ -131,11 +130,10 @@ function BoardPage() {
 
   const handleGameRemoval = async (id, account_id,) => {
     try {
-      const libUrl = `http://localhost:8000/api/libraries/${id}`
+      const libUrl = `${process.env.VITE_API_HOST}/api/libraries/${id}`
       const libResponse = await fetch(libUrl);
       const libData = await libResponse.json();
-      const boardID = libData.board_id
-     const url = `http://localhost:8000/api/libraries/${id}/${account_id}`
+     const url = `${process.env.VITE_API_HOST}/api/libraries/${id}/${account_id}`
      const fetchConfig = {
 
        method: "DELETE",
@@ -146,7 +144,6 @@ function BoardPage() {
         }
         };
       const response = await fetch (url, fetchConfig)
-      const answer = await response.json()
 
 
       if (response.ok) {

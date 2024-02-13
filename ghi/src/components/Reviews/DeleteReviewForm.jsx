@@ -28,7 +28,7 @@ const redButton = {
 };
 
 async function fetchAccountId() {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -61,7 +61,7 @@ const DeleteReviewForm = () => {
       const fetchedAccountId = await fetchAccountId();
       if (fetchedAccountId) {
         setAccountId(fetchedAccountId);
-        
+
       } else {
         console.error('Error fetching account ID');
       }
@@ -73,7 +73,7 @@ const DeleteReviewForm = () => {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `http://localhost:8000/api/reviews/${id}/${accountId}`;
+    const deleteUrl = `${process.env.VITE_API_HOST}/api/reviews/${id}/${accountId}`;
 
     const deleteConfig = {
       method: "delete",

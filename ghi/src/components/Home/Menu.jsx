@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Menu.css';
-import { useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
-const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
+const SideMenu = ({  }) => {
 
-    const [platforms, setPlatforms] = useState([]);
-
-
-    const [menuWidth, setMenuWidth] = useState(250);
-    const navigate = useNavigate();
-    const updateMenuWidth = () => {
-        if (window.innerWidth <= 768) {
-            setMenuWidth(window.innerWidth);
-        } else {
-            setMenuWidth(250);
-        }
-    };
     const [genres, setGenres] = useState([]);
     const fetchGenres = async () => {
-        const url = `http://localhost:8000/api/games`;
+        const url = `${process.env.VITE_API_HOST}/api/games`;
         const response = await fetch(url)
         if (response.ok) {
             const gameGenres = []

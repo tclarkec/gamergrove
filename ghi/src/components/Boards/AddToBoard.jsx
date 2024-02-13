@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import '../../components/Cards/boardCard.css';
 import { Link } from 'react-router-dom';
 
 async function fetchUserName() {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -19,7 +19,7 @@ async function fetchUserName() {
 }
 
 async function fetchGamesForBoard(boardId) {
-  const gamesUrl = `http://localhost:8000/api/users/libraries/${boardId}`;
+  const gamesUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${boardId}`;
   const gamesConfig = {
     credentials: 'include',
   };
@@ -37,7 +37,7 @@ async function fetchGamesForBoard(boardId) {
 }
 
 async function fetchGameDetails(gameId) {
-  const gameUrl = `http://localhost:8000/api/games/${gameId}`;
+  const gameUrl = `${process.env.VITE_API_HOST}/api/games/${gameId}`;
   const gameConfig = {
     credentials: 'include',
   };
@@ -66,7 +66,7 @@ function AddToBoard() {
   const { id } = useParams();
 
   const fetchData = async (userId) => {
-    const boardUrl = `http://localhost:8000/api/boards/users/${userId}`;
+    const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${userId}`;
     const boardConfig = {
       credentials: 'include',
     };
@@ -130,7 +130,7 @@ function AddToBoard() {
 
   async function fetchLibraryData(userId, gameId, boardId) {
     try {
-    const libraryUrl = `http://localhost:8000/api/users/libraries/${userId}`;
+    const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${userId}`;
 
     const fetchConfig = {
         credentials: 'include'
@@ -161,7 +161,7 @@ function AddToBoard() {
     console.error('Error fetching library data', error);
     }
 
-};
+}
 
 
 const handleBoardClick = async (gameId, boardId) => {
@@ -169,7 +169,7 @@ const handleBoardClick = async (gameId, boardId) => {
     const userId = await fetchUserName(); // Fetch userId here
     const libraryData = await fetchLibraryData(userId, gameId, boardId); // Pass userId as an argument
 
-    const libraryUrl = 'http://localhost:8000/api/libraries';
+    const libraryUrl = `${process.env.VITE_API_HOST}/api/libraries`;
 
     const fetchConfig = {
       method: "post",
@@ -182,9 +182,7 @@ const handleBoardClick = async (gameId, boardId) => {
 
     const response = await fetch(libraryUrl, fetchConfig);
 
-    if (response.ok) {
-
-    } else {
+    if (!response.ok) {
       console.error('Failed to add to board. Server response:', response);
       throw new Error('Failed to add to board');
     }

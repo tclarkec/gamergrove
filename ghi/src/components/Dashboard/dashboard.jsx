@@ -1,19 +1,15 @@
-import React from 'react';
 import './dashboard.css';
 
 import BoardCard from '../Cards/boardCard.jsx';
-import ReviewCard from '../Cards/reviewCard.jsx';
 import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';
-import UserReviewCard from '../Cards/userReviewCard';
 import SideMenu from '../Home/Menu';
 import Nav from '../Home/Nav';
 import CombinedCards from '../Cards/combinedCards';
 import Settings from '../Accounts/Settings.jsx';
-import Icon from '../Icon/icon';
 
 const fetchUserName = async () => {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',

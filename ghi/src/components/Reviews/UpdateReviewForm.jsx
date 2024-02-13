@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import StarRating from '../GameDetails/StarRating';
 
 const fetchUserName = async () => {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -23,7 +23,7 @@ const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
   if (saved_username!== undefined) {
-  const accountUrl = `http://localhost:8000/api/accounts/${saved_username}`;
+  const accountUrl = `${process.env.VITE_API_HOST}/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
 
@@ -37,7 +37,7 @@ const fetchAccount = async () => {
 const account_data = await fetchAccount();
 
 async function fetchReviews(id) {
-  const reviewUrl = `http://localhost:8000/api/reviews/${id}`;
+  const reviewUrl = `${process.env.VITE_API_HOST}/api/reviews/${id}`;
   const reviewConfig = {
     credentials: 'include'
   };
@@ -98,7 +98,7 @@ function UpdateReviewForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const reviewsUrl = `http://localhost:8000/api/reviews/${review_id}/${account_data.id}`;
+    const reviewsUrl = `${process.env.VITE_API_HOST}/api/reviews/${review_id}/${account_data.id}`;
 
     const fetchConfig = {
       method: 'put',

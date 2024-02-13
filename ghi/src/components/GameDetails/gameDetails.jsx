@@ -1,9 +1,8 @@
 import {useAuthContext} from "@galvanize-inc/jwtdown-for-react";
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate, Link } from 'react-router-dom';
 import './gameDetails.css';
-import ReviewCard from '../Cards/reviewCard.jsx';
 import SideMenu from '../Home/Menu';
 import Nav from '../Home/Nav';
 import LargeUserReviewCard from '../Cards/largeUserReviewCard';
@@ -13,15 +12,8 @@ import StarRating from './StarRating';
 import parse from 'html-react-parser';
 import { useLocation } from "react-router-dom";
 
-const containerStyle = {
-  minHeight: '100vh',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
 const fetchUserName = async () => {
-  const tokenUrl = `http://localhost:8000/token`;
+  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -41,7 +33,7 @@ const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
   if(saved_username !== undefined) {
-  const accountUrl = `http://localhost:8000/api/accounts/${saved_username}`;
+  const accountUrl = `${process.env.VITE_API_HOST}/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
 
@@ -89,12 +81,6 @@ function GameDetails() {
     game_id: id
   }
 
-  const removeWishListData = {
-    wishlist: false,
-    game_id: id
-  }
-
-
   const initialReviewData = {
     title:"",
     body:"",
@@ -117,7 +103,7 @@ const fetchBoards = async () => {
     return;
   }
 
-  const boardUrl = `http://localhost:8000/api/boards/users/${account_data.id}`
+  const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${account_data.id}`
   const fetchConfig = {
     credentials: 'include'
   };
@@ -139,7 +125,7 @@ const fetchBoards = async () => {
   useEffect(() => {
     const fetchGamesData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/games/${id}`);
+        const response = await fetch(`${process.env.VITE_API_HOST}/api/games/${id}`);
         const data = await response.json();
         setGameData(data);
       } catch (error) {
@@ -153,7 +139,7 @@ const fetchBoards = async () => {
     return;
   }
 
-  const libraryUrl = `http://localhost:8000/api/users/libraries/${account_data.id}`;
+  const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${account_data.id}`;
 
   const fetchConfig = {
     credentials: 'include'
@@ -214,7 +200,7 @@ const fetchBoards = async () => {
 
 const handleWishListClick = async () => {
   if (wishListText === 'Add to Wishlist') {
-    const addEntryUrl = 'http://localhost:8000/api/libraries';
+    const addEntryUrl = `${process.env.VITE_API_HOST}/api/libraries`;
 
     const addEntryFetchConfig = {
       method: "post",
@@ -242,20 +228,10 @@ const handleWishListClick = async () => {
 
 const handleBoardClick = async (event) => {
   const data = {};
-  const libraryUrl = `http://localhost:8000/api/libraries`
   const board = event.target.value;
   data.wishlist = false;
   data.game_id = id;
   data.board_id = board;
-  const fetchConfig = {
-    method: 'post',
-    body: JSON.stringify(data),
-    credentials: 'include',
-    headers: {
-      "Content-type": "application/json"
-    }
-  }
-  const response = await fetch(libraryUrl, fetchConfig);
 
   window.location.reload();
 }
@@ -263,7 +239,7 @@ const handleBoardClick = async (event) => {
 const handleReviewSubmit = async (event) => {
     event.preventDefault();
 
-    const reviewUrl = 'http://localhost:8000/api/reviews'
+    const reviewUrl = `${process.env.VITE_API_HOST}/api/reviews`
 
     const fetchConfig = {
         method: "post",
@@ -284,10 +260,8 @@ const handleReviewSubmit = async (event) => {
   }
 
   let messageReviewClasses = 'alert alert-success d-none mb-0';
-  let formReviewClasses = '';
   if (submittedReview) {
     messageReviewClasses = 'alert alert-success mb-0';
-    formReviewClasses = 'd-none';
   }
 
   const handleClick = async (platform, rawg_pk) => {
@@ -300,7 +274,7 @@ const handleReviewSubmit = async (event) => {
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
 
-      const response = await fetch(`http://localhost:8000/api/stores/${rawg_pk}`);
+      const response = await fetch(`${process.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
 
       const data = await response.json();
 
@@ -321,9 +295,9 @@ const handleReviewSubmit = async (event) => {
     }
   };
 
-  const handleScreenshotClick = (e) => {
+  const handleScreenshotClick = () => {
     const rawgPk = gameData.rawg_pk
-    url = `http://localhost:8000/api/screenshots/${rawgPk}`
+    url = `${process.env.VITE_API_HOST}/api/screenshots/${rawgPk}`
   }
 
 

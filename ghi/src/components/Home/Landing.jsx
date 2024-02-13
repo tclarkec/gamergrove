@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Landing.css';
 import './Menu';
 import './Rows';
@@ -11,7 +12,7 @@ const Landing = () => {
 
   useEffect(() => {
 
-    fetch('http://localhost:8000/api/games')
+    fetch(`${process.env.VITE_API_HOST}/api/games`)
       .then(response => response.json())
       .then(data => {
 
