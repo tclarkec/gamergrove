@@ -148,7 +148,7 @@ function HomeGameCard( { games }  ) {
 
   const handleBoardClick = async (data) => {
     const stuff = {};
-    const libraryUrl = `http://localhost:8000/api/libraries`
+    const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`
     const board = data[0];
     stuff.wishlist = false;
     stuff.game_id = data[1];

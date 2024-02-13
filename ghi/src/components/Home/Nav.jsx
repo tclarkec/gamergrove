@@ -11,7 +11,6 @@ import Icon from "../Icon/icon.jsx";
 const Nav = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { token } = useAuthContext();
-
   const avatarContainerRef = useRef(null);
   const navigate = useNavigate();
   const [searching, setSearching] = useState(false);
@@ -22,6 +21,7 @@ const Nav = () => {
       setShowDropdown(false);
     }
   };
+
 
   const stopPropagation = (e) => {
     e.stopPropagation();
@@ -177,7 +177,7 @@ const Nav = () => {
 
   if (token) {
     return (
-    <div className={`nav ${display && 'nav__black'}`}>
+    <div className='nav'>
       <nav>
         <div className='nav__contents'>
           <div className='ncontainer expanded'>
@@ -201,10 +201,10 @@ const Nav = () => {
             <Icon />
             {showDropdown && (
               <div className='nav__dropdown' onClick={stopPropagation}>
-                <Link to="http://localhost:5173/dashboard">
+                <Link to="/dashboard">
                   <div className='nav__dropdown-item, font-drop'>Dashboard</div>
                 </Link>
-                <Link to="http://localhost:5173/" onClick={() => { handleLogOut(); }}>
+                <Link to="/" onClick={() => { handleLogOut(); }}>
                   <div className='nav__dropdown-item, font-drop'>Logout</div>
                 </Link>
               </div>
@@ -219,7 +219,7 @@ const Nav = () => {
   );
   } else {
   return (
-    <div className={`nav ${display && 'nav__black'}`}>
+    <div className='nav'>
       <nav>
         <div className='nav__contents'>
           <div className='ncontainer expanded'>
@@ -239,10 +239,10 @@ const Nav = () => {
             <Icon />
             {showDropdown && (
               <div className='nav__dropdown' onClick={stopPropagation}>
-                <Link to="http://localhost:5173/login">
+                <Link to="/login">
                 <div className='nav__dropdown-item, font-drop'>Login</div>
                 </Link>
-                <Link to="http://localhost:5173/signup">
+                <Link to="/signup">
                 <div className='nav__dropdown-item, font-drop'>Sign Up</div>
                 </Link>
               </div>
