@@ -503,7 +503,7 @@ const handleReviewSubmit = async (event) => {
                             src={shot.image_url}
                             className="d-block w-100"
                             style={{
-                              height: '800px',
+                              height: '75%',
                               margin: 'auto',
 
                               borderRadius: '40px',
