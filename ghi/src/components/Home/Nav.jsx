@@ -171,7 +171,7 @@ const Nav = () => {
     };
   }, [showDropdown]);
 
-  
+
   const handleDropdownClick = () => {
     setShowDropdown(true);
   };
@@ -227,12 +227,12 @@ const Nav = () => {
             <Icon />
             {showDropdown && (
               <div className='nav__dropdown' onClick={stopPropagation}>
-                <a href="http://localhost:5173/dashboard">
+                <Link to="http://localhost:5173/dashboard">
                   <div className='nav__dropdown-item, font-drop'>Dashboard</div>
-                </a>
-                <a href="http://localhost:5173/" onClick={() => { handleLogOut(); }}>
+                </Link>
+                <Link to="http://localhost:5173/" onClick={() => { handleLogOut(); }}>
                   <div className='nav__dropdown-item, font-drop'>Logout</div>
-                </a>
+                </Link>
               </div>
             )}
           </div>
@@ -265,12 +265,12 @@ const Nav = () => {
             <Icon />
             {showDropdown && (
               <div className='nav__dropdown' onClick={stopPropagation}>
-                <a href="http://localhost:5173/login">
+                <Link to="http://localhost:5173/login">
                 <div className='nav__dropdown-item, font-drop'>Login</div>
-                </a>
-                <a href="http://localhost:5173/signup">
+                </Link>
+                <Link to="http://localhost:5173/signup">
                 <div className='nav__dropdown-item, font-drop'>Sign Up</div>
-                </a>
+                </Link>
               </div>
             )}
           </div>

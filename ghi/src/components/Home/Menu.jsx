@@ -52,9 +52,9 @@ const SideMenu = ({ onSelectGenre, onSelectPlatform }) => {
             <div className="side-menu">
                 <ul>
 
-                    <a href="http://localhost:5173/">
+                    <Link to="http://localhost:5173/">
                     <h5 className='home' style={{ fontFamily: 'K2D'}}>Home Page</h5>
-                    </a>
+                    </Link>
                     <div className="small-space"></div>
 
                     <hr className='solid' />

@@ -47,7 +47,7 @@ function App() {
 
     return (
         <AuthProvider baseUrl = 'http://localhost:8000'>
-            <BrowserRouter>
+            <BrowserRouter basename={basename}>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/signup" element={<SignUpForm />} />

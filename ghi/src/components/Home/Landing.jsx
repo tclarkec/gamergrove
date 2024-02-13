@@ -42,7 +42,7 @@ const Landing = () => {
       <Slider {...settings}>
         {games.map((game, index) => (
             <div key={index}>
-              <a href={`/games/${game.id}`}>
+              <Link to={`/games/${game.id}`}>
               <img
                 src={game.background_img}
                 className="d-block w-100"
@@ -58,7 +58,7 @@ const Landing = () => {
                   marginTop: '10px',
                 }}
               />
-            </a>
+            </Link>
               <div className="caption-container">
               <div className="caption">
                 <h5>{game.name}</h5>

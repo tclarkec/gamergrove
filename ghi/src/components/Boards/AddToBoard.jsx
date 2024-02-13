@@ -207,11 +207,11 @@ const handleBoardClick = async (gameId, boardId) => {
         <div key={boardData.id} className='card' style={{ width: '20rem' }}>
           <img src={boardData.cover_photo} className='card-img-top' alt={`Board Cover for ${boardData.board_name}`} style={{ borderRadius: '20px 20px 0 0 ' }} />
           <div className='card-body'>
-          <a href={`/games/${id}`} className='board-link' onClick={() => {
+          <Link to={`/games/${id}`} className='board-link' onClick={() => {
             handleBoardClick(gameId, boardId);
           }}>
             <h5 className='card-title1'>{boardData.board_name}</h5>
-          </a>
+          </Link>
             <hr className='bsolid' />
             <p className='card-text1'>{`${boardData.game_count} Games`}</p>
             <div className={`flex-container ${boardData.alignment}`}>
