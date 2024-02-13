@@ -11,7 +11,7 @@ useEffect(() => {
       const data = await response.json();
       setScreenshots(Array.isArray(data) ? data.slice(0, 3) : []);
     } catch (error) {
-      pass
+      //empty
     }
   };
 

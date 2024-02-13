@@ -26,7 +26,7 @@ const Icon = () => {
           setIconUrl(iconData.icon_url);
       }
      } catch (error) {
-        pass
+        //empty
       }
 
     }

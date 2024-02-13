@@ -39,10 +39,10 @@ function ReviewCard() {
         const reviewsData = await response.json();
         setUserReviews(reviewsData);
       } else {
-        pass
+        //empty
       }
     } catch (error) {
-      pass
+      //empty
     }
   };
 

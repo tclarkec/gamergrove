@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, } from 'react';
 import './Menu.css';
 import { NavLink, Link } from 'react-router-dom';
 
@@ -21,6 +21,16 @@ const SideMenu = ({  }) => {
             setGenres(gameGenres)
         }
     }
+
+    useEffect(() => {
+        updateMenuWidth();
+        window.addEventListener('resize', updateMenuWidth);
+        fetchGenres();
+
+        return () => {
+            window.removeEventListener('resize', updateMenuWidth);
+        };
+}, []);
 
     return (
             <div className="side-menu">

@@ -138,7 +138,7 @@ function AllGameCard( {games} ) {
     try {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
-        pass
+        // empty
       } else {
         console.error('Failed to add to wishlist. Server response:', addEntryResponse);
         throw new Error('Failed to add to wishlist');

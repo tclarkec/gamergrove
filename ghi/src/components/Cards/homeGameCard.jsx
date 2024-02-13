@@ -57,7 +57,7 @@ function HomeGameCard( { games }  ) {
       }
       setBoardDataList(boards);
     } catch (error) {
-      pass
+      //empty
     }
     }
   };
@@ -134,7 +134,7 @@ function HomeGameCard( { games }  ) {
     try {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
-        pass
+        //empty
       } else {
         console.error('Failed to add to wishlist. Server response:', response);
         throw new Error('Failed to add to wishlist');
