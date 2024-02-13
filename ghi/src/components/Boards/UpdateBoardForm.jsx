@@ -18,18 +18,7 @@ const fetchUserName = async () => {
   }
 };
 
-const fetchAccount = async (username) => {
-  if (username !== undefined) {
-    const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${username}`;
 
-    const response = await fetch(accountUrl);
-
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
-  }
-};
 
 const fetchBoards = async (id) => {
   const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}`;
@@ -54,6 +43,17 @@ function UpdateBoardForm() {
     cover_photo: ''
   });
   const [savedUsername, setSavedUsername] = useState('');
+
+  const fetchAccount = async () => {
+  if (savedUsername !== undefined) {
+    const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${savedUsername}`;
+    const response = await fetch(accountUrl);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  }
+};
   const [accountData, setAccountData] = useState({});
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function UpdateBoardForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}/${savedUsername}`;
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}/${accountData.id}`;
 
     const fetchConfig = {
       method: 'put',

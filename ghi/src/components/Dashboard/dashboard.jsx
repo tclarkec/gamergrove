@@ -1,5 +1,5 @@
 import './dashboard.css';
-
+import {useState, useEffect} from 'react';
 import BoardCard from '../Cards/boardCard.jsx';
 import GameCard from '../Cards/gameCard.jsx';
 import WishlistCard from '../Cards/wishlistCard.jsx';

@@ -18,23 +18,23 @@ const fetchUserName = async () => {
   }
   }
 }
-const fetchAccount = async () => {
-  if (savedUsername!== undefined) {
-    const accountUrl = `http://localhost:8000/api/accounts/${savedUsername}`;
-    const response = await fetch(accountUrl);
-  if (response.ok) {
-    const data = await response.json();
-    return data;
-    }
-  }
-};
-
-
 function Settings() {
   const navigate = useNavigate();
 
   const [icons, setIcons] = useState([]);
   const [savedUsername, setSavedUsername] = useState('');
+
+  const fetchAccount = async () => {
+  if (savedUsername!== undefined) {
+    const accountUrl = `http://localhost:8000/api/accounts/${savedUsername}`;
+    const response = await fetch(accountUrl);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+      }
+  }
+};
+
   const [accountData, setAccountData] = useState({});
 
   useEffect(() => {
@@ -285,7 +285,7 @@ if (accountData) {
                   </div>
                   <div className="mb-3">
                     <button style={{ backgroundColor: 'red' }} type="button" onClick={() => {
-                      navigate(`/settings/delete/${account_data.id}/${account_data.username}`)
+                      navigate(`/settings/delete/${accountData.id}/${accountData.username}`)
                     }}>Delete Account</button>
                   </div>
                 </form>
