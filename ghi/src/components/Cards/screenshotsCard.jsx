@@ -15,7 +15,7 @@ useEffect(() => {
 
       setScreenshots(Array.isArray(data) ? data.slice(0, 3) : []);
     } catch (error) {
-      
+
     }
   };
 
