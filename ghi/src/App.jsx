@@ -1,6 +1,4 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from '@galvanize-inc/jwtdown-for-react';
 
 import './App.css'
 import Home from './Home';
@@ -23,7 +21,6 @@ import SearchResults from './components/SearchResults/SearchResults';
 
 import BoardPage from './components/Boards/boardPage';
 import Hero from './components/Accounts/Hero';
-import AddToBoard from './components/Boards/AddToBoard';
 import DeleteBoardForm from './components/Boards/DeleteBoardForm';
 import UpdateBoardForm from './components/Boards/UpdateBoardForm';
 
@@ -43,11 +40,14 @@ if (!API_HOST) {
 *
 * @returns {React.ReactNode}
 */
+
+const domain = /https:\/\/[^/]+/;
+const basename = import.meta.env.VITE_PUBLIC_URL.replace(domain, '');
+
 function App() {
 
     return (
-        <AuthProvider baseUrl = 'http://localhost:8000'>
-            <BrowserRouter>
+            <BrowserRouter basename={basename}>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/signup" element={<SignUpForm />} />
@@ -71,7 +71,6 @@ function App() {
 
                 </Routes>
             </BrowserRouter>
-        </AuthProvider>
     )
 }
 export default App;

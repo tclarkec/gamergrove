@@ -1,46 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import './boardGameCard.css';
 import parse from 'html-react-parser';
 
 function BoardGameCard({ gameData, onGameRemoval }) {
-
-  const navigate = useNavigate ();
-
-  const handleDelete = async (id, account_id) => {
-    try {
-      const libUrl = `http://localhost:8000/api/libraries/${id}`
-      const libResponse = await fetch(libUrl);
-      const libData = await libResponse.json();
-      const boardID = libData.board_id
-     const url = `http://localhost:8000/api/libraries/${id}/${account_id}`
-     const fetchConfig = {
-
-       method: "DELETE",
-       credentials: 'include',
-       headers: {
-         'Content-Type': 'application/json',
-
-        }
-        };
-      const response = await fetch (url, fetchConfig)
-      const answer = await response.json()
-
-
-      if (response.ok) {
-
-        return 'Game removed!'
-
-        }
-
-
-
-    } catch (error) {
-      console.error("Error deleting game:", error);
-    }
-
-  };
-
 
   return (
     <div className='board-game-card'>
