@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './gameCard.css';
 
 async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -23,7 +23,7 @@ function GameCard() {
   const [userSavedGames, setUserSavedGames] = useState([]);
 
   const fetchData = async (userId) => {
-    const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${userId}`;
+    const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/users/libraries/${userId}`;
     const libraryConfig = {
       credentials: 'include',
     };
@@ -38,7 +38,7 @@ function GameCard() {
       setUserSavedGames(libraryData.map((item) => item.game_id));
 
       const gameDetailsPromises = libraryData.map((item) =>
-        fetch(`${process.env.VITE_API_HOST}/api/games/${item.game_id}`).then((response) =>
+        fetch(`${import.meta.env.VITE_API_HOST}/api/games/${item.game_id}`).then((response) =>
           response.json()
         )
       );

@@ -7,11 +7,11 @@ function ScreenshotsCard({ rawgPk }) {
 useEffect(() => {
   const fetchScreenshots = async () => {
     try {
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/screenshots/${rawgPk}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/screenshots/${rawgPk}`);
       const data = await response.json();
       setScreenshots(Array.isArray(data) ? data.slice(0, 3) : []);
     } catch (error) {
-
+      pass
     }
   };
 

@@ -2,7 +2,7 @@ import { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './wishlistCard.css';
 async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
   };
@@ -20,7 +20,7 @@ async function fetchUserName() {
   };
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
       const data = await response.json();
       for (const link of data) {
         if (link.platform === platform) {
@@ -39,7 +39,7 @@ function WishlistCard() {
   const [userWishlistGames, setUserWishlistGames] = useState([]);
   const fetchData = async (userId) => {
     try {
-      const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${userId}`;
+      const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/users/libraries/${userId}`;
       const libraryConfig = {
         credentials: 'include',
       };
@@ -52,7 +52,7 @@ function WishlistCard() {
         .map((item) => item.game_id);
       const uniqueGameIds = Array.from(new Set(wishlistGameIds));
       const gameDetailsPromises = uniqueGameIds.map((gameId) =>
-        fetch(`${process.env.VITE_API_HOST}/api/games/${gameId}`).then((response) =>
+        fetch(`${import.meta.env.VITE_API_HOST}/api/games/${gameId}`).then((response) =>
           response.json()
         )
       );
@@ -89,7 +89,7 @@ function WishlistCard() {
   const handleRemove = async (gameId) => {
      try {
     const userId = await fetchUserName();
-    const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${userId}`;
+    const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/users/libraries/${userId}`;
     const libraryConfig = {
       credentials: 'include',
     };
@@ -98,7 +98,7 @@ function WishlistCard() {
     const filteredLibraryData = libraryData.filter((libraryEntry) =>
       libraryEntry.game_id === gameId && libraryEntry.wishlist === true
     );
-    const url = `${process.env.VITE_API_HOST}/api/libraries/${filteredLibraryData[0].id}/${userId}`;
+    const url = `${import.meta.env.VITE_API_HOST}/api/libraries/${filteredLibraryData[0].id}/${userId}`;
     const fetchConfig = {
       method: 'delete',
       credentials: 'include',

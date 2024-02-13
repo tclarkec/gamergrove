@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import './boardPage.css';
 import '../Cards/boardGameCard.css'
@@ -10,7 +10,7 @@ import BoardGameCard from '../Cards/boardGameCard';
 
 
 async function fetchBoardDetails(boardId) {
-  const boardUrl = `${process.env.VITE_API_HOST}/api/boards/${boardId}`;
+  const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${boardId}`;
   const boardConfig = {
     credentials: 'include',
   };
@@ -26,7 +26,7 @@ async function fetchBoardDetails(boardId) {
 }
 
 async function fetchGamesForBoard(accountId) {
-  const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${accountId}`;
+  const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/users/libraries/${accountId}`;
   const libraryConfig = {
     credentials: 'include',
   };
@@ -48,7 +48,7 @@ async function fetchGamesForBoard(accountId) {
 }
 
 async function fetchGameDetails(gameId) {
-  const gameUrl = `${process.env.VITE_API_HOST}/api/games/${gameId}`;
+  const gameUrl = `${import.meta.env.VITE_API_HOST}/api/games/${gameId}`;
   const gameConfig = {
     credentials: 'include',
   };
@@ -64,7 +64,7 @@ async function fetchGameDetails(gameId) {
 }
 
 async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
   };
@@ -126,14 +126,11 @@ function BoardPage() {
 
   useEffect(() => {
     fetchData();
-  }, [boardId]);
+  }, []);
 
   const handleGameRemoval = async (id, account_id,) => {
     try {
-      const libUrl = `${process.env.VITE_API_HOST}/api/libraries/${id}`
-      const libResponse = await fetch(libUrl);
-      const libData = await libResponse.json();
-     const url = `${process.env.VITE_API_HOST}/api/libraries/${id}/${account_id}`
+     const url = `${import.meta.env.VITE_API_HOST}/api/libraries/${id}/${account_id}`
      const fetchConfig = {
 
        method: "DELETE",

@@ -7,7 +7,7 @@ const Rows = ({ selectedGenre}) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`${process.env.VITE_API_HOST}/api/games`);
+            const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/games`);
             const data = await response.json();
             setGameDataList(data);
         } catch (error) {

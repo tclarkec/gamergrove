@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const fetchUserName = async () => {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -22,7 +22,7 @@ const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
   if (saved_username!== undefined){
-  const accountUrl = `${process.env.VITE_API_HOST}/api/accounts/${saved_username}`;
+  const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
 
@@ -36,7 +36,7 @@ const fetchAccount = async () => {
 const account_data = await fetchAccount();
 
 async function fetchBoards(id) {
-  const boardUrl = `${process.env.VITE_API_HOST}/api/boards/${id}`;
+  const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}`;
   const boardConfig = {
     credentials: 'include'
   };
@@ -88,7 +88,7 @@ function UpdateBoardForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const boardUrl = `${process.env.VITE_API_HOST}/api/boards/${id}/${account_data.id}`;
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}/${account_data.id}`;
 
     const fetchConfig = {
       method: 'put',

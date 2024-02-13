@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginUrl = `${process.env.VITE_API_HOST}/token`;
+    const loginUrl = `${import.meta.env.VITE_API_HOST}/token`;
     const form = new FormData();
     form.append("username", username);
     form.append("password", password);

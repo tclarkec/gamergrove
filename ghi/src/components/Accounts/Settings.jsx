@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Settings.css';
 
 const fetchUserName = async () => {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -23,7 +23,7 @@ const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
   if (saved_username!== undefined) {
-  const accountUrl = `${process.env.VITE_API_HOST}/api/accounts/${saved_username}`;
+  const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
 
@@ -59,7 +59,7 @@ function Settings() {
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
   const fetchData = async () => {
-    const url = `${process.env.VITE_API_HOST}/api/icons`;
+    const url = `${import.meta.env.VITE_API_HOST}/api/icons`;
     const response = await fetch(url);
 
     if (response.ok) {
@@ -94,7 +94,7 @@ function Settings() {
     event.preventDefault();
 
     if (passwordConfirm === accountFormData.password) {
-      const updateUrl = `${process.env.VITE_API_HOST}/api/accounts/${account_data.id}/${saved_username}`;
+      const updateUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${account_data.id}/${saved_username}`;
 
       const updateFetchConfig = {
         method: 'put',
@@ -146,7 +146,7 @@ function Settings() {
               <div className="settingscard">
                 <h4 className="card-header">Account Settings</h4>
                 <div className={warningClasses} id="warning-message">
-                  Your passwords don't match!
+                  Your passwords do not match!
                 </div>
                 <form onSubmit={handleSubmit} id="create-profile">
                   <div className="settingscard">

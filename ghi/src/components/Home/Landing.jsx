@@ -12,7 +12,7 @@ const Landing = () => {
 
   useEffect(() => {
 
-    fetch(`${process.env.VITE_API_HOST}/api/games`)
+    fetch(`${import.meta.env.VITE_API_HOST}/api/games`)
       .then(response => response.json())
       .then(data => {
 

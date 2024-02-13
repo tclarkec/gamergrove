@@ -36,7 +36,7 @@ function SignUpForm() {
   const { login } = useToken();
 
   const fetchData = async () => {
-    const url = `${process.env.VITE_API_HOST}/api/icons`;
+    const url = `${import.meta.env.VITE_API_HOST}/api/icons`;
     const response = await fetch(url);
 
     if (response.ok) {
@@ -73,7 +73,7 @@ function SignUpForm() {
     event.preventDefault();
 
     if (passwordConfirm === accountFormData.password) {
-      const accountUrl = `${process.env.VITE_API_HOST}/api/accounts`
+      const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts`
 
       const accountFetchConfig = {
         method: "post",
@@ -121,7 +121,7 @@ function SignUpForm() {
               <div className="offset-2 col-8">
                 <h2 className="card-header" style={{ textAlign: 'center'}}>Create account</h2>
                 <div className={warningClasses} id="warning-message">
-                  Your passwords don't match!
+                  Your passwords do not match!
                 </div>
                 <div style={{ width: '100%'}}>
                   <form onSubmit={handleSubmit} id="create-account">

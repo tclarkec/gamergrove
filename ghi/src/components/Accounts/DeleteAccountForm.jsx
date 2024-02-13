@@ -35,7 +35,7 @@ const DeleteAccountForm = () => {
   const handleLogOut = async (event) => {
     event.preventDefault();
 
-    const logOutUrl = `${process.env.VITE_API_HOST}/token`;
+    const logOutUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
     const fetchConfig = {
         method: "delete",
@@ -57,7 +57,7 @@ const DeleteAccountForm = () => {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `${process.env.VITE_API_HOST}/api/accounts/${id}/${username}`;
+    const deleteUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${id}/${username}`;
 
     const deleteConfig = {
       method: "delete",

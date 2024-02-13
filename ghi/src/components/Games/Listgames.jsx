@@ -20,7 +20,7 @@ const Listgames = () => {
 
     const fetchGames = async () => {
       try {
-        const url = `${process.env.VITE_API_HOST}/api/games`;
+        const url = `${import.meta.env.VITE_API_HOST}/api/games`;
         const response = await fetch(url);
 
         if (response.ok) {
@@ -44,7 +44,7 @@ const Listgames = () => {
     const platform = data.state
     const fetchGames = async () => {
       try {
-        const url = `${process.env.VITE_API_HOST}/api/games`;
+        const url = `${import.meta.env.VITE_API_HOST}/api/games`;
         const response = await fetch(url);
 
         if (response.ok) {

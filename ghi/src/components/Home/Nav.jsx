@@ -9,7 +9,6 @@ import Icon from "../Icon/icon.jsx";
 
 
 const Nav = () => {
-  const [display, handleDisplay] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { token } = useAuthContext();
 
@@ -41,7 +40,7 @@ const Nav = () => {
     const searchResults = [];
     const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
     const searchUrl = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&search=${searchTerms}&page=1&page_size=5`;
-    const gamesUrl = `${process.env.VITE_API_HOST}/api/games`;
+    const gamesUrl = `${import.meta.env.VITE_API_HOST}/api/games`;
 
     const answer = await fetch(gamesUrl);
     if (answer.ok) {
@@ -160,7 +159,7 @@ const Nav = () => {
 
 
   const handleLogOut = async () => {
-      const logOutUrl = `${process.env.VITE_API_HOST}/token`;
+      const logOutUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
       const fetchConfig = {
           method: "delete",
@@ -255,8 +254,8 @@ const Nav = () => {
         <PacmanLoader color="#faff06" size={115} loading={searching} aria-label={"Loading Spinner"}/>
       </div>
     </div>
-  );
-};
+  )
+}
 }
 
 export default Nav;

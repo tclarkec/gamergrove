@@ -9,7 +9,7 @@ import CombinedCards from '../Cards/combinedCards';
 import Settings from '../Accounts/Settings.jsx';
 
 const fetchUserName = async () => {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -33,7 +33,7 @@ function Dashboard() {
       <SideMenu />
       <Nav />
       <main>
-        <h1 >{saved_username}'s Dashboard 🎛️ 🖥️ 📟</h1>
+        <h1 >{saved_username}&apos;s Dashboard 🎛️ 🖥️ 📟</h1>
 
         <input id="radio1" type="radio" name="css-tabs" defaultChecked />
         <input id="radio2" type="radio" name="css-tabs" />

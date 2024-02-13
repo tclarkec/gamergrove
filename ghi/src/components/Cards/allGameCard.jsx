@@ -23,7 +23,7 @@ function AllGameCard( {games} ) {
 
 
   async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -42,7 +42,7 @@ function AllGameCard( {games} ) {
   const [boardDataList, setBoardDataList] = useState([]);
 
   const fetchBoardData = async (userId) => {
-    const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${userId}`;
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/users/${userId}`;
     const boardConfig = {
       credentials: 'include',
     };
@@ -85,7 +85,7 @@ function AllGameCard( {games} ) {
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
 
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
 
       const data = await response.json();
 
@@ -121,7 +121,7 @@ function AllGameCard( {games} ) {
 
   const handleWishClick = async (data) => {
 
-    const addEntryUrl = `${process.env.VITE_API_HOST}/api/libraries`;
+    const addEntryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`;
     const wishListData = {}
     wishListData.wishlist = true;
     wishListData.game_id = data;
@@ -138,8 +138,9 @@ function AllGameCard( {games} ) {
     try {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
+        pass
       } else {
-        console.error('Failed to add to wishlist. Server response:', response);
+        console.error('Failed to add to wishlist. Server response:', addEntryResponse);
         throw new Error('Failed to add to wishlist');
       }
     } catch (error) {

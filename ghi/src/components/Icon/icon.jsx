@@ -6,7 +6,7 @@ const Icon = () => {
   useEffect(() => {
 
     const fetchUserData = async () => {
-      const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+      const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
       const fetchConfig = {
         credentials: 'include',
       };
@@ -19,20 +19,17 @@ const Icon = () => {
           const { account } = userData;
           const { icon_id } = account;
 
-          const iconResponse = await fetch(`${process.env.VITE_API_HOST}/api/icons/${icon_id}`);
+          const iconResponse = await fetch(`${import.meta.env.VITE_API_HOST}/api/icons/${icon_id}`);
 
           const iconData = await iconResponse.json();
 
           setIconUrl(iconData.icon_url);
       }
      } catch (error) {
-      
+        pass
       }
 
-        }
-
-
-
+    }
         fetchUserData();
       }, []);
 

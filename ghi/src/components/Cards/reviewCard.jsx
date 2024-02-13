@@ -3,7 +3,7 @@ import './reviewCard.css';
 import { Link } from 'react-router-dom';
 
 async function fetchAccountId() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -30,7 +30,7 @@ function ReviewCard() {
   const [gameDetailsList, setGameDetailsList] = useState([]);
 
   const fetchUserReviews = async (accountId) => {
-    const reviewsUrl = `${process.env.VITE_API_HOST}/api/reviews/users/${accountId}`;
+    const reviewsUrl = `${import.meta.env.VITE_API_HOST}/api/reviews/users/${accountId}`;
 
     try {
       const response = await fetch(reviewsUrl, { credentials: 'include' });
@@ -39,16 +39,16 @@ function ReviewCard() {
         const reviewsData = await response.json();
         setUserReviews(reviewsData);
       } else {
-
+        pass
       }
     } catch (error) {
-
+      pass
     }
   };
 
   const fetchGameDetails = async (gameId) => {
     try {
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/games/${gameId}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/games/${gameId}`);
 
       if (response.ok) {
         const gameData = await response.json();

@@ -22,20 +22,8 @@ function HomeGameCard( { games }  ) {
   const navigate = useNavigate();
   const { token } = useAuthContext();
 
-
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/games`);
-      const data = await response.json();
-      setGameDataList(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -55,7 +43,7 @@ function HomeGameCard( { games }  ) {
 
   const fetchBoardData = async (userId) => {
     if (userId !== undefined) {
-    const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${userId}`;
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/users/${userId}`;
     const boardConfig = {
       credentials: 'include',
     };
@@ -69,6 +57,7 @@ function HomeGameCard( { games }  ) {
       }
       setBoardDataList(boards);
     } catch (error) {
+      pass
     }
     }
   };
@@ -92,7 +81,7 @@ function HomeGameCard( { games }  ) {
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
 
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
 
       const data = await response.json();
 
@@ -128,7 +117,7 @@ function HomeGameCard( { games }  ) {
 
   const handleWishClick = async (data) => {
 
-    const addEntryUrl = `${process.env.VITE_API_HOST}/api/libraries`;
+    const addEntryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`;
     const wishListData = {}
     wishListData.wishlist = true;
     wishListData.game_id = data;
@@ -145,7 +134,7 @@ function HomeGameCard( { games }  ) {
     try {
       const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
       if (addEntryResponse.ok) {
-
+        pass
       } else {
         console.error('Failed to add to wishlist. Server response:', response);
         throw new Error('Failed to add to wishlist');
@@ -159,13 +148,26 @@ function HomeGameCard( { games }  ) {
 
   const handleBoardClick = async (data) => {
     const stuff = {};
+    const libraryUrl = `http://localhost:8000/api/libraries`
     const board = data[0];
     stuff.wishlist = false;
     stuff.game_id = data[1];
     stuff.board_id = board;
 
-    setShow(false)
+    const fetchConfig = {
+      method: 'post',
+      body: JSON.stringify(stuff),
+      credentials: 'include',
+      headers: {
+        "Content-type": "application/json"
+      }
+    }
+    const response = await fetch(libraryUrl, fetchConfig);
+    if (response.ok) {
+      setShow(false);
+    }
   }
+
 
   const handleNewBoard = () => {
     navigate("/boards/create")

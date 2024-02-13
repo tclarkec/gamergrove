@@ -3,6 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate, Link } from 'react-router-dom';
 import './gameDetails.css';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import SideMenu from '../Home/Menu';
 import Nav from '../Home/Nav';
 import LargeUserReviewCard from '../Cards/largeUserReviewCard';
@@ -13,7 +16,7 @@ import parse from 'html-react-parser';
 import { useLocation } from "react-router-dom";
 
 const fetchUserName = async () => {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -33,7 +36,7 @@ const saved_username = await fetchUserName();
 
 const fetchAccount = async () => {
   if(saved_username !== undefined) {
-  const accountUrl = `${process.env.VITE_API_HOST}/api/accounts/${saved_username}`;
+  const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${saved_username}`;
 
   const response = await fetch(accountUrl);
 
@@ -103,7 +106,7 @@ const fetchBoards = async () => {
     return;
   }
 
-  const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${account_data.id}`
+  const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/users/${account_data.id}`
   const fetchConfig = {
     credentials: 'include'
   };
@@ -125,7 +128,7 @@ const fetchBoards = async () => {
   useEffect(() => {
     const fetchGamesData = async () => {
       try {
-        const response = await fetch(`${process.env.VITE_API_HOST}/api/games/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/games/${id}`);
         const data = await response.json();
         setGameData(data);
       } catch (error) {
@@ -139,7 +142,7 @@ const fetchBoards = async () => {
     return;
   }
 
-  const libraryUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${account_data.id}`;
+  const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/users/libraries/${account_data.id}`;
 
   const fetchConfig = {
     credentials: 'include'
@@ -165,7 +168,7 @@ const fetchBoards = async () => {
     fetchLibraryData();
     }
     fetchBoards();
-  }, [, token]);
+  }, []);
 
 
   if (!gameData) {
@@ -200,7 +203,7 @@ const fetchBoards = async () => {
 
 const handleWishListClick = async () => {
   if (wishListText === 'Add to Wishlist') {
-    const addEntryUrl = `${process.env.VITE_API_HOST}/api/libraries`;
+    const addEntryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`;
 
     const addEntryFetchConfig = {
       method: "post",
@@ -216,30 +219,42 @@ const handleWishListClick = async () => {
       if (addEntryResponse.ok) {
         setWishListText('Added to Wishlist!');
       } else {
-        console.error('Failed to add to wishlist. Server response:', response);
+        console.error('Failed to add to wishlist. Server response:', addEntryResponse);
         throw new Error('Failed to add to wishlist');
       }
     } catch (error) {
       console.error('Error adding to wishlist:', error);
     }
 
-  };
+  }
 }
 
 const handleBoardClick = async (event) => {
   const data = {};
+  const libraryUrl = `http://localhost:8000/api/libraries`
   const board = event.target.value;
   data.wishlist = false;
   data.game_id = id;
   data.board_id = board;
-
-  window.location.reload();
+  const fetchConfig = {
+    method: 'post',
+    body: JSON.stringify(data),
+    credentials: 'include',
+    headers: {
+      "Content-type": "application/json"
+    }
+  }
+  const response = await fetch(libraryUrl, fetchConfig);
+  if (response.ok) {
+    window.location.reload();
+  }
 }
+
 
 const handleReviewSubmit = async (event) => {
     event.preventDefault();
 
-    const reviewUrl = `${process.env.VITE_API_HOST}/api/reviews`
+    const reviewUrl = `${import.meta.env.VITE_API_HOST}/api/reviews`
 
     const fetchConfig = {
         method: "post",
@@ -274,7 +289,7 @@ const handleReviewSubmit = async (event) => {
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
 
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
 
       const data = await response.json();
 
@@ -286,9 +301,6 @@ const handleReviewSubmit = async (event) => {
 
       }
 
-
-
-
     } catch (error) {
       console.error('Cant find the store you are looking for', error);
       return null;
@@ -296,9 +308,18 @@ const handleReviewSubmit = async (event) => {
   };
 
   const handleScreenshotClick = () => {
-    const rawgPk = gameData.rawg_pk
-    url = `${process.env.VITE_API_HOST}/api/screenshots/${rawgPk}`
+
+    document.getElementById("big-screenshots").style.opacity = "100"
+    document.getElementById("big-screenshots").style.zIndex = "1"
+
   }
+
+  const handleXbutton = () => {
+  document.getElementById("big-screenshots").style.opacity = "0"
+  document.getElementById("big-screenshots").style.zIndex = "-1"
+  }
+
+
 
 
   if (token) {
@@ -426,8 +447,31 @@ const handleReviewSubmit = async (event) => {
                 alt="Divider"
               />
 
+
               <div className='screenshotsHero' onClick={handleScreenshotClick}>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
+              </div>
+              <div className="container">
+                <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
+              <div id="big-screenshots">
+                  <button onClick={handleXbutton} style={{backgroundColor: "darkgray"}}>❌</button>
+                  <Slider {...settings}>
+                    {screenshots.map((shot) => (
+                        <div key={shot.id}>
+                          <img
+                            src={shot.image_url}
+                            className="d-block w-100"
+                            style={{
+                              height: '75%',
+                              margin: 'auto',
+
+                              borderRadius: '40px',
+                            }}
+                          />
+                        </div>
+                    ))}
+                  </Slider>
               </div>
               <div className="container">
                 <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
@@ -588,8 +632,31 @@ const handleReviewSubmit = async (event) => {
                 alt="Divider"
               />
 
+
               <div className='screenshotsHero' onClick={handleScreenshotClick}>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
+              </div>
+              <div className="container">
+                <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>
+              </div>
+              <div id="big-screenshots">
+                  <button onClick={handleXbutton} style={{backgroundColor: "darkgray"}}>❌</button>
+                  <Slider {...settings}>
+                    {screenshots.map((shot) => (
+                        <div key={shot.id}>
+                          <img
+                            src={shot.image_url}
+                            className="d-block w-100"
+                            style={{
+                              height: '75%',
+                              margin: 'auto',
+
+                              borderRadius: '40px',
+                            }}
+                          />
+                        </div>
+                    ))}
+                  </Slider>
               </div>
               <div className="container">
                 <p className="rec">Recommendation: {getRecommendation(gameData.rating)}</p>

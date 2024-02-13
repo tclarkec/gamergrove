@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './largeUserReviewCard.css';
 import StarRating from '../GameDetails/StarRating';
@@ -10,7 +10,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
     const fetchReviewsForGame = async (gameId) => {
     const votes = await fetchVotesForUser();
-    const reviewsUrl = `${process.env.VITE_API_HOST}/api/reviews/games/${gameId}`;
+    const reviewsUrl = `${import.meta.env.VITE_API_HOST}/api/reviews/games/${gameId}`;
 
     try {
       const response = await fetch(reviewsUrl);
@@ -54,7 +54,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
   const fetchVotesForUser = async () => {
     const user = await fetchUserName();
-    const votesUrl = `${process.env.VITE_API_HOST}/api/votes/users/${user}`;
+    const votesUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`;
 
     const votesConfig = {
       credentials: 'include'
@@ -82,10 +82,10 @@ function LargeUserReviewCard({ gameId, accountId }) {
   useEffect(() => {
     fetchReviewsForGame(gameId);
     fetchVotesForUser();
-  }, [gameId, accountId]);
+  }, []);
 
   async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -105,7 +105,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
 
     if (user) {
-      const voteUrl = `${process.env.VITE_API_HOST}/api/votes/users/${user}`
+      const voteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -139,7 +139,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
   const handleDownVoteClick = async (reviewId, gameId) => {
     const user = await fetchUserName();
     if (user) {
-      const voteUrl = `${process.env.VITE_API_HOST}/api/votes/users/${user}`
+      const voteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()

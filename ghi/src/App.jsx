@@ -42,7 +42,7 @@ if (!API_HOST) {
 */
 
 const domain = /https:\/\/[^/]+/;
-const basename = process.env.PUBLIC_URL.replace(domain, '');
+const basename = import.meta.env.VITE_PUBLIC_URL.replace(domain, '');
 
 function App() {
 
@@ -71,7 +71,6 @@ function App() {
 
                 </Routes>
             </BrowserRouter>
-        </AuthProvider>
     )
 }
 export default App;

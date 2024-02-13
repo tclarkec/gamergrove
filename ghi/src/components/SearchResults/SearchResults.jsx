@@ -20,7 +20,7 @@ const SearchResults = () => {
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
     async function fetchUserName() {
-    const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+    const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
     const fetchConfig = {
         credentials: 'include',
         redirect: 'follow',
@@ -47,7 +47,7 @@ const SearchResults = () => {
     };
 
     const fetchBoardData = async (userId) => {
-        const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${userId}`;
+        const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/users/${userId}`;
         const boardConfig = {
         credentials: 'include',
         };
@@ -75,7 +75,7 @@ const SearchResults = () => {
     const fetchData = async () => {
         try {
         const games = []
-        const response = await fetch(`${process.env.VITE_API_HOST}/api/games`);
+        const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/games`);
         const data = await response.json();
         for (const d of data) {
             if (rawg_pks.includes(d.rawg_pk)) {
@@ -111,7 +111,7 @@ useEffect(() => {
   const fetchStoreUrl = async (platform, rawg_pk) => {
     try {
 
-      const response = await fetch(`${process.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
+      const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/stores/${rawg_pk}`);
 
       const data = await response.json();
 
@@ -147,7 +147,7 @@ useEffect(() => {
 
     const handleWishClick = async (data) => {
 
-        const addEntryUrl = `${process.env.VITE_API_HOST}/api/libraries`;
+        const addEntryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`;
         const wishListData = {}
         wishListData.wishlist = true;
         wishListData.game_id = data;
@@ -164,8 +164,9 @@ useEffect(() => {
         try {
         const addEntryResponse = await fetch(addEntryUrl, addEntryFetchConfig);
         if (addEntryResponse.ok) {
+          pass
         } else {
-            console.error('Failed to add to wishlist. Server response:', response);
+            console.error('Failed to add to wishlist. Server response:', addEntryResponse);
             throw new Error('Failed to add to wishlist');
         }
         } catch (error) {

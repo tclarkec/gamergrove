@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const containerStyle = {
@@ -28,7 +28,7 @@ const redButton = {
 };
 
 async function fetchAccountId() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -73,7 +73,7 @@ const DeleteReviewForm = () => {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `${process.env.VITE_API_HOST}/api/reviews/${id}/${accountId}`;
+    const deleteUrl = `${import.meta.env.VITE_API_HOST}/api/reviews/${id}/${accountId}`;
 
     const deleteConfig = {
       method: "delete",

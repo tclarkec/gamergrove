@@ -6,7 +6,7 @@ const SideMenu = ({  }) => {
 
     const [genres, setGenres] = useState([]);
     const fetchGenres = async () => {
-        const url = `${process.env.VITE_API_HOST}/api/games`;
+        const url = `${import.meta.env.VITE_API_HOST}/api/games`;
         const response = await fetch(url)
         if (response.ok) {
             const gameGenres = []
@@ -21,19 +21,6 @@ const SideMenu = ({  }) => {
             setGenres(gameGenres)
         }
     }
-
-
-    useEffect(() => {
-        updateMenuWidth();
-        window.addEventListener('resize', updateMenuWidth);
-        fetchGenres();
-
-        return () => {
-            window.removeEventListener('resize', updateMenuWidth);
-        };
-    }, []);
-
-
 
     return (
             <div className="side-menu">

@@ -10,7 +10,7 @@ function LargeNonUserReviewCard({ gameId }) {
 
 
   const fetchReviewsForGame = async (gameId) => {
-    const reviewsUrl = `${process.env.VITE_API_HOST}/api/reviews/games/${gameId}`;
+    const reviewsUrl = `${import.meta.env.VITE_API_HOST}/api/reviews/games/${gameId}`;
 
     try {
       const response = await fetch(reviewsUrl);
@@ -23,7 +23,7 @@ function LargeNonUserReviewCard({ gameId }) {
       }
     } catch (error) {
       console.error('Error fetching reviews:', error);
-    } 
+    }
   };
 
 

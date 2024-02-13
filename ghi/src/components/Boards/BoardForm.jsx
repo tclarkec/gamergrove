@@ -22,7 +22,7 @@ function BoardForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const boardUrl = `${process.env.VITE_API_HOST}/api/boards`
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards`
 
 
 

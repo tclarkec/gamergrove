@@ -28,7 +28,7 @@ const redButton = {
 };
 
 async function fetchAccountId() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
 
   const fetchConfig = {
     credentials: 'include',
@@ -73,7 +73,7 @@ const DeleteBoardForm = () => {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    const deleteUrl = `${process.env.VITE_API_HOST}/api/boards/${id}/${accountId}`;
+    const deleteUrl = `${import.meta.env.VITE_API_HOST}/api/boards/${id}/${accountId}`;
 
     const deleteConfig = {
       method: "delete",

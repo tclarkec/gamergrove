@@ -3,7 +3,7 @@ import './boardCard.css';
 import { Link, useNavigate} from 'react-router-dom';
 
 async function fetchUserName() {
-  const tokenUrl = `${process.env.VITE_API_HOST}/token`;
+  const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
   const fetchConfig = {
     credentials: 'include',
     redirect: 'follow',
@@ -18,7 +18,7 @@ async function fetchUserName() {
 }
 
 async function fetchGamesForBoard(boardId) {
-  const gamesUrl = `${process.env.VITE_API_HOST}/api/users/libraries/${boardId}`;
+  const gamesUrl = `${import.meta.env.VITE_API_HOST}/api/users/libraries/${boardId}`;
   const gamesConfig = {
     credentials: 'include',
   };
@@ -39,7 +39,7 @@ async function fetchGamesForBoard(boardId) {
 }
 
 async function fetchGameDetails(gameId) {
-  const gameUrl = `${process.env.VITE_API_HOST}/api/games/${gameId}`;
+  const gameUrl = `${import.meta.env.VITE_API_HOST}/api/games/${gameId}`;
   const gameConfig = {
     credentials: 'include',
   };
@@ -66,7 +66,7 @@ function BoardCard() {
   const [userSavedBoards, setUserSavedBoards] = useState([]);
 
   const fetchData = async (userId) => {
-    const boardUrl = `${process.env.VITE_API_HOST}/api/boards/users/${userId}`;
+    const boardUrl = `${import.meta.env.VITE_API_HOST}/api/boards/users/${userId}`;
     const boardConfig = {
       credentials: 'include',
     };
