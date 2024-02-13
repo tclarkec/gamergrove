@@ -26,7 +26,7 @@ function Settings() {
 
   const fetchAccount = async () => {
   if (savedUsername!== undefined) {
-    const accountUrl = `http://localhost:8000/api/accounts/${savedUsername}`;
+    const accountUrl = `${import.meta.env.VITE_API_HOST}/${savedUsername}`;
     const response = await fetch(accountUrl);
     if (response.ok) {
       const data = await response.json();

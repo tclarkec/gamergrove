@@ -1,4 +1,4 @@
-import { useState, } from 'react';
+import { useEffect, useState, } from 'react';
 import './Menu.css';
 import { NavLink, Link } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ const SideMenu = ({  }) => {
             <div className="side-menu">
                 <ul>
 
-                    <Link to="http://localhost:5173/">
+                    <Link to="/">
                     <h5 className='home' style={{ fontFamily: 'K2D'}}>Home Page</h5>
                     </Link>
                     <div className="small-space"></div>
