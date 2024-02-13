@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './largeUserReviewCard.css';
 import StarRating from '../GameDetails/StarRating';
@@ -8,11 +7,10 @@ import StarRating from '../GameDetails/StarRating';
 function LargeNonUserReviewCard({ gameId }) {
   const navigate = useNavigate();
   const [userReviews, setUserReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
 
   const fetchReviewsForGame = async (gameId) => {
-    const reviewsUrl = `http://localhost:8000/api/reviews/games/${gameId}`;
+    const reviewsUrl = `${import.meta.env.VITE_API_HOST}/api/reviews/games/${gameId}`;
 
     try {
       const response = await fetch(reviewsUrl);
@@ -25,8 +23,6 @@ function LargeNonUserReviewCard({ gameId }) {
       }
     } catch (error) {
       console.error('Error fetching reviews:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
