@@ -31,9 +31,12 @@ function LargeUserReviewCard({ gameId, accountId }) {
               if (v.upvote) {
                 r.upvote = true
                 r.downvote = false
-              } else {
+              } else if (v.downvote) {
                 r.upvote = false
                 r.downvote = true
+              } else {
+                r.upvote = false
+                r.downvote = false
               }
             }
           }
@@ -112,7 +115,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
     }
     if (user) {
       const voteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`
-      const postUrl = '${import.meta.env.VITE_API_HOST}/api/votes'
+      const postUrl = `${import.meta.env.VITE_API_HOST}/api/votes`
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -122,6 +125,27 @@ function LargeUserReviewCard({ gameId, accountId }) {
         for (const v of votes) {
           if (v.account_id == user && v.review_id == reviewId ) {
             if (v.upvote == true) {
+              const noVoteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/${v.id}/${user}`;
+              const noVoteData = {
+                "review_id": reviewId,
+                "upvote": false,
+                "downvote": false
+              }
+              const fetchConfig = {
+                method: 'put',
+                body: JSON.stringify(noVoteData),
+                credentials: 'include',
+                headers: {
+                  "Content-Type": 'application/json'
+                }
+              }
+              const noVoteResponse = await fetch(noVoteUrl, fetchConfig)
+              if (noVoteResponse.ok) {
+
+                fetchReviewsForGame(gameId)
+                return
+
+              }
 
               return
 
@@ -181,7 +205,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
     }
     if (user) {
       const voteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`
-      const postUrl = '${import.meta.env.VITE_API_HOST}/api/votes'
+      const postUrl = `${import.meta.env.VITE_API_HOST}/api/votes`
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -191,6 +215,25 @@ function LargeUserReviewCard({ gameId, accountId }) {
         for (const v of votes) {
           if (v.account_id == user && v.review_id == reviewId ) {
             if (v.downvote == true) {
+              const noVoteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/${v.id}/${user}`;
+              const noVoteData = {
+                "review_id": reviewId,
+                "upvote": false,
+                "downvote": false
+              }
+              const fetchConfig = {
+                method: 'put',
+                body: JSON.stringify(noVoteData),
+                credentials: 'include',
+                headers: {
+                  "Content-Type": 'application/json'
+                }
+              }
+              const noVoteResponse = await fetch(noVoteUrl, fetchConfig)
+              if (noVoteResponse.ok) {
+                fetchReviewsForGame(gameId)
+                return
+              }
               return
             } else {
               const downVoteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/${v.id}/${user}`
@@ -278,9 +321,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
                 <p>{review.body}</p>
               </div>
               <div className="lurcard-date">
-                  <p>Rating: {review.rating}</p>
                   <div className="rating-container">
-                    <div className="star-rating" style={{ marginRight: '-30px', marginBottom: '-250px', position: 'relative'}}>
+                    <div className="star-rating" style={{marginTop: '75px'}}>
                       <StarRating rating={review.rating} />
                     </div>
                   </div>

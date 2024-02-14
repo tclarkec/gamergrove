@@ -38,54 +38,28 @@ function LargeNonUserReviewCard({ gameId }) {
         userReviews.map((review) => (
           <div key={review.id} className="largercard">
             <div className="lurcard-title">{review.title}</div>
-            <div className="lurcard-date">9/3/2023</div>
-            <div>
-                  <button
-                    className="lurcard-edit"
-                    style={{ color: 'black' }}
-                    onClick={() => {
-                      navigate(`/games/${gameId}/nonuser`)
-                    }}
-                  >
-                    Edit
-                  </button>{' '}
-                  <button
-                    className="lurcard-delete"
-                    style={{ color: 'black' }}
-                    onClick={() => {
-                      navigate(`/games/${gameId}/nonuser`)
-                    }}
-                  >
-                    Delete
-                  </button>{' '}
 
-
-            </div>
             <div className="lurline"></div>
             <div style={{color: 'white'}} className="urcard-content">
-              <div className="lurcontainer-title">
-                <p>Title: {review.title}</p>
+              <div className="lurcontainer">
+                <p>{review.body}</p>
               </div>
               <div className="lurcontainer">
-                <p>Review: {review.body}</p>
-              </div>
-              <div className="lurcontainer">
-                  <p>Rating: {review.rating}</p>
                   <div className="rating-container">
-                    <div className="star-rating">
+                    <div className="star-rating" style={{marginTop: '15px'}}>
                       <StarRating rating={review.rating} />
                     </div>
                   </div>
               </div>
             </div>
-            <div>
+            <div className='divthumbsnouser'>
               <button onClick = {() => {
                 navigate(`/games/${gameId}/nonuser`)
               }}
               style = {{ backgroundColor: 'transparent'}}
               >
               <img
-                className="thumbs-up"
+                className="thumb-up"
                 src="https://i.postimg.cc/dV4GtWb9/Thumbs-Up-White.png"
                 alt="Thumbs Up"
               />
