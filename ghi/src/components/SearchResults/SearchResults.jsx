@@ -132,20 +132,20 @@ useEffect(() => {
     }
   };
 
-    const handleReviewClick = (data) => {
+    const handleReviewClick = (event, index, data) => {
         const v = data;
         navigate(`/games/${v}`, { state: 'create-review'})
     }
 
 
 
-    const handleDetailClick = (data) => {
+    const handleDetailClick = (event, index, data) => {
         const v = data;
         navigate(`/games/${v}`)
 
     }
 
-    const handleWishClick = async (data) => {
+    const handleWishClick = async (event, index, data) => {
 
         const addEntryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`;
         const wishListData = {}
@@ -176,15 +176,27 @@ useEffect(() => {
 
     };
 
-    const handleBoardClick = async (data) => {
-        const stuff = {};
-        const board = data[0];
-        stuff.wishlist = false;
-        stuff.game_id = data[1];
-        stuff.board_id = board;
+    const handleBoardClick = async (event, index, data) => {
+      const stuff = {};
+      const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`
+      const board = data[0];
+      stuff.wishlist = false;
+      stuff.game_id = data[1];
+      stuff.board_id = board;
 
-        setShow(false)
-    }
+      const fetchConfig = {
+        method: 'post',
+        body: JSON.stringify(stuff),
+        credentials: 'include',
+        headers: {
+          "Content-type": "application/json"
+        }
+      }
+      const response = await fetch(libraryUrl, fetchConfig);
+      if (response.ok) {
+        setShow(false);
+      }
+  }
 
     const handleNewBoard = () => {
         navigate("/boards/create")
@@ -403,7 +415,10 @@ useEffect(() => {
                   <div>{parse(gameData.description.slice(0, 100))}</div>
                 </div>
                 <div className="shgbutton">
-                  <button>
+                  <button onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/games/${gameData.id}/nonuser`)
+                  }}>
                     <b>Options</b>
                   </button>
                 </div>

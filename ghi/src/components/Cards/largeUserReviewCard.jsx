@@ -7,6 +7,7 @@ import StarRating from '../GameDetails/StarRating';
 function LargeUserReviewCard({ gameId, accountId }) {
   const navigate = useNavigate();
   const [userReviews, setUserReviews] = useState([]);
+  const [voted, setVoted] = useState(false)
 
     const fetchReviewsForGame = async (gameId) => {
     const votes = await fetchVotesForUser();
@@ -25,6 +26,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
           for (const v of votes) {
             if (r.id == v.review_id) {
+              setVoted(true)
               change++
               if (v.upvote) {
                 r.upvote = true
@@ -76,13 +78,12 @@ function LargeUserReviewCard({ gameId, accountId }) {
         return 0
       }
 
-
   };
 
   useEffect(() => {
     fetchReviewsForGame(gameId);
     fetchVotesForUser();
-  }, []);
+  }, [gameId, accountId]);
 
   async function fetchUserName() {
   const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
@@ -104,8 +105,14 @@ function LargeUserReviewCard({ gameId, accountId }) {
     const user = await fetchUserName();
 
 
+    const upVoteData = {
+      "review_id": reviewId,
+      "upvote": true,
+      "downvote": false
+    }
     if (user) {
       const voteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`
+      const postUrl = '${import.meta.env.VITE_API_HOST}/api/votes'
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -119,6 +126,16 @@ function LargeUserReviewCard({ gameId, accountId }) {
               return
 
             } else {
+              const upVoteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/${v.id}/${user}`;
+              const fetchConfig = {
+                method: 'put',
+                body: JSON.stringify(upVoteData),
+                credentials: 'include',
+                headers: {
+                  "Content-Type": 'application/json'
+                }
+              }
+              const upVoteResponse = await fetch(upVoteUrl, fetchConfig)
               fetchReviewsForGame(gameId)
               return
             }
@@ -126,10 +143,29 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
           }
         }
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(upVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const upVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
 
 
       } else {
+
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(upVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const upVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
       }
     }
@@ -138,8 +174,14 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
   const handleDownVoteClick = async (reviewId, gameId) => {
     const user = await fetchUserName();
+    const downVoteData = {
+      "review_id": reviewId,
+      "upvote": false,
+      "downvote": true
+    }
     if (user) {
       const voteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/users/${user}`
+      const postUrl = '${import.meta.env.VITE_API_HOST}/api/votes'
       const response = await fetch(voteUrl, { credentials: 'include' });
       if (response.ok) {
         const votes = await response.json()
@@ -151,6 +193,16 @@ function LargeUserReviewCard({ gameId, accountId }) {
             if (v.downvote == true) {
               return
             } else {
+              const downVoteUrl = `${import.meta.env.VITE_API_HOST}/api/votes/${v.id}/${user}`
+              const fetchConfig = {
+                method: 'put',
+                body: JSON.stringify(downVoteData),
+                credentials: 'include',
+                headers: {
+                  "Content-Type": 'application/json'
+                }
+              }
+              const downVoteResponse = await fetch(downVoteUrl, fetchConfig)
               fetchReviewsForGame(gameId)
               return
 
@@ -158,11 +210,30 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
           }
         }
+
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(downVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const downVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
 
 
 
       } else {
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(downVoteData),
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          const downVoteResponse = await fetch(postUrl, fetchConfig)
           fetchReviewsForGame(gameId)
       }
     }

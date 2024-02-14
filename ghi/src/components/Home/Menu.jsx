@@ -23,13 +23,8 @@ const SideMenu = ({  }) => {
     }
 
     useEffect(() => {
-        updateMenuWidth();
-        window.addEventListener('resize', updateMenuWidth);
         fetchGenres();
 
-        return () => {
-            window.removeEventListener('resize', updateMenuWidth);
-        };
 }, []);
 
     return (

@@ -11,6 +11,7 @@ import Icon from "../Icon/icon.jsx";
 const Nav = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { token } = useAuthContext();
+
   const avatarContainerRef = useRef(null);
   const navigate = useNavigate();
   const [searching, setSearching] = useState(false);
@@ -21,7 +22,6 @@ const Nav = () => {
       setShowDropdown(false);
     }
   };
-
 
   const stopPropagation = (e) => {
     e.stopPropagation();
@@ -170,6 +170,10 @@ const Nav = () => {
       };
 
       const response = await fetch (logOutUrl, fetchConfig);
+      if (response.ok){
+        navigate('/');
+        window.location.reload();
+      }
       if (!response.ok) {
           throw new Error('Failed to log out');
       }

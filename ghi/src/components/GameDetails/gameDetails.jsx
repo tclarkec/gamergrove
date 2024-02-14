@@ -49,7 +49,18 @@ const GameDetails = () => {
   });
   const [submittedReview, setSubmittedReview] = useState(false);
   const [boards, setBoards] = useState([]);
+  const [screenshots, setScreenshots] = useState([])
+  const [savedUsername, setSavedUsername] = useState('');
 
+  const fetchScreenshots = async (rawg_pk) => {
+    const rawgPk = rawg_pk
+    const url = `${import.meta.env.VITE_API_HOST}/api/screenshots/${rawgPk}`
+    const response = await fetch(url)
+    if (response.ok) {
+      const data = await response.json()
+      setScreenshots(data)
+    }
+  }
   const fetchUserName = async () => {
     const tokenUrl = `${import.meta.env.VITE_API_HOST}/token`;
     const fetchConfig = {
@@ -65,9 +76,9 @@ const GameDetails = () => {
     }
   };
 
-  const fetchAccount = async (username) => {
-    if (username !== undefined) {
-      const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${username}`;
+  const fetchAccount = async (savedUsername) => {
+    if (savedUsername !== undefined) {
+      const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${savedUsername}`;
       const response = await fetch(accountUrl);
 
       if (response.ok) {
@@ -77,13 +88,15 @@ const GameDetails = () => {
     }
   };
 
+  const [accountData, setAccountData] = useState({});
+
   const fetchBoards = async () => {
     try {
       const username = await fetchUserName();
       const account = await fetchAccount(username);
 
       if (!account || !account.id) {
-        console.error('Account data is undefined or missing ID.');
+
         return;
       }
 
@@ -108,6 +121,7 @@ const GameDetails = () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_HOST}/api/games/${id}`);
         const data = await response.json();
+        fetchScreenshots(data.rawg_pk)
         setGameData(data);
       } catch (error) {
         console.error('Error fetching games data:', error);
@@ -289,6 +303,15 @@ const GameDetails = () => {
       return null;
     }
   };
+
+  const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: false,
+    };
 
   const handleScreenshotClick = () => {
     document.getElementById("big-screenshots").style.opacity = "100";
@@ -490,7 +513,7 @@ const GameDetails = () => {
       </div>
           <h1 className='gamesh1' style={{ textAlign: 'center', textDecoration: 'underline', marginTop: '5px' }}>Reviews</h1>
           <div className='moveright' >
-            <LargeUserReviewCard gameId={gameData.id} accountId={account_data?.id} />
+            <LargeUserReviewCard gameId={gameData.id} accountId={accountData?.id} />
           </div>
 
         </div>
