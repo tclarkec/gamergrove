@@ -116,3 +116,10 @@ Animated Pointer Menu that gives user the ability to: Add to Wishlist, Add to a 
 Search results based on an input title, and fetched from rawg api then propagated into game cards.
 
 ![Search Results](https://i.postimg.cc/1XxpmY8b/GG-22-Search-Results.png)
+
+
+## Demonstrations
+
+Going to Game Details Page using pointer menu
+
+![Details Gif](https://jmp.sh/s/8vNFTLlKFMhCZMtK933X)
