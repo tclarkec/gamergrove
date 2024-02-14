@@ -94,7 +94,6 @@ async def update_vote(
         review_dict["upvote_count"] += 1
     elif vote_dict["upvote"] is False and vote_details["upvote"] is True:
         review_dict["upvote_count"] -= 1
-    
     review_queries.update_review(review_id, review_dict)
 
     updated_vote = queries.update_vote(id, vote_dict)
