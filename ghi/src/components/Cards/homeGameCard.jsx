@@ -63,7 +63,6 @@ function HomeGameCard( { games }  ) {
   };
 
   useEffect(() => {
-    fetchData();
     const fetchUserData = async () => {
       const userId = await fetchUserName();
       fetchBoardData(userId);
@@ -102,20 +101,20 @@ function HomeGameCard( { games }  ) {
     }
   };
 
-  const handleReviewClick = (data) => {
+  const handleReviewClick = (event, index, data) => {
     const v = data;
     navigate(`/games/${v}`, { state: 'create-review'})
   }
 
 
 
-  const handleDetailClick = (data) => {
+  const handleDetailClick = (event, index, data) => {
     const v = data;
     navigate(`/games/${v}`)
 
   }
 
-  const handleWishClick = async (data) => {
+  const handleWishClick = async (event, index, data) => {
 
     const addEntryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`;
     const wishListData = {}
@@ -146,7 +145,7 @@ function HomeGameCard( { games }  ) {
 
   };
 
-  const handleBoardClick = async (data) => {
+  const handleBoardClick = async (event, index, data) => {
     const stuff = {};
     const libraryUrl = `${import.meta.env.VITE_API_HOST}/api/libraries`
     const board = data[0];
