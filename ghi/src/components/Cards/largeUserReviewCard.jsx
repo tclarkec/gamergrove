@@ -288,7 +288,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
         userReviews.map((review) => (
           <div key={review.id} className="largercard">
             <div>
-            <div className="lurcard-title">{review.title}</div>
+            <div className="lurcard-title" style={{ marginBottom: '-33px'}}>{review.title}</div>
             </div>
             <div>
               {review.account_id === accountId && (
@@ -322,7 +322,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
               </div>
               <div className="lurcard-date">
                   <div className="rating-container">
-                    <div className="star-rating" style={{marginTop: '75px'}}>
+                    <div className="star-rating" style={{marginTop: '145px', marginBottom: '-50px'}}>
                       <StarRating rating={review.rating} />
                     </div>
                   </div>
@@ -355,6 +355,7 @@ function LargeUserReviewCard({ gameId, accountId }) {
 
               </button>
             </div>
+            <div className="lurline" style={{ marginBottom: '10px', marginTop: '10px'}}></div>
           </div>
         ))
       ) : (

@@ -467,7 +467,7 @@ const GameDetails = () => {
                             src={shot.image_url}
                             className="d-block"
                             style={{
-                              maxHeight: '550px',
+                              maxHeight: '500px',
                               margin: 'auto',
 
                               borderRadius: '40px',
@@ -640,9 +640,9 @@ const GameDetails = () => {
                         <div key={shot.id}>
                           <img
                             src={shot.image_url}
-                            className="d-block w-100"
+                            className="d-block"
                             style={{
-                              maxHeight: '550px',
+                              maxHeight: '500px',
                               margin: 'auto',
 
                               borderRadius: '40px',
