@@ -22,11 +22,12 @@ function Settings() {
   const navigate = useNavigate();
 
   const [icons, setIcons] = useState([]);
-  const [savedUsername, setSavedUsername] = useState('');
+  const [username, setUsername] = useState('');
+  const [accountData, setAccountData] = useState('')
 
-  const fetchAccount = async () => {
-  if (savedUsername!== undefined) {
-    const accountUrl = `${import.meta.env.VITE_API_HOST}/${savedUsername}`;
+  const fetchAccount = async (user) => {
+  if (user!== undefined) {
+    const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${user}`;
     const response = await fetch(accountUrl);
     if (response.ok) {
       const data = await response.json();
@@ -35,32 +36,41 @@ function Settings() {
   }
 };
 
-  const [accountData, setAccountData] = useState({});
+  const [accountFormData, setAccountFormData] = useState({
+    username: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    icon_id: ''
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       const username = await fetchUserName();
-      setSavedUsername(username);
-      const account = await fetchAccount();
+      setUsername(username);
+      const account = await fetchAccount(username);
       setAccountData(account);
+      if (account) {
+        setAccountFormData({
+          username: account.username || '',
+          password: '',
+          first_name: account.first_name || '',
+          last_name: account.last_name || '',
+          email: account.email || '',
+          icon_id: account.icon_id || ''
+        });
+      }
     };
     fetchData();
+
   }, []);
 
-let initialAccountData = {};
 
-if (accountData) {
-  initialAccountData = {
-    username: savedUsername,
-    password: "",
-    first_name: accountData.first_name,
-    last_name: accountData.last_name,
-    email: accountData.email,
-    icon_id: accountData.icon_id,
-  };
-}
+
+
   const [updatedAccount, setUpdatedAccount] = useState(false);
-  const [accountFormData, setAccountFormData] = useState(initialAccountData);
+
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
@@ -100,7 +110,7 @@ if (accountData) {
     event.preventDefault();
 
     if (passwordConfirm === accountFormData.password) {
-      const updateUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${accountData.id}/${savedUsername}`;
+      const updateUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${accountData.id}/${username}`;
 
       const updateFetchConfig = {
         method: 'put',

@@ -42,11 +42,10 @@ function UpdateBoardForm() {
     description: '',
     cover_photo: ''
   });
-  const [savedUsername, setSavedUsername] = useState('');
 
-  const fetchAccount = async () => {
-  if (savedUsername !== undefined) {
-    const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${savedUsername}`;
+  const fetchAccount = async (user) => {
+  if (user !== undefined) {
+    const accountUrl = `${import.meta.env.VITE_API_HOST}/api/accounts/${user}`;
     const response = await fetch(accountUrl);
     if (response.ok) {
       const data = await response.json();
@@ -60,9 +59,8 @@ function UpdateBoardForm() {
     const fetchData = async () => {
       try {
         const username = await fetchUserName();
-        setSavedUsername(username);
-
         const account = await fetchAccount(username);
+
         setAccountData(account);
 
         const boardData = await fetchBoards(id);

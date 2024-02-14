@@ -66,6 +66,7 @@ build-front-end-job:
     # Don't forget to also replace PROJECT NAME in the npm run build line as well
     VITE_PUBLIC_URL: https://gamer-grove-gamergrove-e4b66709a0ca1018f06e6423b03cd88c405f322b.gitlab.io/
     VITE_API_HOST: https://oct-2023-7-et-api.mod3projects.com
+    VITE_RAWG_API_KEY: 0c4556270545498782c9a942f38cb48a
   script:
     - cd ghi
     - npm install
