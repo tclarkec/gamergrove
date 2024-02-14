@@ -94,6 +94,7 @@ const GameDetails = () => {
     try {
       const username = await fetchUserName();
       const account = await fetchAccount(username);
+      setAccountData(account)
 
       if (!account || !account.id) {
 
@@ -464,9 +465,9 @@ const GameDetails = () => {
                         <div key={shot.id}>
                           <img
                             src={shot.image_url}
-                            className="d-block w-100"
+                            className="d-block"
                             style={{
-                              height: '75%',
+                              maxHeight: '550px',
                               margin: 'auto',
 
                               borderRadius: '40px',
@@ -641,7 +642,7 @@ const GameDetails = () => {
                             src={shot.image_url}
                             className="d-block w-100"
                             style={{
-                              height: '75%',
+                              maxHeight: '550px',
                               margin: 'auto',
 
                               borderRadius: '40px',
