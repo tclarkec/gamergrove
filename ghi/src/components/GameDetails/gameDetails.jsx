@@ -94,6 +94,7 @@ const GameDetails = () => {
     try {
       const username = await fetchUserName();
       const account = await fetchAccount(username);
+      setAccountData(account)
 
       if (!account || !account.id) {
 
