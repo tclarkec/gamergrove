@@ -492,7 +492,7 @@ const handleReviewSubmit = async (event) => {
                 alt="Divider"
               />
 
-              <div className='screenshotsHero' onClick={handleScreenshotClick}>
+              <div className='screenshot' onClick={handleScreenshotClick}>
                 <ScreenshotsCard rawgPk={gameData.rawg_pk} />
               </div>
               <div className="container">
@@ -670,7 +670,7 @@ const handleReviewSubmit = async (event) => {
                 alt="Divider"
               />
 
-              <div className='screenshotsHero' onClick={handleScreenshotClick}>
+              <div className='screenshot' onClick={handleScreenshotClick}>
                 <ScreenshotsCard  rawgPk={gameData.rawg_pk} />
               </div>
               <div id="big-screenshots">

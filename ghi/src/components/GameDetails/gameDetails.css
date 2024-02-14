@@ -298,3 +298,7 @@ label[for='rating'] {
   border-radius: 20px;
   padding: 15px;
 }
+
+.screenshot:hover {
+  cursor: pointer;
+}
