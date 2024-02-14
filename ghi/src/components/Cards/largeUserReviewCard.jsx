@@ -321,9 +321,8 @@ function LargeUserReviewCard({ gameId, accountId }) {
                 <p>{review.body}</p>
               </div>
               <div className="lurcard-date">
-                  <p>Rating: {review.rating}</p>
                   <div className="rating-container">
-                    <div className="star-rating" style={{ marginRight: '-30px', marginBottom: '-250px', position: 'relative'}}>
+                    <div className="star-rating" style={{marginTop: '75px'}}>
                       <StarRating rating={review.rating} />
                     </div>
                   </div>
